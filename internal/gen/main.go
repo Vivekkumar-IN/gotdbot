@@ -22,16 +22,14 @@ func main() {
 	}
 
 	log.Println("Generating Go code...")
-	generateClasses(classes)
-	generateObjects(types, classes)
+	generateInterfaces(classes)
+	generateTypes(types, classes)
 	generateFunctions(functions, classes)
-	generateOptions(functions, classes)
-	generateTDLibOptions(options)
 	generateMethods(functions, classes)
-	extFiles := generateExtHandlers(types)
+	generateUpdates(types)
+	generateOptions(options)
 	helperFiles := generateHelpers(types, functions, classes)
-	filesToFmt := append([]string{"gen_classes.go", "gen_types.go", "gen_functions.go", "gen_options.go", "gen_methods.go", "client_opts.go"}, helperFiles...)
-	filesToFmt = append(filesToFmt, extFiles...)
+	filesToFmt := append([]string{"gen_interfaces.go", "gen_types.go", "gen_functions.go", "gen_methods.go", "gen_handlers.go", "client_opts.go"}, helperFiles...)
 	gofmt(filesToFmt...)
 	log.Println("Done.")
 }

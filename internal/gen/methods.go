@@ -30,6 +30,21 @@ func generateMethods(functions []TLType, classes map[string]*TLClass) {
 
 		optsStructName := methodName + "Opts"
 
+		// Generate Opts struct (inline, before method)
+		if hasOptional {
+			fmt.Fprintf(&sb, "// %s contains optional parameters for %s\n", optsStructName, methodName)
+			fmt.Fprintf(&sb, "type %s struct {\n", optsStructName)
+			for _, p := range fn.Params {
+				if p.IsOptional || p.Type == "Bool" {
+					fmt.Fprintf(&sb, "\t// %s\n", formatDesc(p.Description))
+					goType := toGoType(p.Type, classes)
+					fieldName := toCamelCase(p.Name)
+					fmt.Fprintf(&sb, "\t%s %s\n", fieldName, goType)
+				}
+			}
+			sb.WriteString("}\n\n")
+		}
+
 		isOk := fn.ResultType == "ok" || fn.ResultType == "Ok"
 		resultType := toCamelCase(fn.ResultType)
 		if isOk {
@@ -51,7 +66,6 @@ func generateMethods(functions []TLType, classes map[string]*TLClass) {
 				continue
 			}
 			goType := toGoType(p.Type, classes)
-
 			fieldName := toCamelCase(p.Name)
 			argName := strings.ToLower(fieldName[:1]) + fieldName[1:]
 			if argName == "type" {
@@ -60,7 +74,6 @@ func generateMethods(functions []TLType, classes map[string]*TLClass) {
 			if argName == "func" {
 				argName = "funcArg"
 			}
-
 			args = append(args, fmt.Sprintf("%s %s", argName, goType))
 		}
 
@@ -89,7 +102,6 @@ func generateMethods(functions []TLType, classes map[string]*TLClass) {
 			if argName == "func" {
 				argName = "funcArg"
 			}
-
 			fmt.Fprintf(&sb, "\t\t%s: %s,\n", fieldName, argName)
 		}
 		sb.WriteString("\t}\n")

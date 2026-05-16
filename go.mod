@@ -1,4 +1,4 @@
-module github.com/AshokShau/gotdbot
+module github.com/Vivekkumar-IN/gotdbot
 
 go 1.22
 

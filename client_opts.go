@@ -34,10 +34,13 @@ type ClientOpts struct {
 	LogVerbosityLevel       int32
 	LogStream               LogStream
 	AutoRetry               *AutoRetry
+	CommandPrefixes         string
 
-	// Dispatcher is the dispatcher to use for this client.
-	// If nil, a new dispatcher will be created.
-	Dispatcher *Dispatcher
+	// PanicHandler handles panics during update processing.
+	PanicHandler func(client *Client, update TlObject, r any)
+
+	// ErrorHandler handles errors returned by handlers.
+	ErrorHandler func(client *Client, update TlObject, err error) error
 }
 
 // TDLibOptions contains TDLib options that can be set
@@ -210,5 +213,6 @@ func DefaultClientConfig() *ClientOpts {
 		AuthorizationTimeout:    60 * time.Second,
 		LogVerbosityLevel:       2,
 		AutoRetry:               &AutoRetry{},
+		CommandPrefixes:         "/",
 	}
 }

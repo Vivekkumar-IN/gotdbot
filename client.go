@@ -11,8 +11,11 @@ import (
 	"os"
 	"os/signal"
 	"regexp"
+	"runtime/debug"
+	"sort"
 	"strings"
 	"sync"
+	"sync/atomic"
 	"syscall"
 	"time"
 
@@ -37,8 +40,6 @@ type Client struct {
 	closed  chan struct{}
 	wg      sync.WaitGroup
 
-	Dispatcher *Dispatcher
-
 	pendingRequests sync.Map // map[string]chan TlObject
 	pendingMessages sync.Map // map[string]chan TlObject
 
@@ -47,6 +48,19 @@ type Client struct {
 	isAuthorized  bool
 	startOnce     sync.Once
 	closeOnce     sync.Once
+
+	handleMu sync.RWMutex
+	handlers map[UpdateType][]Handle
+
+	waiters     map[string]*Waiter
+	waiterCount int64
+	wMu         sync.RWMutex
+
+	// PanicHandler handles panics during update processing.
+	PanicHandler func(client *Client, update TlObject, r any)
+
+	// ErrorHandler handles errors returned by handlers.
+	ErrorHandler func(client *Client, update TlObject, err error) error
 
 	// Me is the bot's User info, as returned by client.GetMe.
 	// Populated when authorization is ready.
@@ -122,18 +136,31 @@ func NewClient(apiID int32, apiHash, tokenOrPhone string, config *ClientOpts) (*
 		stop:          make(chan struct{}),
 		closed:        make(chan struct{}),
 		authErrorChan: make(chan error, 1),
+		handlers:      make(map[UpdateType][]Handle),
+		waiters:       make(map[string]*Waiter),
 	}
 
-	if config.Dispatcher != nil {
-		c.Dispatcher = config.Dispatcher
+	if config.PanicHandler != nil {
+		c.PanicHandler = config.PanicHandler
 	} else {
-		c.Dispatcher = NewDispatcher(nil)
+		c.PanicHandler = func(client *Client, update TlObject, r any) {
+			c.Logger.Error("Panic in update handler", "panic", r, "stack", string(debug.Stack()))
+		}
 	}
 
-	c.Dispatcher.AddHandlerToGroup(&internalHandler{client: c, handleFunc: c.authHandler, updateType: "updateAuthorizationState"}, -999)
-	c.Dispatcher.AddHandlerToGroup(&internalHandler{client: c, handleFunc: c.messageSendSucceededHandler, updateType: "updateMessageSendSucceeded"}, -998)
-	c.Dispatcher.AddHandlerToGroup(&internalHandler{client: c, handleFunc: c.messageSendFailedHandler, updateType: "updateMessageSendFailed"}, -997)
-	c.Dispatcher.AddHandlerToGroup(&internalHandler{client: c, handleFunc: c.connectionStateHandler, updateType: "updateConnectionState"}, -2)
+	if config.ErrorHandler != nil {
+		c.ErrorHandler = config.ErrorHandler
+	} else {
+		c.ErrorHandler = func(client *Client, update TlObject, err error) error {
+			c.Logger.Error("Handler error", "error", err)
+			return nil
+		}
+	}
+
+	c.AddAuthorizationStateHandler(c.authHandler).SetGroup(-999)
+	c.AddMessageSendSucceededHandler(c.messageSendSucceededHandler).SetGroup(-998)
+	c.AddMessageSendFailedHandler(c.messageSendFailedHandler).SetGroup(-997)
+	c.AddConnectionStateHandler(c.connectionStateHandler).SetGroup(-2)
 	return c, nil
 }
 
@@ -201,17 +228,12 @@ func (c *Client) processor() {
 		case <-c.stop:
 			return
 		case update := <-c.updates:
-			c.Dispatcher.ProcessUpdate(c, update)
+			c.processUpdate(update)
 		}
 	}
 }
 
-func (c *Client) authHandler(client *Client, update TlObject) error {
-	authState, ok := update.(*UpdateAuthorizationState)
-	if !ok {
-		return nil
-	}
-
+func (c *Client) authHandler(client *Client, authState *UpdateAuthorizationState) error {
 	c.Logger.Debug("Authorization state update", "state", authState.AuthorizationState.GetType())
 
 	switch authState.AuthorizationState.GetType() {
@@ -384,24 +406,14 @@ func (c *Client) authHandler(client *Client, update TlObject) error {
 	return nil
 }
 
-func (c *Client) connectionStateHandler(client *Client, update TlObject) error {
-	u, ok := update.(*UpdateConnectionState)
-	if !ok {
-		return nil
-	}
-
+func (c *Client) connectionStateHandler(client *Client, u *UpdateConnectionState) error {
 	state := u.State.GetType()
 	state = strings.TrimPrefix(state, "connectionState")
 	c.Logger.Info("Connection state changed", "state", state)
 	return nil
 }
 
-func (c *Client) messageSendSucceededHandler(client *Client, update TlObject) error {
-	u, ok := update.(*UpdateMessageSendSucceeded)
-	if !ok {
-		return nil
-	}
-
+func (c *Client) messageSendSucceededHandler(client *Client, u *UpdateMessageSendSucceeded) error {
 	key := fmt.Sprintf("%d:%d", u.Message.ChatId, u.OldMessageId)
 	if ch, ok := c.pendingMessages.Load(key); ok {
 		ch.(chan TlObject) <- u
@@ -411,11 +423,7 @@ func (c *Client) messageSendSucceededHandler(client *Client, update TlObject) er
 	return nil
 }
 
-func (c *Client) messageSendFailedHandler(client *Client, update TlObject) error {
-	u, ok := update.(*UpdateMessageSendFailed)
-	if !ok {
-		return nil
-	}
+func (c *Client) messageSendFailedHandler(client *Client, u *UpdateMessageSendFailed) error {
 	key := fmt.Sprintf("%d:%d", u.Message.ChatId, u.OldMessageId)
 	if ch, ok := c.pendingMessages.Load(key); ok {
 		ch.(chan TlObject) <- u
@@ -658,6 +666,182 @@ func toOptionValue(v interface{}) OptionValue {
 	default:
 		return nil
 	}
+}
+
+
+// AddCommandHandler registers a command handler for UpdateNewMessage updates.
+func (c *Client) AddCommandHandler(command string, hn HandlerFunc[UpdateNewMessage], f ...Filter) Handle {
+	filters := append([]Filter{FilterCommand(command)}, f...)
+	return c.AddNewMessageHandler(hn, filters...)
+}
+
+// AddRawHandler registers a raw handler that accepts any update satisfying the filters.
+func (c *Client) AddRawHandler(hn RawHandlerFunc, f ...Filter) Handle {
+	h := &rawHandle{
+		client:  c,
+		handler: hn,
+		filters: f,
+	}
+
+	c.addHandler(UpdateTypeRaw, h)
+
+	return h
+}
+
+
+// RemoveHandler removes a registered update handler.
+func (c *Client) RemoveHandler(h Handle) {
+	if h == nil {
+		return
+	}
+	tp := h.GetType()
+
+	c.handleMu.Lock()
+	defer c.handleMu.Unlock()
+
+	handlers := c.handlers[tp]
+	for i, handler := range handlers {
+		if handler == h {
+			c.handlers[tp] = append(handlers[:i], handlers[i+1:]...)
+			return
+		}
+	}
+}
+
+func (c *Client) addHandler(tp UpdateType, h Handle) {
+	c.handleMu.Lock()
+	defer c.handleMu.Unlock()
+
+	c.handlers[tp] = append(c.handlers[tp], h)
+	c.sortHandlersLocked(tp)
+}
+
+func (c *Client) sortHandlers(tp UpdateType) {
+	c.handleMu.Lock()
+	defer c.handleMu.Unlock()
+	c.sortHandlersLocked(tp)
+}
+
+func (c *Client) sortHandlersLocked(tp UpdateType) {
+	sort.SliceStable(c.handlers[tp], func(i, j int) bool {
+		if c.handlers[tp][i].GetGroup() != c.handlers[tp][j].GetGroup() {
+			return c.handlers[tp][i].GetGroup() < c.handlers[tp][j].GetGroup()
+		}
+		return c.handlers[tp][i].GetPriority() > c.handlers[tp][j].GetPriority()
+	})
+}
+
+func (c *Client) processUpdate(update TlObject) {
+	go func() {
+		tp := UpdateType(update.GetType())
+
+		defer func() {
+			if r := recover(); r != nil {
+				if c.PanicHandler != nil {
+					c.PanicHandler(c, update, r)
+				}
+			}
+		}()
+
+		// Waiters
+		c.wMu.RLock()
+		var matchedWaiters []*Waiter
+		for _, w := range c.waiters {
+			if w.Filter(c, update) {
+				matchedWaiters = append(matchedWaiters, w)
+			}
+		}
+		c.wMu.RUnlock()
+
+		for _, w := range matchedWaiters {
+			select {
+			case w.C <- update:
+			default:
+			}
+		}
+
+		// Handlers
+		c.handleMu.RLock()
+		typeHandlers := c.handlers[tp]
+		rawHandlers := c.handlers[UpdateTypeRaw]
+		
+
+		handlers := make([]Handle, 0, len(typeHandlers)+len(rawHandlers))
+		i, j := 0, 0
+		for i < len(typeHandlers) && j < len(rawHandlers) {
+			h1, h2 := typeHandlers[i], rawHandlers[j]
+			if h1.GetGroup() < h2.GetGroup() || (h1.GetGroup() == h2.GetGroup() && h1.GetPriority() >= h2.GetPriority()) {
+				handlers = append(handlers, h1)
+				i++
+			} else {
+				handlers = append(handlers, h2)
+				j++
+			}
+		}
+		handlers = append(handlers, typeHandlers[i:]...)
+		handlers = append(handlers, rawHandlers[j:]...)
+		c.handleMu.RUnlock()
+
+		for i := 0; i < len(handlers); {
+			currentGroup := handlers[i].GetGroup()
+			groupHandled := false
+
+			for ; i < len(handlers) && handlers[i].GetGroup() == currentGroup; i++ {
+				if groupHandled {
+					continue
+				}
+
+				h := handlers[i]
+				if h.Check(c, update) {
+					groupHandled = true
+					err := h.Execute(c, update)
+
+					var action error
+					if err != nil && !errors.Is(err, EndGroups) && !errors.Is(err, ContinueGroups) {
+						action = c.ErrorHandler(c, update, err)
+					} else {
+						action = err
+					}
+
+					if errors.Is(action, EndGroups) {
+						return
+					}
+					if errors.Is(action, ContinueGroups) {
+						groupHandled = false
+						continue
+					}
+				}
+			}
+		}
+	}()
+}
+
+func (c *Client) WaitFor(filter func(*Client, TlObject) bool, timeout time.Duration) (TlObject, error) {
+	ch := make(chan TlObject, 1)
+	idNum := atomic.AddInt64(&c.waiterCount, 1)
+	id := fmt.Sprintf("%d", idNum)
+
+	c.wMu.Lock()
+	c.waiters[id] = &Waiter{Filter: filter, C: ch}
+	c.wMu.Unlock()
+
+	defer func() {
+		c.wMu.Lock()
+		delete(c.waiters, id)
+		c.wMu.Unlock()
+	}()
+
+	select {
+	case u := <-ch:
+		return u, nil
+	case <-time.After(timeout):
+		return nil, ConversationTimeout
+	}
+}
+
+type Waiter struct {
+	Filter func(*Client, TlObject) bool
+	C      chan TlObject
 }
 
 func Bool(b bool) *bool {
