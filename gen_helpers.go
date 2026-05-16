@@ -35,14 +35,14 @@ func (c *Chat) AddFileToDownloads(client *Client, fileId int32, messageId int64,
 
 // AddLocalMessage Adds a local message to a chat. The message is persistent across application restarts only if the message database is used. Returns the added message
 // It is a helper method for Client.AddLocalMessage
-func (c *Chat) AddLocalMessage(client *Client, inputMessageContent InputMessageContent, senderId MessageSender, opts *AddLocalMessageOpts) (*Message, error) {
-	return client.AddLocalMessage(c.Id, inputMessageContent, senderId, opts)
+func (c *Chat) AddLocalMessage(client *Client, inputMessageContent InputMessageContent, senderId MessageSender, opts ...*AddLocalMessageOpts) (*Message, error) {
+	return client.AddLocalMessage(c.Id, inputMessageContent, senderId, opts...)
 }
 
 // AddMessageReaction Adds a reaction or a tag to a message. Use getMessageAvailableReactions to receive the list of available reactions for the message
 // It is a helper method for Client.AddMessageReaction
-func (c *Chat) AddMessageReaction(client *Client, messageId int64, reactionType ReactionType, opts *AddMessageReactionOpts) error {
-	return client.AddMessageReaction(c.Id, messageId, reactionType, opts)
+func (c *Chat) AddMessageReaction(client *Client, messageId int64, reactionType ReactionType, opts ...*AddMessageReactionOpts) error {
+	return client.AddMessageReaction(c.Id, messageId, reactionType, opts...)
 }
 
 // AddOffer Sends a suggested post based on a previously sent message in a channel direct messages chat. Can be also used to suggest price or time change for an existing suggested post.
@@ -53,8 +53,8 @@ func (c *Chat) AddOffer(client *Client, messageId int64, options *MessageSendOpt
 
 // AddPendingPaidMessageReaction Adds the paid message reaction to a message. Use getMessageAvailableReactions to check whether the reaction is available for the message
 // It is a helper method for Client.AddPendingPaidMessageReaction
-func (c *Chat) AddPendingPaidMessageReaction(client *Client, messageId int64, starCount int64, opts *AddPendingPaidMessageReactionOpts) error {
-	return client.AddPendingPaidMessageReaction(c.Id, messageId, starCount, opts)
+func (c *Chat) AddPendingPaidMessageReaction(client *Client, messageId int64, starCount int64, opts ...*AddPendingPaidMessageReactionOpts) error {
+	return client.AddPendingPaidMessageReaction(c.Id, messageId, starCount, opts...)
 }
 
 // AddPollOption Adds an option to a poll
@@ -83,8 +83,8 @@ func (c *Chat) ApproveSuggestedPost(client *Client, messageId int64, sendDate in
 
 // BanMember Bans a member in a chat; requires can_restrict_members administrator right. Members can't be banned in private or secret chats. In supergroups and channels, the user will not be able to return to the group on their own using invite links, etc., unless unbanned first
 // It is a helper method for Client.BanChatMember
-func (c *Chat) BanMember(client *Client, bannedUntilDate int32, memberId MessageSender, opts *BanChatMemberOpts) error {
-	return client.BanChatMember(bannedUntilDate, c.Id, memberId, opts)
+func (c *Chat) BanMember(client *Client, bannedUntilDate int32, memberId MessageSender, opts ...*BanChatMemberOpts) error {
+	return client.BanChatMember(bannedUntilDate, c.Id, memberId, opts...)
 }
 
 // Boost Boosts a chat and returns the list of available chat boost slots for the current user after the boost
@@ -113,8 +113,8 @@ func (c *Chat) ClickAnimatedEmojiMessage(client *Client, messageId int64) (*Stic
 
 // ClickSponsoredMessage Informs TDLib that the user opened the sponsored chat via the button, the name, the chat photo, a mention in the sponsored message text, or the media in the sponsored message
 // It is a helper method for Client.ClickChatSponsoredMessage
-func (c *Chat) ClickSponsoredMessage(client *Client, messageId int64, opts *ClickChatSponsoredMessageOpts) error {
-	return client.ClickChatSponsoredMessage(c.Id, messageId, opts)
+func (c *Chat) ClickSponsoredMessage(client *Client, messageId int64, opts ...*ClickChatSponsoredMessageOpts) error {
+	return client.ClickChatSponsoredMessage(c.Id, messageId, opts...)
 }
 
 // Close Informs TDLib that the chat is closed by the user. Many useful activities depend on the chat being opened or closed
@@ -131,8 +131,8 @@ func (c *Chat) CommitPendingPaidMessageReactions(client *Client, messageId int64
 
 // CreateInviteLink Creates a new invite link for a chat. Available for basic groups, supergroups, and channels. Requires administrator privileges and can_invite_users right in the chat
 // It is a helper method for Client.CreateChatInviteLink
-func (c *Chat) CreateInviteLink(client *Client, expirationDate int32, memberLimit int32, name string, opts *CreateChatInviteLinkOpts) (*ChatInviteLink, error) {
-	return client.CreateChatInviteLink(c.Id, expirationDate, memberLimit, name, opts)
+func (c *Chat) CreateInviteLink(client *Client, expirationDate int32, memberLimit int32, name string, opts ...*CreateChatInviteLinkOpts) (*ChatInviteLink, error) {
+	return client.CreateChatInviteLink(c.Id, expirationDate, memberLimit, name, opts...)
 }
 
 // CreateSubscriptionInviteLink Creates a new subscription invite link for a channel chat. Requires can_invite_users right in the chat
@@ -143,14 +143,14 @@ func (c *Chat) CreateSubscriptionInviteLink(client *Client, name string, subscri
 
 // CreateForumTopic Creates a topic in a forum supergroup chat or a chat with a bot with topics; requires can_manage_topics administrator or can_create_topics member right in the supergroup
 // It is a helper method for Client.CreateForumTopic
-func (c *Chat) CreateForumTopic(client *Client, icon *ForumTopicIcon, name string, opts *CreateForumTopicOpts) (*ForumTopicInfo, error) {
-	return client.CreateForumTopic(c.Id, icon, name, opts)
+func (c *Chat) CreateForumTopic(client *Client, icon *ForumTopicIcon, name string, opts ...*CreateForumTopicOpts) (*ForumTopicInfo, error) {
+	return client.CreateForumTopic(c.Id, icon, name, opts...)
 }
 
 // CreateVideo Creates a video chat (a group call bound to a chat); for basic groups, supergroups and channels only; requires can_manage_video_chats administrator right
 // It is a helper method for Client.CreateVideoChat
-func (c *Chat) CreateVideo(client *Client, startDate int32, opts *CreateVideoChatOpts) (*GroupCallId, error) {
-	return client.CreateVideoChat(c.Id, startDate, c.Title, opts)
+func (c *Chat) CreateVideo(client *Client, startDate int32, opts ...*CreateVideoChatOpts) (*GroupCallId, error) {
+	return client.CreateVideoChat(c.Id, startDate, c.Title, opts...)
 }
 
 // DeclineGroupCallInvitation Declines an invitation to an active group call via messageGroupCall. Can be called both by the sender and the receiver of the invitation
@@ -185,20 +185,20 @@ func (c *Chat) Delete(client *Client) error {
 
 // DeleteBackground Deletes background in a specific chat
 // It is a helper method for Client.DeleteChatBackground
-func (c *Chat) DeleteBackground(client *Client, opts *DeleteChatBackgroundOpts) error {
-	return client.DeleteChatBackground(c.Id, opts)
+func (c *Chat) DeleteBackground(client *Client, opts ...*DeleteChatBackgroundOpts) error {
+	return client.DeleteChatBackground(c.Id, opts...)
 }
 
 // DeleteHistory Deletes all messages in the chat. Use chat.can_be_deleted_only_for_self and chat.can_be_deleted_for_all_users fields to find whether and how the method can be applied to the chat
 // It is a helper method for Client.DeleteChatHistory
-func (c *Chat) DeleteHistory(client *Client, opts *DeleteChatHistoryOpts) error {
-	return client.DeleteChatHistory(c.Id, opts)
+func (c *Chat) DeleteHistory(client *Client, opts ...*DeleteChatHistoryOpts) error {
+	return client.DeleteChatHistory(c.Id, opts...)
 }
 
 // DeleteMessagesByDate Deletes all messages between the specified dates in a chat. Supported only for private chats and basic groups. Messages sent in the last 30 seconds will not be deleted
 // It is a helper method for Client.DeleteChatMessagesByDate
-func (c *Chat) DeleteMessagesByDate(client *Client, maxDate int32, minDate int32, opts *DeleteChatMessagesByDateOpts) error {
-	return client.DeleteChatMessagesByDate(c.Id, maxDate, minDate, opts)
+func (c *Chat) DeleteMessagesByDate(client *Client, maxDate int32, minDate int32, opts ...*DeleteChatMessagesByDateOpts) error {
+	return client.DeleteChatMessagesByDate(c.Id, maxDate, minDate, opts...)
 }
 
 // DeleteMessagesBySender Deletes all messages sent by the specified message sender in a chat. Supported only for supergroups; requires can_delete_messages administrator right
@@ -239,8 +239,8 @@ func (c *Chat) DeleteMessageReactionsFromSender(client *Client, messageId int64,
 
 // DeleteMessages Deletes messages
 // It is a helper method for Client.DeleteMessages
-func (c *Chat) DeleteMessages(client *Client, messageIds []int64, opts *DeleteMessagesOpts) error {
-	return client.DeleteMessages(c.Id, messageIds, opts)
+func (c *Chat) DeleteMessages(client *Client, messageIds []int64, opts ...*DeleteMessagesOpts) error {
+	return client.DeleteMessages(c.Id, messageIds, opts...)
 }
 
 // DeletePollOption Deletes an option from a poll
@@ -263,44 +263,44 @@ func (c *Chat) DeleteStoryAlbum(client *Client, storyAlbumId int32) error {
 
 // EditBusinessMessageCaption Edits the caption of a message sent on behalf of a business account; for bots only
 // It is a helper method for Client.EditBusinessMessageCaption
-func (c *Chat) EditBusinessMessageCaption(client *Client, businessConnectionId string, messageId int64, opts *EditBusinessMessageCaptionOpts) (*BusinessMessage, error) {
-	return client.EditBusinessMessageCaption(businessConnectionId, c.Id, messageId, opts)
+func (c *Chat) EditBusinessMessageCaption(client *Client, businessConnectionId string, messageId int64, opts ...*EditBusinessMessageCaptionOpts) (*BusinessMessage, error) {
+	return client.EditBusinessMessageCaption(businessConnectionId, c.Id, messageId, opts...)
 }
 
 // EditBusinessMessageChecklist Edits the content of a checklist in a message sent on behalf of a business account; for bots only
 // It is a helper method for Client.EditBusinessMessageChecklist
-func (c *Chat) EditBusinessMessageChecklist(client *Client, businessConnectionId string, checklist *InputChecklist, messageId int64, opts *EditBusinessMessageChecklistOpts) (*BusinessMessage, error) {
-	return client.EditBusinessMessageChecklist(businessConnectionId, c.Id, checklist, messageId, opts)
+func (c *Chat) EditBusinessMessageChecklist(client *Client, businessConnectionId string, checklist *InputChecklist, messageId int64, opts ...*EditBusinessMessageChecklistOpts) (*BusinessMessage, error) {
+	return client.EditBusinessMessageChecklist(businessConnectionId, c.Id, checklist, messageId, opts...)
 }
 
 // EditBusinessMessageLiveLocation Edits the content of a live location in a message sent on behalf of a business account; for bots only
 // It is a helper method for Client.EditBusinessMessageLiveLocation
-func (c *Chat) EditBusinessMessageLiveLocation(client *Client, businessConnectionId string, heading int32, livePeriod int32, messageId int64, proximityAlertRadius int32, opts *EditBusinessMessageLiveLocationOpts) (*BusinessMessage, error) {
-	return client.EditBusinessMessageLiveLocation(businessConnectionId, c.Id, heading, livePeriod, messageId, proximityAlertRadius, opts)
+func (c *Chat) EditBusinessMessageLiveLocation(client *Client, businessConnectionId string, heading int32, livePeriod int32, messageId int64, proximityAlertRadius int32, opts ...*EditBusinessMessageLiveLocationOpts) (*BusinessMessage, error) {
+	return client.EditBusinessMessageLiveLocation(businessConnectionId, c.Id, heading, livePeriod, messageId, proximityAlertRadius, opts...)
 }
 
 // EditBusinessMessageMedia Edits the media content of a message with a text, an animation, an audio, a document, a photo or a video in a message sent on behalf of a business account; for bots only
 // It is a helper method for Client.EditBusinessMessageMedia
-func (c *Chat) EditBusinessMessageMedia(client *Client, businessConnectionId string, inputMessageContent InputMessageContent, messageId int64, opts *EditBusinessMessageMediaOpts) (*BusinessMessage, error) {
-	return client.EditBusinessMessageMedia(businessConnectionId, c.Id, inputMessageContent, messageId, opts)
+func (c *Chat) EditBusinessMessageMedia(client *Client, businessConnectionId string, inputMessageContent InputMessageContent, messageId int64, opts ...*EditBusinessMessageMediaOpts) (*BusinessMessage, error) {
+	return client.EditBusinessMessageMedia(businessConnectionId, c.Id, inputMessageContent, messageId, opts...)
 }
 
 // EditBusinessMessageReplyMarkup Edits the reply markup of a message sent on behalf of a business account; for bots only
 // It is a helper method for Client.EditBusinessMessageReplyMarkup
-func (c *Chat) EditBusinessMessageReplyMarkup(client *Client, businessConnectionId string, messageId int64, opts *EditBusinessMessageReplyMarkupOpts) (*BusinessMessage, error) {
-	return client.EditBusinessMessageReplyMarkup(businessConnectionId, c.Id, messageId, opts)
+func (c *Chat) EditBusinessMessageReplyMarkup(client *Client, businessConnectionId string, messageId int64, opts ...*EditBusinessMessageReplyMarkupOpts) (*BusinessMessage, error) {
+	return client.EditBusinessMessageReplyMarkup(businessConnectionId, c.Id, messageId, opts...)
 }
 
 // EditBusinessMessageText Edits the text of a text or game message sent on behalf of a business account; for bots only
 // It is a helper method for Client.EditBusinessMessageText
-func (c *Chat) EditBusinessMessageText(client *Client, businessConnectionId string, inputMessageContent InputMessageContent, messageId int64, opts *EditBusinessMessageTextOpts) (*BusinessMessage, error) {
-	return client.EditBusinessMessageText(businessConnectionId, c.Id, inputMessageContent, messageId, opts)
+func (c *Chat) EditBusinessMessageText(client *Client, businessConnectionId string, inputMessageContent InputMessageContent, messageId int64, opts ...*EditBusinessMessageTextOpts) (*BusinessMessage, error) {
+	return client.EditBusinessMessageText(businessConnectionId, c.Id, inputMessageContent, messageId, opts...)
 }
 
 // EditInviteLink Edits a non-primary invite link for a chat. Available for basic groups, supergroups, and channels.
 // It is a helper method for Client.EditChatInviteLink
-func (c *Chat) EditInviteLink(client *Client, expirationDate int32, inviteLink string, memberLimit int32, name string, opts *EditChatInviteLinkOpts) (*ChatInviteLink, error) {
-	return client.EditChatInviteLink(c.Id, expirationDate, inviteLink, memberLimit, name, opts)
+func (c *Chat) EditInviteLink(client *Client, expirationDate int32, inviteLink string, memberLimit int32, name string, opts ...*EditChatInviteLinkOpts) (*ChatInviteLink, error) {
+	return client.EditChatInviteLink(c.Id, expirationDate, inviteLink, memberLimit, name, opts...)
 }
 
 // EditSubscriptionInviteLink Edits a subscription invite link for a channel chat. Requires can_invite_users right in the chat for own links and owner privileges for other links
@@ -311,62 +311,62 @@ func (c *Chat) EditSubscriptionInviteLink(client *Client, inviteLink string, nam
 
 // EditForumTopic Edits title and icon of a topic in a forum supergroup chat or a chat with a bot with topics; for supergroup chats requires can_manage_topics administrator right
 // It is a helper method for Client.EditForumTopic
-func (c *Chat) EditForumTopic(client *Client, forumTopicId int32, iconCustomEmojiId int64, name string, opts *EditForumTopicOpts) error {
-	return client.EditForumTopic(c.Id, forumTopicId, iconCustomEmojiId, name, opts)
+func (c *Chat) EditForumTopic(client *Client, forumTopicId int32, iconCustomEmojiId int64, name string, opts ...*EditForumTopicOpts) error {
+	return client.EditForumTopic(c.Id, forumTopicId, iconCustomEmojiId, name, opts...)
 }
 
 // EditMessageCaption Edits the message content caption. Returns the edited message after the edit is completed on the server side
 // It is a helper method for Client.EditMessageCaption
-func (c *Chat) EditMessageCaption(client *Client, messageId int64, opts *EditMessageCaptionOpts) (*Message, error) {
-	return client.EditMessageCaption(c.Id, messageId, opts)
+func (c *Chat) EditMessageCaption(client *Client, messageId int64, opts ...*EditMessageCaptionOpts) (*Message, error) {
+	return client.EditMessageCaption(c.Id, messageId, opts...)
 }
 
 // EditMessageChecklist Edits the message content of a checklist. Returns the edited message after the edit is completed on the server side
 // It is a helper method for Client.EditMessageChecklist
-func (c *Chat) EditMessageChecklist(client *Client, checklist *InputChecklist, messageId int64, opts *EditMessageChecklistOpts) (*Message, error) {
-	return client.EditMessageChecklist(c.Id, checklist, messageId, opts)
+func (c *Chat) EditMessageChecklist(client *Client, checklist *InputChecklist, messageId int64, opts ...*EditMessageChecklistOpts) (*Message, error) {
+	return client.EditMessageChecklist(c.Id, checklist, messageId, opts...)
 }
 
 // EditMessageLiveLocation Edits the message content of a live location. Messages can be edited for a limited period of time specified in the live location.
 // It is a helper method for Client.EditMessageLiveLocation
-func (c *Chat) EditMessageLiveLocation(client *Client, heading int32, livePeriod int32, messageId int64, proximityAlertRadius int32, opts *EditMessageLiveLocationOpts) (*Message, error) {
-	return client.EditMessageLiveLocation(c.Id, heading, livePeriod, messageId, proximityAlertRadius, opts)
+func (c *Chat) EditMessageLiveLocation(client *Client, heading int32, livePeriod int32, messageId int64, proximityAlertRadius int32, opts ...*EditMessageLiveLocationOpts) (*Message, error) {
+	return client.EditMessageLiveLocation(c.Id, heading, livePeriod, messageId, proximityAlertRadius, opts...)
 }
 
 // EditMessageMedia Edits the media content of a message, including message caption. If only the caption needs to be edited, use editMessageCaption instead.
 // It is a helper method for Client.EditMessageMedia
-func (c *Chat) EditMessageMedia(client *Client, inputMessageContent InputMessageContent, messageId int64, opts *EditMessageMediaOpts) (*Message, error) {
-	return client.EditMessageMedia(c.Id, inputMessageContent, messageId, opts)
+func (c *Chat) EditMessageMedia(client *Client, inputMessageContent InputMessageContent, messageId int64, opts ...*EditMessageMediaOpts) (*Message, error) {
+	return client.EditMessageMedia(c.Id, inputMessageContent, messageId, opts...)
 }
 
 // EditMessageReplyMarkup Edits the message reply markup; for bots only. Returns the edited message after the edit is completed on the server side
 // It is a helper method for Client.EditMessageReplyMarkup
-func (c *Chat) EditMessageReplyMarkup(client *Client, messageId int64, opts *EditMessageReplyMarkupOpts) (*Message, error) {
-	return client.EditMessageReplyMarkup(c.Id, messageId, opts)
+func (c *Chat) EditMessageReplyMarkup(client *Client, messageId int64, opts ...*EditMessageReplyMarkupOpts) (*Message, error) {
+	return client.EditMessageReplyMarkup(c.Id, messageId, opts...)
 }
 
 // EditMessageSchedulingState Edits the time when a scheduled message will be sent. Scheduling state of all messages in the same album or forwarded together with the message will be also changed
 // It is a helper method for Client.EditMessageSchedulingState
-func (c *Chat) EditMessageSchedulingState(client *Client, messageId int64, opts *EditMessageSchedulingStateOpts) error {
-	return client.EditMessageSchedulingState(c.Id, messageId, opts)
+func (c *Chat) EditMessageSchedulingState(client *Client, messageId int64, opts ...*EditMessageSchedulingStateOpts) error {
+	return client.EditMessageSchedulingState(c.Id, messageId, opts...)
 }
 
 // EditMessageText Edits the text of a message (or a text of a game message). Returns the edited message after the edit is completed on the server side
 // It is a helper method for Client.EditMessageText
-func (c *Chat) EditMessageText(client *Client, inputMessageContent InputMessageContent, messageId int64, opts *EditMessageTextOpts) (*Message, error) {
-	return client.EditMessageText(c.Id, inputMessageContent, messageId, opts)
+func (c *Chat) EditMessageText(client *Client, inputMessageContent InputMessageContent, messageId int64, opts ...*EditMessageTextOpts) (*Message, error) {
+	return client.EditMessageText(c.Id, inputMessageContent, messageId, opts...)
 }
 
 // ForwardMessages Forwards previously sent messages. Returns the forwarded messages in the same order as the message identifiers passed in message_ids. If a message can't be forwarded, null will be returned instead of the message
 // It is a helper method for Client.ForwardMessages
-func (c *Chat) ForwardMessages(client *Client, fromChatId int64, messageIds []int64, opts *ForwardMessagesOpts) (*Messages, error) {
-	return client.ForwardMessages(c.Id, fromChatId, messageIds, opts)
+func (c *Chat) ForwardMessages(client *Client, fromChatId int64, messageIds []int64, opts ...*ForwardMessagesOpts) (*Messages, error) {
+	return client.ForwardMessages(c.Id, fromChatId, messageIds, opts...)
 }
 
 // GetAllStickerEmojis Returns unique emoji that correspond to stickers to be found by the getStickers(sticker_type, query, 1000000, chat_id)
 // It is a helper method for Client.GetAllStickerEmojis
-func (c *Chat) GetAllStickerEmojis(client *Client, query string, stickerType StickerType, opts *GetAllStickerEmojisOpts) (*Emojis, error) {
-	return client.GetAllStickerEmojis(c.Id, query, stickerType, opts)
+func (c *Chat) GetAllStickerEmojis(client *Client, query string, stickerType StickerType, opts ...*GetAllStickerEmojisOpts) (*Emojis, error) {
+	return client.GetAllStickerEmojis(c.Id, query, stickerType, opts...)
 }
 
 // GetCallbackQueryAnswer Sends a callback query to a bot and returns an answer. Returns an error with code 502 if the bot fails to answer the query before the query timeout expires
@@ -425,8 +425,8 @@ func (c *Chat) GetBoostLink(client *Client) (*ChatBoostLink, error) {
 
 // GetBoosts Returns the list of boosts applied to a chat; requires administrator rights in the chat
 // It is a helper method for Client.GetChatBoosts
-func (c *Chat) GetBoosts(client *Client, limit int32, offset string, opts *GetChatBoostsOpts) (*FoundChatBoosts, error) {
-	return client.GetChatBoosts(c.Id, limit, offset, opts)
+func (c *Chat) GetBoosts(client *Client, limit int32, offset string, opts ...*GetChatBoostsOpts) (*FoundChatBoosts, error) {
+	return client.GetChatBoosts(c.Id, limit, offset, opts...)
 }
 
 // GetBoostStatus Returns the current boost status for a supergroup or a channel chat
@@ -437,14 +437,14 @@ func (c *Chat) GetBoostStatus(client *Client) (*ChatBoostStatus, error) {
 
 // GetEventLog Returns a list of service actions taken by chat members and administrators in the last 48 hours. Available only for supergroups and channels. Requires administrator rights. Returns results in reverse chronological order (i.e., in order of decreasing event_id)
 // It is a helper method for Client.GetChatEventLog
-func (c *Chat) GetEventLog(client *Client, fromEventId int64, limit int32, query string, userIds []int64, opts *GetChatEventLogOpts) (*ChatEvents, error) {
-	return client.GetChatEventLog(c.Id, fromEventId, limit, query, userIds, opts)
+func (c *Chat) GetEventLog(client *Client, fromEventId int64, limit int32, query string, userIds []int64, opts ...*GetChatEventLogOpts) (*ChatEvents, error) {
+	return client.GetChatEventLog(c.Id, fromEventId, limit, query, userIds, opts...)
 }
 
 // GetHistory Returns messages in a chat. The messages are returned in reverse chronological order (i.e., in order of decreasing message_id).
 // It is a helper method for Client.GetChatHistory
-func (c *Chat) GetHistory(client *Client, fromMessageId int64, limit int32, offset int32, opts *GetChatHistoryOpts) (*Messages, error) {
-	return client.GetChatHistory(c.Id, fromMessageId, limit, offset, opts)
+func (c *Chat) GetHistory(client *Client, fromMessageId int64, limit int32, offset int32, opts ...*GetChatHistoryOpts) (*Messages, error) {
+	return client.GetChatHistory(c.Id, fromMessageId, limit, offset, opts...)
 }
 
 // GetInviteLink Returns information about an invite link. Requires administrator privileges and can_invite_users right in the chat to get own links and owner privileges to get other links
@@ -461,20 +461,20 @@ func (c *Chat) GetInviteLinkCounts(client *Client) (*ChatInviteLinkCounts, error
 
 // GetInviteLinkMembers Returns chat members joined a chat via an invite link. Requires administrator privileges and can_invite_users right in the chat for own links and owner privileges for other links
 // It is a helper method for Client.GetChatInviteLinkMembers
-func (c *Chat) GetInviteLinkMembers(client *Client, inviteLink string, limit int32, opts *GetChatInviteLinkMembersOpts) (*ChatInviteLinkMembers, error) {
-	return client.GetChatInviteLinkMembers(c.Id, inviteLink, limit, opts)
+func (c *Chat) GetInviteLinkMembers(client *Client, inviteLink string, limit int32, opts ...*GetChatInviteLinkMembersOpts) (*ChatInviteLinkMembers, error) {
+	return client.GetChatInviteLinkMembers(c.Id, inviteLink, limit, opts...)
 }
 
 // GetInviteLinks Returns invite links for a chat created by specified administrator. Requires administrator privileges and can_invite_users right in the chat to get own links and owner privileges to get other links
 // It is a helper method for Client.GetChatInviteLinks
-func (c *Chat) GetInviteLinks(client *Client, creatorUserId int64, limit int32, offsetDate int32, offsetInviteLink string, opts *GetChatInviteLinksOpts) (*ChatInviteLinks, error) {
-	return client.GetChatInviteLinks(c.Id, creatorUserId, limit, offsetDate, offsetInviteLink, opts)
+func (c *Chat) GetInviteLinks(client *Client, creatorUserId int64, limit int32, offsetDate int32, offsetInviteLink string, opts ...*GetChatInviteLinksOpts) (*ChatInviteLinks, error) {
+	return client.GetChatInviteLinks(c.Id, creatorUserId, limit, offsetDate, offsetInviteLink, opts...)
 }
 
 // GetJoinRequests Returns pending join requests in a chat
 // It is a helper method for Client.GetChatJoinRequests
-func (c *Chat) GetJoinRequests(client *Client, inviteLink string, limit int32, query string, opts *GetChatJoinRequestsOpts) (*ChatJoinRequests, error) {
-	return client.GetChatJoinRequests(c.Id, inviteLink, limit, query, opts)
+func (c *Chat) GetJoinRequests(client *Client, inviteLink string, limit int32, query string, opts ...*GetChatJoinRequestsOpts) (*ChatJoinRequests, error) {
+	return client.GetChatJoinRequests(c.Id, inviteLink, limit, query, opts...)
 }
 
 // GetListsToAddChat Returns chat lists to which the chat can be added. This is an offline method
@@ -497,20 +497,20 @@ func (c *Chat) GetMessageByDate(client *Client, date int32) (*Message, error) {
 
 // GetMessageCalendar Returns information about the next messages of the specified type in the chat split by days. Returns the results in reverse chronological order. Can return partial result for the last returned day. Behavior of this method depends on the value of the option "utc_time_offset"
 // It is a helper method for Client.GetChatMessageCalendar
-func (c *Chat) GetMessageCalendar(client *Client, filter SearchMessagesFilter, fromMessageId int64, opts *GetChatMessageCalendarOpts) (*MessageCalendar, error) {
-	return client.GetChatMessageCalendar(c.Id, filter, fromMessageId, opts)
+func (c *Chat) GetMessageCalendar(client *Client, filter SearchMessagesFilter, fromMessageId int64, opts ...*GetChatMessageCalendarOpts) (*MessageCalendar, error) {
+	return client.GetChatMessageCalendar(c.Id, filter, fromMessageId, opts...)
 }
 
 // GetMessageCount Returns approximate number of messages of the specified type in the chat or its topic
 // It is a helper method for Client.GetChatMessageCount
-func (c *Chat) GetMessageCount(client *Client, filter SearchMessagesFilter, opts *GetChatMessageCountOpts) (*Count, error) {
-	return client.GetChatMessageCount(c.Id, filter, opts)
+func (c *Chat) GetMessageCount(client *Client, filter SearchMessagesFilter, opts ...*GetChatMessageCountOpts) (*Count, error) {
+	return client.GetChatMessageCount(c.Id, filter, opts...)
 }
 
 // GetMessagePosition Returns approximate 1-based position of a message among messages, which can be found by the specified filter in the chat and topic. Cannot be used in secret chats
 // It is a helper method for Client.GetChatMessagePosition
-func (c *Chat) GetMessagePosition(client *Client, filter SearchMessagesFilter, messageId int64, opts *GetChatMessagePositionOpts) (*Count, error) {
-	return client.GetChatMessagePosition(c.Id, filter, messageId, opts)
+func (c *Chat) GetMessagePosition(client *Client, filter SearchMessagesFilter, messageId int64, opts ...*GetChatMessagePositionOpts) (*Count, error) {
+	return client.GetChatMessagePosition(c.Id, filter, messageId, opts...)
 }
 
 // GetOwnerAfterLeaving Returns the user who will become the owner of the chat after 7 days if the current user does not return to the supergroup or channel during that period or immediately for basic groups; requires owner privileges in the chat.
@@ -533,8 +533,8 @@ func (c *Chat) GetPostedToChatPageStories(client *Client, fromStoryId int32, lim
 
 // GetRevenueStatistics Returns detailed revenue statistics about a chat. Currently, this method can be used only
 // It is a helper method for Client.GetChatRevenueStatistics
-func (c *Chat) GetRevenueStatistics(client *Client, opts *GetChatRevenueStatisticsOpts) (*ChatRevenueStatistics, error) {
-	return client.GetChatRevenueStatistics(c.Id, opts)
+func (c *Chat) GetRevenueStatistics(client *Client, opts ...*GetChatRevenueStatisticsOpts) (*ChatRevenueStatistics, error) {
+	return client.GetChatRevenueStatistics(c.Id, opts...)
 }
 
 // GetRevenueTransactions Returns the list of revenue transactions for a chat. Currently, this method can be used only
@@ -557,8 +557,8 @@ func (c *Chat) GetScheduledMessages(client *Client) (*Messages, error) {
 
 // GetSimilarChatCount Returns approximate number of chats similar to the given chat
 // It is a helper method for Client.GetChatSimilarChatCount
-func (c *Chat) GetSimilarChatCount(client *Client, opts *GetChatSimilarChatCountOpts) (*Count, error) {
-	return client.GetChatSimilarChatCount(c.Id, opts)
+func (c *Chat) GetSimilarChatCount(client *Client, opts ...*GetChatSimilarChatCountOpts) (*Count, error) {
+	return client.GetChatSimilarChatCount(c.Id, opts...)
 }
 
 // GetSimilarChats Returns a list of chats similar to the given chat
@@ -581,8 +581,8 @@ func (c *Chat) GetSponsoredMessages(client *Client) (*SponsoredMessages, error) 
 
 // GetStatistics Returns detailed statistics about a chat. Currently, this method can be used only for supergroups and channels. Can be used only if supergroupFullInfo.can_get_statistics == true
 // It is a helper method for Client.GetChatStatistics
-func (c *Chat) GetStatistics(client *Client, opts *GetChatStatisticsOpts) (ChatStatistics, error) {
-	return client.GetChatStatistics(c.Id, opts)
+func (c *Chat) GetStatistics(client *Client, opts ...*GetChatStatisticsOpts) (ChatStatistics, error) {
+	return client.GetChatStatistics(c.Id, opts...)
 }
 
 // GetStoryAlbums Returns the list of story albums owned by the given chat
@@ -653,8 +653,8 @@ func (c *Chat) GetGiveawayInfo(client *Client, messageId int64) (GiveawayInfo, e
 
 // GetInlineQueryResults Sends an inline query to a bot and returns its results. Returns an error with code 502 if the bot fails to answer the query before the query timeout expires
 // It is a helper method for Client.GetInlineQueryResults
-func (c *Chat) GetInlineQueryResults(client *Client, botUserId int64, offset string, query string, opts *GetInlineQueryResultsOpts) (*InlineQueryResults, error) {
-	return client.GetInlineQueryResults(botUserId, c.Id, offset, query, opts)
+func (c *Chat) GetInlineQueryResults(client *Client, botUserId int64, offset string, query string, opts ...*GetInlineQueryResultsOpts) (*InlineQueryResults, error) {
+	return client.GetInlineQueryResults(botUserId, c.Id, offset, query, opts...)
 }
 
 // GetLiveStoryRtmpUrl Returns RTMP URL for streaming to a live story; requires can_post_stories administrator right for channel chats
@@ -665,8 +665,8 @@ func (c *Chat) GetLiveStoryRtmpUrl(client *Client) (*RtmpUrl, error) {
 
 // GetLoginUrl Returns an HTTP URL which can be used to automatically authorize the user on a website after clicking an inline button of type inlineKeyboardButtonTypeLoginUrl.
 // It is a helper method for Client.GetLoginUrl
-func (c *Chat) GetLoginUrl(client *Client, buttonId int64, messageId int64, opts *GetLoginUrlOpts) (*HttpUrl, error) {
-	return client.GetLoginUrl(buttonId, c.Id, messageId, opts)
+func (c *Chat) GetLoginUrl(client *Client, buttonId int64, messageId int64, opts ...*GetLoginUrlOpts) (*HttpUrl, error) {
+	return client.GetLoginUrl(buttonId, c.Id, messageId, opts...)
 }
 
 // GetLoginUrlInfo Returns information about a button of type inlineKeyboardButtonTypeLoginUrl. The method needs to be called when the user presses the button
@@ -695,8 +695,8 @@ func (c *Chat) GetMessage(client *Client, messageId int64) (*Message, error) {
 
 // GetMessageAddedReactions Returns reactions added for a message, along with their sender
 // It is a helper method for Client.GetMessageAddedReactions
-func (c *Chat) GetMessageAddedReactions(client *Client, limit int32, messageId int64, offset string, opts *GetMessageAddedReactionsOpts) (*AddedReactions, error) {
-	return client.GetMessageAddedReactions(c.Id, limit, messageId, offset, opts)
+func (c *Chat) GetMessageAddedReactions(client *Client, limit int32, messageId int64, offset string, opts ...*GetMessageAddedReactionsOpts) (*AddedReactions, error) {
+	return client.GetMessageAddedReactions(c.Id, limit, messageId, offset, opts...)
 }
 
 // GetMessageAuthor Returns information about actual author of a message sent on behalf of a channel. The method can be called if messageProperties.can_get_author == true
@@ -713,8 +713,8 @@ func (c *Chat) GetMessageAvailableReactions(client *Client, messageId int64, row
 
 // GetMessageEmbeddingCode Returns an HTML code for embedding the message. Available only if messageProperties.can_get_embedding_code
 // It is a helper method for Client.GetMessageEmbeddingCode
-func (c *Chat) GetMessageEmbeddingCode(client *Client, messageId int64, opts *GetMessageEmbeddingCodeOpts) (*Text, error) {
-	return client.GetMessageEmbeddingCode(c.Id, messageId, opts)
+func (c *Chat) GetMessageEmbeddingCode(client *Client, messageId int64, opts ...*GetMessageEmbeddingCodeOpts) (*Text, error) {
+	return client.GetMessageEmbeddingCode(c.Id, messageId, opts...)
 }
 
 // GetMessageImportConfirmationText Returns a confirmation text to be shown to the user before starting message import
@@ -725,8 +725,8 @@ func (c *Chat) GetMessageImportConfirmationText(client *Client) (*Text, error) {
 
 // GetMessageLink Returns an HTTPS link to a message in a chat. Available only if messageProperties.can_get_link, or if messageProperties.can_get_media_timestamp_links and a media timestamp link is generated. This is an offline method
 // It is a helper method for Client.GetMessageLink
-func (c *Chat) GetMessageLink(client *Client, checklistTaskId int32, mediaTimestamp int32, messageId int64, pollOptionId string, opts *GetMessageLinkOpts) (*MessageLink, error) {
-	return client.GetMessageLink(c.Id, checklistTaskId, mediaTimestamp, messageId, pollOptionId, opts)
+func (c *Chat) GetMessageLink(client *Client, checklistTaskId int32, mediaTimestamp int32, messageId int64, pollOptionId string, opts ...*GetMessageLinkOpts) (*MessageLink, error) {
+	return client.GetMessageLink(c.Id, checklistTaskId, mediaTimestamp, messageId, pollOptionId, opts...)
 }
 
 // GetMessageLocally Returns information about a message, if it is available without sending network request. Returns a 404 error if message isn't available locally. This is an offline method
@@ -761,8 +761,8 @@ func (c *Chat) GetMessages(client *Client, messageIds []int64) (*Messages, error
 
 // GetMessageStatistics Returns detailed statistics about a message. Can be used only if messageProperties.can_get_statistics == true
 // It is a helper method for Client.GetMessageStatistics
-func (c *Chat) GetMessageStatistics(client *Client, messageId int64, opts *GetMessageStatisticsOpts) (*MessageStatistics, error) {
-	return client.GetMessageStatistics(c.Id, messageId, opts)
+func (c *Chat) GetMessageStatistics(client *Client, messageId int64, opts ...*GetMessageStatisticsOpts) (*MessageStatistics, error) {
+	return client.GetMessageStatistics(c.Id, messageId, opts...)
 }
 
 // GetMessageThread Returns information about a message thread. Can be used only if messageProperties.can_get_message_thread == true
@@ -803,8 +803,8 @@ func (c *Chat) GetPollVoters(client *Client, limit int32, messageId int64, offse
 
 // GetPollVoteStatistics Returns statistics of poll votes in a poll
 // It is a helper method for Client.GetPollVoteStatistics
-func (c *Chat) GetPollVoteStatistics(client *Client, messageId int64, opts *GetPollVoteStatisticsOpts) (*PollVoteStatistics, error) {
-	return client.GetPollVoteStatistics(c.Id, messageId, opts)
+func (c *Chat) GetPollVoteStatistics(client *Client, messageId int64, opts ...*GetPollVoteStatisticsOpts) (*PollVoteStatistics, error) {
+	return client.GetPollVoteStatistics(c.Id, messageId, opts...)
 }
 
 // GetRepliedMessage Returns information about a non-bundled message that is replied by a given message. Also, returns the pinned message for messagePinMessage,
@@ -833,8 +833,8 @@ func (c *Chat) GetStoryAlbumStories(client *Client, limit int32, offset int32, s
 
 // GetStoryStatistics Returns detailed statistics about a story. Can be used only if story.can_get_statistics == true
 // It is a helper method for Client.GetStoryStatistics
-func (c *Chat) GetStoryStatistics(client *Client, storyId int32, opts *GetStoryStatisticsOpts) (*StoryStatistics, error) {
-	return client.GetStoryStatistics(c.Id, storyId, opts)
+func (c *Chat) GetStoryStatistics(client *Client, storyId int32, opts ...*GetStoryStatisticsOpts) (*StoryStatistics, error) {
+	return client.GetStoryStatistics(c.Id, storyId, opts...)
 }
 
 // GetUserBoosts Returns the list of boosts applied to a chat by a given user; requires administrator rights in the chat; for bots only
@@ -863,8 +863,8 @@ func (c *Chat) GetVideoMessageAdvertisements(client *Client, messageId int64) (*
 
 // GetWebAppLinkUrl Returns an HTTPS URL of a Web App to open after a link of the type internalLinkTypeWebApp is clicked
 // It is a helper method for Client.GetWebAppLinkUrl
-func (c *Chat) GetWebAppLinkUrl(client *Client, botUserId int64, parameters *WebAppOpenParameters, startParameter string, webAppShortName string, opts *GetWebAppLinkUrlOpts) (*HttpUrl, error) {
-	return client.GetWebAppLinkUrl(botUserId, c.Id, parameters, startParameter, webAppShortName, opts)
+func (c *Chat) GetWebAppLinkUrl(client *Client, botUserId int64, parameters *WebAppOpenParameters, startParameter string, webAppShortName string, opts ...*GetWebAppLinkUrlOpts) (*HttpUrl, error) {
+	return client.GetWebAppLinkUrl(botUserId, c.Id, parameters, startParameter, webAppShortName, opts...)
 }
 
 // ImportMessages Imports messages exported from another application
@@ -917,44 +917,44 @@ func (c *Chat) OpenMessageContent(client *Client, messageId int64) error {
 
 // OpenWebApp Informs TDLib that a Web App is being opened from the attachment menu, a botMenuButton button, an internalLinkTypeAttachmentMenuBot link, or an inlineKeyboardButtonTypeWebApp button.
 // It is a helper method for Client.OpenWebApp
-func (c *Chat) OpenWebApp(client *Client, botUserId int64, parameters *WebAppOpenParameters, url string, opts *OpenWebAppOpts) (*WebAppInfo, error) {
-	return client.OpenWebApp(botUserId, c.Id, parameters, url, opts)
+func (c *Chat) OpenWebApp(client *Client, botUserId int64, parameters *WebAppOpenParameters, url string, opts ...*OpenWebAppOpts) (*WebAppInfo, error) {
+	return client.OpenWebApp(botUserId, c.Id, parameters, url, opts...)
 }
 
 // PinMessage Pins a message in a chat. A message can be pinned only if messageProperties.can_be_pinned
 // It is a helper method for Client.PinChatMessage
-func (c *Chat) PinMessage(client *Client, messageId int64, opts *PinChatMessageOpts) error {
-	return client.PinChatMessage(c.Id, messageId, opts)
+func (c *Chat) PinMessage(client *Client, messageId int64, opts ...*PinChatMessageOpts) error {
+	return client.PinChatMessage(c.Id, messageId, opts...)
 }
 
 // PostStory Posts a new story on behalf of a chat; requires can_post_stories administrator right for supergroup and channel chats. Returns a temporary story
 // It is a helper method for Client.PostStory
-func (c *Chat) PostStory(client *Client, activePeriod int32, albumIds []int32, content InputStoryContent, privacySettings StoryPrivacySettings, opts *PostStoryOpts) (*Story, error) {
-	return client.PostStory(activePeriod, albumIds, c.Id, content, privacySettings, opts)
+func (c *Chat) PostStory(client *Client, activePeriod int32, albumIds []int32, content InputStoryContent, privacySettings StoryPrivacySettings, opts ...*PostStoryOpts) (*Story, error) {
+	return client.PostStory(activePeriod, albumIds, c.Id, content, privacySettings, opts...)
 }
 
 // ProcessHasProtectedContentDisableRequest Processes request to disable has_protected_content in a chat
 // It is a helper method for Client.ProcessChatHasProtectedContentDisableRequest
-func (c *Chat) ProcessHasProtectedContentDisableRequest(client *Client, requestMessageId int64, opts *ProcessChatHasProtectedContentDisableRequestOpts) error {
-	return client.ProcessChatHasProtectedContentDisableRequest(c.Id, requestMessageId, opts)
+func (c *Chat) ProcessHasProtectedContentDisableRequest(client *Client, requestMessageId int64, opts ...*ProcessChatHasProtectedContentDisableRequestOpts) error {
+	return client.ProcessChatHasProtectedContentDisableRequest(c.Id, requestMessageId, opts...)
 }
 
 // ProcessJoinRequest Handles a pending join request in a chat
 // It is a helper method for Client.ProcessChatJoinRequest
-func (c *Chat) ProcessJoinRequest(client *Client, userId int64, opts *ProcessChatJoinRequestOpts) error {
-	return client.ProcessChatJoinRequest(c.Id, userId, opts)
+func (c *Chat) ProcessJoinRequest(client *Client, userId int64, opts ...*ProcessChatJoinRequestOpts) error {
+	return client.ProcessChatJoinRequest(c.Id, userId, opts...)
 }
 
 // ProcessJoinRequests Handles all pending join requests for a given link in a chat
 // It is a helper method for Client.ProcessChatJoinRequests
-func (c *Chat) ProcessJoinRequests(client *Client, inviteLink string, opts *ProcessChatJoinRequestsOpts) error {
-	return client.ProcessChatJoinRequests(c.Id, inviteLink, opts)
+func (c *Chat) ProcessJoinRequests(client *Client, inviteLink string, opts ...*ProcessChatJoinRequestsOpts) error {
+	return client.ProcessChatJoinRequests(c.Id, inviteLink, opts...)
 }
 
 // RateSpeechRecognition Rates recognized speech in a video note or a voice note message
 // It is a helper method for Client.RateSpeechRecognition
-func (c *Chat) RateSpeechRecognition(client *Client, messageId int64, opts *RateSpeechRecognitionOpts) error {
-	return client.RateSpeechRecognition(c.Id, messageId, opts)
+func (c *Chat) RateSpeechRecognition(client *Client, messageId int64, opts ...*RateSpeechRecognitionOpts) error {
+	return client.RateSpeechRecognition(c.Id, messageId, opts...)
 }
 
 // ReadAllMentions Marks all mentions in a chat as read
@@ -1109,8 +1109,8 @@ func (c *Chat) ReportMessageReactions(client *Client, messageId int64, senderId 
 
 // ResendMessages Resends messages which failed to send. Can be called only for messages for which messageSendingStateFailed.can_retry is true and after specified in messageSendingStateFailed.retry_after time passed.
 // It is a helper method for Client.ResendMessages
-func (c *Chat) ResendMessages(client *Client, messageIds []int64, paidMessageStarCount int64, opts *ResendMessagesOpts) (*Messages, error) {
-	return client.ResendMessages(c.Id, messageIds, paidMessageStarCount, opts)
+func (c *Chat) ResendMessages(client *Client, messageIds []int64, paidMessageStarCount int64, opts ...*ResendMessagesOpts) (*Messages, error) {
+	return client.ResendMessages(c.Id, messageIds, paidMessageStarCount, opts...)
 }
 
 // RevokeInviteLink Revokes invite link for a chat. Available for basic groups, supergroups, and channels. Requires administrator privileges and can_invite_users right in the chat for own links and owner privileges for other links.
@@ -1127,14 +1127,14 @@ func (c *Chat) SaveApplicationLogEvent(client *Client, data JsonValue, typeField
 
 // SearchMembers Searches for a specified query in the first name, last name and usernames of the members of a specified chat. Requires administrator rights if the chat is a channel
 // It is a helper method for Client.SearchChatMembers
-func (c *Chat) SearchMembers(client *Client, limit int32, query string, opts *SearchChatMembersOpts) (*ChatMembers, error) {
-	return client.SearchChatMembers(c.Id, limit, query, opts)
+func (c *Chat) SearchMembers(client *Client, limit int32, query string, opts ...*SearchChatMembersOpts) (*ChatMembers, error) {
+	return client.SearchChatMembers(c.Id, limit, query, opts...)
 }
 
 // SearchMessages Searches for messages with given words in the chat. Returns the results in reverse chronological order, i.e. in order of decreasing message_id. Cannot be used in secret chats with a non-empty query
 // It is a helper method for Client.SearchChatMessages
-func (c *Chat) SearchMessages(client *Client, fromMessageId int64, limit int32, offset int32, query string, opts *SearchChatMessagesOpts) (*FoundChatMessages, error) {
-	return client.SearchChatMessages(c.Id, fromMessageId, limit, offset, query, opts)
+func (c *Chat) SearchMessages(client *Client, fromMessageId int64, limit int32, offset int32, query string, opts ...*SearchChatMessagesOpts) (*FoundChatMessages, error) {
+	return client.SearchChatMessages(c.Id, fromMessageId, limit, offset, query, opts...)
 }
 
 // SearchRecentLocationMessages Returns information about the recent locations of chat members that were sent to the chat. Returns up to 1 location message per user
@@ -1145,8 +1145,8 @@ func (c *Chat) SearchRecentLocationMessages(client *Client, limit int32) (*Messa
 
 // SearchSecretMessages Searches for messages in secret chats. Returns the results in reverse chronological order. For optimal performance, the number of returned messages is chosen by TDLib
 // It is a helper method for Client.SearchSecretMessages
-func (c *Chat) SearchSecretMessages(client *Client, limit int32, offset string, query string, opts *SearchSecretMessagesOpts) (*FoundMessages, error) {
-	return client.SearchSecretMessages(c.Id, limit, offset, query, opts)
+func (c *Chat) SearchSecretMessages(client *Client, limit int32, offset string, query string, opts ...*SearchSecretMessagesOpts) (*FoundMessages, error) {
+	return client.SearchSecretMessages(c.Id, limit, offset, query, opts...)
 }
 
 // SendBotStartMessage Invites a bot to a chat (if it is not yet a member) and sends it the /start command; requires can_invite_users member right. Bots can't be invited to a private chat other than the chat with the bot.
@@ -1157,38 +1157,38 @@ func (c *Chat) SendBotStartMessage(client *Client, botUserId int64, parameter st
 
 // SendBusinessMessage Sends a message on behalf of a business account; for bots only. Returns the message after it was sent
 // It is a helper method for Client.SendBusinessMessage
-func (c *Chat) SendBusinessMessage(client *Client, businessConnectionId string, effectId int64, inputMessageContent InputMessageContent, opts *SendBusinessMessageOpts) (*BusinessMessage, error) {
-	return client.SendBusinessMessage(businessConnectionId, c.Id, effectId, inputMessageContent, opts)
+func (c *Chat) SendBusinessMessage(client *Client, businessConnectionId string, effectId int64, inputMessageContent InputMessageContent, opts ...*SendBusinessMessageOpts) (*BusinessMessage, error) {
+	return client.SendBusinessMessage(businessConnectionId, c.Id, effectId, inputMessageContent, opts...)
 }
 
 // SendBusinessMessageAlbum Sends 2-10 messages grouped together into an album on behalf of a business account; for bots only. Currently, only audio, document, photo and video messages can be grouped into an album.
 // It is a helper method for Client.SendBusinessMessageAlbum
-func (c *Chat) SendBusinessMessageAlbum(client *Client, businessConnectionId string, effectId int64, inputMessageContents []InputMessageContent, opts *SendBusinessMessageAlbumOpts) (*BusinessMessages, error) {
-	return client.SendBusinessMessageAlbum(businessConnectionId, c.Id, effectId, inputMessageContents, opts)
+func (c *Chat) SendBusinessMessageAlbum(client *Client, businessConnectionId string, effectId int64, inputMessageContents []InputMessageContent, opts ...*SendBusinessMessageAlbumOpts) (*BusinessMessages, error) {
+	return client.SendBusinessMessageAlbum(businessConnectionId, c.Id, effectId, inputMessageContents, opts...)
 }
 
 // SendAction Sends a notification about user activity in a chat
 // It is a helper method for Client.SendChatAction
-func (c *Chat) SendAction(client *Client, businessConnectionId string, opts *SendChatActionOpts) error {
-	return client.SendChatAction(businessConnectionId, c.Id, opts)
+func (c *Chat) SendAction(client *Client, businessConnectionId string, opts ...*SendChatActionOpts) error {
+	return client.SendChatAction(businessConnectionId, c.Id, opts...)
 }
 
 // SendInlineQueryResultMessage Sends the result of an inline query as a message. Returns the sent message. Always clears a chat draft message
 // It is a helper method for Client.SendInlineQueryResultMessage
-func (c *Chat) SendInlineQueryResultMessage(client *Client, queryId int64, resultId string, opts *SendInlineQueryResultMessageOpts) (*Message, error) {
-	return client.SendInlineQueryResultMessage(c.Id, queryId, resultId, opts)
+func (c *Chat) SendInlineQueryResultMessage(client *Client, queryId int64, resultId string, opts ...*SendInlineQueryResultMessageOpts) (*Message, error) {
+	return client.SendInlineQueryResultMessage(c.Id, queryId, resultId, opts...)
 }
 
 // SendMessage Sends a message. Returns the sent message
 // It is a helper method for Client.SendMessage
-func (c *Chat) SendMessage(client *Client, inputMessageContent InputMessageContent, opts *SendMessageOpts) (*Message, error) {
-	return client.SendMessage(c.Id, inputMessageContent, opts)
+func (c *Chat) SendMessage(client *Client, inputMessageContent InputMessageContent, opts ...*SendMessageOpts) (*Message, error) {
+	return client.SendMessage(c.Id, inputMessageContent, opts...)
 }
 
 // SendMessageAlbum Sends 2-10 messages grouped together into an album. Currently, only audio, document, photo and video messages can be grouped into an album.
 // It is a helper method for Client.SendMessageAlbum
-func (c *Chat) SendMessageAlbum(client *Client, inputMessageContents []InputMessageContent, opts *SendMessageAlbumOpts) (*Messages, error) {
-	return client.SendMessageAlbum(c.Id, inputMessageContents, opts)
+func (c *Chat) SendMessageAlbum(client *Client, inputMessageContents []InputMessageContent, opts ...*SendMessageAlbumOpts) (*Messages, error) {
+	return client.SendMessageAlbum(c.Id, inputMessageContents, opts...)
 }
 
 // SendMessageViewMetrics Informs TDLib about details of a message view by the user from a chat, a message thread or a forum topic history. The method must be called if
@@ -1205,14 +1205,14 @@ func (c *Chat) SendQuickReplyShortcutMessages(client *Client, sendingId int32, s
 
 // SendTextMessageDraft Sends a draft for a being generated text message; for bots only
 // It is a helper method for Client.SendTextMessageDraft
-func (c *Chat) SendTextMessageDraft(client *Client, draftId int64, forumTopicId int32, opts *SendTextMessageDraftOpts) error {
-	return client.SendTextMessageDraft(c.Id, draftId, forumTopicId, opts)
+func (c *Chat) SendTextMessageDraft(client *Client, draftId int64, forumTopicId int32, opts ...*SendTextMessageDraftOpts) error {
+	return client.SendTextMessageDraft(c.Id, draftId, forumTopicId, opts...)
 }
 
 // SetBusinessMessageIsPinned Pins or unpins a message sent on behalf of a business account; for bots only
 // It is a helper method for Client.SetBusinessMessageIsPinned
-func (c *Chat) SetBusinessMessageIsPinned(client *Client, businessConnectionId string, messageId int64, opts *SetBusinessMessageIsPinnedOpts) error {
-	return client.SetBusinessMessageIsPinned(businessConnectionId, c.Id, messageId, opts)
+func (c *Chat) SetBusinessMessageIsPinned(client *Client, businessConnectionId string, messageId int64, opts ...*SetBusinessMessageIsPinnedOpts) error {
+	return client.SetBusinessMessageIsPinned(businessConnectionId, c.Id, messageId, opts...)
 }
 
 // SetAccentColor Changes accent color and background custom emoji of a channel chat. Requires can_change_info administrator right
@@ -1229,8 +1229,8 @@ func (c *Chat) SetActiveStoriesList(client *Client, storyList StoryList) error {
 
 // SetAffiliateProgram Changes affiliate program for a bot
 // It is a helper method for Client.SetChatAffiliateProgram
-func (c *Chat) SetAffiliateProgram(client *Client, opts *SetChatAffiliateProgramOpts) error {
-	return client.SetChatAffiliateProgram(c.Id, opts)
+func (c *Chat) SetAffiliateProgram(client *Client, opts ...*SetChatAffiliateProgramOpts) error {
+	return client.SetChatAffiliateProgram(c.Id, opts...)
 }
 
 // SetAvailableReactions Changes reactions, available in a chat. Available for basic groups, supergroups, and channels. Requires can_change_info member right
@@ -1241,8 +1241,8 @@ func (c *Chat) SetAvailableReactions(client *Client) error {
 
 // SetBackground Sets the background in a specific chat. Supported only in private and secret chats with non-deleted users, and in chats with sufficient boost level and can_change_info administrator right
 // It is a helper method for Client.SetChatBackground
-func (c *Chat) SetBackground(client *Client, darkThemeDimming int32, opts *SetChatBackgroundOpts) error {
-	return client.SetChatBackground(c.Id, darkThemeDimming, opts)
+func (c *Chat) SetBackground(client *Client, darkThemeDimming int32, opts ...*SetChatBackgroundOpts) error {
+	return client.SetChatBackground(c.Id, darkThemeDimming, opts...)
 }
 
 // SetClientData Changes application-specific data associated with a chat
@@ -1259,8 +1259,8 @@ func (c *Chat) SetDescription(client *Client, description string) error {
 
 // SetDirectMessagesGroup Changes direct messages group settings for a channel chat; requires owner privileges in the chat
 // It is a helper method for Client.SetChatDirectMessagesGroup
-func (c *Chat) SetDirectMessagesGroup(client *Client, paidMessageStarCount int64, opts *SetChatDirectMessagesGroupOpts) error {
-	return client.SetChatDirectMessagesGroup(c.Id, paidMessageStarCount, opts)
+func (c *Chat) SetDirectMessagesGroup(client *Client, paidMessageStarCount int64, opts ...*SetChatDirectMessagesGroupOpts) error {
+	return client.SetChatDirectMessagesGroup(c.Id, paidMessageStarCount, opts...)
 }
 
 // SetDiscussionGroup Changes the discussion group of a channel chat; requires can_change_info administrator right in the channel if it is specified
@@ -1271,14 +1271,14 @@ func (c *Chat) SetDiscussionGroup(client *Client, discussionChatId int64) error 
 
 // SetDraftMessage Changes the draft message in a chat or a topic
 // It is a helper method for Client.SetChatDraftMessage
-func (c *Chat) SetDraftMessage(client *Client, opts *SetChatDraftMessageOpts) error {
-	return client.SetChatDraftMessage(c.Id, opts)
+func (c *Chat) SetDraftMessage(client *Client, opts ...*SetChatDraftMessageOpts) error {
+	return client.SetChatDraftMessage(c.Id, opts...)
 }
 
 // SetEmojiStatus Changes the emoji status of a chat. Use chatBoostLevelFeatures.can_set_emoji_status to check whether an emoji status can be set. Requires can_change_info administrator right
 // It is a helper method for Client.SetChatEmojiStatus
-func (c *Chat) SetEmojiStatus(client *Client, opts *SetChatEmojiStatusOpts) error {
-	return client.SetChatEmojiStatus(c.Id, opts)
+func (c *Chat) SetEmojiStatus(client *Client, opts ...*SetChatEmojiStatusOpts) error {
+	return client.SetChatEmojiStatus(c.Id, opts...)
 }
 
 // SetLocation Changes the location of a chat. Available only for some location-based supergroups, use supergroupFullInfo.can_set_location to check whether the method is allowed to use
@@ -1331,8 +1331,8 @@ func (c *Chat) SetPermissions(client *Client) error {
 
 // SetPhoto Changes the photo of a chat. Supported only for basic groups, supergroups and channels. Requires can_change_info member right
 // It is a helper method for Client.SetChatPhoto
-func (c *Chat) SetPhoto(client *Client, opts *SetChatPhotoOpts) error {
-	return client.SetChatPhoto(c.Id, opts)
+func (c *Chat) SetPhoto(client *Client, opts ...*SetChatPhotoOpts) error {
+	return client.SetChatPhoto(c.Id, opts...)
 }
 
 // SetPinnedStories Changes the list of pinned stories on a chat page; requires can_edit_stories administrator right in the chat
@@ -1355,8 +1355,8 @@ func (c *Chat) SetSlowModeDelay(client *Client, slowModeDelay int32) error {
 
 // SetTheme Changes the chat theme. Supported only in private and secret chats
 // It is a helper method for Client.SetChatTheme
-func (c *Chat) SetTheme(client *Client, opts *SetChatThemeOpts) error {
-	return client.SetChatTheme(c.Id, opts)
+func (c *Chat) SetTheme(client *Client, opts ...*SetChatThemeOpts) error {
+	return client.SetChatTheme(c.Id, opts...)
 }
 
 // SetTitle Changes the chat title. Supported only for basic groups, supergroups and channels. Requires can_change_info member right
@@ -1367,8 +1367,8 @@ func (c *Chat) SetTitle(client *Client) error {
 
 // SetDirectMessagesTopicIsMarkedAsUnread Changes the marked as unread state of the topic in a channel direct messages chat administered by the current user
 // It is a helper method for Client.SetDirectMessagesChatTopicIsMarkedAsUnread
-func (c *Chat) SetDirectMessagesTopicIsMarkedAsUnread(client *Client, topicId int64, opts *SetDirectMessagesChatTopicIsMarkedAsUnreadOpts) error {
-	return client.SetDirectMessagesChatTopicIsMarkedAsUnread(c.Id, topicId, opts)
+func (c *Chat) SetDirectMessagesTopicIsMarkedAsUnread(client *Client, topicId int64, opts ...*SetDirectMessagesChatTopicIsMarkedAsUnreadOpts) error {
+	return client.SetDirectMessagesChatTopicIsMarkedAsUnread(c.Id, topicId, opts...)
 }
 
 // SetForumTopicNotificationSettings Changes the notification settings of a forum topic in a forum supergroup chat or a chat with a bot with topics
@@ -1379,20 +1379,20 @@ func (c *Chat) SetForumTopicNotificationSettings(client *Client, forumTopicId in
 
 // SetGameScore Updates the game score of the specified user in the game; for bots only
 // It is a helper method for Client.SetGameScore
-func (c *Chat) SetGameScore(client *Client, messageId int64, score int32, userId int64, opts *SetGameScoreOpts) (*Message, error) {
-	return client.SetGameScore(c.Id, messageId, score, userId, opts)
+func (c *Chat) SetGameScore(client *Client, messageId int64, score int32, userId int64, opts ...*SetGameScoreOpts) (*Message, error) {
+	return client.SetGameScore(c.Id, messageId, score, userId, opts...)
 }
 
 // SetMessageFactCheck Changes the fact-check of a message. Can be only used if messageProperties.can_set_fact_check == true
 // It is a helper method for Client.SetMessageFactCheck
-func (c *Chat) SetMessageFactCheck(client *Client, messageId int64, opts *SetMessageFactCheckOpts) error {
-	return client.SetMessageFactCheck(c.Id, messageId, opts)
+func (c *Chat) SetMessageFactCheck(client *Client, messageId int64, opts ...*SetMessageFactCheckOpts) error {
+	return client.SetMessageFactCheck(c.Id, messageId, opts...)
 }
 
 // SetMessageReactions Sets reactions on a message; for bots only
 // It is a helper method for Client.SetMessageReactions
-func (c *Chat) SetMessageReactions(client *Client, messageId int64, reactionTypes []ReactionType, opts *SetMessageReactionsOpts) error {
-	return client.SetMessageReactions(c.Id, messageId, reactionTypes, opts)
+func (c *Chat) SetMessageReactions(client *Client, messageId int64, reactionTypes []ReactionType, opts ...*SetMessageReactionsOpts) error {
+	return client.SetMessageReactions(c.Id, messageId, reactionTypes, opts...)
 }
 
 // SetPaidMessageReactionType Changes type of paid message reaction of the current user on a message. The message must have paid reaction added by the current user
@@ -1433,20 +1433,20 @@ func (c *Chat) SetVideoDefaultParticipant(client *Client, defaultParticipantId M
 
 // StartLiveStory Starts a new live story on behalf of a chat; requires can_post_stories administrator right for channel chats
 // It is a helper method for Client.StartLiveStory
-func (c *Chat) StartLiveStory(client *Client, paidMessageStarCount int64, privacySettings StoryPrivacySettings, opts *StartLiveStoryOpts) (StartLiveStoryResult, error) {
-	return client.StartLiveStory(c.Id, paidMessageStarCount, privacySettings, opts)
+func (c *Chat) StartLiveStory(client *Client, paidMessageStarCount int64, privacySettings StoryPrivacySettings, opts ...*StartLiveStoryOpts) (StartLiveStoryResult, error) {
+	return client.StartLiveStory(c.Id, paidMessageStarCount, privacySettings, opts...)
 }
 
 // StopBusinessPoll Stops a poll sent on behalf of a business account; for bots only
 // It is a helper method for Client.StopBusinessPoll
-func (c *Chat) StopBusinessPoll(client *Client, businessConnectionId string, messageId int64, opts *StopBusinessPollOpts) (*BusinessMessage, error) {
-	return client.StopBusinessPoll(businessConnectionId, c.Id, messageId, opts)
+func (c *Chat) StopBusinessPoll(client *Client, businessConnectionId string, messageId int64, opts ...*StopBusinessPollOpts) (*BusinessMessage, error) {
+	return client.StopBusinessPoll(businessConnectionId, c.Id, messageId, opts...)
 }
 
 // StopPoll Stops a poll
 // It is a helper method for Client.StopPoll
-func (c *Chat) StopPoll(client *Client, messageId int64, opts *StopPollOpts) error {
-	return client.StopPoll(c.Id, messageId, opts)
+func (c *Chat) StopPoll(client *Client, messageId int64, opts ...*StopPollOpts) error {
+	return client.StopPoll(c.Id, messageId, opts...)
 }
 
 // SummarizeMessage Summarizes content of the message with non-empty summary_language_code
@@ -1457,74 +1457,74 @@ func (c *Chat) SummarizeMessage(client *Client, messageId int64, tone string, tr
 
 // ToggleBusinessConnectedBotIsPaused Pauses or resumes the connected business bot in a specific chat
 // It is a helper method for Client.ToggleBusinessConnectedBotChatIsPaused
-func (c *Chat) ToggleBusinessConnectedBotIsPaused(client *Client, opts *ToggleBusinessConnectedBotChatIsPausedOpts) error {
-	return client.ToggleBusinessConnectedBotChatIsPaused(c.Id, opts)
+func (c *Chat) ToggleBusinessConnectedBotIsPaused(client *Client, opts ...*ToggleBusinessConnectedBotChatIsPausedOpts) error {
+	return client.ToggleBusinessConnectedBotChatIsPaused(c.Id, opts...)
 }
 
 // ToggleDefaultDisableNotification Changes the value of the default disable_notification parameter, used when a message is sent to a chat
 // It is a helper method for Client.ToggleChatDefaultDisableNotification
-func (c *Chat) ToggleDefaultDisableNotification(client *Client, opts *ToggleChatDefaultDisableNotificationOpts) error {
-	return client.ToggleChatDefaultDisableNotification(c.Id, opts)
+func (c *Chat) ToggleDefaultDisableNotification(client *Client, opts ...*ToggleChatDefaultDisableNotificationOpts) error {
+	return client.ToggleChatDefaultDisableNotification(c.Id, opts...)
 }
 
 // ToggleGiftNotifications Toggles whether notifications for new gifts received by a channel chat are sent to the current user; requires can_post_messages administrator right in the chat
 // It is a helper method for Client.ToggleChatGiftNotifications
-func (c *Chat) ToggleGiftNotifications(client *Client, opts *ToggleChatGiftNotificationsOpts) error {
-	return client.ToggleChatGiftNotifications(c.Id, opts)
+func (c *Chat) ToggleGiftNotifications(client *Client, opts ...*ToggleChatGiftNotificationsOpts) error {
+	return client.ToggleChatGiftNotifications(c.Id, opts...)
 }
 
 // ToggleHasProtectedContent Changes the ability of users to save, forward, or copy chat content. Requires owner privileges in basic groups, supergroups and channels.
 // It is a helper method for Client.ToggleChatHasProtectedContent
-func (c *Chat) ToggleHasProtectedContent(client *Client, opts *ToggleChatHasProtectedContentOpts) error {
-	return client.ToggleChatHasProtectedContent(c.Id, opts)
+func (c *Chat) ToggleHasProtectedContent(client *Client, opts ...*ToggleChatHasProtectedContentOpts) error {
+	return client.ToggleChatHasProtectedContent(c.Id, opts...)
 }
 
 // ToggleIsMarkedAsUnread Changes the marked as unread state of a chat
 // It is a helper method for Client.ToggleChatIsMarkedAsUnread
-func (c *Chat) ToggleIsMarkedAsUnread(client *Client, opts *ToggleChatIsMarkedAsUnreadOpts) error {
-	return client.ToggleChatIsMarkedAsUnread(c.Id, opts)
+func (c *Chat) ToggleIsMarkedAsUnread(client *Client, opts ...*ToggleChatIsMarkedAsUnreadOpts) error {
+	return client.ToggleChatIsMarkedAsUnread(c.Id, opts...)
 }
 
 // ToggleIsPinned Changes the pinned state of a chat. There can be up to getOption("pinned_chat_count_max")/getOption("pinned_archived_chat_count_max") pinned non-secret chats and the same number of secret chats in the main/archive chat list. The limit can be increased with Telegram Premium
 // It is a helper method for Client.ToggleChatIsPinned
-func (c *Chat) ToggleIsPinned(client *Client, chatList ChatList, opts *ToggleChatIsPinnedOpts) error {
-	return client.ToggleChatIsPinned(c.Id, chatList, opts)
+func (c *Chat) ToggleIsPinned(client *Client, chatList ChatList, opts ...*ToggleChatIsPinnedOpts) error {
+	return client.ToggleChatIsPinned(c.Id, chatList, opts...)
 }
 
 // ToggleIsTranslatable Changes the translatable state of a chat
 // It is a helper method for Client.ToggleChatIsTranslatable
-func (c *Chat) ToggleIsTranslatable(client *Client, opts *ToggleChatIsTranslatableOpts) error {
-	return client.ToggleChatIsTranslatable(c.Id, opts)
+func (c *Chat) ToggleIsTranslatable(client *Client, opts ...*ToggleChatIsTranslatableOpts) error {
+	return client.ToggleChatIsTranslatable(c.Id, opts...)
 }
 
 // ToggleViewAsTopics Changes the view_as_topics setting of a forum chat or Saved Messages
 // It is a helper method for Client.ToggleChatViewAsTopics
-func (c *Chat) ToggleViewAsTopics(client *Client, opts *ToggleChatViewAsTopicsOpts) error {
-	return client.ToggleChatViewAsTopics(c.Id, opts)
+func (c *Chat) ToggleViewAsTopics(client *Client, opts ...*ToggleChatViewAsTopicsOpts) error {
+	return client.ToggleChatViewAsTopics(c.Id, opts...)
 }
 
 // ToggleDirectMessagesTopicCanSendUnpaidMessages Allows to send unpaid messages to the given topic of the channel direct messages chat administered by the current user
 // It is a helper method for Client.ToggleDirectMessagesChatTopicCanSendUnpaidMessages
-func (c *Chat) ToggleDirectMessagesTopicCanSendUnpaidMessages(client *Client, topicId int64, opts *ToggleDirectMessagesChatTopicCanSendUnpaidMessagesOpts) error {
-	return client.ToggleDirectMessagesChatTopicCanSendUnpaidMessages(c.Id, topicId, opts)
+func (c *Chat) ToggleDirectMessagesTopicCanSendUnpaidMessages(client *Client, topicId int64, opts ...*ToggleDirectMessagesChatTopicCanSendUnpaidMessagesOpts) error {
+	return client.ToggleDirectMessagesChatTopicCanSendUnpaidMessages(c.Id, topicId, opts...)
 }
 
 // ToggleForumTopicIsClosed Toggles whether a topic is closed in a forum supergroup chat; requires can_manage_topics administrator right in the supergroup unless the user is creator of the topic
 // It is a helper method for Client.ToggleForumTopicIsClosed
-func (c *Chat) ToggleForumTopicIsClosed(client *Client, forumTopicId int32, opts *ToggleForumTopicIsClosedOpts) error {
-	return client.ToggleForumTopicIsClosed(c.Id, forumTopicId, opts)
+func (c *Chat) ToggleForumTopicIsClosed(client *Client, forumTopicId int32, opts ...*ToggleForumTopicIsClosedOpts) error {
+	return client.ToggleForumTopicIsClosed(c.Id, forumTopicId, opts...)
 }
 
 // ToggleForumTopicIsPinned Changes the pinned state of a topic in a forum supergroup chat or a chat with a bot with topics; requires can_manage_topics administrator right in the supergroup.
 // It is a helper method for Client.ToggleForumTopicIsPinned
-func (c *Chat) ToggleForumTopicIsPinned(client *Client, forumTopicId int32, opts *ToggleForumTopicIsPinnedOpts) error {
-	return client.ToggleForumTopicIsPinned(c.Id, forumTopicId, opts)
+func (c *Chat) ToggleForumTopicIsPinned(client *Client, forumTopicId int32, opts ...*ToggleForumTopicIsPinnedOpts) error {
+	return client.ToggleForumTopicIsPinned(c.Id, forumTopicId, opts...)
 }
 
 // ToggleGeneralForumTopicIsHidden Toggles whether a General topic is hidden in a forum supergroup chat; requires can_manage_topics administrator right in the supergroup
 // It is a helper method for Client.ToggleGeneralForumTopicIsHidden
-func (c *Chat) ToggleGeneralForumTopicIsHidden(client *Client, opts *ToggleGeneralForumTopicIsHiddenOpts) error {
-	return client.ToggleGeneralForumTopicIsHidden(c.Id, opts)
+func (c *Chat) ToggleGeneralForumTopicIsHidden(client *Client, opts ...*ToggleGeneralForumTopicIsHiddenOpts) error {
+	return client.ToggleGeneralForumTopicIsHidden(c.Id, opts...)
 }
 
 // TransferOwnership Changes the owner of a chat; for basic groups, supergroups and channel chats only; requires owner privileges in the chat. Use the method canTransferOwnership to check whether the ownership can be transferred from the current session
@@ -1571,8 +1571,8 @@ func (c *Chat) UpgradeBasicGroupToSupergroupChat(client *Client) (*Chat, error) 
 
 // ViewMessages Informs TDLib that messages are being viewed by the user. Sponsored messages must be marked as viewed only when the entire text of the message is shown on the screen (excluding the button).
 // It is a helper method for Client.ViewMessages
-func (c *Chat) ViewMessages(client *Client, messageIds []int64, opts *ViewMessagesOpts) error {
-	return client.ViewMessages(c.Id, messageIds, opts)
+func (c *Chat) ViewMessages(client *Client, messageIds []int64, opts ...*ViewMessagesOpts) error {
+	return client.ViewMessages(c.Id, messageIds, opts...)
 }
 
 // AddToDownloads Adds a file from a message to the list of file downloads. Download progress and completion of the download will be notified through updateFile updates.
@@ -1583,8 +1583,8 @@ func (f *File) AddToDownloads(client *Client, chatId int64, messageId int64, pri
 
 // CancelDownload Stops the downloading of a file. If a file has already been downloaded, does nothing
 // It is a helper method for Client.CancelDownloadFile
-func (f *File) CancelDownload(client *Client, opts *CancelDownloadFileOpts) error {
-	return client.CancelDownloadFile(f.Id, opts)
+func (f *File) CancelDownload(client *Client, opts ...*CancelDownloadFileOpts) error {
+	return client.CancelDownloadFile(f.Id, opts...)
 }
 
 // CancelPreliminaryUpload Stops the preliminary uploading of a file. Supported only for files uploaded by using preliminaryUploadFile
@@ -1601,8 +1601,8 @@ func (f *File) Delete(client *Client) error {
 
 // Download Downloads a file from the cloud. Download progress and completion of the download will be notified through updateFile updates
 // It is a helper method for Client.DownloadFile
-func (f *File) Download(client *Client, limit int64, offset int64, priority int32, opts *DownloadFileOpts) (*File, error) {
-	return client.DownloadFile(f.Id, limit, offset, priority, opts)
+func (f *File) Download(client *Client, limit int64, offset int64, priority int32, opts ...*DownloadFileOpts) (*File, error) {
+	return client.DownloadFile(f.Id, limit, offset, priority, opts...)
 }
 
 // EditBotMediaPreview Replaces media preview in the list of media previews of a bot. Returns the new preview after edit is completed server-side
@@ -1649,8 +1649,8 @@ func (f *File) ReadPart(client *Client, count int64, offset int64) (*Data, error
 
 // RemoveFromDownloads Removes a file from the file download list
 // It is a helper method for Client.RemoveFileFromDownloads
-func (f *File) RemoveFromDownloads(client *Client, opts *RemoveFileFromDownloadsOpts) error {
-	return client.RemoveFileFromDownloads(f.Id, opts)
+func (f *File) RemoveFromDownloads(client *Client, opts ...*RemoveFileFromDownloadsOpts) error {
+	return client.RemoveFileFromDownloads(f.Id, opts...)
 }
 
 // RemoveProfileAudio Removes an audio file from the profile audio files of the current user
@@ -1673,8 +1673,8 @@ func (f *File) SetProfileAudioPosition(client *Client, afterFileId int32) error 
 
 // ToggleDownloadIsPaused Changes pause state of a file in the file download list
 // It is a helper method for Client.ToggleDownloadIsPaused
-func (f *File) ToggleDownloadIsPaused(client *Client, opts *ToggleDownloadIsPausedOpts) error {
-	return client.ToggleDownloadIsPaused(f.Id, opts)
+func (f *File) ToggleDownloadIsPaused(client *Client, opts ...*ToggleDownloadIsPausedOpts) error {
+	return client.ToggleDownloadIsPaused(f.Id, opts...)
 }
 
 // AddChecklistTasks Adds tasks to a checklist in a message
@@ -1691,8 +1691,8 @@ func (m *Message) AddFileToDownloads(client *Client, fileId int32, priority int3
 
 // AddReaction Adds a reaction or a tag to a message. Use getMessageAvailableReactions to receive the list of available reactions for the message
 // It is a helper method for Client.AddMessageReaction
-func (m *Message) AddReaction(client *Client, reactionType ReactionType, opts *AddMessageReactionOpts) error {
-	return client.AddMessageReaction(m.ChatId, m.Id, reactionType, opts)
+func (m *Message) AddReaction(client *Client, reactionType ReactionType, opts ...*AddMessageReactionOpts) error {
+	return client.AddMessageReaction(m.ChatId, m.Id, reactionType, opts...)
 }
 
 // AddOffer Sends a suggested post based on a previously sent message in a channel direct messages chat. Can be also used to suggest price or time change for an existing suggested post.
@@ -1703,8 +1703,8 @@ func (m *Message) AddOffer(client *Client, options *MessageSendOptions) (*Messag
 
 // AddPendingPaidReaction Adds the paid message reaction to a message. Use getMessageAvailableReactions to check whether the reaction is available for the message
 // It is a helper method for Client.AddPendingPaidMessageReaction
-func (m *Message) AddPendingPaidReaction(client *Client, starCount int64, opts *AddPendingPaidMessageReactionOpts) error {
-	return client.AddPendingPaidMessageReaction(m.ChatId, m.Id, starCount, opts)
+func (m *Message) AddPendingPaidReaction(client *Client, starCount int64, opts ...*AddPendingPaidMessageReactionOpts) error {
+	return client.AddPendingPaidMessageReaction(m.ChatId, m.Id, starCount, opts...)
 }
 
 // AddPollOption Adds an option to a poll
@@ -1721,8 +1721,8 @@ func (m *Message) ApproveSuggestedPost(client *Client, sendDate int32) error {
 
 // BlockSenderFromReplies Blocks an original sender of a message in the Replies chat
 // It is a helper method for Client.BlockMessageSenderFromReplies
-func (m *Message) BlockSenderFromReplies(client *Client, opts *BlockMessageSenderFromRepliesOpts) error {
-	return client.BlockMessageSenderFromReplies(m.Id, opts)
+func (m *Message) BlockSenderFromReplies(client *Client, opts ...*BlockMessageSenderFromRepliesOpts) error {
+	return client.BlockMessageSenderFromReplies(m.Id, opts...)
 }
 
 // ClickAnimatedEmoji Informs TDLib that a message with an animated emoji was clicked by the user. Returns a big animated sticker to be played or a 404 error if usual animation needs to be played
@@ -1733,8 +1733,8 @@ func (m *Message) ClickAnimatedEmoji(client *Client) (*Sticker, error) {
 
 // ClickChatSponsored Informs TDLib that the user opened the sponsored chat via the button, the name, the chat photo, a mention in the sponsored message text, or the media in the sponsored message
 // It is a helper method for Client.ClickChatSponsoredMessage
-func (m *Message) ClickChatSponsored(client *Client, opts *ClickChatSponsoredMessageOpts) error {
-	return client.ClickChatSponsoredMessage(m.ChatId, m.Id, opts)
+func (m *Message) ClickChatSponsored(client *Client, opts ...*ClickChatSponsoredMessageOpts) error {
+	return client.ClickChatSponsoredMessage(m.ChatId, m.Id, opts...)
 }
 
 // CommitPendingPaidReactions Applies all pending paid reactions on a message
@@ -1775,68 +1775,68 @@ func (m *Message) DeletePollOption(client *Client, optionId string) error {
 
 // EditBusinessCaption Edits the caption of a message sent on behalf of a business account; for bots only
 // It is a helper method for Client.EditBusinessMessageCaption
-func (m *Message) EditBusinessCaption(client *Client, businessConnectionId string, opts *EditBusinessMessageCaptionOpts) (*BusinessMessage, error) {
-	return client.EditBusinessMessageCaption(businessConnectionId, m.ChatId, m.Id, opts)
+func (m *Message) EditBusinessCaption(client *Client, businessConnectionId string, opts ...*EditBusinessMessageCaptionOpts) (*BusinessMessage, error) {
+	return client.EditBusinessMessageCaption(businessConnectionId, m.ChatId, m.Id, opts...)
 }
 
 // EditBusinessChecklist Edits the content of a checklist in a message sent on behalf of a business account; for bots only
 // It is a helper method for Client.EditBusinessMessageChecklist
-func (m *Message) EditBusinessChecklist(client *Client, businessConnectionId string, checklist *InputChecklist, opts *EditBusinessMessageChecklistOpts) (*BusinessMessage, error) {
-	return client.EditBusinessMessageChecklist(businessConnectionId, m.ChatId, checklist, m.Id, opts)
+func (m *Message) EditBusinessChecklist(client *Client, businessConnectionId string, checklist *InputChecklist, opts ...*EditBusinessMessageChecklistOpts) (*BusinessMessage, error) {
+	return client.EditBusinessMessageChecklist(businessConnectionId, m.ChatId, checklist, m.Id, opts...)
 }
 
 // EditBusinessLiveLocation Edits the content of a live location in a message sent on behalf of a business account; for bots only
 // It is a helper method for Client.EditBusinessMessageLiveLocation
-func (m *Message) EditBusinessLiveLocation(client *Client, businessConnectionId string, heading int32, livePeriod int32, proximityAlertRadius int32, opts *EditBusinessMessageLiveLocationOpts) (*BusinessMessage, error) {
-	return client.EditBusinessMessageLiveLocation(businessConnectionId, m.ChatId, heading, livePeriod, m.Id, proximityAlertRadius, opts)
+func (m *Message) EditBusinessLiveLocation(client *Client, businessConnectionId string, heading int32, livePeriod int32, proximityAlertRadius int32, opts ...*EditBusinessMessageLiveLocationOpts) (*BusinessMessage, error) {
+	return client.EditBusinessMessageLiveLocation(businessConnectionId, m.ChatId, heading, livePeriod, m.Id, proximityAlertRadius, opts...)
 }
 
 // EditBusinessMedia Edits the media content of a message with a text, an animation, an audio, a document, a photo or a video in a message sent on behalf of a business account; for bots only
 // It is a helper method for Client.EditBusinessMessageMedia
-func (m *Message) EditBusinessMedia(client *Client, businessConnectionId string, inputMessageContent InputMessageContent, opts *EditBusinessMessageMediaOpts) (*BusinessMessage, error) {
-	return client.EditBusinessMessageMedia(businessConnectionId, m.ChatId, inputMessageContent, m.Id, opts)
+func (m *Message) EditBusinessMedia(client *Client, businessConnectionId string, inputMessageContent InputMessageContent, opts ...*EditBusinessMessageMediaOpts) (*BusinessMessage, error) {
+	return client.EditBusinessMessageMedia(businessConnectionId, m.ChatId, inputMessageContent, m.Id, opts...)
 }
 
 // EditBusinessReplyMarkup Edits the reply markup of a message sent on behalf of a business account; for bots only
 // It is a helper method for Client.EditBusinessMessageReplyMarkup
-func (m *Message) EditBusinessReplyMarkup(client *Client, businessConnectionId string, opts *EditBusinessMessageReplyMarkupOpts) (*BusinessMessage, error) {
-	return client.EditBusinessMessageReplyMarkup(businessConnectionId, m.ChatId, m.Id, opts)
+func (m *Message) EditBusinessReplyMarkup(client *Client, businessConnectionId string, opts ...*EditBusinessMessageReplyMarkupOpts) (*BusinessMessage, error) {
+	return client.EditBusinessMessageReplyMarkup(businessConnectionId, m.ChatId, m.Id, opts...)
 }
 
 // EditBusinessText Edits the text of a text or game message sent on behalf of a business account; for bots only
 // It is a helper method for Client.EditBusinessMessageText
-func (m *Message) EditBusinessText(client *Client, businessConnectionId string, inputMessageContent InputMessageContent, opts *EditBusinessMessageTextOpts) (*BusinessMessage, error) {
-	return client.EditBusinessMessageText(businessConnectionId, m.ChatId, inputMessageContent, m.Id, opts)
+func (m *Message) EditBusinessText(client *Client, businessConnectionId string, inputMessageContent InputMessageContent, opts ...*EditBusinessMessageTextOpts) (*BusinessMessage, error) {
+	return client.EditBusinessMessageText(businessConnectionId, m.ChatId, inputMessageContent, m.Id, opts...)
 }
 
 // EditChecklist Edits the message content of a checklist. Returns the edited message after the edit is completed on the server side
 // It is a helper method for Client.EditMessageChecklist
-func (m *Message) EditChecklist(client *Client, checklist *InputChecklist, opts *EditMessageChecklistOpts) (*Message, error) {
-	return client.EditMessageChecklist(m.ChatId, checklist, m.Id, opts)
+func (m *Message) EditChecklist(client *Client, checklist *InputChecklist, opts ...*EditMessageChecklistOpts) (*Message, error) {
+	return client.EditMessageChecklist(m.ChatId, checklist, m.Id, opts...)
 }
 
 // EditLiveLocation Edits the message content of a live location. Messages can be edited for a limited period of time specified in the live location.
 // It is a helper method for Client.EditMessageLiveLocation
-func (m *Message) EditLiveLocation(client *Client, heading int32, livePeriod int32, proximityAlertRadius int32, opts *EditMessageLiveLocationOpts) (*Message, error) {
-	return client.EditMessageLiveLocation(m.ChatId, heading, livePeriod, m.Id, proximityAlertRadius, opts)
+func (m *Message) EditLiveLocation(client *Client, heading int32, livePeriod int32, proximityAlertRadius int32, opts ...*EditMessageLiveLocationOpts) (*Message, error) {
+	return client.EditMessageLiveLocation(m.ChatId, heading, livePeriod, m.Id, proximityAlertRadius, opts...)
 }
 
 // EditMedia Edits the media content of a message, including message caption. If only the caption needs to be edited, use editMessageCaption instead.
 // It is a helper method for Client.EditMessageMedia
-func (m *Message) EditMedia(client *Client, inputMessageContent InputMessageContent, opts *EditMessageMediaOpts) (*Message, error) {
-	return client.EditMessageMedia(m.ChatId, inputMessageContent, m.Id, opts)
+func (m *Message) EditMedia(client *Client, inputMessageContent InputMessageContent, opts ...*EditMessageMediaOpts) (*Message, error) {
+	return client.EditMessageMedia(m.ChatId, inputMessageContent, m.Id, opts...)
 }
 
 // EditReplyMarkup Edits the message reply markup; for bots only. Returns the edited message after the edit is completed on the server side
 // It is a helper method for Client.EditMessageReplyMarkup
-func (m *Message) EditReplyMarkup(client *Client, opts *EditMessageReplyMarkupOpts) (*Message, error) {
-	return client.EditMessageReplyMarkup(m.ChatId, m.Id, opts)
+func (m *Message) EditReplyMarkup(client *Client, opts ...*EditMessageReplyMarkupOpts) (*Message, error) {
+	return client.EditMessageReplyMarkup(m.ChatId, m.Id, opts...)
 }
 
 // EditSchedulingState Edits the time when a scheduled message will be sent. Scheduling state of all messages in the same album or forwarded together with the message will be also changed
 // It is a helper method for Client.EditMessageSchedulingState
-func (m *Message) EditSchedulingState(client *Client, opts *EditMessageSchedulingStateOpts) error {
-	return client.EditMessageSchedulingState(m.ChatId, m.Id, opts)
+func (m *Message) EditSchedulingState(client *Client, opts ...*EditMessageSchedulingStateOpts) error {
+	return client.EditMessageSchedulingState(m.ChatId, m.Id, opts...)
 }
 
 // EditQuickReply Asynchronously edits the text, media or caption of a quick reply message. Use quickReplyMessage.can_be_edited to check whether a message can be edited.
@@ -1859,8 +1859,8 @@ func (m *Message) GetCallbackQuery(client *Client, callbackQueryId int64) (*Mess
 
 // GetChatPosition Returns approximate 1-based position of a message among messages, which can be found by the specified filter in the chat and topic. Cannot be used in secret chats
 // It is a helper method for Client.GetChatMessagePosition
-func (m *Message) GetChatPosition(client *Client, filter SearchMessagesFilter, opts *GetChatMessagePositionOpts) (*Count, error) {
-	return client.GetChatMessagePosition(m.ChatId, filter, m.Id, opts)
+func (m *Message) GetChatPosition(client *Client, filter SearchMessagesFilter, opts ...*GetChatMessagePositionOpts) (*Count, error) {
+	return client.GetChatMessagePosition(m.ChatId, filter, m.Id, opts...)
 }
 
 // GetGameHighScores Returns the high scores for a game and some part of the high score table in the range of the specified user; for bots only
@@ -1877,8 +1877,8 @@ func (m *Message) GetGiveawayInfo(client *Client) (GiveawayInfo, error) {
 
 // GetLoginUrl Returns an HTTP URL which can be used to automatically authorize the user on a website after clicking an inline button of type inlineKeyboardButtonTypeLoginUrl.
 // It is a helper method for Client.GetLoginUrl
-func (m *Message) GetLoginUrl(client *Client, buttonId int64, opts *GetLoginUrlOpts) (*HttpUrl, error) {
-	return client.GetLoginUrl(buttonId, m.ChatId, m.Id, opts)
+func (m *Message) GetLoginUrl(client *Client, buttonId int64, opts ...*GetLoginUrlOpts) (*HttpUrl, error) {
+	return client.GetLoginUrl(buttonId, m.ChatId, m.Id, opts...)
 }
 
 // GetLoginUrlInfo Returns information about a button of type inlineKeyboardButtonTypeLoginUrl. The method needs to be called when the user presses the button
@@ -1895,8 +1895,8 @@ func (m *Message) Get(client *Client) (*Message, error) {
 
 // GetAddedReactions Returns reactions added for a message, along with their sender
 // It is a helper method for Client.GetMessageAddedReactions
-func (m *Message) GetAddedReactions(client *Client, limit int32, offset string, opts *GetMessageAddedReactionsOpts) (*AddedReactions, error) {
-	return client.GetMessageAddedReactions(m.ChatId, limit, m.Id, offset, opts)
+func (m *Message) GetAddedReactions(client *Client, limit int32, offset string, opts ...*GetMessageAddedReactionsOpts) (*AddedReactions, error) {
+	return client.GetMessageAddedReactions(m.ChatId, limit, m.Id, offset, opts...)
 }
 
 // GetAuthor Returns information about actual author of a message sent on behalf of a channel. The method can be called if messageProperties.can_get_author == true
@@ -1913,8 +1913,8 @@ func (m *Message) GetAvailableReactions(client *Client, rowSize int32) (*Availab
 
 // GetEmbeddingCode Returns an HTML code for embedding the message. Available only if messageProperties.can_get_embedding_code
 // It is a helper method for Client.GetMessageEmbeddingCode
-func (m *Message) GetEmbeddingCode(client *Client, opts *GetMessageEmbeddingCodeOpts) (*Text, error) {
-	return client.GetMessageEmbeddingCode(m.ChatId, m.Id, opts)
+func (m *Message) GetEmbeddingCode(client *Client, opts ...*GetMessageEmbeddingCodeOpts) (*Text, error) {
+	return client.GetMessageEmbeddingCode(m.ChatId, m.Id, opts...)
 }
 
 // GetLocally Returns information about a message, if it is available without sending network request. Returns a 404 error if message isn't available locally. This is an offline method
@@ -1943,8 +1943,8 @@ func (m *Message) GetReadDate(client *Client) (MessageReadDate, error) {
 
 // GetStatistics Returns detailed statistics about a message. Can be used only if messageProperties.can_get_statistics == true
 // It is a helper method for Client.GetMessageStatistics
-func (m *Message) GetStatistics(client *Client, opts *GetMessageStatisticsOpts) (*MessageStatistics, error) {
-	return client.GetMessageStatistics(m.ChatId, m.Id, opts)
+func (m *Message) GetStatistics(client *Client, opts ...*GetMessageStatisticsOpts) (*MessageStatistics, error) {
+	return client.GetMessageStatistics(m.ChatId, m.Id, opts...)
 }
 
 // GetThread Returns information about a message thread. Can be used only if messageProperties.can_get_message_thread == true
@@ -1985,8 +1985,8 @@ func (m *Message) GetPollVoters(client *Client, limit int32, offset int32, optio
 
 // GetPollVoteStatistics Returns statistics of poll votes in a poll
 // It is a helper method for Client.GetPollVoteStatistics
-func (m *Message) GetPollVoteStatistics(client *Client, opts *GetPollVoteStatisticsOpts) (*PollVoteStatistics, error) {
-	return client.GetPollVoteStatistics(m.ChatId, m.Id, opts)
+func (m *Message) GetPollVoteStatistics(client *Client, opts ...*GetPollVoteStatisticsOpts) (*PollVoteStatistics, error) {
+	return client.GetPollVoteStatistics(m.ChatId, m.Id, opts...)
 }
 
 // GetReplied Returns information about a non-bundled message that is replied by a given message. Also, returns the pinned message for messagePinMessage,
@@ -2015,20 +2015,20 @@ func (m *Message) OpenContent(client *Client) error {
 
 // PinChat Pins a message in a chat. A message can be pinned only if messageProperties.can_be_pinned
 // It is a helper method for Client.PinChatMessage
-func (m *Message) PinChat(client *Client, opts *PinChatMessageOpts) error {
-	return client.PinChatMessage(m.ChatId, m.Id, opts)
+func (m *Message) PinChat(client *Client, opts ...*PinChatMessageOpts) error {
+	return client.PinChatMessage(m.ChatId, m.Id, opts...)
 }
 
 // ProcessGiftPurchaseOffer Handles a pending gift purchase offer
 // It is a helper method for Client.ProcessGiftPurchaseOffer
-func (m *Message) ProcessGiftPurchaseOffer(client *Client, opts *ProcessGiftPurchaseOfferOpts) error {
-	return client.ProcessGiftPurchaseOffer(m.Id, opts)
+func (m *Message) ProcessGiftPurchaseOffer(client *Client, opts ...*ProcessGiftPurchaseOfferOpts) error {
+	return client.ProcessGiftPurchaseOffer(m.Id, opts...)
 }
 
 // RateSpeechRecognition Rates recognized speech in a video note or a voice note message
 // It is a helper method for Client.RateSpeechRecognition
-func (m *Message) RateSpeechRecognition(client *Client, opts *RateSpeechRecognitionOpts) error {
-	return client.RateSpeechRecognition(m.ChatId, m.Id, opts)
+func (m *Message) RateSpeechRecognition(client *Client, opts ...*RateSpeechRecognitionOpts) error {
+	return client.RateSpeechRecognition(m.ChatId, m.Id, opts...)
 }
 
 // ReadBusiness Reads a message on behalf of a business account; for bots only
@@ -2081,26 +2081,26 @@ func (m *Message) SendViewMetrics(client *Client, activeTimeInViewMs int32, heig
 
 // SetBusinessIsPinned Pins or unpins a message sent on behalf of a business account; for bots only
 // It is a helper method for Client.SetBusinessMessageIsPinned
-func (m *Message) SetBusinessIsPinned(client *Client, businessConnectionId string, opts *SetBusinessMessageIsPinnedOpts) error {
-	return client.SetBusinessMessageIsPinned(businessConnectionId, m.ChatId, m.Id, opts)
+func (m *Message) SetBusinessIsPinned(client *Client, businessConnectionId string, opts ...*SetBusinessMessageIsPinnedOpts) error {
+	return client.SetBusinessMessageIsPinned(businessConnectionId, m.ChatId, m.Id, opts...)
 }
 
 // SetGameScore Updates the game score of the specified user in the game; for bots only
 // It is a helper method for Client.SetGameScore
-func (m *Message) SetGameScore(client *Client, score int32, userId int64, opts *SetGameScoreOpts) (*Message, error) {
-	return client.SetGameScore(m.ChatId, m.Id, score, userId, opts)
+func (m *Message) SetGameScore(client *Client, score int32, userId int64, opts ...*SetGameScoreOpts) (*Message, error) {
+	return client.SetGameScore(m.ChatId, m.Id, score, userId, opts...)
 }
 
 // SetFactCheck Changes the fact-check of a message. Can be only used if messageProperties.can_set_fact_check == true
 // It is a helper method for Client.SetMessageFactCheck
-func (m *Message) SetFactCheck(client *Client, opts *SetMessageFactCheckOpts) error {
-	return client.SetMessageFactCheck(m.ChatId, m.Id, opts)
+func (m *Message) SetFactCheck(client *Client, opts ...*SetMessageFactCheckOpts) error {
+	return client.SetMessageFactCheck(m.ChatId, m.Id, opts...)
 }
 
 // SetReactions Sets reactions on a message; for bots only
 // It is a helper method for Client.SetMessageReactions
-func (m *Message) SetReactions(client *Client, reactionTypes []ReactionType, opts *SetMessageReactionsOpts) error {
-	return client.SetMessageReactions(m.ChatId, m.Id, reactionTypes, opts)
+func (m *Message) SetReactions(client *Client, reactionTypes []ReactionType, opts ...*SetMessageReactionsOpts) error {
+	return client.SetMessageReactions(m.ChatId, m.Id, reactionTypes, opts...)
 }
 
 // SetPaidReactionType Changes type of paid message reaction of the current user on a message. The message must have paid reaction added by the current user
@@ -2117,14 +2117,14 @@ func (m *Message) SetPollAnswer(client *Client, optionIds []int32) error {
 
 // StopBusinessPoll Stops a poll sent on behalf of a business account; for bots only
 // It is a helper method for Client.StopBusinessPoll
-func (m *Message) StopBusinessPoll(client *Client, businessConnectionId string, opts *StopBusinessPollOpts) (*BusinessMessage, error) {
-	return client.StopBusinessPoll(businessConnectionId, m.ChatId, m.Id, opts)
+func (m *Message) StopBusinessPoll(client *Client, businessConnectionId string, opts ...*StopBusinessPollOpts) (*BusinessMessage, error) {
+	return client.StopBusinessPoll(businessConnectionId, m.ChatId, m.Id, opts...)
 }
 
 // StopPoll Stops a poll
 // It is a helper method for Client.StopPoll
-func (m *Message) StopPoll(client *Client, opts *StopPollOpts) error {
-	return client.StopPoll(m.ChatId, m.Id, opts)
+func (m *Message) StopPoll(client *Client, opts ...*StopPollOpts) error {
+	return client.StopPoll(m.ChatId, m.Id, opts...)
 }
 
 // Summarize Summarizes content of the message with non-empty summary_language_code
@@ -2147,8 +2147,8 @@ func (m *Message) UnpinChat(client *Client) error {
 
 // Get Returns information about a file by its remote identifier. This is an offline method. Can be used to register a URL as a file for further uploading, or sending as a message. Even the request succeeds, the file can be used only if it is still accessible to the user.
 // It is a helper method for Client.GetRemoteFile
-func (r *RemoteFile) Get(client *Client, opts *GetRemoteFileOpts) (*File, error) {
-	return client.GetRemoteFile(r.Id, opts)
+func (r *RemoteFile) Get(client *Client, opts ...*GetRemoteFileOpts) (*File, error) {
+	return client.GetRemoteFile(r.Id, opts...)
 }
 
 // AddChatMember Adds a new member to a chat; requires can_invite_users member right. Members can't be added to private or secret chats. Returns information about members that weren't added
@@ -2159,8 +2159,8 @@ func (u *User) AddChatMember(client *Client, chatId int64, forwardLimit int32) (
 
 // AddContact Adds a user to the contact list or edits an existing contact by their user identifier
 // It is a helper method for Client.AddContact
-func (u *User) AddContact(client *Client, opts *AddContactOpts) error {
-	return client.AddContact(u.Id, opts)
+func (u *User) AddContact(client *Client, opts ...*AddContactOpts) error {
+	return client.AddContact(u.Id, opts...)
 }
 
 // AddStickerToSet Adds a new sticker to a set
@@ -2171,20 +2171,20 @@ func (u *User) AddStickerToSet(client *Client, name string, sticker *InputSticke
 
 // AllowUnpaidMessagesFrom Allows the specified user to send unpaid private messages to the current user by adding a rule to userPrivacySettingAllowUnpaidMessages
 // It is a helper method for Client.AllowUnpaidMessagesFromUser
-func (u *User) AllowUnpaidMessagesFrom(client *Client, opts *AllowUnpaidMessagesFromUserOpts) error {
-	return client.AllowUnpaidMessagesFromUser(u.Id, opts)
+func (u *User) AllowUnpaidMessagesFrom(client *Client, opts ...*AllowUnpaidMessagesFromUserOpts) error {
+	return client.AllowUnpaidMessagesFromUser(u.Id, opts...)
 }
 
 // CanSendMessageTo Checks whether the current user can message another user or try to create a chat with them
 // It is a helper method for Client.CanSendMessageToUser
-func (u *User) CanSendMessageTo(client *Client, opts *CanSendMessageToUserOpts) (CanSendMessageToUserResult, error) {
-	return client.CanSendMessageToUser(u.Id, opts)
+func (u *User) CanSendMessageTo(client *Client, opts ...*CanSendMessageToUserOpts) (CanSendMessageToUserResult, error) {
+	return client.CanSendMessageToUser(u.Id, opts...)
 }
 
 // CreateCall Creates a new call
 // It is a helper method for Client.CreateCall
-func (u *User) CreateCall(client *Client, protocol *CallProtocol, opts *CreateCallOpts) (*CallId, error) {
-	return client.CreateCall(protocol, u.Id, opts)
+func (u *User) CreateCall(client *Client, protocol *CallProtocol, opts ...*CreateCallOpts) (*CallId, error) {
+	return client.CreateCall(protocol, u.Id, opts...)
 }
 
 // CreateNewSecretChat Creates a new secret chat. Returns the newly created chat
@@ -2195,20 +2195,20 @@ func (u *User) CreateNewSecretChat(client *Client) (*Chat, error) {
 
 // CreateNewStickerSet Creates a new sticker set. Returns the newly created sticker set
 // It is a helper method for Client.CreateNewStickerSet
-func (u *User) CreateNewStickerSet(client *Client, name string, stickerType StickerType, stickers []InputSticker, title string, opts *CreateNewStickerSetOpts) (*StickerSet, error) {
-	return client.CreateNewStickerSet(name, stickerType, stickers, title, u.Id, opts)
+func (u *User) CreateNewStickerSet(client *Client, name string, stickerType StickerType, stickers []InputSticker, title string, opts ...*CreateNewStickerSetOpts) (*StickerSet, error) {
+	return client.CreateNewStickerSet(name, stickerType, stickers, title, u.Id, opts...)
 }
 
 // CreatePrivateChat Returns an existing chat corresponding to a given user
 // It is a helper method for Client.CreatePrivateChat
-func (u *User) CreatePrivateChat(client *Client, opts *CreatePrivateChatOpts) (*Chat, error) {
-	return client.CreatePrivateChat(u.Id, opts)
+func (u *User) CreatePrivateChat(client *Client, opts ...*CreatePrivateChatOpts) (*Chat, error) {
+	return client.CreatePrivateChat(u.Id, opts...)
 }
 
 // EditStarSubscription Cancels or re-enables Telegram Star subscription for a user; for bots only
 // It is a helper method for Client.EditUserStarSubscription
-func (u *User) EditStarSubscription(client *Client, telegramPaymentChargeId string, opts *EditUserStarSubscriptionOpts) error {
-	return client.EditUserStarSubscription(telegramPaymentChargeId, u.Id, opts)
+func (u *User) EditStarSubscription(client *Client, telegramPaymentChargeId string, opts ...*EditUserStarSubscriptionOpts) error {
+	return client.EditUserStarSubscription(telegramPaymentChargeId, u.Id, opts...)
 }
 
 // GetGameHighScores Returns the high scores for a game and some part of the high score table in the range of the specified user; for bots only
@@ -2297,20 +2297,20 @@ func (u *User) GiftPremiumWithStars(client *Client, monthCount int32, starCount 
 
 // InviteGroupCallParticipant Invites a user to an active group call; for group calls not bound to a chat only. Sends a service message of the type messageGroupCall.
 // It is a helper method for Client.InviteGroupCallParticipant
-func (u *User) InviteGroupCallParticipant(client *Client, groupCallId int32, opts *InviteGroupCallParticipantOpts) (InviteGroupCallParticipantResult, error) {
-	return client.InviteGroupCallParticipant(groupCallId, u.Id, opts)
+func (u *User) InviteGroupCallParticipant(client *Client, groupCallId int32, opts ...*InviteGroupCallParticipantOpts) (InviteGroupCallParticipantResult, error) {
+	return client.InviteGroupCallParticipant(groupCallId, u.Id, opts...)
 }
 
 // PlaceGiftAuctionBid Places a bid on an auction gift
 // It is a helper method for Client.PlaceGiftAuctionBid
-func (u *User) PlaceGiftAuctionBid(client *Client, giftId int64, starCount int64, text *FormattedText, opts *PlaceGiftAuctionBidOpts) error {
-	return client.PlaceGiftAuctionBid(giftId, starCount, text, u.Id, opts)
+func (u *User) PlaceGiftAuctionBid(client *Client, giftId int64, starCount int64, text *FormattedText, opts ...*PlaceGiftAuctionBidOpts) error {
+	return client.PlaceGiftAuctionBid(giftId, starCount, text, u.Id, opts...)
 }
 
 // ProcessChatJoinRequest Handles a pending join request in a chat
 // It is a helper method for Client.ProcessChatJoinRequest
-func (u *User) ProcessChatJoinRequest(client *Client, chatId int64, opts *ProcessChatJoinRequestOpts) error {
-	return client.ProcessChatJoinRequest(chatId, u.Id, opts)
+func (u *User) ProcessChatJoinRequest(client *Client, chatId int64, opts ...*ProcessChatJoinRequestOpts) error {
+	return client.ProcessChatJoinRequest(chatId, u.Id, opts...)
 }
 
 // RefundStarPayment Refunds a previously done payment in Telegram Stars; for bots only
@@ -2345,14 +2345,14 @@ func (u *User) SetChatMemberTag(client *Client, chatId int64, tag string) error 
 
 // SetGameScore Updates the game score of the specified user in the game; for bots only
 // It is a helper method for Client.SetGameScore
-func (u *User) SetGameScore(client *Client, chatId int64, messageId int64, score int32, opts *SetGameScoreOpts) (*Message, error) {
-	return client.SetGameScore(chatId, messageId, score, u.Id, opts)
+func (u *User) SetGameScore(client *Client, chatId int64, messageId int64, score int32, opts ...*SetGameScoreOpts) (*Message, error) {
+	return client.SetGameScore(chatId, messageId, score, u.Id, opts...)
 }
 
 // SetInlineGameScore Updates the game score of the specified user in a game; for bots only
 // It is a helper method for Client.SetInlineGameScore
-func (u *User) SetInlineGameScore(client *Client, inlineMessageId string, score int32, opts *SetInlineGameScoreOpts) error {
-	return client.SetInlineGameScore(inlineMessageId, score, u.Id, opts)
+func (u *User) SetInlineGameScore(client *Client, inlineMessageId string, score int32, opts ...*SetInlineGameScoreOpts) error {
+	return client.SetInlineGameScore(inlineMessageId, score, u.Id, opts...)
 }
 
 // SetMenuButton Sets menu button for the given user or for all users; for bots only
@@ -2369,14 +2369,14 @@ func (u *User) SetPassportElementErrors(client *Client, errors []InputPassportEl
 
 // SetStickerSetThumbnail Sets a sticker set thumbnail
 // It is a helper method for Client.SetStickerSetThumbnail
-func (u *User) SetStickerSetThumbnail(client *Client, name string, opts *SetStickerSetThumbnailOpts) error {
-	return client.SetStickerSetThumbnail(name, u.Id, opts)
+func (u *User) SetStickerSetThumbnail(client *Client, name string, opts ...*SetStickerSetThumbnailOpts) error {
+	return client.SetStickerSetThumbnail(name, u.Id, opts...)
 }
 
 // SetEmojiStatus Changes the emoji status of a user; for bots only
 // It is a helper method for Client.SetUserEmojiStatus
-func (u *User) SetEmojiStatus(client *Client, opts *SetUserEmojiStatusOpts) error {
-	return client.SetUserEmojiStatus(u.Id, opts)
+func (u *User) SetEmojiStatus(client *Client, opts ...*SetUserEmojiStatusOpts) error {
+	return client.SetUserEmojiStatus(u.Id, opts...)
 }
 
 // SetNote Changes a note of a contact user
@@ -2387,8 +2387,8 @@ func (u *User) SetNote(client *Client, note *FormattedText) error {
 
 // SetPersonalProfilePhoto Changes a personal profile photo of a contact user
 // It is a helper method for Client.SetUserPersonalProfilePhoto
-func (u *User) SetPersonalProfilePhoto(client *Client, opts *SetUserPersonalProfilePhotoOpts) error {
-	return client.SetUserPersonalProfilePhoto(u.Id, opts)
+func (u *User) SetPersonalProfilePhoto(client *Client, opts ...*SetUserPersonalProfilePhotoOpts) error {
+	return client.SetUserPersonalProfilePhoto(u.Id, opts...)
 }
 
 // SetSupportInfo Sets support information for the given user; for Telegram support only

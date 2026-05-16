@@ -172,8 +172,8 @@ func generateHelperMethod(sb *strings.Builder, t TLType, fn TLType, matches map[
 
 	optsStructName := clientMethodName + "Opts"
 	if hasOptional {
-		funcArgs = append(funcArgs, fmt.Sprintf("opts *%s", optsStructName))
-		callArgs = append(callArgs, "opts")
+		funcArgs = append(funcArgs, fmt.Sprintf("opts ...*%s", optsStructName))
+		callArgs = append(callArgs, "opts...")
 	}
 
 	isOk := fn.ResultType == "ok" || fn.ResultType == "Ok"
