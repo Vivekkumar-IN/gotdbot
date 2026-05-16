@@ -32,11 +32,8 @@ func generateClasses(classes map[string]*TLClass) {
 		if len(cls.Implementations) > 0 {
 			impls := append([]string(nil), cls.Implementations...)
 			sort.Strings(impls)
-			sb.WriteString("//   - ")
-			for i, impl := range impls {
-				if i > 0 {
-					sb.WriteString("//   - ")
-				}
+			for _, impl := range impls {
+				sb.WriteString("//   - ")
 				sb.WriteString(toCamelCase(impl))
 				sb.WriteByte('\n')
 			}

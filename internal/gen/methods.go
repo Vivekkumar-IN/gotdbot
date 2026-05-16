@@ -65,7 +65,7 @@ func generateMethods(functions []TLType, classes map[string]*TLClass) {
 		}
 
 		if hasOptional {
-			args = append(args, fmt.Sprintf("opts *%s", optsStructName))
+			args = append(args, fmt.Sprintf("opts ...*%s", optsStructName))
 		}
 
 		fmt.Fprintf(&sb, "%s", strings.Join(args, ", "))
@@ -95,13 +95,13 @@ func generateMethods(functions []TLType, classes map[string]*TLClass) {
 		sb.WriteString("\t}\n")
 
 		if hasOptional {
-			sb.WriteString("\tif opts != nil {\n")
+			sb.WriteString("\tif len(opts) > 0 && opts[0] != nil {\n")
 			for _, p := range fn.Params {
 				if !p.IsOptional && p.Type != "Bool" {
 					continue
 				}
 				fieldName := toCamelCase(p.Name)
-				fmt.Fprintf(&sb, "\t\treq.%s = opts.%s\n", fieldName, fieldName)
+				fmt.Fprintf(&sb, "\t\treq.%s = opts[0].%s\n", fieldName, fieldName)
 			}
 			sb.WriteString("\t}\n")
 		}
