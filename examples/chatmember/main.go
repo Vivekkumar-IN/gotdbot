@@ -6,8 +6,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/AshokShau/gotdbot"
-	"github.com/AshokShau/gotdbot/handlers"
+	"github.com/Vivekkumar-IN/gotdbot"
 )
 
 func main() {
@@ -15,7 +14,7 @@ func main() {
 	apiHash := ""
 	botToken := ""
 
-	bot, err := gotdbot.NewClient(apiID, apiHash, botToken, &gotdbot.ClientOpts{
+	client, err := gotdbot.NewClient(apiID, apiHash, botToken, &gotdbot.ClientOpts{
 		LibraryPath: "./libtdjson.so.1.8.64",
 	})
 
@@ -23,13 +22,11 @@ func main() {
 		panic(err)
 	}
 
-	dispatcher := bot.Dispatcher
 	log.Println("Starting bot...")
 	// Register the UpdateChatMember handler
 	// This will trigger on any change in chat/user membership (join, leave, promote, demote, etc.)
-	dispatcher.AddHandler(handlers.NewUpdateChatMember(nil, func(c *gotdbot.Client, ctx *gotdbot.Context) error {
-		update := ctx.Update.UpdateChatMember
-		chatId := ctx.EffectiveChatId
+	client.AddChatMemberHandler(func(c *gotdbot.Client, u *gotdbot.UpdateChatMember) error {
+		chatId := u.ChatId
 		me, _ := c.GetMe()
 
 		var userId int64
@@ -46,9 +43,9 @@ func main() {
 			}
 		}
 
-		userId, memberName = getMemberInfo(update.NewChatMember.MemberId)
-		oldStatus := getStatusType(update.OldChatMember.Status)
-		newStatus := getStatusType(update.NewChatMember.Status)
+		userId, memberName = getMemberInfo(u.NewChatMember.MemberId)
+		oldStatus := getStatusType(u.OldChatMember.Status)
+		newStatus := getStatusType(u.NewChatMember.Status)
 
 		var text string
 
@@ -96,13 +93,13 @@ func main() {
 		}
 
 		return nil
-	}))
+	})
 
-	err = bot.Start()
+	err = client.Start()
 	if err != nil {
 		log.Fatalf("Failed to start bot: %v", err)
 	}
-	bot.Idle()
+	client.Idle()
 }
 
 // Helper to get string representation of ChatMemberStatus

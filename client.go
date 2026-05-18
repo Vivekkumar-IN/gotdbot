@@ -19,8 +19,8 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/AshokShau/gotdbot/internal/qrcode"
-	"github.com/AshokShau/gotdbot/internal/tdjson"
+	"github.com/Vivekkumar-IN/gotdbot/internal/qrcode"
+	"github.com/Vivekkumar-IN/gotdbot/internal/tdjson"
 )
 
 type Client struct {

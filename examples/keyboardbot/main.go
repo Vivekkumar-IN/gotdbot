@@ -7,8 +7,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/AshokShau/gotdbot"
-	"github.com/AshokShau/gotdbot/handlers"
+	"github.com/Vivekkumar-IN/gotdbot"
 )
 
 func main() {
@@ -26,25 +25,20 @@ func main() {
 		botToken = envToken
 	}
 
-	bot, err := gotdbot.NewClient(apiID, apiHash, botToken, &gotdbot.ClientOpts{LibraryPath: "./libtdjson.so.1.8.64"})
+	client, err := gotdbot.NewClient(apiID, apiHash, botToken, &gotdbot.ClientOpts{LibraryPath: "./libtdjson.so.1.8.64"})
 	if err != nil {
 		panic(err)
 	}
 
-	dispatcher := bot.Dispatcher
-
-	dispatcher.AddHandler(handlers.NewCommand("start", func(c *gotdbot.Client, ctx *gotdbot.Context) error {
-		msg := ctx.EffectiveMessage
+	client.AddCommandHandler("start", func(c *gotdbot.Client, u *gotdbot.UpdateNewMessage) error {
+		msg := u.Message
 		userId := msg.SenderID()
 
-		action, err := msg.Action(c, "typing", nil)
+		err := msg.Action(c, &gotdbot.SendChatActionOpts{Action: &gotdbot.ChatActionTyping{}})
 		if err != nil {
-			c.Logger.Error("Failed to create chat action", "err", err)
+			c.Logger.Error("Failed to send chat action", "err", err)
 			return err
 		}
-
-		//defer action.Stop()
-		action.Send() // Send once
 
 		c.Logger.Info("Received /start command", "user_id", userId)
 
@@ -62,7 +56,7 @@ func main() {
 					{
 						Text: "GitHub",
 						Type: &gotdbot.InlineKeyboardButtonTypeUrl{
-							Url: "https://github.com/AshokShau/gotdbot",
+							Url: "https://github.com/Vivekkumar-IN/gotdbot",
 						},
 						IconCustomEmojiId: 5271604874419647061,
 						Style:             &gotdbot.ButtonStylePrimary{},
@@ -87,10 +81,10 @@ func main() {
 			c.Logger.Info("Sent welcome message", "link", link.Link)
 		}
 		return nil
-	}))
+	})
 
 	// /inline - Send message with inline keyboard buttons
-	dispatcher.AddHandler(handlers.NewCommand("inline", func(c *gotdbot.Client, ctx *gotdbot.Context) error {
+	client.AddCommandHandler("inline", func(c *gotdbot.Client, u *gotdbot.UpdateNewMessage) error {
 		kb := &gotdbot.ReplyMarkupInlineKeyboard{
 			Rows: [][]gotdbot.InlineKeyboardButton{
 				{
@@ -123,7 +117,7 @@ func main() {
 			ReplyMarkup: kb,
 		}
 
-		message, err := c.SendMessage(ctx.EffectiveChatId, content, opts)
+		message, err := c.SendMessage(u.Message.ChatId, content, opts)
 		if err != nil {
 			c.Logger.Error("Failed to send message", "err", err)
 			return err
@@ -131,10 +125,10 @@ func main() {
 		c.Logger.Info("Sent message with inline", "message_id", message.Id)
 
 		return nil
-	}))
+	})
 
 	// /keyboard - Send message with reply keyboard
-	dispatcher.AddHandler(handlers.NewCommand("keyboard", func(c *gotdbot.Client, ctx *gotdbot.Context) error {
+	client.AddCommandHandler("keyboard", func(c *gotdbot.Client, u *gotdbot.UpdateNewMessage) error {
 		kb := &gotdbot.ReplyMarkupShowKeyboard{
 			Rows: [][]gotdbot.KeyboardButton{
 				{
@@ -162,17 +156,17 @@ func main() {
 			ReplyMarkup: kb,
 		}
 
-		message, err := c.SendMessage(ctx.EffectiveChatId, content, opts)
+		message, err := c.SendMessage(u.Message.ChatId, content, opts)
 		if err != nil {
 			c.Logger.Error("Failed to send message", "err", err)
 			return err
 		}
 		c.Logger.Info("Sent message with keyboard", "message_id", message.Id)
 		return nil
-	}))
+	})
 
 	// /remove - Remove keyboard
-	dispatcher.AddHandler(handlers.NewCommand("remove", func(c *gotdbot.Client, ctx *gotdbot.Context) error {
+	client.AddCommandHandler("remove", func(c *gotdbot.Client, u *gotdbot.UpdateNewMessage) error {
 		content := &gotdbot.InputMessageText{
 			Text: &gotdbot.FormattedText{
 				Text: "Keyboards removed",
@@ -183,12 +177,12 @@ func main() {
 			ReplyMarkup: &gotdbot.ReplyMarkupRemoveKeyboard{},
 		}
 
-		_, err := c.SendMessage(ctx.EffectiveChatId, content, opts)
+		_, err := c.SendMessage(u.Message.ChatId, content, opts)
 		return err
-	}))
+	})
 
 	// /force - Force reply
-	dispatcher.AddHandler(handlers.NewCommand("force", func(c *gotdbot.Client, ctx *gotdbot.Context) error {
+	client.AddCommandHandler("force", func(c *gotdbot.Client, u *gotdbot.UpdateNewMessage) error {
 		content := &gotdbot.InputMessageText{
 			Text: &gotdbot.FormattedText{
 				Text: "This is a force reply",
@@ -199,19 +193,18 @@ func main() {
 			ReplyMarkup: &gotdbot.ReplyMarkupForceReply{},
 		}
 
-		_, err := c.SendMessage(ctx.EffectiveChatId, content, opts)
+		_, err := c.SendMessage(u.Message.ChatId, content, opts)
 
-		// _, err = ctx.EffectiveMessage.ReplyText(ctx.Client, "This is a force reply", &gotdbot.SendTextMessageOpts{ReplyMarkup: &gotdbot.ReplyMarkupForceReply{}})
+		// _, err = u.Message.ReplyText(c, "This is a force reply", &gotdbot.SendTextMessageOpts{ReplyMarkup: &gotdbot.ReplyMarkupForceReply{}})
 		return err
-	}))
+	})
 
 	// CallbackQuery Handler
-	dispatcher.AddHandler(handlers.NewUpdateNewCallbackQuery(nil, func(c *gotdbot.Client, ctx *gotdbot.Context) error {
-		update := ctx.Update.UpdateNewCallbackQuery
-		c.Logger.Info("Received callback query", "message_id", update.MessageId, "chat_id", update.ChatId)
+	client.AddNewCallbackQueryHandler(func(c *gotdbot.Client, u *gotdbot.UpdateNewCallbackQuery) error {
+		c.Logger.Info("Received callback query", "message_id", u.MessageId, "chat_id", u.ChatId)
 		var data string
-		if update.Payload != nil {
-			if p, ok := update.Payload.(*gotdbot.CallbackQueryPayloadData); ok {
+		if u.Payload != nil {
+			if p, ok := u.Payload.(*gotdbot.CallbackQueryPayloadData); ok {
 				data = string(p.Data)
 			}
 		}
@@ -223,7 +216,7 @@ func main() {
 						{
 							Text: "GitHub",
 							Type: &gotdbot.InlineKeyboardButtonTypeUrl{
-								Url: "https://github.com/AshokShau/gotdbot",
+								Url: "https://github.com/Vivekkumar-IN/gotdbot",
 							},
 							IconCustomEmojiId: 5330237710655306682,
 							Style:             &gotdbot.ButtonStyleSuccess{},
@@ -238,7 +231,7 @@ func main() {
 				},
 			}
 
-			_, err = c.EditMessageText(update.ChatId, inputContent, update.MessageId, &gotdbot.EditMessageTextOpts{
+			_, err = c.EditMessageText(u.ChatId, inputContent, u.MessageId, &gotdbot.EditMessageTextOpts{
 				ReplyMarkup: kb,
 			})
 
@@ -248,21 +241,21 @@ func main() {
 		}
 
 		return nil
-	}))
+	})
 
-	err = bot.Start()
+	err = client.Start()
 	if err != nil {
 		log.Fatalf("Failed to start bot: %v", err)
 	}
 
-	me, _ := bot.GetMe()
+	me, _ := client.GetMe()
 	if me != nil {
 		username := ""
 		if me.Usernames != nil && len(me.Usernames.ActiveUsernames) > 0 {
 			username = me.Usernames.ActiveUsernames[0]
 		}
-		bot.Logger.Info("Logged in", "username", username, "id", me.Id)
+		client.Logger.Info("Logged in", "username", username, "id", me.Id)
 	}
 
-	bot.Idle()
+	client.Idle()
 }

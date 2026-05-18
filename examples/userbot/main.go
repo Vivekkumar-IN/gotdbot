@@ -7,15 +7,14 @@ import (
 	"log"
 	"time"
 
-	"github.com/AshokShau/gotdbot"
-	"github.com/AshokShau/gotdbot/handlers"
+	"github.com/Vivekkumar-IN/gotdbot"
 )
 
 func main() {
 	apiID := int32(6)
 	apiHash := "API_HASH"
 
-	bot, err := gotdbot.NewClient(apiID, apiHash, "", &gotdbot.ClientOpts{
+	client, err := gotdbot.NewClient(apiID, apiHash, "", &gotdbot.ClientOpts{
 		LibraryPath:           "./libtdjson.so.1.8.64",
 		UseFileDatabase:       gotdbot.Bool(true),
 		AuthorizationTimeout:  2 * time.Minute,
@@ -27,22 +26,20 @@ func main() {
 		panic(err)
 	}
 
-	dispatcher := bot.Dispatcher
-
-	dispatcher.AddHandler(handlers.NewCommand("hi", func(c *gotdbot.Client, ctx *gotdbot.Context) error {
-		_, err := ctx.EffectiveMessage.ReplyText(c, "Hi, this is from gotdbot!", nil)
+	client.AddCommandHandler("hi", func(c *gotdbot.Client, u *gotdbot.UpdateNewMessage) error {
+		_, err := u.Message.ReplyText(c, "Hi, this is from gotdbot!", nil)
 		return err
-	}))
+	})
 
-	err = bot.Start()
+	err = client.Start()
 	if err != nil {
 		log.Fatalf("Failed to start bot: %v", err)
 	}
 
-	me, _ := bot.GetMe()
+	me, _ := client.GetMe()
 	if me != nil {
 		fmt.Printf("Current user: %s (ID: %d)\n", me.FirstName, me.Id)
 	}
 
-	bot.Idle()
+	client.Idle()
 }

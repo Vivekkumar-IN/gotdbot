@@ -6,8 +6,8 @@ import (
 
 // WaitMessageOpts holds optional parameters for Ask.
 type WaitMessageOpts struct {
-	Filter             func(*Message) bool
-	CancellationFilter func(*Message) bool
+	Filter             Filter
+	CancellationFilter Filter
 	Timeout            time.Duration
 }
 
@@ -28,11 +28,11 @@ func (c *Client) Ask(chatId int64, opts *WaitMessageOpts) (*Message, error) {
 			return false
 		}
 
-		if opts.CancellationFilter != nil && opts.CancellationFilter(msg) {
+		if opts.CancellationFilter != nil && opts.CancellationFilter.Check(client, u) {
 			return true
 		}
 
-		if opts.Filter != nil && !opts.Filter(msg) {
+		if opts.Filter != nil && !opts.Filter.Check(client, u) {
 			return false
 		}
 
@@ -44,9 +44,10 @@ func (c *Client) Ask(chatId int64, opts *WaitMessageOpts) (*Message, error) {
 		return nil, err
 	}
 
-	msg := raw.(*UpdateNewMessage).Message
+	u := raw.(*UpdateNewMessage)
+	msg := u.Message
 
-	if opts.CancellationFilter != nil && opts.CancellationFilter(msg) {
+	if opts.CancellationFilter != nil && opts.CancellationFilter.Check(c, u) {
 		return nil, ConversationCancelled
 	}
 

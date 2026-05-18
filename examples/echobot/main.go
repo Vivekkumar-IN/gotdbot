@@ -8,7 +8,7 @@ import (
 	"runtime"
 	"time"
 
-	"github.com/AshokShau/gotdbot"
+	"github.com/Vivekkumar-IN/gotdbot"
 )
 
 func main() {
@@ -16,21 +16,21 @@ func main() {
 	apiHash := ""
 	botToken := ""
 
-	bot, err := gotdbot.NewClient(apiID, apiHash, botToken, &gotdbot.ClientOpts{LibraryPath: "./libtdjson.so.1.8.64"})
+	client, err := gotdbot.NewClient(apiID, apiHash, botToken, &gotdbot.ClientOpts{LibraryPath: "./libtdjson.so.1.8.64"})
 	if err != nil {
 		panic(err)
 	}
 
 	var startTime = time.Now()
 
-	bot.AddCommandHandler("start", func(c *gotdbot.Client, u *gotdbot.UpdateNewMessage) error {
+	client.AddCommandHandler("start", func(c *gotdbot.Client, u *gotdbot.UpdateNewMessage) error {
 		kb := &gotdbot.ReplyMarkupInlineKeyboard{
 			Rows: [][]gotdbot.InlineKeyboardButton{
 				{
 					{
 						Text: "GoTDBot GitHub",
 						Type: &gotdbot.InlineKeyboardButtonTypeUrl{
-							Url: "https://github.com/AshokShau/gotdbot",
+							Url: "https://github.com/Vivekkumar-IN/gotdbot",
 						},
 					},
 				},
@@ -57,12 +57,12 @@ func main() {
 		return nil
 	})
 
-	bot.AddDeleteMessagesHandler(func(c *gotdbot.Client, u *gotdbot.UpdateDeleteMessages) error {
+	client.AddDeleteMessagesHandler(func(c *gotdbot.Client, u *gotdbot.UpdateDeleteMessages) error {
 		log.Printf("Messages deleted: %v (ChatID %d)", u.MessageIds, u.ChatId)
 		return nil
 	})
 
-	bot.AddCommandHandler("go", func(c *gotdbot.Client, u *gotdbot.UpdateNewMessage) error {
+	client.AddCommandHandler("go", func(c *gotdbot.Client, u *gotdbot.UpdateNewMessage) error {
 		var m runtime.MemStats
 		runtime.ReadMemStats(&m)
 
@@ -92,21 +92,21 @@ func main() {
 		return err
 	})
 
-	bot.AddNewMessageHandler(func(c *gotdbot.Client, u *gotdbot.UpdateNewMessage) error {
+	client.AddNewMessageHandler(func(c *gotdbot.Client, u *gotdbot.UpdateNewMessage) error {
 		_, err := c.ForwardMessages(u.Message.ChatId, u.Message.ChatId, []int64{u.Message.Id}, &gotdbot.ForwardMessagesOpts{SendCopy: true})
 		return err
 	}, gotdbot.FilterPrivate)
 
-	err = bot.Start()
+	err = client.Start()
 	if err != nil {
 		log.Fatalf("Failed to start bot: %v", err)
 	}
 
-	me, _ := bot.GetMe()
+	me, _ := client.GetMe()
 	username := ""
 	if me.Usernames != nil && len(me.Usernames.ActiveUsernames) > 0 {
 		username = me.Usernames.ActiveUsernames[0]
 	}
-	bot.Logger.Info("Logged in", "username", username, "id", me.Id)
-	bot.Idle()
+	client.Logger.Info("Logged in", "username", username, "id", me.Id)
+	client.Idle()
 }

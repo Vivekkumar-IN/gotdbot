@@ -8,9 +8,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/AshokShau/gotdbot"
-	"github.com/AshokShau/gotdbot/handlers"
-	"github.com/AshokShau/gotdbot/handlers/filters"
+	"github.com/Vivekkumar-IN/gotdbot"
 )
 
 func main() {
@@ -18,32 +16,30 @@ func main() {
 	apiHash := "API_HASH"
 	botToken := "BOT_TOKEN"
 
-	bot, err := gotdbot.NewClient(apiID, apiHash, botToken, &gotdbot.ClientOpts{LibraryPath: "./libtdjson.so.1.8.64"})
+	client, err := gotdbot.NewClient(apiID, apiHash, botToken, &gotdbot.ClientOpts{LibraryPath: "./libtdjson.so.1.8.64"})
 	if err != nil {
 		panic(err)
 	}
 
-	dispatcher := bot.Dispatcher
-
-	dispatcher.AddHandler(handlers.NewCommand("start", func(c *gotdbot.Client, ctx *gotdbot.Context) error {
-		msg := ctx.EffectiveMessage
+	client.AddCommandHandler("start", func(c *gotdbot.Client, u *gotdbot.UpdateNewMessage) error {
+		msg := u.Message
 		_, err := msg.ReplyText(c, "Welcome! Use /survey to start the survey.\nSend /cancel to stop talking to me", nil)
 		return err
-	}))
+	})
 
-	dispatcher.AddHandler(handlers.NewCommand("survey", func(c *gotdbot.Client, ctx *gotdbot.Context) error {
-		chatId := ctx.EffectiveChatId
-		msg := ctx.EffectiveMessage
+	client.AddCommandHandler("survey", func(c *gotdbot.Client, u *gotdbot.UpdateNewMessage) error {
+		msg := u.Message
+		chatId := msg.ChatId
 
 		timeOut := 30 * time.Second
-		stopFilter := filters.Text.And(filters.SenderID(msg.SenderID())).And(filters.Command("cancel"))
+		stopFilter := gotdbot.FilterText.And(gotdbot.FilterSenderID(msg.SenderID())).And(gotdbot.FilterCommand("cancel"))
 
 		_, err = msg.ReplyText(c, "What is your name?", nil)
 		if err != nil {
 			return err
 		}
 
-		nameMsg, err := ctx.Ask(chatId, &gotdbot.WaitMessageOpts{Timeout: timeOut, Filter: filters.Text.And(filters.SenderID(msg.SenderID())), CancellationFilter: stopFilter})
+		nameMsg, err := c.Ask(chatId, &gotdbot.WaitMessageOpts{Timeout: timeOut, Filter: gotdbot.FilterText.And(gotdbot.FilterSenderID(msg.SenderID())), CancellationFilter: stopFilter})
 		if err != nil {
 			_, _ = msg.ReplyText(c, err.Error(), nil)
 			return nil
@@ -54,7 +50,7 @@ func main() {
 			return err
 		}
 
-		picMsg, err := ctx.Ask(chatId, &gotdbot.WaitMessageOpts{Timeout: timeOut, Filter: filters.Photo.And(filters.SenderID(msg.SenderID())), CancellationFilter: stopFilter})
+		picMsg, err := c.Ask(chatId, &gotdbot.WaitMessageOpts{Timeout: timeOut, Filter: gotdbot.FilterPhoto.And(gotdbot.FilterSenderID(msg.SenderID())), CancellationFilter: stopFilter})
 		if err != nil {
 			if errors.Is(err, gotdbot.ConversationCancelled) {
 				_, _ = msg.ReplyText(c, "Survey cancelled. Send /survey to start again.", nil)
@@ -71,11 +67,11 @@ func main() {
 		}
 
 		return nil
-	}))
+	})
 
-	err = bot.Start()
+	err = client.Start()
 	if err != nil {
 		log.Fatalf("Failed to start bot: %v", err)
 	}
-	bot.Idle()
+	client.Idle()
 }

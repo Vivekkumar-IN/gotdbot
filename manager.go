@@ -6,7 +6,7 @@ import (
 	"sync"
 	"syscall"
 
-	"github.com/AshokShau/gotdbot/internal/tdjson"
+	"github.com/Vivekkumar-IN/gotdbot/internal/tdjson"
 )
 
 var (
