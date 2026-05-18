@@ -73,5 +73,5 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Inspired by
 
-- [gotgbot](https://github.com/PaulSonOfLars/gotgbot)
+- [gogram](https://github.com/AmarnathCJD/gogram)
 - [pytdbot](https://github.com/pytdbot/client)
