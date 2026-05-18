@@ -121,36 +121,34 @@ type SendTextMessageOpts struct {
 }
 
 // SendTextMessage sends a text message to chat
-func (c *Client) SendTextMessage(chatId int64, text string, opts *SendTextMessageOpts) (*Message, error) {
-	if opts == nil {
-		opts = &SendTextMessageOpts{}
-	}
+func (c *Client) SendTextMessage(chatId int64, text string, opts ...*SendTextMessageOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendTextMessageOpts{})
 
-	formattedText, err := GetFormattedText(c, text, opts.Entities, opts.ParseMode)
+	formattedText, err := GetFormattedText(c, text, opt.Entities, opt.ParseMode)
 	if err != nil {
 		return nil, err
 	}
 
 	linkPreviewOptions := &LinkPreviewOptions{
-		IsDisabled:      opts.DisableWebPagePreview,
-		Url:             opts.Url,
-		ForceSmallMedia: opts.ForceSmallMedia,
-		ForceLargeMedia: opts.ForceLargeMedia,
-		ShowAboveText:   opts.ShowAboveText,
+		IsDisabled:      opt.DisableWebPagePreview,
+		Url:             opt.Url,
+		ForceSmallMedia: opt.ForceSmallMedia,
+		ForceLargeMedia: opt.ForceLargeMedia,
+		ShowAboveText:   opt.ShowAboveText,
 	}
 
 	content := &InputMessageText{
 		Text:               formattedText,
 		LinkPreviewOptions: linkPreviewOptions,
-		ClearDraft:         opts.ClearDraft,
+		ClearDraft:         opt.ClearDraft,
 	}
 
 	return c.sendMessageWithContent(chatId, content, &MessageSendOptions{
-		DisableNotification: opts.DisableNotification,
-		ProtectContent:      opts.ProtectContent,
-		AllowPaidBroadcast:  opts.AllowPaidBroadcast,
-		EffectId:            opts.EffectId,
-	}, opts.TopicId, opts.Quote, opts.ReplyTo, opts.ReplyToMessageID, opts.ReplyMarkup)
+		DisableNotification: opt.DisableNotification,
+		ProtectContent:      opt.ProtectContent,
+		AllowPaidBroadcast:  opt.AllowPaidBroadcast,
+		EffectId:            opt.EffectId,
+	}, opt.TopicId, opt.Quote, opt.ReplyTo, opt.ReplyToMessageID, opt.ReplyMarkup)
 }
 
 // SendPhotoOpts contains optional parameters for SendPhoto
@@ -176,33 +174,31 @@ type SendPhotoOpts struct {
 }
 
 // SendPhoto sends a photo to chat
-func (c *Client) SendPhoto(chatId int64, photo InputFile, opts *SendPhotoOpts) (*Message, error) {
-	if opts == nil {
-		opts = &SendPhotoOpts{}
-	}
+func (c *Client) SendPhoto(chatId int64, photo InputFile, opts ...*SendPhotoOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendPhotoOpts{})
 
-	caption, err := GetFormattedText(c, opts.Caption, opts.CaptionEntities, opts.ParseMode)
+	caption, err := GetFormattedText(c, opt.Caption, opt.CaptionEntities, opt.ParseMode)
 	if err != nil {
 		return nil, err
 	}
 
 	content := &InputMessagePhoto{
 		Photo:               photo,
-		Thumbnail:           opts.Thumbnail,
-		AddedStickerFileIds: opts.AddedStickerFileIds,
-		Width:               opts.Width,
-		Height:              opts.Height,
+		Thumbnail:           opt.Thumbnail,
+		AddedStickerFileIds: opt.AddedStickerFileIds,
+		Width:               opt.Width,
+		Height:              opt.Height,
 		Caption:             caption,
-		SelfDestructType:    opts.SelfDestructType,
-		HasSpoiler:          opts.HasSpoiler,
+		SelfDestructType:    opt.SelfDestructType,
+		HasSpoiler:          opt.HasSpoiler,
 	}
 
 	return c.sendMessageWithContent(chatId, content, &MessageSendOptions{
-		DisableNotification: opts.DisableNotification,
-		ProtectContent:      opts.ProtectContent,
-		AllowPaidBroadcast:  opts.AllowPaidBroadcast,
-		EffectId:            opts.EffectId,
-	}, opts.TopicId, opts.Quote, opts.ReplyTo, opts.ReplyToMessageID, opts.ReplyMarkup)
+		DisableNotification: opt.DisableNotification,
+		ProtectContent:      opt.ProtectContent,
+		AllowPaidBroadcast:  opt.AllowPaidBroadcast,
+		EffectId:            opt.EffectId,
+	}, opt.TopicId, opt.Quote, opt.ReplyTo, opt.ReplyToMessageID, opt.ReplyMarkup)
 }
 
 // SendVideoOpts contains optional parameters for SendVideo
@@ -230,35 +226,33 @@ type SendVideoOpts struct {
 }
 
 // SendVideo sends a video to chat
-func (c *Client) SendVideo(chatId int64, video InputFile, opts *SendVideoOpts) (*Message, error) {
-	if opts == nil {
-		opts = &SendVideoOpts{}
-	}
+func (c *Client) SendVideo(chatId int64, video InputFile, opts ...*SendVideoOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendVideoOpts{})
 
-	caption, err := GetFormattedText(c, opts.Caption, opts.CaptionEntities, opts.ParseMode)
+	caption, err := GetFormattedText(c, opt.Caption, opt.CaptionEntities, opt.ParseMode)
 	if err != nil {
 		return nil, err
 	}
 
 	content := &InputMessageVideo{
 		Video:               video,
-		Thumbnail:           opts.Thumbnail,
-		AddedStickerFileIds: opts.AddedStickerFileIds,
-		Duration:            opts.Duration,
-		Width:               opts.Width,
-		Height:              opts.Height,
-		SupportsStreaming:   opts.SupportsStreaming,
+		Thumbnail:           opt.Thumbnail,
+		AddedStickerFileIds: opt.AddedStickerFileIds,
+		Duration:            opt.Duration,
+		Width:               opt.Width,
+		Height:              opt.Height,
+		SupportsStreaming:   opt.SupportsStreaming,
 		Caption:             caption,
-		SelfDestructType:    opts.SelfDestructType,
-		HasSpoiler:          opts.HasSpoiler,
+		SelfDestructType:    opt.SelfDestructType,
+		HasSpoiler:          opt.HasSpoiler,
 	}
 
 	return c.sendMessageWithContent(chatId, content, &MessageSendOptions{
-		DisableNotification: opts.DisableNotification,
-		ProtectContent:      opts.ProtectContent,
-		AllowPaidBroadcast:  opts.AllowPaidBroadcast,
-		EffectId:            opts.EffectId,
-	}, opts.TopicId, opts.Quote, opts.ReplyTo, opts.ReplyToMessageID, opts.ReplyMarkup)
+		DisableNotification: opt.DisableNotification,
+		ProtectContent:      opt.ProtectContent,
+		AllowPaidBroadcast:  opt.AllowPaidBroadcast,
+		EffectId:            opt.EffectId,
+	}, opt.TopicId, opt.Quote, opt.ReplyTo, opt.ReplyToMessageID, opt.ReplyMarkup)
 }
 
 // SendAnimationOpts contains optional parameters for SendAnimation
@@ -284,33 +278,31 @@ type SendAnimationOpts struct {
 }
 
 // SendAnimation sends an animation to chat
-func (c *Client) SendAnimation(chatId int64, animation InputFile, opts *SendAnimationOpts) (*Message, error) {
-	if opts == nil {
-		opts = &SendAnimationOpts{}
-	}
+func (c *Client) SendAnimation(chatId int64, animation InputFile, opts ...*SendAnimationOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendAnimationOpts{})
 
-	caption, err := GetFormattedText(c, opts.Caption, opts.CaptionEntities, opts.ParseMode)
+	caption, err := GetFormattedText(c, opt.Caption, opt.CaptionEntities, opt.ParseMode)
 	if err != nil {
 		return nil, err
 	}
 
 	content := &InputMessageAnimation{
 		Animation:           animation,
-		Thumbnail:           opts.Thumbnail,
-		AddedStickerFileIds: opts.AddedStickerFileIds,
-		Duration:            opts.Duration,
-		Width:               opts.Width,
-		Height:              opts.Height,
+		Thumbnail:           opt.Thumbnail,
+		AddedStickerFileIds: opt.AddedStickerFileIds,
+		Duration:            opt.Duration,
+		Width:               opt.Width,
+		Height:              opt.Height,
 		Caption:             caption,
-		HasSpoiler:          opts.HasSpoiler,
+		HasSpoiler:          opt.HasSpoiler,
 	}
 
 	return c.sendMessageWithContent(chatId, content, &MessageSendOptions{
-		DisableNotification: opts.DisableNotification,
-		ProtectContent:      opts.ProtectContent,
-		AllowPaidBroadcast:  opts.AllowPaidBroadcast,
-		EffectId:            opts.EffectId,
-	}, opts.TopicId, opts.Quote, opts.ReplyTo, opts.ReplyToMessageID, opts.ReplyMarkup)
+		DisableNotification: opt.DisableNotification,
+		ProtectContent:      opt.ProtectContent,
+		AllowPaidBroadcast:  opt.AllowPaidBroadcast,
+		EffectId:            opt.EffectId,
+	}, opt.TopicId, opt.Quote, opt.ReplyTo, opt.ReplyToMessageID, opt.ReplyMarkup)
 }
 
 // SendAudioOpts contains optional parameters for SendAudio
@@ -334,31 +326,29 @@ type SendAudioOpts struct {
 }
 
 // SendAudio sends an audio to chat
-func (c *Client) SendAudio(chatId int64, audio InputFile, opts *SendAudioOpts) (*Message, error) {
-	if opts == nil {
-		opts = &SendAudioOpts{}
-	}
+func (c *Client) SendAudio(chatId int64, audio InputFile, opts ...*SendAudioOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendAudioOpts{})
 
-	caption, err := GetFormattedText(c, opts.Caption, opts.CaptionEntities, opts.ParseMode)
+	caption, err := GetFormattedText(c, opt.Caption, opt.CaptionEntities, opt.ParseMode)
 	if err != nil {
 		return nil, err
 	}
 
 	content := &InputMessageAudio{
 		Audio:               audio,
-		AlbumCoverThumbnail: opts.AlbumCoverThumbnail,
-		Title:               opts.Title,
-		Performer:           opts.Performer,
-		Duration:            opts.Duration,
+		AlbumCoverThumbnail: opt.AlbumCoverThumbnail,
+		Title:               opt.Title,
+		Performer:           opt.Performer,
+		Duration:            opt.Duration,
 		Caption:             caption,
 	}
 
 	return c.sendMessageWithContent(chatId, content, &MessageSendOptions{
-		DisableNotification: opts.DisableNotification,
-		ProtectContent:      opts.ProtectContent,
-		AllowPaidBroadcast:  opts.AllowPaidBroadcast,
-		EffectId:            opts.EffectId,
-	}, opts.TopicId, opts.Quote, opts.ReplyTo, opts.ReplyToMessageID, opts.ReplyMarkup)
+		DisableNotification: opt.DisableNotification,
+		ProtectContent:      opt.ProtectContent,
+		AllowPaidBroadcast:  opt.AllowPaidBroadcast,
+		EffectId:            opt.EffectId,
+	}, opt.TopicId, opt.Quote, opt.ReplyTo, opt.ReplyToMessageID, opt.ReplyMarkup)
 }
 
 // SendDocumentOpts contains optional parameters for SendDocument
@@ -380,29 +370,27 @@ type SendDocumentOpts struct {
 }
 
 // SendDocument sends a document to chat
-func (c *Client) SendDocument(chatId int64, document InputFile, opts *SendDocumentOpts) (*Message, error) {
-	if opts == nil {
-		opts = &SendDocumentOpts{}
-	}
+func (c *Client) SendDocument(chatId int64, document InputFile, opts ...*SendDocumentOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendDocumentOpts{})
 
-	caption, err := GetFormattedText(c, opts.Caption, opts.CaptionEntities, opts.ParseMode)
+	caption, err := GetFormattedText(c, opt.Caption, opt.CaptionEntities, opt.ParseMode)
 	if err != nil {
 		return nil, err
 	}
 
 	content := &InputMessageDocument{
 		Document:                    document,
-		Thumbnail:                   opts.Thumbnail,
-		DisableContentTypeDetection: opts.DisableContentTypeDetection,
+		Thumbnail:                   opt.Thumbnail,
+		DisableContentTypeDetection: opt.DisableContentTypeDetection,
 		Caption:                     caption,
 	}
 
 	return c.sendMessageWithContent(chatId, content, &MessageSendOptions{
-		DisableNotification: opts.DisableNotification,
-		ProtectContent:      opts.ProtectContent,
-		AllowPaidBroadcast:  opts.AllowPaidBroadcast,
-		EffectId:            opts.EffectId,
-	}, opts.TopicId, opts.Quote, opts.ReplyTo, opts.ReplyToMessageID, opts.ReplyMarkup)
+		DisableNotification: opt.DisableNotification,
+		ProtectContent:      opt.ProtectContent,
+		AllowPaidBroadcast:  opt.AllowPaidBroadcast,
+		EffectId:            opt.EffectId,
+	}, opt.TopicId, opt.Quote, opt.ReplyTo, opt.ReplyToMessageID, opt.ReplyMarkup)
 }
 
 // SendVoiceOpts contains optional parameters for SendVoice
@@ -424,29 +412,27 @@ type SendVoiceOpts struct {
 }
 
 // SendVoice sends a voice note to chat
-func (c *Client) SendVoice(chatId int64, voice InputFile, opts *SendVoiceOpts) (*Message, error) {
-	if opts == nil {
-		opts = &SendVoiceOpts{}
-	}
+func (c *Client) SendVoice(chatId int64, voice InputFile, opts ...*SendVoiceOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendVoiceOpts{})
 
-	caption, err := GetFormattedText(c, opts.Caption, opts.CaptionEntities, opts.ParseMode)
+	caption, err := GetFormattedText(c, opt.Caption, opt.CaptionEntities, opt.ParseMode)
 	if err != nil {
 		return nil, err
 	}
 
 	content := &InputMessageVoiceNote{
 		VoiceNote: voice,
-		Waveform:  opts.Waveform,
-		Duration:  opts.Duration,
+		Waveform:  opt.Waveform,
+		Duration:  opt.Duration,
 		Caption:   caption,
 	}
 
 	return c.sendMessageWithContent(chatId, content, &MessageSendOptions{
-		DisableNotification: opts.DisableNotification,
-		ProtectContent:      opts.ProtectContent,
-		AllowPaidBroadcast:  opts.AllowPaidBroadcast,
-		EffectId:            opts.EffectId,
-	}, opts.TopicId, opts.Quote, opts.ReplyTo, opts.ReplyToMessageID, opts.ReplyMarkup)
+		DisableNotification: opt.DisableNotification,
+		ProtectContent:      opt.ProtectContent,
+		AllowPaidBroadcast:  opt.AllowPaidBroadcast,
+		EffectId:            opt.EffectId,
+	}, opt.TopicId, opt.Quote, opt.ReplyTo, opt.ReplyToMessageID, opt.ReplyMarkup)
 }
 
 // SendVideoNoteOpts contains optional parameters for SendVideoNote
@@ -466,24 +452,22 @@ type SendVideoNoteOpts struct {
 }
 
 // SendVideoNote sends a video note to chat
-func (c *Client) SendVideoNote(chatId int64, videoNote InputFile, opts *SendVideoNoteOpts) (*Message, error) {
-	if opts == nil {
-		opts = &SendVideoNoteOpts{}
-	}
+func (c *Client) SendVideoNote(chatId int64, videoNote InputFile, opts ...*SendVideoNoteOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendVideoNoteOpts{})
 
 	content := &InputMessageVideoNote{
 		VideoNote: videoNote,
-		Thumbnail: opts.Thumbnail,
-		Duration:  opts.Duration,
-		Length:    opts.Length,
+		Thumbnail: opt.Thumbnail,
+		Duration:  opt.Duration,
+		Length:    opt.Length,
 	}
 
 	return c.sendMessageWithContent(chatId, content, &MessageSendOptions{
-		DisableNotification: opts.DisableNotification,
-		ProtectContent:      opts.ProtectContent,
-		AllowPaidBroadcast:  opts.AllowPaidBroadcast,
-		EffectId:            opts.EffectId,
-	}, opts.TopicId, opts.Quote, opts.ReplyTo, opts.ReplyToMessageID, opts.ReplyMarkup)
+		DisableNotification: opt.DisableNotification,
+		ProtectContent:      opt.ProtectContent,
+		AllowPaidBroadcast:  opt.AllowPaidBroadcast,
+		EffectId:            opt.EffectId,
+	}, opt.TopicId, opt.Quote, opt.ReplyTo, opt.ReplyToMessageID, opt.ReplyMarkup)
 }
 
 // SendStickerOpts contains optional parameters for SendSticker
@@ -504,25 +488,23 @@ type SendStickerOpts struct {
 }
 
 // SendSticker sends a sticker to chat
-func (c *Client) SendSticker(chatId int64, sticker InputFile, opts *SendStickerOpts) (*Message, error) {
-	if opts == nil {
-		opts = &SendStickerOpts{}
-	}
+func (c *Client) SendSticker(chatId int64, sticker InputFile, opts ...*SendStickerOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendStickerOpts{})
 
 	content := &InputMessageSticker{
 		Sticker:   sticker,
-		Thumbnail: opts.Thumbnail,
-		Width:     opts.Width,
-		Height:    opts.Height,
-		Emoji:     opts.Emoji,
+		Thumbnail: opt.Thumbnail,
+		Width:     opt.Width,
+		Height:    opt.Height,
+		Emoji:     opt.Emoji,
 	}
 
 	return c.sendMessageWithContent(chatId, content, &MessageSendOptions{
-		DisableNotification: opts.DisableNotification,
-		ProtectContent:      opts.ProtectContent,
-		AllowPaidBroadcast:  opts.AllowPaidBroadcast,
-		EffectId:            opts.EffectId,
-	}, opts.TopicId, opts.Quote, opts.ReplyTo, opts.ReplyToMessageID, opts.ReplyMarkup)
+		DisableNotification: opt.DisableNotification,
+		ProtectContent:      opt.ProtectContent,
+		AllowPaidBroadcast:  opt.AllowPaidBroadcast,
+		EffectId:            opt.EffectId,
+	}, opt.TopicId, opt.Quote, opt.ReplyTo, opt.ReplyToMessageID, opt.ReplyMarkup)
 }
 
 // SendCopyOpts contains optional parameters for SendCopy
@@ -544,32 +526,30 @@ type SendCopyOpts struct {
 }
 
 // SendCopy copies a message to chat
-func (c *Client) SendCopy(chatId int64, fromChatId int64, messageId int64, opts *SendCopyOpts) (*Message, error) {
-	if opts == nil {
-		opts = &SendCopyOpts{}
-	}
+func (c *Client) SendCopy(chatId int64, fromChatId int64, messageId int64, opts ...*SendCopyOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendCopyOpts{})
 
-	caption, err := GetFormattedText(c, opts.NewCaption, opts.NewCaptionEntities, opts.ParseMode)
+	caption, err := GetFormattedText(c, opt.NewCaption, opt.NewCaptionEntities, opt.ParseMode)
 	if err != nil {
 		return nil, err
 	}
 	content := &InputMessageForwarded{
 		FromChatId:  fromChatId,
 		MessageId:   messageId,
-		InGameShare: opts.InGameShare,
+		InGameShare: opt.InGameShare,
 		CopyOptions: &MessageCopyOptions{
 			SendCopy:       true,
-			ReplaceCaption: opts.ReplaceCaption,
+			ReplaceCaption: opt.ReplaceCaption,
 			NewCaption:     caption,
 		},
 	}
 
 	return c.sendMessageWithContent(chatId, content, &MessageSendOptions{
-		DisableNotification: opts.DisableNotification,
-		ProtectContent:      opts.ProtectContent,
-		AllowPaidBroadcast:  opts.AllowPaidBroadcast,
-		EffectId:            opts.EffectId,
-	}, opts.TopicId, opts.Quote, opts.ReplyTo, opts.ReplyToMessageID, opts.ReplyMarkup)
+		DisableNotification: opt.DisableNotification,
+		ProtectContent:      opt.ProtectContent,
+		AllowPaidBroadcast:  opt.AllowPaidBroadcast,
+		EffectId:            opt.EffectId,
+	}, opt.TopicId, opt.Quote, opt.ReplyTo, opt.ReplyToMessageID, opt.ReplyMarkup)
 }
 
 // ForwardMessageOpts contains optional parameters for ForwardMessage
@@ -580,20 +560,18 @@ type ForwardMessageOpts struct {
 }
 
 // ForwardMessage forwards a message to chat
-func (c *Client) ForwardMessage(chatId int64, fromChatId int64, messageId int64, opts *ForwardMessageOpts) (*Message, error) {
-	if opts == nil {
-		opts = &ForwardMessageOpts{}
-	}
+func (c *Client) ForwardMessage(chatId int64, fromChatId int64, messageId int64, opts ...*ForwardMessageOpts) (*Message, error) {
+	opt := getVariadic(opts, &ForwardMessageOpts{})
 
 	content := &InputMessageForwarded{
 		FromChatId:  fromChatId,
 		MessageId:   messageId,
-		InGameShare: opts.InGameShare,
+		InGameShare: opt.InGameShare,
 	}
 
 	return c.sendMessageWithContent(chatId, content, &MessageSendOptions{
-		DisableNotification: opts.DisableNotification,
-		EffectId:            opts.EffectId,
+		DisableNotification: opt.DisableNotification,
+		EffectId:            opt.EffectId,
 	}, nil, nil, nil, 0, nil)
 }
 
@@ -610,10 +588,8 @@ type EditTextMessageOpts struct {
 }
 
 // EditTextMessage edits a text message
-func (c *Client) EditTextMessage(chatId int64, messageId int64, text string, opts *EditTextMessageOpts) (*Message, error) {
-	if opts == nil {
-		opts = &EditTextMessageOpts{}
-	}
+func (c *Client) EditTextMessage(chatId int64, messageId int64, text string, opts ...*EditTextMessageOpts) (*Message, error) {
+	opt := getVariadic(opts, &EditTextMessageOpts{})
 
 	if !*c.config.UseMessageDatabase {
 		if _, err := c.GetMessage(chatId, messageId); err != nil {
@@ -621,17 +597,17 @@ func (c *Client) EditTextMessage(chatId int64, messageId int64, text string, opt
 		}
 	}
 
-	formattedText, err := GetFormattedText(c, text, opts.Entities, opts.ParseMode)
+	formattedText, err := GetFormattedText(c, text, opt.Entities, opt.ParseMode)
 	if err != nil {
 		return nil, err
 	}
 
 	linkPreviewOptions := &LinkPreviewOptions{
-		IsDisabled:      opts.DisableWebPagePreview,
-		Url:             opts.Url,
-		ForceSmallMedia: opts.ForceSmallMedia,
-		ForceLargeMedia: opts.ForceLargeMedia,
-		ShowAboveText:   opts.ShowAboveText,
+		IsDisabled:      opt.DisableWebPagePreview,
+		Url:             opt.Url,
+		ForceSmallMedia: opt.ForceSmallMedia,
+		ForceLargeMedia: opt.ForceLargeMedia,
+		ShowAboveText:   opt.ShowAboveText,
 	}
 
 	content := &InputMessageText{
@@ -640,7 +616,7 @@ func (c *Client) EditTextMessage(chatId int64, messageId int64, text string, opt
 	}
 
 	return c.EditMessageText(chatId, content, messageId, &EditMessageTextOpts{
-		ReplyMarkup: opts.ReplyMarkup,
+		ReplyMarkup: opt.ReplyMarkup,
 	})
 }
 
@@ -653,10 +629,8 @@ type EditCaptionOpts struct {
 }
 
 // EditCaption edits the caption of a message
-func (c *Client) EditCaption(chatId int64, messageId int64, caption string, opts *EditCaptionOpts) (*Message, error) {
-	if opts == nil {
-		opts = &EditCaptionOpts{}
-	}
+func (c *Client) EditCaption(chatId int64, messageId int64, caption string, opts ...*EditCaptionOpts) (*Message, error) {
+	opt := getVariadic(opts, &EditCaptionOpts{})
 
 	if !*c.config.UseMessageDatabase {
 		if _, err := c.GetMessage(chatId, messageId); err != nil {
@@ -664,15 +638,15 @@ func (c *Client) EditCaption(chatId int64, messageId int64, caption string, opts
 		}
 	}
 
-	formattedText, err := GetFormattedText(c, caption, opts.Entities, opts.ParseMode)
+	formattedText, err := GetFormattedText(c, caption, opt.Entities, opt.ParseMode)
 	if err != nil {
 		return nil, err
 	}
 
 	return c.EditMessageCaption(chatId, messageId, &EditMessageCaptionOpts{
 		Caption:               formattedText,
-		ReplyMarkup:           opts.ReplyMarkup,
-		ShowCaptionAboveMedia: opts.ShowCaptionAboveMedia,
+		ReplyMarkup:           opt.ReplyMarkup,
+		ShowCaptionAboveMedia: opt.ShowCaptionAboveMedia,
 	})
 }
 
@@ -726,19 +700,17 @@ type SendChecklistOpts struct {
 }
 
 // SendChecklist sends a checklist to chat
-func (c *Client) SendChecklist(chatId int64, checklist *InputChecklist, opts *SendChecklistOpts) (*Message, error) {
-	if opts == nil {
-		opts = &SendChecklistOpts{}
-	}
+func (c *Client) SendChecklist(chatId int64, checklist *InputChecklist, opts ...*SendChecklistOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendChecklistOpts{})
 	content := &InputMessageChecklist{
 		Checklist: checklist,
 	}
 	return c.sendMessageWithContent(chatId, content, &MessageSendOptions{
-		DisableNotification: opts.DisableNotification,
-		ProtectContent:      opts.ProtectContent,
-		AllowPaidBroadcast:  opts.AllowPaidBroadcast,
-		EffectId:            opts.EffectId,
-	}, opts.TopicId, opts.Quote, opts.ReplyTo, opts.ReplyToMessageID, opts.ReplyMarkup)
+		DisableNotification: opt.DisableNotification,
+		ProtectContent:      opt.ProtectContent,
+		AllowPaidBroadcast:  opt.AllowPaidBroadcast,
+		EffectId:            opt.EffectId,
+	}, opt.TopicId, opt.Quote, opt.ReplyTo, opt.ReplyToMessageID, opt.ReplyMarkup)
 }
 
 // SendContactOpts contains optional parameters for SendContact
@@ -755,19 +727,17 @@ type SendContactOpts struct {
 }
 
 // SendContact sends a contact to chat
-func (c *Client) SendContact(chatId int64, contact *Contact, opts *SendContactOpts) (*Message, error) {
-	if opts == nil {
-		opts = &SendContactOpts{}
-	}
+func (c *Client) SendContact(chatId int64, contact *Contact, opts ...*SendContactOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendContactOpts{})
 	content := &InputMessageContact{
 		Contact: contact,
 	}
 	return c.sendMessageWithContent(chatId, content, &MessageSendOptions{
-		DisableNotification: opts.DisableNotification,
-		ProtectContent:      opts.ProtectContent,
-		AllowPaidBroadcast:  opts.AllowPaidBroadcast,
-		EffectId:            opts.EffectId,
-	}, opts.TopicId, opts.Quote, opts.ReplyTo, opts.ReplyToMessageID, opts.ReplyMarkup)
+		DisableNotification: opt.DisableNotification,
+		ProtectContent:      opt.ProtectContent,
+		AllowPaidBroadcast:  opt.AllowPaidBroadcast,
+		EffectId:            opt.EffectId,
+	}, opt.TopicId, opt.Quote, opt.ReplyTo, opt.ReplyToMessageID, opt.ReplyMarkup)
 }
 
 // SendDiceOpts contains optional parameters for SendDice
@@ -785,20 +755,18 @@ type SendDiceOpts struct {
 }
 
 // SendDice sends a dice to chat
-func (c *Client) SendDice(chatId int64, emoji string, opts *SendDiceOpts) (*Message, error) {
-	if opts == nil {
-		opts = &SendDiceOpts{}
-	}
+func (c *Client) SendDice(chatId int64, emoji string, opts ...*SendDiceOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendDiceOpts{})
 	content := &InputMessageDice{
 		Emoji:      emoji,
-		ClearDraft: opts.ClearDraft,
+		ClearDraft: opt.ClearDraft,
 	}
 	return c.sendMessageWithContent(chatId, content, &MessageSendOptions{
-		DisableNotification: opts.DisableNotification,
-		ProtectContent:      opts.ProtectContent,
-		AllowPaidBroadcast:  opts.AllowPaidBroadcast,
-		EffectId:            opts.EffectId,
-	}, opts.TopicId, opts.Quote, opts.ReplyTo, opts.ReplyToMessageID, opts.ReplyMarkup)
+		DisableNotification: opt.DisableNotification,
+		ProtectContent:      opt.ProtectContent,
+		AllowPaidBroadcast:  opt.AllowPaidBroadcast,
+		EffectId:            opt.EffectId,
+	}, opt.TopicId, opt.Quote, opt.ReplyTo, opt.ReplyToMessageID, opt.ReplyMarkup)
 }
 
 // SendGameOpts contains optional parameters for SendGame
@@ -815,20 +783,18 @@ type SendGameOpts struct {
 }
 
 // SendGame sends a game to chat
-func (c *Client) SendGame(chatId int64, botUserId int64, gameShortName string, opts *SendGameOpts) (*Message, error) {
-	if opts == nil {
-		opts = &SendGameOpts{}
-	}
+func (c *Client) SendGame(chatId int64, botUserId int64, gameShortName string, opts ...*SendGameOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendGameOpts{})
 	content := &InputMessageGame{
 		BotUserId:     botUserId,
 		GameShortName: gameShortName,
 	}
 	return c.sendMessageWithContent(chatId, content, &MessageSendOptions{
-		DisableNotification: opts.DisableNotification,
-		ProtectContent:      opts.ProtectContent,
-		AllowPaidBroadcast:  opts.AllowPaidBroadcast,
-		EffectId:            opts.EffectId,
-	}, opts.TopicId, opts.Quote, opts.ReplyTo, opts.ReplyToMessageID, opts.ReplyMarkup)
+		DisableNotification: opt.DisableNotification,
+		ProtectContent:      opt.ProtectContent,
+		AllowPaidBroadcast:  opt.AllowPaidBroadcast,
+		EffectId:            opt.EffectId,
+	}, opt.TopicId, opt.Quote, opt.ReplyTo, opt.ReplyToMessageID, opt.ReplyMarkup)
 }
 
 // SendInvoiceOpts contains optional parameters for SendInvoice
@@ -856,35 +822,33 @@ type SendInvoiceOpts struct {
 }
 
 // SendInvoice sends an invoice to chat
-func (c *Client) SendInvoice(chatId int64, invoice *Invoice, title string, description string, payload []byte, opts *SendInvoiceOpts) (*Message, error) {
-	if opts == nil {
-		opts = &SendInvoiceOpts{}
-	}
-	paidMediaCaption, err := GetFormattedText(c, opts.PaidMediaCaption, opts.PaidMediaEntities, opts.ParseMode)
+func (c *Client) SendInvoice(chatId int64, invoice *Invoice, title string, description string, payload []byte, opts ...*SendInvoiceOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendInvoiceOpts{})
+	paidMediaCaption, err := GetFormattedText(c, opt.PaidMediaCaption, opt.PaidMediaEntities, opt.ParseMode)
 	if err != nil {
 		return nil, err
 	}
 	content := &InputMessageInvoice{
 		Description:      description,
 		Invoice:          invoice,
-		PaidMedia:        opts.PaidMedia,
+		PaidMedia:        opt.PaidMedia,
 		PaidMediaCaption: paidMediaCaption,
 		Payload:          payload,
-		PhotoHeight:      opts.PhotoHeight,
-		PhotoSize:        opts.PhotoSize,
-		PhotoUrl:         opts.PhotoUrl,
-		PhotoWidth:       opts.PhotoWidth,
-		ProviderData:     opts.ProviderData,
-		ProviderToken:    opts.ProviderToken,
-		StartParameter:   opts.StartParameter,
+		PhotoHeight:      opt.PhotoHeight,
+		PhotoSize:        opt.PhotoSize,
+		PhotoUrl:         opt.PhotoUrl,
+		PhotoWidth:       opt.PhotoWidth,
+		ProviderData:     opt.ProviderData,
+		ProviderToken:    opt.ProviderToken,
+		StartParameter:   opt.StartParameter,
 		Title:            title,
 	}
 	return c.sendMessageWithContent(chatId, content, &MessageSendOptions{
-		DisableNotification: opts.DisableNotification,
-		ProtectContent:      opts.ProtectContent,
-		AllowPaidBroadcast:  opts.AllowPaidBroadcast,
-		EffectId:            opts.EffectId,
-	}, opts.TopicId, opts.Quote, opts.ReplyTo, opts.ReplyToMessageID, opts.ReplyMarkup)
+		DisableNotification: opt.DisableNotification,
+		ProtectContent:      opt.ProtectContent,
+		AllowPaidBroadcast:  opt.AllowPaidBroadcast,
+		EffectId:            opt.EffectId,
+	}, opt.TopicId, opt.Quote, opt.ReplyTo, opt.ReplyToMessageID, opt.ReplyMarkup)
 }
 
 // SendLocationOpts contains optional parameters for SendLocation
@@ -904,22 +868,20 @@ type SendLocationOpts struct {
 }
 
 // SendLocation sends a location to chat
-func (c *Client) SendLocation(chatId int64, location *Location, opts *SendLocationOpts) (*Message, error) {
-	if opts == nil {
-		opts = &SendLocationOpts{}
-	}
+func (c *Client) SendLocation(chatId int64, location *Location, opts ...*SendLocationOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendLocationOpts{})
 	content := &InputMessageLocation{
-		Heading:              opts.Heading,
-		LivePeriod:           opts.LivePeriod,
+		Heading:              opt.Heading,
+		LivePeriod:           opt.LivePeriod,
 		Location:             location,
-		ProximityAlertRadius: opts.ProximityAlertRadius,
+		ProximityAlertRadius: opt.ProximityAlertRadius,
 	}
 	return c.sendMessageWithContent(chatId, content, &MessageSendOptions{
-		DisableNotification: opts.DisableNotification,
-		ProtectContent:      opts.ProtectContent,
-		AllowPaidBroadcast:  opts.AllowPaidBroadcast,
-		EffectId:            opts.EffectId,
-	}, opts.TopicId, opts.Quote, opts.ReplyTo, opts.ReplyToMessageID, opts.ReplyMarkup)
+		DisableNotification: opt.DisableNotification,
+		ProtectContent:      opt.ProtectContent,
+		AllowPaidBroadcast:  opt.AllowPaidBroadcast,
+		EffectId:            opt.EffectId,
+	}, opt.TopicId, opt.Quote, opt.ReplyTo, opt.ReplyToMessageID, opt.ReplyMarkup)
 }
 
 // SendPaidMediaOpts contains optional parameters for SendPaidMedia
@@ -941,27 +903,25 @@ type SendPaidMediaOpts struct {
 }
 
 // SendPaidMedia sends paid media to chat
-func (c *Client) SendPaidMedia(chatId int64, starCount int64, paidMedia []InputPaidMedia, opts *SendPaidMediaOpts) (*Message, error) {
-	if opts == nil {
-		opts = &SendPaidMediaOpts{}
-	}
-	caption, err := GetFormattedText(c, opts.Caption, opts.CaptionEntities, opts.ParseMode)
+func (c *Client) SendPaidMedia(chatId int64, starCount int64, paidMedia []InputPaidMedia, opts ...*SendPaidMediaOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendPaidMediaOpts{})
+	caption, err := GetFormattedText(c, opt.Caption, opt.CaptionEntities, opt.ParseMode)
 	if err != nil {
 		return nil, err
 	}
 	content := &InputMessagePaidMedia{
 		Caption:               caption,
 		PaidMedia:             paidMedia,
-		Payload:               opts.Payload,
-		ShowCaptionAboveMedia: opts.ShowCaptionAboveMedia,
+		Payload:               opt.Payload,
+		ShowCaptionAboveMedia: opt.ShowCaptionAboveMedia,
 		StarCount:             starCount,
 	}
 	return c.sendMessageWithContent(chatId, content, &MessageSendOptions{
-		DisableNotification: opts.DisableNotification,
-		ProtectContent:      opts.ProtectContent,
-		AllowPaidBroadcast:  opts.AllowPaidBroadcast,
-		EffectId:            opts.EffectId,
-	}, opts.TopicId, opts.Quote, opts.ReplyTo, opts.ReplyToMessageID, opts.ReplyMarkup)
+		DisableNotification: opt.DisableNotification,
+		ProtectContent:      opt.ProtectContent,
+		AllowPaidBroadcast:  opt.AllowPaidBroadcast,
+		EffectId:            opt.EffectId,
+	}, opt.TopicId, opt.Quote, opt.ReplyTo, opt.ReplyToMessageID, opt.ReplyMarkup)
 }
 
 // SendPollOpts contains optional parameters for SendPoll
@@ -991,38 +951,36 @@ type SendPollOpts struct {
 }
 
 // SendPoll sends a poll to chat
-func (c *Client) SendPoll(chatId int64, question string, options []InputPollOption, opts *SendPollOpts) (*Message, error) {
-	if opts == nil {
-		opts = &SendPollOpts{}
-	}
-	formattedQuestion, err := GetFormattedText(c, question, opts.QuestionEntities, opts.ParseMode)
+func (c *Client) SendPoll(chatId int64, question string, options []InputPollOption, opts ...*SendPollOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendPollOpts{})
+	formattedQuestion, err := GetFormattedText(c, question, opt.QuestionEntities, opt.ParseMode)
 	if err != nil {
 		return nil, err
 	}
-	description, err := GetFormattedText(c, opts.Description, opts.DescriptionEntities, opts.ParseMode)
+	description, err := GetFormattedText(c, opt.Description, opt.DescriptionEntities, opt.ParseMode)
 	if err != nil {
 		return nil, err
 	}
 	content := &InputMessagePoll{
-		AllowsMultipleAnswers:  opts.AllowsMultipleAnswers,
-		AllowsRevoting:         opts.AllowsRevoting,
-		CloseDate:              opts.CloseDate,
+		AllowsMultipleAnswers:  opt.AllowsMultipleAnswers,
+		AllowsRevoting:         opt.AllowsRevoting,
+		CloseDate:              opt.CloseDate,
 		Description:            description,
-		HideResultsUntilCloses: opts.HideResultsUntilCloses,
-		IsAnonymous:            opts.IsAnonymous,
-		IsClosed:               opts.IsClosed,
-		OpenPeriod:             opts.OpenPeriod,
+		HideResultsUntilCloses: opt.HideResultsUntilCloses,
+		IsAnonymous:            opt.IsAnonymous,
+		IsClosed:               opt.IsClosed,
+		OpenPeriod:             opt.OpenPeriod,
 		Options:                options,
 		Question:               formattedQuestion,
-		ShuffleOptions:         opts.ShuffleOptions,
-		Type:                   opts.Type,
+		ShuffleOptions:         opt.ShuffleOptions,
+		Type:                   opt.Type,
 	}
 	return c.sendMessageWithContent(chatId, content, &MessageSendOptions{
-		DisableNotification: opts.DisableNotification,
-		ProtectContent:      opts.ProtectContent,
-		AllowPaidBroadcast:  opts.AllowPaidBroadcast,
-		EffectId:            opts.EffectId,
-	}, opts.TopicId, opts.Quote, opts.ReplyTo, opts.ReplyToMessageID, opts.ReplyMarkup)
+		DisableNotification: opt.DisableNotification,
+		ProtectContent:      opt.ProtectContent,
+		AllowPaidBroadcast:  opt.AllowPaidBroadcast,
+		EffectId:            opt.EffectId,
+	}, opt.TopicId, opt.Quote, opt.ReplyTo, opt.ReplyToMessageID, opt.ReplyMarkup)
 }
 
 // SendStakeDiceOpts contains optional parameters for SendStakeDice
@@ -1040,21 +998,19 @@ type SendStakeDiceOpts struct {
 }
 
 // SendStakeDice sends a stake dice to chat
-func (c *Client) SendStakeDice(chatId int64, stakeToncoinAmount int64, stateHash string, opts *SendStakeDiceOpts) (*Message, error) {
-	if opts == nil {
-		opts = &SendStakeDiceOpts{}
-	}
+func (c *Client) SendStakeDice(chatId int64, stakeToncoinAmount int64, stateHash string, opts ...*SendStakeDiceOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendStakeDiceOpts{})
 	content := &InputMessageStakeDice{
-		ClearDraft:         opts.ClearDraft,
+		ClearDraft:         opt.ClearDraft,
 		StakeToncoinAmount: stakeToncoinAmount,
 		StateHash:          stateHash,
 	}
 	return c.sendMessageWithContent(chatId, content, &MessageSendOptions{
-		DisableNotification: opts.DisableNotification,
-		ProtectContent:      opts.ProtectContent,
-		AllowPaidBroadcast:  opts.AllowPaidBroadcast,
-		EffectId:            opts.EffectId,
-	}, opts.TopicId, opts.Quote, opts.ReplyTo, opts.ReplyToMessageID, opts.ReplyMarkup)
+		DisableNotification: opt.DisableNotification,
+		ProtectContent:      opt.ProtectContent,
+		AllowPaidBroadcast:  opt.AllowPaidBroadcast,
+		EffectId:            opt.EffectId,
+	}, opt.TopicId, opt.Quote, opt.ReplyTo, opt.ReplyToMessageID, opt.ReplyMarkup)
 }
 
 // SendStoryOpts contains optional parameters for SendStory
@@ -1071,20 +1027,18 @@ type SendStoryOpts struct {
 }
 
 // SendStory sends a story to chat
-func (c *Client) SendStory(chatId int64, storyPosterChatId int64, storyId int32, opts *SendStoryOpts) (*Message, error) {
-	if opts == nil {
-		opts = &SendStoryOpts{}
-	}
+func (c *Client) SendStory(chatId int64, storyPosterChatId int64, storyId int32, opts ...*SendStoryOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendStoryOpts{})
 	content := &InputMessageStory{
 		StoryId:           storyId,
 		StoryPosterChatId: storyPosterChatId,
 	}
 	return c.sendMessageWithContent(chatId, content, &MessageSendOptions{
-		DisableNotification: opts.DisableNotification,
-		ProtectContent:      opts.ProtectContent,
-		AllowPaidBroadcast:  opts.AllowPaidBroadcast,
-		EffectId:            opts.EffectId,
-	}, opts.TopicId, opts.Quote, opts.ReplyTo, opts.ReplyToMessageID, opts.ReplyMarkup)
+		DisableNotification: opt.DisableNotification,
+		ProtectContent:      opt.ProtectContent,
+		AllowPaidBroadcast:  opt.AllowPaidBroadcast,
+		EffectId:            opt.EffectId,
+	}, opt.TopicId, opt.Quote, opt.ReplyTo, opt.ReplyToMessageID, opt.ReplyMarkup)
 }
 
 // SendVenueOpts contains optional parameters for SendVenue
@@ -1101,17 +1055,15 @@ type SendVenueOpts struct {
 }
 
 // SendVenue sends a venue to chat
-func (c *Client) SendVenue(chatId int64, venue *Venue, opts *SendVenueOpts) (*Message, error) {
-	if opts == nil {
-		opts = &SendVenueOpts{}
-	}
+func (c *Client) SendVenue(chatId int64, venue *Venue, opts ...*SendVenueOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendVenueOpts{})
 	content := &InputMessageVenue{
 		Venue: venue,
 	}
 	return c.sendMessageWithContent(chatId, content, &MessageSendOptions{
-		DisableNotification: opts.DisableNotification,
-		ProtectContent:      opts.ProtectContent,
-		AllowPaidBroadcast:  opts.AllowPaidBroadcast,
-		EffectId:            opts.EffectId,
-	}, opts.TopicId, opts.Quote, opts.ReplyTo, opts.ReplyToMessageID, opts.ReplyMarkup)
+		DisableNotification: opt.DisableNotification,
+		ProtectContent:      opt.ProtectContent,
+		AllowPaidBroadcast:  opt.AllowPaidBroadcast,
+		EffectId:            opt.EffectId,
+	}, opt.TopicId, opt.Quote, opt.ReplyTo, opt.ReplyToMessageID, opt.ReplyMarkup)
 }

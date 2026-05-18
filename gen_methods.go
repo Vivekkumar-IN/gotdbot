@@ -27,10 +27,9 @@ func (c *Client) AcceptOauthRequest(matchCode string, url string, opts ...*Accep
 		MatchCode: matchCode,
 		Url:       url,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.AllowPhoneNumberAccess = opts[0].AllowPhoneNumberAccess
-		req.AllowWriteAccess = opts[0].AllowWriteAccess
-	}
+	opt := getVariadic(opts, &AcceptOauthRequestOpts{})
+	req.AllowPhoneNumberAccess = opt.AllowPhoneNumberAccess
+	req.AllowWriteAccess = opt.AllowWriteAccess
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -139,10 +138,9 @@ func (c *Client) AddContact(userId int64, opts ...*AddContactOpts) error {
 	req := &AddContact{
 		UserId: userId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Contact = opts[0].Contact
-		req.SharePhoneNumber = opts[0].SharePhoneNumber
-	}
+	opt := getVariadic(opts, &AddContactOpts{})
+	req.Contact = opt.Contact
+	req.SharePhoneNumber = opt.SharePhoneNumber
 	_, err := c.Send(req)
 	return err
 }
@@ -209,10 +207,9 @@ func (c *Client) AddLocalMessage(chatId int64, inputMessageContent InputMessageC
 		InputMessageContent: inputMessageContent,
 		SenderId:            senderId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.DisableNotification = opts[0].DisableNotification
-		req.ReplyTo = opts[0].ReplyTo
-	}
+	opt := getVariadic(opts, &AddLocalMessageOpts{})
+	req.DisableNotification = opt.DisableNotification
+	req.ReplyTo = opt.ReplyTo
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -258,10 +255,9 @@ func (c *Client) AddMessageReaction(chatId int64, messageId int64, reactionType 
 		MessageId:    messageId,
 		ReactionType: reactionType,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsBig = opts[0].IsBig
-		req.UpdateRecentReactions = opts[0].UpdateRecentReactions
-	}
+	opt := getVariadic(opts, &AddMessageReactionOpts{})
+	req.IsBig = opt.IsBig
+	req.UpdateRecentReactions = opt.UpdateRecentReactions
 	_, err := c.Send(req)
 	return err
 }
@@ -312,9 +308,8 @@ func (c *Client) AddPendingPaidMessageReaction(chatId int64, messageId int64, st
 		MessageId: messageId,
 		StarCount: starCount,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Type = opts[0].Type
-	}
+	opt := getVariadic(opts, &AddPendingPaidMessageReactionOpts{})
+	req.Type = opt.Type
 	_, err := c.Send(req)
 	return err
 }
@@ -354,9 +349,8 @@ func (c *Client) AddProxy(comment string, proxy *Proxy, opts ...*AddProxyOpts) (
 		Comment: comment,
 		Proxy:   proxy,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Enable = opts[0].Enable
-	}
+	opt := getVariadic(opts, &AddProxyOpts{})
+	req.Enable = opt.Enable
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -378,9 +372,8 @@ func (c *Client) AddQuickReplyShortcutInlineQueryResultMessage(queryId int64, re
 		ResultId:         resultId,
 		ShortcutName:     shortcutName,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.HideViaBot = opts[0].HideViaBot
-	}
+	opt := getVariadic(opts, &AddQuickReplyShortcutInlineQueryResultMessageOpts{})
+	req.HideViaBot = opt.HideViaBot
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -436,9 +429,8 @@ func (c *Client) AddRecentSticker(sticker InputFile, opts ...*AddRecentStickerOp
 	req := &AddRecentSticker{
 		Sticker: sticker,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsAttached = opts[0].IsAttached
-	}
+	opt := getVariadic(opts, &AddRecentStickerOpts{})
+	req.IsAttached = opt.IsAttached
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -521,9 +513,8 @@ func (c *Client) AllowUnpaidMessagesFromUser(userId int64, opts ...*AllowUnpaidM
 	req := &AllowUnpaidMessagesFromUser{
 		UserId: userId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.RefundPayments = opts[0].RefundPayments
-	}
+	opt := getVariadic(opts, &AllowUnpaidMessagesFromUserOpts{})
+	req.RefundPayments = opt.RefundPayments
 	_, err := c.Send(req)
 	return err
 }
@@ -542,9 +533,8 @@ func (c *Client) AnswerCallbackQuery(cacheTime int32, callbackQueryId int64, tex
 		Text:            text,
 		Url:             url,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ShowAlert = opts[0].ShowAlert
-	}
+	opt := getVariadic(opts, &AnswerCallbackQueryOpts{})
+	req.ShowAlert = opt.ShowAlert
 	_, err := c.Send(req)
 	return err
 }
@@ -588,10 +578,9 @@ func (c *Client) AnswerInlineQuery(cacheTime int32, inlineQueryId int64, nextOff
 		NextOffset:    nextOffset,
 		Results:       results,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Button = opts[0].Button
-		req.IsPersonal = opts[0].IsPersonal
-	}
+	opt := getVariadic(opts, &AnswerInlineQueryOpts{})
+	req.Button = opt.Button
+	req.IsPersonal = opt.IsPersonal
 	_, err := c.Send(req)
 	return err
 }
@@ -673,9 +662,8 @@ func (c *Client) BanChatMember(bannedUntilDate int32, chatId int64, memberId Mes
 		ChatId:          chatId,
 		MemberId:        memberId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.RevokeMessages = opts[0].RevokeMessages
-	}
+	opt := getVariadic(opts, &BanChatMemberOpts{})
+	req.RevokeMessages = opt.RevokeMessages
 	_, err := c.Send(req)
 	return err
 }
@@ -705,11 +693,10 @@ func (c *Client) BlockMessageSenderFromReplies(messageId int64, opts ...*BlockMe
 	req := &BlockMessageSenderFromReplies{
 		MessageId: messageId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.DeleteAllMessages = opts[0].DeleteAllMessages
-		req.DeleteMessage = opts[0].DeleteMessage
-		req.ReportSpam = opts[0].ReportSpam
-	}
+	opt := getVariadic(opts, &BlockMessageSenderFromRepliesOpts{})
+	req.DeleteAllMessages = opt.DeleteAllMessages
+	req.DeleteMessage = opt.DeleteMessage
+	req.ReportSpam = opt.ReportSpam
 	_, err := c.Send(req)
 	return err
 }
@@ -758,9 +745,8 @@ func (c *Client) CancelDownloadFile(fileId int32, opts ...*CancelDownloadFileOpt
 	req := &CancelDownloadFile{
 		FileId: fileId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.OnlyIfPending = opts[0].OnlyIfPending
-	}
+	opt := getVariadic(opts, &CancelDownloadFileOpts{})
+	req.OnlyIfPending = opt.OnlyIfPending
 	_, err := c.Send(req)
 	return err
 }
@@ -835,9 +821,8 @@ func (c *Client) CanSendMessageToUser(userId int64, opts ...*CanSendMessageToUse
 	req := &CanSendMessageToUser{
 		UserId: userId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.OnlyLocal = opts[0].OnlyLocal
-	}
+	opt := getVariadic(opts, &CanSendMessageToUserOpts{})
+	req.OnlyLocal = opt.OnlyLocal
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -880,10 +865,9 @@ func (c *Client) ChangeStickerSet(setId int64, opts ...*ChangeStickerSetOpts) er
 	req := &ChangeStickerSet{
 		SetId: setId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsArchived = opts[0].IsArchived
-		req.IsInstalled = opts[0].IsInstalled
-	}
+	opt := getVariadic(opts, &ChangeStickerSetOpts{})
+	req.IsArchived = opt.IsArchived
+	req.IsInstalled = opt.IsInstalled
 	_, err := c.Send(req)
 	return err
 }
@@ -1138,9 +1122,8 @@ type ClearAllDraftMessagesOpts struct {
 // ClearAllDraftMessages Clears message drafts in all chats
 func (c *Client) ClearAllDraftMessages(opts ...*ClearAllDraftMessagesOpts) error {
 	req := &ClearAllDraftMessages{}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ExcludeSecretChats = opts[0].ExcludeSecretChats
-	}
+	opt := getVariadic(opts, &ClearAllDraftMessagesOpts{})
+	req.ExcludeSecretChats = opt.ExcludeSecretChats
 	_, err := c.Send(req)
 	return err
 }
@@ -1189,9 +1172,8 @@ type ClearRecentStickersOpts struct {
 // ClearRecentStickers Clears the list of recently used stickers
 func (c *Client) ClearRecentStickers(opts ...*ClearRecentStickersOpts) error {
 	req := &ClearRecentStickers{}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsAttached = opts[0].IsAttached
-	}
+	opt := getVariadic(opts, &ClearRecentStickersOpts{})
+	req.IsAttached = opt.IsAttached
 	_, err := c.Send(req)
 	return err
 }
@@ -1205,9 +1187,8 @@ type ClearSearchedForTagsOpts struct {
 // ClearSearchedForTags Clears the list of recently searched for hashtags or cashtags
 func (c *Client) ClearSearchedForTags(opts ...*ClearSearchedForTagsOpts) error {
 	req := &ClearSearchedForTags{}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ClearCashtags = opts[0].ClearCashtags
-	}
+	opt := getVariadic(opts, &ClearSearchedForTagsOpts{})
+	req.ClearCashtags = opt.ClearCashtags
 	_, err := c.Send(req)
 	return err
 }
@@ -1239,10 +1220,9 @@ func (c *Client) ClickChatSponsoredMessage(chatId int64, messageId int64, opts .
 		ChatId:    chatId,
 		MessageId: messageId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.FromFullscreen = opts[0].FromFullscreen
-		req.IsMediaClick = opts[0].IsMediaClick
-	}
+	opt := getVariadic(opts, &ClickChatSponsoredMessageOpts{})
+	req.FromFullscreen = opt.FromFullscreen
+	req.IsMediaClick = opt.IsMediaClick
 	_, err := c.Send(req)
 	return err
 }
@@ -1341,9 +1321,8 @@ func (c *Client) ComposeTextWithAi(styleName string, text *FormattedText, transl
 		Text:                    text,
 		TranslateToLanguageCode: translateToLanguageCode,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.AddEmojis = opts[0].AddEmojis
-	}
+	opt := getVariadic(opts, &ComposeTextWithAiOpts{})
+	req.AddEmojis = opt.AddEmojis
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -1408,9 +1387,8 @@ func (c *Client) CreateBasicGroupChat(basicGroupId int64, opts ...*CreateBasicGr
 	req := &CreateBasicGroupChat{
 		BasicGroupId: basicGroupId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Force = opts[0].Force
-	}
+	opt := getVariadic(opts, &CreateBasicGroupChatOpts{})
+	req.Force = opt.Force
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -1431,9 +1409,8 @@ func (c *Client) CreateBot(managerBotUserId int64, name string, username string,
 		Name:             name,
 		Username:         username,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ViaLink = opts[0].ViaLink
-	}
+	opt := getVariadic(opts, &CreateBotOpts{})
+	req.ViaLink = opt.ViaLink
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -1465,9 +1442,8 @@ func (c *Client) CreateCall(protocol *CallProtocol, userId int64, opts ...*Creat
 		Protocol: protocol,
 		UserId:   userId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsVideo = opts[0].IsVideo
-	}
+	opt := getVariadic(opts, &CreateCallOpts{})
+	req.IsVideo = opt.IsVideo
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -1515,9 +1491,8 @@ func (c *Client) CreateChatInviteLink(chatId int64, expirationDate int32, member
 		MemberLimit:    memberLimit,
 		Name:           name,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.CreatesJoinRequest = opts[0].CreatesJoinRequest
-	}
+	opt := getVariadic(opts, &CreateChatInviteLinkOpts{})
+	req.CreatesJoinRequest = opt.CreatesJoinRequest
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -1552,9 +1527,8 @@ func (c *Client) CreateForumTopic(chatId int64, icon *ForumTopicIcon, name strin
 		Icon:   icon,
 		Name:   name,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsNameImplicit = opts[0].IsNameImplicit
-	}
+	opt := getVariadic(opts, &CreateForumTopicOpts{})
+	req.IsNameImplicit = opt.IsNameImplicit
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -1585,9 +1559,8 @@ type CreateGroupCallOpts struct {
 // CreateGroupCall Creates a new group call that isn't bound to a chat
 func (c *Client) CreateGroupCall(opts ...*CreateGroupCallOpts) (*GroupCallInfo, error) {
 	req := &CreateGroupCall{}
-	if len(opts) > 0 && opts[0] != nil {
-		req.JoinParameters = opts[0].JoinParameters
-	}
+	opt := getVariadic(opts, &CreateGroupCallOpts{})
+	req.JoinParameters = opt.JoinParameters
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -1620,9 +1593,8 @@ func (c *Client) CreateNewBasicGroupChat(messageAutoDeleteTime int32, title stri
 		MessageAutoDeleteTime: messageAutoDeleteTime,
 		Title:                 title,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.UserIds = opts[0].UserIds
-	}
+	opt := getVariadic(opts, &CreateNewBasicGroupChatOpts{})
+	req.UserIds = opt.UserIds
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -1659,10 +1631,9 @@ func (c *Client) CreateNewStickerSet(name string, stickerType StickerType, stick
 		Title:       title,
 		UserId:      userId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.NeedsRepainting = opts[0].NeedsRepainting
-		req.Source = opts[0].Source
-	}
+	opt := getVariadic(opts, &CreateNewStickerSetOpts{})
+	req.NeedsRepainting = opt.NeedsRepainting
+	req.Source = opt.Source
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -1689,12 +1660,11 @@ func (c *Client) CreateNewSupergroupChat(description string, messageAutoDeleteTi
 		MessageAutoDeleteTime: messageAutoDeleteTime,
 		Title:                 title,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ForImport = opts[0].ForImport
-		req.IsChannel = opts[0].IsChannel
-		req.IsForum = opts[0].IsForum
-		req.Location = opts[0].Location
-	}
+	opt := getVariadic(opts, &CreateNewSupergroupChatOpts{})
+	req.ForImport = opt.ForImport
+	req.IsChannel = opt.IsChannel
+	req.IsForum = opt.IsForum
+	req.Location = opt.Location
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -1713,9 +1683,8 @@ func (c *Client) CreatePrivateChat(userId int64, opts ...*CreatePrivateChatOpts)
 	req := &CreatePrivateChat{
 		UserId: userId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Force = opts[0].Force
-	}
+	opt := getVariadic(opts, &CreatePrivateChatOpts{})
+	req.Force = opt.Force
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -1760,9 +1729,8 @@ func (c *Client) CreateSupergroupChat(supergroupId int64, opts ...*CreateSupergr
 	req := &CreateSupergroupChat{
 		SupergroupId: supergroupId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Force = opts[0].Force
-	}
+	opt := getVariadic(opts, &CreateSupergroupChatOpts{})
+	req.Force = opt.Force
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -1796,9 +1764,8 @@ func (c *Client) CreateTextCompositionStyle(customEmojiId int64, prompt string, 
 		Prompt:        prompt,
 		Title:         title,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ShowCreator = opts[0].ShowCreator
-	}
+	opt := getVariadic(opts, &CreateTextCompositionStyleOpts{})
+	req.ShowCreator = opt.ShowCreator
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -1819,9 +1786,8 @@ func (c *Client) CreateVideoChat(chatId int64, startDate int32, title string, op
 		StartDate: startDate,
 		Title:     title,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsRtmpStream = opts[0].IsRtmpStream
-	}
+	opt := getVariadic(opts, &CreateVideoChatOpts{})
+	req.IsRtmpStream = opt.IsRtmpStream
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -1872,9 +1838,8 @@ func (c *Client) DecryptGroupCallData(data []byte, groupCallId int32, participan
 		GroupCallId:   groupCallId,
 		ParticipantId: participantId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.DataChannel = opts[0].DataChannel
-	}
+	opt := getVariadic(opts, &DecryptGroupCallDataOpts{})
+	req.DataChannel = opt.DataChannel
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -1901,9 +1866,8 @@ type DeleteAllCallMessagesOpts struct {
 // DeleteAllCallMessages Deletes all call messages
 func (c *Client) DeleteAllCallMessages(opts ...*DeleteAllCallMessagesOpts) error {
 	req := &DeleteAllCallMessages{}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Revoke = opts[0].Revoke
-	}
+	opt := getVariadic(opts, &DeleteAllCallMessagesOpts{})
+	req.Revoke = opt.Revoke
 	_, err := c.Send(req)
 	return err
 }
@@ -1997,9 +1961,8 @@ func (c *Client) DeleteChatBackground(chatId int64, opts ...*DeleteChatBackgroun
 	req := &DeleteChatBackground{
 		ChatId: chatId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.RestorePrevious = opts[0].RestorePrevious
-	}
+	opt := getVariadic(opts, &DeleteChatBackgroundOpts{})
+	req.RestorePrevious = opt.RestorePrevious
 	_, err := c.Send(req)
 	return err
 }
@@ -2037,10 +2000,9 @@ func (c *Client) DeleteChatHistory(chatId int64, opts ...*DeleteChatHistoryOpts)
 	req := &DeleteChatHistory{
 		ChatId: chatId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.RemoveFromChatList = opts[0].RemoveFromChatList
-		req.Revoke = opts[0].Revoke
-	}
+	opt := getVariadic(opts, &DeleteChatHistoryOpts{})
+	req.RemoveFromChatList = opt.RemoveFromChatList
+	req.Revoke = opt.Revoke
 	_, err := c.Send(req)
 	return err
 }
@@ -2058,9 +2020,8 @@ func (c *Client) DeleteChatMessagesByDate(chatId int64, maxDate int32, minDate i
 		MaxDate: maxDate,
 		MinDate: minDate,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Revoke = opts[0].Revoke
-	}
+	opt := getVariadic(opts, &DeleteChatMessagesByDateOpts{})
+	req.Revoke = opt.Revoke
 	_, err := c.Send(req)
 	return err
 }
@@ -2096,9 +2057,8 @@ func (c *Client) DeleteCommands(languageCode string, opts ...*DeleteCommandsOpts
 	req := &DeleteCommands{
 		LanguageCode: languageCode,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Scope = opts[0].Scope
-	}
+	opt := getVariadic(opts, &DeleteCommandsOpts{})
+	req.Scope = opt.Scope
 	_, err := c.Send(req)
 	return err
 }
@@ -2112,9 +2072,8 @@ type DeleteDefaultBackgroundOpts struct {
 // DeleteDefaultBackground Deletes default background for chats
 func (c *Client) DeleteDefaultBackground(opts ...*DeleteDefaultBackgroundOpts) error {
 	req := &DeleteDefaultBackground{}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ForDarkTheme = opts[0].ForDarkTheme
-	}
+	opt := getVariadic(opts, &DeleteDefaultBackgroundOpts{})
+	req.ForDarkTheme = opt.ForDarkTheme
 	_, err := c.Send(req)
 	return err
 }
@@ -2182,9 +2141,8 @@ func (c *Client) DeleteGroupCallMessages(groupCallId int32, messageIds []int32, 
 		GroupCallId: groupCallId,
 		MessageIds:  messageIds,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ReportSpam = opts[0].ReportSpam
-	}
+	opt := getVariadic(opts, &DeleteGroupCallMessagesOpts{})
+	req.ReportSpam = opt.ReportSpam
 	_, err := c.Send(req)
 	return err
 }
@@ -2201,9 +2159,8 @@ func (c *Client) DeleteGroupCallMessagesBySender(groupCallId int32, senderId Mes
 		GroupCallId: groupCallId,
 		SenderId:    senderId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ReportSpam = opts[0].ReportSpam
-	}
+	opt := getVariadic(opts, &DeleteGroupCallMessagesBySenderOpts{})
+	req.ReportSpam = opt.ReportSpam
 	_, err := c.Send(req)
 	return err
 }
@@ -2240,9 +2197,8 @@ func (c *Client) DeleteMessages(chatId int64, messageIds []int64, opts ...*Delet
 		ChatId:     chatId,
 		MessageIds: messageIds,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Revoke = opts[0].Revoke
-	}
+	opt := getVariadic(opts, &DeleteMessagesOpts{})
+	req.Revoke = opt.Revoke
 	_, err := c.Send(req)
 	return err
 }
@@ -2416,10 +2372,9 @@ func (c *Client) DiscardCall(callId int32, connectionId int64, duration int32, i
 		Duration:     duration,
 		InviteLink:   inviteLink,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsDisconnected = opts[0].IsDisconnected
-		req.IsVideo = opts[0].IsVideo
-	}
+	opt := getVariadic(opts, &DiscardCallOpts{})
+	req.IsDisconnected = opt.IsDisconnected
+	req.IsVideo = opt.IsVideo
 	_, err := c.Send(req)
 	return err
 }
@@ -2467,9 +2422,8 @@ func (c *Client) DownloadFile(fileId int32, limit int64, offset int64, priority 
 		Offset:   offset,
 		Priority: priority,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Synchronous = opts[0].Synchronous
-	}
+	opt := getVariadic(opts, &DownloadFileOpts{})
+	req.Synchronous = opt.Synchronous
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -2532,11 +2486,10 @@ func (c *Client) EditBusinessMessageCaption(businessConnectionId string, chatId 
 		ChatId:               chatId,
 		MessageId:            messageId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Caption = opts[0].Caption
-		req.ReplyMarkup = opts[0].ReplyMarkup
-		req.ShowCaptionAboveMedia = opts[0].ShowCaptionAboveMedia
-	}
+	opt := getVariadic(opts, &EditBusinessMessageCaptionOpts{})
+	req.Caption = opt.Caption
+	req.ReplyMarkup = opt.ReplyMarkup
+	req.ShowCaptionAboveMedia = opt.ShowCaptionAboveMedia
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -2558,9 +2511,8 @@ func (c *Client) EditBusinessMessageChecklist(businessConnectionId string, chatI
 		Checklist:            checklist,
 		MessageId:            messageId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ReplyMarkup = opts[0].ReplyMarkup
-	}
+	opt := getVariadic(opts, &EditBusinessMessageChecklistOpts{})
+	req.ReplyMarkup = opt.ReplyMarkup
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -2586,10 +2538,9 @@ func (c *Client) EditBusinessMessageLiveLocation(businessConnectionId string, ch
 		MessageId:            messageId,
 		ProximityAlertRadius: proximityAlertRadius,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Location = opts[0].Location
-		req.ReplyMarkup = opts[0].ReplyMarkup
-	}
+	opt := getVariadic(opts, &EditBusinessMessageLiveLocationOpts{})
+	req.Location = opt.Location
+	req.ReplyMarkup = opt.ReplyMarkup
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -2611,9 +2562,8 @@ func (c *Client) EditBusinessMessageMedia(businessConnectionId string, chatId in
 		InputMessageContent:  inputMessageContent,
 		MessageId:            messageId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ReplyMarkup = opts[0].ReplyMarkup
-	}
+	opt := getVariadic(opts, &EditBusinessMessageMediaOpts{})
+	req.ReplyMarkup = opt.ReplyMarkup
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -2634,9 +2584,8 @@ func (c *Client) EditBusinessMessageReplyMarkup(businessConnectionId string, cha
 		ChatId:               chatId,
 		MessageId:            messageId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ReplyMarkup = opts[0].ReplyMarkup
-	}
+	opt := getVariadic(opts, &EditBusinessMessageReplyMarkupOpts{})
+	req.ReplyMarkup = opt.ReplyMarkup
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -2658,9 +2607,8 @@ func (c *Client) EditBusinessMessageText(businessConnectionId string, chatId int
 		InputMessageContent:  inputMessageContent,
 		MessageId:            messageId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ReplyMarkup = opts[0].ReplyMarkup
-	}
+	opt := getVariadic(opts, &EditBusinessMessageTextOpts{})
+	req.ReplyMarkup = opt.ReplyMarkup
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -2728,9 +2676,8 @@ func (c *Client) EditChatInviteLink(chatId int64, expirationDate int32, inviteLi
 		MemberLimit:    memberLimit,
 		Name:           name,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.CreatesJoinRequest = opts[0].CreatesJoinRequest
-	}
+	opt := getVariadic(opts, &EditChatInviteLinkOpts{})
+	req.CreatesJoinRequest = opt.CreatesJoinRequest
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -2775,9 +2722,8 @@ func (c *Client) EditForumTopic(chatId int64, forumTopicId int32, iconCustomEmoj
 		IconCustomEmojiId: iconCustomEmojiId,
 		Name:              name,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.EditIconCustomEmoji = opts[0].EditIconCustomEmoji
-	}
+	opt := getVariadic(opts, &EditForumTopicOpts{})
+	req.EditIconCustomEmoji = opt.EditIconCustomEmoji
 	_, err := c.Send(req)
 	return err
 }
@@ -2797,11 +2743,10 @@ func (c *Client) EditInlineMessageCaption(inlineMessageId string, opts ...*EditI
 	req := &EditInlineMessageCaption{
 		InlineMessageId: inlineMessageId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Caption = opts[0].Caption
-		req.ReplyMarkup = opts[0].ReplyMarkup
-		req.ShowCaptionAboveMedia = opts[0].ShowCaptionAboveMedia
-	}
+	opt := getVariadic(opts, &EditInlineMessageCaptionOpts{})
+	req.Caption = opt.Caption
+	req.ReplyMarkup = opt.ReplyMarkup
+	req.ShowCaptionAboveMedia = opt.ShowCaptionAboveMedia
 	_, err := c.Send(req)
 	return err
 }
@@ -2822,10 +2767,9 @@ func (c *Client) EditInlineMessageLiveLocation(heading int32, inlineMessageId st
 		LivePeriod:           livePeriod,
 		ProximityAlertRadius: proximityAlertRadius,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Location = opts[0].Location
-		req.ReplyMarkup = opts[0].ReplyMarkup
-	}
+	opt := getVariadic(opts, &EditInlineMessageLiveLocationOpts{})
+	req.Location = opt.Location
+	req.ReplyMarkup = opt.ReplyMarkup
 	_, err := c.Send(req)
 	return err
 }
@@ -2842,9 +2786,8 @@ func (c *Client) EditInlineMessageMedia(inlineMessageId string, inputMessageCont
 		InlineMessageId:     inlineMessageId,
 		InputMessageContent: inputMessageContent,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ReplyMarkup = opts[0].ReplyMarkup
-	}
+	opt := getVariadic(opts, &EditInlineMessageMediaOpts{})
+	req.ReplyMarkup = opt.ReplyMarkup
 	_, err := c.Send(req)
 	return err
 }
@@ -2860,9 +2803,8 @@ func (c *Client) EditInlineMessageReplyMarkup(inlineMessageId string, opts ...*E
 	req := &EditInlineMessageReplyMarkup{
 		InlineMessageId: inlineMessageId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ReplyMarkup = opts[0].ReplyMarkup
-	}
+	opt := getVariadic(opts, &EditInlineMessageReplyMarkupOpts{})
+	req.ReplyMarkup = opt.ReplyMarkup
 	_, err := c.Send(req)
 	return err
 }
@@ -2879,9 +2821,8 @@ func (c *Client) EditInlineMessageText(inlineMessageId string, inputMessageConte
 		InlineMessageId:     inlineMessageId,
 		InputMessageContent: inputMessageContent,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ReplyMarkup = opts[0].ReplyMarkup
-	}
+	opt := getVariadic(opts, &EditInlineMessageTextOpts{})
+	req.ReplyMarkup = opt.ReplyMarkup
 	_, err := c.Send(req)
 	return err
 }
@@ -2902,11 +2843,10 @@ func (c *Client) EditMessageCaption(chatId int64, messageId int64, opts ...*Edit
 		ChatId:    chatId,
 		MessageId: messageId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Caption = opts[0].Caption
-		req.ReplyMarkup = opts[0].ReplyMarkup
-		req.ShowCaptionAboveMedia = opts[0].ShowCaptionAboveMedia
-	}
+	opt := getVariadic(opts, &EditMessageCaptionOpts{})
+	req.Caption = opt.Caption
+	req.ReplyMarkup = opt.ReplyMarkup
+	req.ShowCaptionAboveMedia = opt.ShowCaptionAboveMedia
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -2927,9 +2867,8 @@ func (c *Client) EditMessageChecklist(chatId int64, checklist *InputChecklist, m
 		Checklist: checklist,
 		MessageId: messageId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ReplyMarkup = opts[0].ReplyMarkup
-	}
+	opt := getVariadic(opts, &EditMessageChecklistOpts{})
+	req.ReplyMarkup = opt.ReplyMarkup
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -2954,10 +2893,9 @@ func (c *Client) EditMessageLiveLocation(chatId int64, heading int32, livePeriod
 		MessageId:            messageId,
 		ProximityAlertRadius: proximityAlertRadius,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Location = opts[0].Location
-		req.ReplyMarkup = opts[0].ReplyMarkup
-	}
+	opt := getVariadic(opts, &EditMessageLiveLocationOpts{})
+	req.Location = opt.Location
+	req.ReplyMarkup = opt.ReplyMarkup
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -2978,9 +2916,8 @@ func (c *Client) EditMessageMedia(chatId int64, inputMessageContent InputMessage
 		InputMessageContent: inputMessageContent,
 		MessageId:           messageId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ReplyMarkup = opts[0].ReplyMarkup
-	}
+	opt := getVariadic(opts, &EditMessageMediaOpts{})
+	req.ReplyMarkup = opt.ReplyMarkup
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -3000,9 +2937,8 @@ func (c *Client) EditMessageReplyMarkup(chatId int64, messageId int64, opts ...*
 		ChatId:    chatId,
 		MessageId: messageId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ReplyMarkup = opts[0].ReplyMarkup
-	}
+	opt := getVariadic(opts, &EditMessageReplyMarkupOpts{})
+	req.ReplyMarkup = opt.ReplyMarkup
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -3022,9 +2958,8 @@ func (c *Client) EditMessageSchedulingState(chatId int64, messageId int64, opts 
 		ChatId:    chatId,
 		MessageId: messageId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.SchedulingState = opts[0].SchedulingState
-	}
+	opt := getVariadic(opts, &EditMessageSchedulingStateOpts{})
+	req.SchedulingState = opt.SchedulingState
 	_, err := c.Send(req)
 	return err
 }
@@ -3042,9 +2977,8 @@ func (c *Client) EditMessageText(chatId int64, inputMessageContent InputMessageC
 		InputMessageContent: inputMessageContent,
 		MessageId:           messageId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ReplyMarkup = opts[0].ReplyMarkup
-	}
+	opt := getVariadic(opts, &EditMessageTextOpts{})
+	req.ReplyMarkup = opt.ReplyMarkup
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -3065,9 +2999,8 @@ func (c *Client) EditProxy(comment string, proxy *Proxy, proxyId int32, opts ...
 		Proxy:   proxy,
 		ProxyId: proxyId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Enable = opts[0].Enable
-	}
+	opt := getVariadic(opts, &EditProxyOpts{})
+	req.Enable = opt.Enable
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -3097,9 +3030,8 @@ func (c *Client) EditStarSubscription(subscriptionId string, opts ...*EditStarSu
 	req := &EditStarSubscription{
 		SubscriptionId: subscriptionId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsCanceled = opts[0].IsCanceled
-	}
+	opt := getVariadic(opts, &EditStarSubscriptionOpts{})
+	req.IsCanceled = opt.IsCanceled
 	_, err := c.Send(req)
 	return err
 }
@@ -3120,11 +3052,10 @@ func (c *Client) EditStory(storyId int32, storyPosterChatId int64, opts ...*Edit
 		StoryId:           storyId,
 		StoryPosterChatId: storyPosterChatId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Areas = opts[0].Areas
-		req.Caption = opts[0].Caption
-		req.Content = opts[0].Content
-	}
+	opt := getVariadic(opts, &EditStoryOpts{})
+	req.Areas = opt.Areas
+	req.Caption = opt.Caption
+	req.Content = opt.Content
 	_, err := c.Send(req)
 	return err
 }
@@ -3154,9 +3085,8 @@ func (c *Client) EditTextCompositionStyle(customEmojiId int64, name string, prom
 		Prompt:        prompt,
 		Title:         title,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ShowCreator = opts[0].ShowCreator
-	}
+	opt := getVariadic(opts, &EditTextCompositionStyleOpts{})
+	req.ShowCreator = opt.ShowCreator
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -3176,9 +3106,8 @@ func (c *Client) EditUserStarSubscription(telegramPaymentChargeId string, userId
 		TelegramPaymentChargeId: telegramPaymentChargeId,
 		UserId:                  userId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsCanceled = opts[0].IsCanceled
-	}
+	opt := getVariadic(opts, &EditUserStarSubscriptionOpts{})
+	req.IsCanceled = opt.IsCanceled
 	_, err := c.Send(req)
 	return err
 }
@@ -3245,9 +3174,8 @@ func (c *Client) FinishFileGeneration(generationId int64, opts ...*FinishFileGen
 	req := &FinishFileGeneration{
 		GenerationId: generationId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Error = opts[0].Error
-	}
+	opt := getVariadic(opts, &FinishFileGenerationOpts{})
+	req.Error = opt.Error
 	_, err := c.Send(req)
 	return err
 }
@@ -3283,12 +3211,11 @@ func (c *Client) ForwardMessages(chatId int64, fromChatId int64, messageIds []in
 		FromChatId: fromChatId,
 		MessageIds: messageIds,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Options = opts[0].Options
-		req.RemoveCaption = opts[0].RemoveCaption
-		req.SendCopy = opts[0].SendCopy
-		req.TopicId = opts[0].TopicId
-	}
+	opt := getVariadic(opts, &ForwardMessagesOpts{})
+	req.Options = opt.Options
+	req.RemoveCaption = opt.RemoveCaption
+	req.SendCopy = opt.SendCopy
+	req.TopicId = opt.TopicId
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -3341,9 +3268,8 @@ func (c *Client) GetAllStickerEmojis(chatId int64, query string, stickerType Sti
 		Query:       query,
 		StickerType: stickerType,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ReturnOnlyMainEmoji = opts[0].ReturnOnlyMainEmoji
-	}
+	opt := getVariadic(opts, &GetAllStickerEmojisOpts{})
+	req.ReturnOnlyMainEmoji = opt.ReturnOnlyMainEmoji
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -3629,9 +3555,8 @@ func (c *Client) GetBotSimilarBotCount(botUserId int64, opts ...*GetBotSimilarBo
 	req := &GetBotSimilarBotCount{
 		BotUserId: botUserId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ReturnLocal = opts[0].ReturnLocal
-	}
+	opt := getVariadic(opts, &GetBotSimilarBotCountOpts{})
+	req.ReturnLocal = opt.ReturnLocal
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -3716,9 +3641,8 @@ type GetBusinessFeaturesOpts struct {
 // GetBusinessFeatures Returns information about features, available to Business users
 func (c *Client) GetBusinessFeatures(opts ...*GetBusinessFeaturesOpts) (*BusinessFeatures, error) {
 	req := &GetBusinessFeatures{}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Source = opts[0].Source
-	}
+	opt := getVariadic(opts, &GetBusinessFeaturesOpts{})
+	req.Source = opt.Source
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -3837,9 +3761,8 @@ type GetChatBoostFeaturesOpts struct {
 // GetChatBoostFeatures Returns the list of features available for different chat boost levels. This is an offline method
 func (c *Client) GetChatBoostFeatures(opts ...*GetChatBoostFeaturesOpts) (*ChatBoostFeatures, error) {
 	req := &GetChatBoostFeatures{}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsChannel = opts[0].IsChannel
-	}
+	opt := getVariadic(opts, &GetChatBoostFeaturesOpts{})
+	req.IsChannel = opt.IsChannel
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -3858,9 +3781,8 @@ func (c *Client) GetChatBoostLevelFeatures(level int32, opts ...*GetChatBoostLev
 	req := &GetChatBoostLevelFeatures{
 		Level: level,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsChannel = opts[0].IsChannel
-	}
+	opt := getVariadic(opts, &GetChatBoostLevelFeaturesOpts{})
+	req.IsChannel = opt.IsChannel
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -3905,9 +3827,8 @@ func (c *Client) GetChatBoosts(chatId int64, limit int32, offset string, opts ..
 		Limit:  limit,
 		Offset: offset,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.OnlyGiftCodes = opts[0].OnlyGiftCodes
-	}
+	opt := getVariadic(opts, &GetChatBoostsOpts{})
+	req.OnlyGiftCodes = opt.OnlyGiftCodes
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -3942,9 +3863,8 @@ func (c *Client) GetChatEventLog(chatId int64, fromEventId int64, limit int32, q
 		Query:       query,
 		UserIds:     userIds,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Filters = opts[0].Filters
-	}
+	opt := getVariadic(opts, &GetChatEventLogOpts{})
+	req.Filters = opt.Filters
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -4038,9 +3958,8 @@ func (c *Client) GetChatHistory(chatId int64, fromMessageId int64, limit int32, 
 		Limit:         limit,
 		Offset:        offset,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.OnlyLocal = opts[0].OnlyLocal
-	}
+	opt := getVariadic(opts, &GetChatHistoryOpts{})
+	req.OnlyLocal = opt.OnlyLocal
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -4088,10 +4007,9 @@ func (c *Client) GetChatInviteLinkMembers(chatId int64, inviteLink string, limit
 		InviteLink: inviteLink,
 		Limit:      limit,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.OffsetMember = opts[0].OffsetMember
-		req.OnlyWithExpiredSubscription = opts[0].OnlyWithExpiredSubscription
-	}
+	opt := getVariadic(opts, &GetChatInviteLinkMembersOpts{})
+	req.OffsetMember = opt.OffsetMember
+	req.OnlyWithExpiredSubscription = opt.OnlyWithExpiredSubscription
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -4114,9 +4032,8 @@ func (c *Client) GetChatInviteLinks(chatId int64, creatorUserId int64, limit int
 		OffsetDate:       offsetDate,
 		OffsetInviteLink: offsetInviteLink,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsRevoked = opts[0].IsRevoked
-	}
+	opt := getVariadic(opts, &GetChatInviteLinksOpts{})
+	req.IsRevoked = opt.IsRevoked
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -4138,9 +4055,8 @@ func (c *Client) GetChatJoinRequests(chatId int64, inviteLink string, limit int3
 		Limit:      limit,
 		Query:      query,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.OffsetRequest = opts[0].OffsetRequest
-	}
+	opt := getVariadic(opts, &GetChatJoinRequestsOpts{})
+	req.OffsetRequest = opt.OffsetRequest
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -4199,9 +4115,8 @@ func (c *Client) GetChatMessageCalendar(chatId int64, filter SearchMessagesFilte
 		Filter:        filter,
 		FromMessageId: fromMessageId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.TopicId = opts[0].TopicId
-	}
+	opt := getVariadic(opts, &GetChatMessageCalendarOpts{})
+	req.TopicId = opt.TopicId
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -4223,10 +4138,9 @@ func (c *Client) GetChatMessageCount(chatId int64, filter SearchMessagesFilter, 
 		ChatId: chatId,
 		Filter: filter,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ReturnLocal = opts[0].ReturnLocal
-		req.TopicId = opts[0].TopicId
-	}
+	opt := getVariadic(opts, &GetChatMessageCountOpts{})
+	req.ReturnLocal = opt.ReturnLocal
+	req.TopicId = opt.TopicId
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -4247,9 +4161,8 @@ func (c *Client) GetChatMessagePosition(chatId int64, filter SearchMessagesFilte
 		Filter:    filter,
 		MessageId: messageId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.TopicId = opts[0].TopicId
-	}
+	opt := getVariadic(opts, &GetChatMessagePositionOpts{})
+	req.TopicId = opt.TopicId
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -4268,10 +4181,9 @@ type GetChatNotificationSettingsExceptionsOpts struct {
 // GetChatNotificationSettingsExceptions Returns the list of chats with non-default notification settings for new messages
 func (c *Client) GetChatNotificationSettingsExceptions(opts ...*GetChatNotificationSettingsExceptionsOpts) (*Chats, error) {
 	req := &GetChatNotificationSettingsExceptions{}
-	if len(opts) > 0 && opts[0] != nil {
-		req.CompareSound = opts[0].CompareSound
-		req.Scope = opts[0].Scope
-	}
+	opt := getVariadic(opts, &GetChatNotificationSettingsExceptionsOpts{})
+	req.CompareSound = opt.CompareSound
+	req.Scope = opt.Scope
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -4328,9 +4240,8 @@ func (c *Client) GetChatRevenueStatistics(chatId int64, opts ...*GetChatRevenueS
 	req := &GetChatRevenueStatistics{
 		ChatId: chatId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsDark = opts[0].IsDark
-	}
+	opt := getVariadic(opts, &GetChatRevenueStatisticsOpts{})
+	req.IsDark = opt.IsDark
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -4376,9 +4287,8 @@ func (c *Client) GetChats(limit int32, opts ...*GetChatsOpts) (*Chats, error) {
 	req := &GetChats{
 		Limit: limit,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ChatList = opts[0].ChatList
-	}
+	opt := getVariadic(opts, &GetChatsOpts{})
+	req.ChatList = opt.ChatList
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -4421,9 +4331,8 @@ func (c *Client) GetChatSimilarChatCount(chatId int64, opts ...*GetChatSimilarCh
 	req := &GetChatSimilarChatCount{
 		ChatId: chatId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ReturnLocal = opts[0].ReturnLocal
-	}
+	opt := getVariadic(opts, &GetChatSimilarChatCountOpts{})
+	req.ReturnLocal = opt.ReturnLocal
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -4482,9 +4391,8 @@ func (c *Client) GetChatStatistics(chatId int64, opts ...*GetChatStatisticsOpts)
 	req := &GetChatStatistics{
 		ChatId: chatId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsDark = opts[0].IsDark
-	}
+	opt := getVariadic(opts, &GetChatStatisticsOpts{})
+	req.IsDark = opt.IsDark
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -4530,10 +4438,9 @@ func (c *Client) GetChatStoryInteractions(limit int32, offset string, storyId in
 		StoryId:           storyId,
 		StoryPosterChatId: storyPosterChatId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.PreferForwards = opts[0].PreferForwards
-		req.ReactionType = opts[0].ReactionType
-	}
+	opt := getVariadic(opts, &GetChatStoryInteractionsOpts{})
+	req.PreferForwards = opt.PreferForwards
+	req.ReactionType = opt.ReactionType
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -4574,9 +4481,8 @@ func (c *Client) GetCommands(languageCode string, opts ...*GetCommandsOpts) (*Bo
 	req := &GetCommands{
 		LanguageCode: languageCode,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Scope = opts[0].Scope
-	}
+	opt := getVariadic(opts, &GetCommandsOpts{})
+	req.Scope = opt.Scope
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -4876,9 +4782,8 @@ type GetEmojiCategoriesOpts struct {
 // GetEmojiCategories Returns available emoji categories
 func (c *Client) GetEmojiCategories(opts ...*GetEmojiCategoriesOpts) (*EmojiCategories, error) {
 	req := &GetEmojiCategories{}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Type = opts[0].Type
-	}
+	opt := getVariadic(opts, &GetEmojiCategoriesOpts{})
+	req.Type = opt.Type
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -4921,9 +4826,8 @@ func (c *Client) GetExternalLink(link string, opts ...*GetExternalLinkOpts) (*Ht
 	req := &GetExternalLink{
 		Link: link,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.AllowWriteAccess = opts[0].AllowWriteAccess
-	}
+	opt := getVariadic(opts, &GetExternalLinkOpts{})
+	req.AllowWriteAccess = opt.AllowWriteAccess
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -5247,9 +5151,8 @@ func (c *Client) GetGroupCallStreamSegment(channelId int32, groupCallId int32, s
 		Scale:       scale,
 		TimeOffset:  timeOffset,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.VideoQuality = opts[0].VideoQuality
-	}
+	opt := getVariadic(opts, &GetGroupCallStreamSegmentOpts{})
+	req.VideoQuality = opt.VideoQuality
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -5318,9 +5221,8 @@ func (c *Client) GetInlineQueryResults(botUserId int64, chatId int64, offset str
 		Offset:    offset,
 		Query:     query,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.UserLocation = opts[0].UserLocation
-	}
+	opt := getVariadic(opts, &GetInlineQueryResultsOpts{})
+	req.UserLocation = opt.UserLocation
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -5337,9 +5239,8 @@ type GetInstalledBackgroundsOpts struct {
 // GetInstalledBackgrounds Returns backgrounds installed by the user
 func (c *Client) GetInstalledBackgrounds(opts ...*GetInstalledBackgroundsOpts) (*Backgrounds, error) {
 	req := &GetInstalledBackgrounds{}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ForDarkTheme = opts[0].ForDarkTheme
-	}
+	opt := getVariadic(opts, &GetInstalledBackgroundsOpts{})
+	req.ForDarkTheme = opt.ForDarkTheme
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -5370,9 +5271,8 @@ func (c *Client) GetInternalLink(typeField InternalLinkType, opts ...*GetInterna
 	req := &GetInternalLink{
 		Type: typeField,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsHttp = opts[0].IsHttp
-	}
+	opt := getVariadic(opts, &GetInternalLinkOpts{})
+	req.IsHttp = opt.IsHttp
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -5427,9 +5327,8 @@ func (c *Client) GetKeywordEmojis(text string, opts ...*GetKeywordEmojisOpts) (*
 	req := &GetKeywordEmojis{
 		Text: text,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.InputLanguageCodes = opts[0].InputLanguageCodes
-	}
+	opt := getVariadic(opts, &GetKeywordEmojisOpts{})
+	req.InputLanguageCodes = opt.InputLanguageCodes
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -5488,9 +5387,8 @@ func (c *Client) GetLinkPreview(text *FormattedText, opts ...*GetLinkPreviewOpts
 	req := &GetLinkPreview{
 		Text: text,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.LinkPreviewOptions = opts[0].LinkPreviewOptions
-	}
+	opt := getVariadic(opts, &GetLinkPreviewOpts{})
+	req.LinkPreviewOptions = opt.LinkPreviewOptions
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -5555,9 +5453,8 @@ type GetLocalizationTargetInfoOpts struct {
 // GetLocalizationTargetInfo Returns information about the current localization target. This is an offline method if only_local is true. Can be called before authorization
 func (c *Client) GetLocalizationTargetInfo(opts ...*GetLocalizationTargetInfoOpts) (*LocalizationTargetInfo, error) {
 	req := &GetLocalizationTargetInfo{}
-	if len(opts) > 0 && opts[0] != nil {
-		req.OnlyLocal = opts[0].OnlyLocal
-	}
+	opt := getVariadic(opts, &GetLocalizationTargetInfoOpts{})
+	req.OnlyLocal = opt.OnlyLocal
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -5588,9 +5485,8 @@ func (c *Client) GetLoginUrl(buttonId int64, chatId int64, messageId int64, opts
 		ChatId:    chatId,
 		MessageId: messageId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.AllowWriteAccess = opts[0].AllowWriteAccess
-	}
+	opt := getVariadic(opts, &GetLoginUrlOpts{})
+	req.AllowWriteAccess = opt.AllowWriteAccess
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -5692,9 +5588,8 @@ func (c *Client) GetManagedBotToken(botUserId int64, opts ...*GetManagedBotToken
 	req := &GetManagedBotToken{
 		BotUserId: botUserId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Revoke = opts[0].Revoke
-	}
+	opt := getVariadic(opts, &GetManagedBotTokenOpts{})
+	req.Revoke = opt.Revoke
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -5780,9 +5675,8 @@ func (c *Client) GetMessageAddedReactions(chatId int64, limit int32, messageId i
 		MessageId: messageId,
 		Offset:    offset,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ReactionType = opts[0].ReactionType
-	}
+	opt := getVariadic(opts, &GetMessageAddedReactionsOpts{})
+	req.ReactionType = opt.ReactionType
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -5841,9 +5735,8 @@ func (c *Client) GetMessageEmbeddingCode(chatId int64, messageId int64, opts ...
 		ChatId:    chatId,
 		MessageId: messageId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ForAlbum = opts[0].ForAlbum
-	}
+	opt := getVariadic(opts, &GetMessageEmbeddingCodeOpts{})
+	req.ForAlbum = opt.ForAlbum
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -5892,10 +5785,9 @@ func (c *Client) GetMessageLink(chatId int64, checklistTaskId int32, mediaTimest
 		MessageId:       messageId,
 		PollOptionId:    pollOptionId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ForAlbum = opts[0].ForAlbum
-		req.InMessageThread = opts[0].InMessageThread
-	}
+	opt := getVariadic(opts, &GetMessageLinkOpts{})
+	req.ForAlbum = opt.ForAlbum
+	req.InMessageThread = opt.InMessageThread
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -5994,9 +5886,8 @@ func (c *Client) GetMessageStatistics(chatId int64, messageId int64, opts ...*Ge
 		ChatId:    chatId,
 		MessageId: messageId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsDark = opts[0].IsDark
-	}
+	opt := getVariadic(opts, &GetMessageStatisticsOpts{})
+	req.IsDark = opt.IsDark
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -6055,9 +5946,8 @@ type GetNetworkStatisticsOpts struct {
 // GetNetworkStatistics Returns network data usage statistics. Can be called before authorization
 func (c *Client) GetNetworkStatistics(opts ...*GetNetworkStatisticsOpts) (*NetworkStatistics, error) {
 	req := &GetNetworkStatistics{}
-	if len(opts) > 0 && opts[0] != nil {
-		req.OnlyCurrent = opts[0].OnlyCurrent
-	}
+	opt := getVariadic(opts, &GetNetworkStatisticsOpts{})
+	req.OnlyCurrent = opt.OnlyCurrent
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -6207,9 +6097,8 @@ func (c *Client) GetPaymentForm(inputInvoice InputInvoice, opts ...*GetPaymentFo
 	req := &GetPaymentForm{
 		InputInvoice: inputInvoice,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Theme = opts[0].Theme
-	}
+	opt := getVariadic(opts, &GetPaymentFormOpts{})
+	req.Theme = opt.Theme
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -6310,9 +6199,8 @@ func (c *Client) GetPollVoteStatistics(chatId int64, messageId int64, opts ...*G
 		ChatId:    chatId,
 		MessageId: messageId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsDark = opts[0].IsDark
-	}
+	opt := getVariadic(opts, &GetPollVoteStatisticsOpts{})
+	req.IsDark = opt.IsDark
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -6341,9 +6229,8 @@ type GetPremiumFeaturesOpts struct {
 // GetPremiumFeatures Returns information about features, available to Premium users
 func (c *Client) GetPremiumFeatures(opts ...*GetPremiumFeaturesOpts) (*PremiumFeatures, error) {
 	req := &GetPremiumFeatures{}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Source = opts[0].Source
-	}
+	opt := getVariadic(opts, &GetPremiumFeaturesOpts{})
+	req.Source = opt.Source
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -6542,17 +6429,16 @@ func (c *Client) GetReceivedGifts(businessConnectionId string, collectionId int3
 		Offset:               offset,
 		OwnerId:              ownerId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ExcludeHosted = opts[0].ExcludeHosted
-		req.ExcludeNonUpgradable = opts[0].ExcludeNonUpgradable
-		req.ExcludeSaved = opts[0].ExcludeSaved
-		req.ExcludeUnlimited = opts[0].ExcludeUnlimited
-		req.ExcludeUnsaved = opts[0].ExcludeUnsaved
-		req.ExcludeUpgradable = opts[0].ExcludeUpgradable
-		req.ExcludeUpgraded = opts[0].ExcludeUpgraded
-		req.ExcludeWithoutColors = opts[0].ExcludeWithoutColors
-		req.SortByPrice = opts[0].SortByPrice
-	}
+	opt := getVariadic(opts, &GetReceivedGiftsOpts{})
+	req.ExcludeHosted = opt.ExcludeHosted
+	req.ExcludeNonUpgradable = opt.ExcludeNonUpgradable
+	req.ExcludeSaved = opt.ExcludeSaved
+	req.ExcludeUnlimited = opt.ExcludeUnlimited
+	req.ExcludeUnsaved = opt.ExcludeUnsaved
+	req.ExcludeUpgradable = opt.ExcludeUpgradable
+	req.ExcludeUpgraded = opt.ExcludeUpgraded
+	req.ExcludeWithoutColors = opt.ExcludeWithoutColors
+	req.SortByPrice = opt.SortByPrice
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -6613,9 +6499,8 @@ type GetRecentStickersOpts struct {
 // GetRecentStickers Returns a list of recently used stickers
 func (c *Client) GetRecentStickers(opts ...*GetRecentStickersOpts) (*Stickers, error) {
 	req := &GetRecentStickers{}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsAttached = opts[0].IsAttached
-	}
+	opt := getVariadic(opts, &GetRecentStickersOpts{})
+	req.IsAttached = opt.IsAttached
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -6666,9 +6551,8 @@ func (c *Client) GetRemoteFile(remoteFileId string, opts ...*GetRemoteFileOpts) 
 	req := &GetRemoteFile{
 		RemoteFileId: remoteFileId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.FileType = opts[0].FileType
-	}
+	opt := getVariadic(opts, &GetRemoteFileOpts{})
+	req.FileType = opt.FileType
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -6885,9 +6769,8 @@ func (c *Client) GetStarRevenueStatistics(ownerId MessageSender, opts ...*GetSta
 	req := &GetStarRevenueStatistics{
 		OwnerId: ownerId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsDark = opts[0].IsDark
-	}
+	opt := getVariadic(opts, &GetStarRevenueStatisticsOpts{})
+	req.IsDark = opt.IsDark
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -6906,9 +6789,8 @@ func (c *Client) GetStarSubscriptions(offset string, opts ...*GetStarSubscriptio
 	req := &GetStarSubscriptions{
 		Offset: offset,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.OnlyExpiring = opts[0].OnlyExpiring
-	}
+	opt := getVariadic(opts, &GetStarSubscriptionsOpts{})
+	req.OnlyExpiring = opt.OnlyExpiring
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -6931,10 +6813,9 @@ func (c *Client) GetStarTransactions(limit int32, offset string, ownerId Message
 		Offset:  offset,
 		OwnerId: ownerId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Direction = opts[0].Direction
-		req.SubscriptionId = opts[0].SubscriptionId
-	}
+	opt := getVariadic(opts, &GetStarTransactionsOpts{})
+	req.Direction = opt.Direction
+	req.SubscriptionId = opt.SubscriptionId
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -6995,10 +6876,9 @@ func (c *Client) GetStickerOutline(stickerFileId int32, opts ...*GetStickerOutli
 	req := &GetStickerOutline{
 		StickerFileId: stickerFileId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ForAnimatedEmoji = opts[0].ForAnimatedEmoji
-		req.ForClickedAnimatedEmojiMessage = opts[0].ForClickedAnimatedEmojiMessage
-	}
+	opt := getVariadic(opts, &GetStickerOutlineOpts{})
+	req.ForAnimatedEmoji = opt.ForAnimatedEmoji
+	req.ForClickedAnimatedEmojiMessage = opt.ForClickedAnimatedEmojiMessage
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -7019,10 +6899,9 @@ func (c *Client) GetStickerOutlineSvgPath(stickerFileId int32, opts ...*GetStick
 	req := &GetStickerOutlineSvgPath{
 		StickerFileId: stickerFileId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ForAnimatedEmoji = opts[0].ForAnimatedEmoji
-		req.ForClickedAnimatedEmojiMessage = opts[0].ForClickedAnimatedEmojiMessage
-	}
+	opt := getVariadic(opts, &GetStickerOutlineSvgPathOpts{})
+	req.ForAnimatedEmoji = opt.ForAnimatedEmoji
+	req.ForClickedAnimatedEmojiMessage = opt.ForClickedAnimatedEmojiMessage
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -7103,9 +6982,8 @@ func (c *Client) GetStory(storyId int32, storyPosterChatId int64, opts ...*GetSt
 		StoryId:           storyId,
 		StoryPosterChatId: storyPosterChatId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.OnlyLocal = opts[0].OnlyLocal
-	}
+	opt := getVariadic(opts, &GetStoryOpts{})
+	req.OnlyLocal = opt.OnlyLocal
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -7159,12 +7037,11 @@ func (c *Client) GetStoryInteractions(limit int32, offset string, storyId int32,
 		Offset:  offset,
 		StoryId: storyId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.OnlyContacts = opts[0].OnlyContacts
-		req.PreferForwards = opts[0].PreferForwards
-		req.PreferWithReaction = opts[0].PreferWithReaction
-		req.Query = opts[0].Query
-	}
+	opt := getVariadic(opts, &GetStoryInteractionsOpts{})
+	req.OnlyContacts = opt.OnlyContacts
+	req.PreferForwards = opt.PreferForwards
+	req.PreferWithReaction = opt.PreferWithReaction
+	req.Query = opt.Query
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -7209,9 +7086,8 @@ func (c *Client) GetStoryStatistics(chatId int64, storyId int32, opts ...*GetSto
 		ChatId:  chatId,
 		StoryId: storyId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsDark = opts[0].IsDark
-	}
+	opt := getVariadic(opts, &GetStoryStatisticsOpts{})
+	req.IsDark = opt.IsDark
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -7301,9 +7177,8 @@ func (c *Client) GetSupergroupMembers(limit int32, offset int32, supergroupId in
 		Offset:       offset,
 		SupergroupId: supergroupId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Filter = opts[0].Filter
-	}
+	opt := getVariadic(opts, &GetSupergroupMembersOpts{})
+	req.Filter = opt.Filter
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -7417,9 +7292,8 @@ type GetTonRevenueStatisticsOpts struct {
 // GetTonRevenueStatistics Returns detailed Toncoin revenue statistics of the current user
 func (c *Client) GetTonRevenueStatistics(opts ...*GetTonRevenueStatisticsOpts) (*TonRevenueStatistics, error) {
 	req := &GetTonRevenueStatistics{}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsDark = opts[0].IsDark
-	}
+	opt := getVariadic(opts, &GetTonRevenueStatisticsOpts{})
+	req.IsDark = opt.IsDark
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -7439,9 +7313,8 @@ func (c *Client) GetTonTransactions(limit int32, offset string, opts ...*GetTonT
 		Limit:  limit,
 		Offset: offset,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Direction = opts[0].Direction
-	}
+	opt := getVariadic(opts, &GetTonTransactionsOpts{})
+	req.Direction = opt.Direction
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -7545,10 +7418,9 @@ func (c *Client) GetUpgradedGiftVariants(regularGiftId int64, opts ...*GetUpgrad
 	req := &GetUpgradedGiftVariants{
 		RegularGiftId: regularGiftId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ReturnCraftModels = opts[0].ReturnCraftModels
-		req.ReturnUpgradeModels = opts[0].ReturnUpgradeModels
-	}
+	opt := getVariadic(opts, &GetUpgradedGiftVariantsOpts{})
+	req.ReturnCraftModels = opt.ReturnCraftModels
+	req.ReturnUpgradeModels = opt.ReturnUpgradeModels
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -7691,9 +7563,8 @@ func (c *Client) GetVideoChatInviteLink(groupCallId int32, opts ...*GetVideoChat
 	req := &GetVideoChatInviteLink{
 		GroupCallId: groupCallId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.CanSelfUnmute = opts[0].CanSelfUnmute
-	}
+	opt := getVariadic(opts, &GetVideoChatInviteLinkOpts{})
+	req.CanSelfUnmute = opt.CanSelfUnmute
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -7741,9 +7612,8 @@ func (c *Client) GetWebAppLinkUrl(botUserId int64, chatId int64, parameters *Web
 		StartParameter:  startParameter,
 		WebAppShortName: webAppShortName,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.AllowWriteAccess = opts[0].AllowWriteAccess
-	}
+	opt := getVariadic(opts, &GetWebAppLinkUrlOpts{})
+	req.AllowWriteAccess = opt.AllowWriteAccess
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -7788,9 +7658,8 @@ func (c *Client) GetWebPageInstantView(url string, opts ...*GetWebPageInstantVie
 	req := &GetWebPageInstantView{
 		Url: url,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.OnlyLocal = opts[0].OnlyLocal
-	}
+	opt := getVariadic(opts, &GetWebPageInstantViewOpts{})
+	req.OnlyLocal = opt.OnlyLocal
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -7871,9 +7740,8 @@ func (c *Client) InviteGroupCallParticipant(groupCallId int32, userId int64, opt
 		GroupCallId: groupCallId,
 		UserId:      userId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsVideo = opts[0].IsVideo
-	}
+	opt := getVariadic(opts, &InviteGroupCallParticipantOpts{})
+	req.IsVideo = opt.IsVideo
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -7967,9 +7835,8 @@ func (c *Client) JoinVideoChat(groupCallId int32, inviteHash string, joinParamet
 		InviteHash:     inviteHash,
 		JoinParameters: joinParameters,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ParticipantId = opts[0].ParticipantId
-	}
+	opt := getVariadic(opts, &JoinVideoChatOpts{})
+	req.ParticipantId = opt.ParticipantId
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -8037,9 +7904,8 @@ func (c *Client) LoadChats(limit int32, opts ...*LoadChatsOpts) error {
 	req := &LoadChats{
 		Limit: limit,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ChatList = opts[0].ChatList
-	}
+	opt := getVariadic(opts, &LoadChatsOpts{})
+	req.ChatList = opt.ChatList
 	_, err := c.Send(req)
 	return err
 }
@@ -8191,10 +8057,9 @@ func (c *Client) OpenWebApp(botUserId int64, chatId int64, parameters *WebAppOpe
 		Parameters: parameters,
 		Url:        url,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ReplyTo = opts[0].ReplyTo
-		req.TopicId = opts[0].TopicId
-	}
+	opt := getVariadic(opts, &OpenWebAppOpts{})
+	req.ReplyTo = opt.ReplyTo
+	req.TopicId = opt.TopicId
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -8223,12 +8088,11 @@ func (c *Client) OptimizeStorage(chatLimit int32, count int32, immunityDelay int
 		Size:          size,
 		Ttl:           ttl,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ChatIds = opts[0].ChatIds
-		req.ExcludeChatIds = opts[0].ExcludeChatIds
-		req.FileTypes = opts[0].FileTypes
-		req.ReturnDeletedFileStatistics = opts[0].ReturnDeletedFileStatistics
-	}
+	opt := getVariadic(opts, &OptimizeStorageOpts{})
+	req.ChatIds = opt.ChatIds
+	req.ExcludeChatIds = opt.ExcludeChatIds
+	req.FileTypes = opt.FileTypes
+	req.ReturnDeletedFileStatistics = opt.ReturnDeletedFileStatistics
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -8275,10 +8139,9 @@ func (c *Client) PinChatMessage(chatId int64, messageId int64, opts ...*PinChatM
 		ChatId:    chatId,
 		MessageId: messageId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.DisableNotification = opts[0].DisableNotification
-		req.OnlyForSelf = opts[0].OnlyForSelf
-	}
+	opt := getVariadic(opts, &PinChatMessageOpts{})
+	req.DisableNotification = opt.DisableNotification
+	req.OnlyForSelf = opt.OnlyForSelf
 	_, err := c.Send(req)
 	return err
 }
@@ -8292,9 +8155,8 @@ type PingProxyOpts struct {
 // PingProxy Computes time needed to receive a response from a Telegram server through a proxy. Can be called before authorization
 func (c *Client) PingProxy(opts ...*PingProxyOpts) (*Seconds, error) {
 	req := &PingProxy{}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Proxy = opts[0].Proxy
-	}
+	opt := getVariadic(opts, &PingProxyOpts{})
+	req.Proxy = opt.Proxy
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -8316,9 +8178,8 @@ func (c *Client) PlaceGiftAuctionBid(giftId int64, starCount int64, text *Format
 		Text:      text,
 		UserId:    userId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsPrivate = opts[0].IsPrivate
-	}
+	opt := getVariadic(opts, &PlaceGiftAuctionBidOpts{})
+	req.IsPrivate = opt.IsPrivate
 	_, err := c.Send(req)
 	return err
 }
@@ -8346,13 +8207,12 @@ func (c *Client) PostStory(activePeriod int32, albumIds []int32, chatId int64, c
 		Content:         content,
 		PrivacySettings: privacySettings,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Areas = opts[0].Areas
-		req.Caption = opts[0].Caption
-		req.FromStoryFullId = opts[0].FromStoryFullId
-		req.IsPostedToChatPage = opts[0].IsPostedToChatPage
-		req.ProtectContent = opts[0].ProtectContent
-	}
+	opt := getVariadic(opts, &PostStoryOpts{})
+	req.Areas = opt.Areas
+	req.Caption = opt.Caption
+	req.FromStoryFullId = opt.FromStoryFullId
+	req.IsPostedToChatPage = opt.IsPostedToChatPage
+	req.ProtectContent = opt.ProtectContent
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -8372,9 +8232,8 @@ func (c *Client) PreliminaryUploadFile(file InputFile, priority int32, opts ...*
 		File:     file,
 		Priority: priority,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.FileType = opts[0].FileType
-	}
+	opt := getVariadic(opts, &PreliminaryUploadFileOpts{})
+	req.FileType = opt.FileType
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -8404,9 +8263,8 @@ func (c *Client) ProcessChatHasProtectedContentDisableRequest(chatId int64, requ
 		ChatId:           chatId,
 		RequestMessageId: requestMessageId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Approve = opts[0].Approve
-	}
+	opt := getVariadic(opts, &ProcessChatHasProtectedContentDisableRequestOpts{})
+	req.Approve = opt.Approve
 	_, err := c.Send(req)
 	return err
 }
@@ -8423,9 +8281,8 @@ func (c *Client) ProcessChatJoinRequest(chatId int64, userId int64, opts ...*Pro
 		ChatId: chatId,
 		UserId: userId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Approve = opts[0].Approve
-	}
+	opt := getVariadic(opts, &ProcessChatJoinRequestOpts{})
+	req.Approve = opt.Approve
 	_, err := c.Send(req)
 	return err
 }
@@ -8442,9 +8299,8 @@ func (c *Client) ProcessChatJoinRequests(chatId int64, inviteLink string, opts .
 		ChatId:     chatId,
 		InviteLink: inviteLink,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Approve = opts[0].Approve
-	}
+	opt := getVariadic(opts, &ProcessChatJoinRequestsOpts{})
+	req.Approve = opt.Approve
 	_, err := c.Send(req)
 	return err
 }
@@ -8460,9 +8316,8 @@ func (c *Client) ProcessGiftPurchaseOffer(messageId int64, opts ...*ProcessGiftP
 	req := &ProcessGiftPurchaseOffer{
 		MessageId: messageId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Accept = opts[0].Accept
-	}
+	opt := getVariadic(opts, &ProcessGiftPurchaseOfferOpts{})
+	req.Accept = opt.Accept
 	_, err := c.Send(req)
 	return err
 }
@@ -8488,9 +8343,8 @@ func (c *Client) RateSpeechRecognition(chatId int64, messageId int64, opts ...*R
 		ChatId:    chatId,
 		MessageId: messageId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsGood = opts[0].IsGood
-	}
+	opt := getVariadic(opts, &RateSpeechRecognitionOpts{})
+	req.IsGood = opt.IsGood
 	_, err := c.Send(req)
 	return err
 }
@@ -8632,10 +8486,9 @@ func (c *Client) RecoverAuthenticationPassword(recoveryCode string, opts ...*Rec
 	req := &RecoverAuthenticationPassword{
 		RecoveryCode: recoveryCode,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.NewHint = opts[0].NewHint
-		req.NewPassword = opts[0].NewPassword
-	}
+	opt := getVariadic(opts, &RecoverAuthenticationPasswordOpts{})
+	req.NewHint = opt.NewHint
+	req.NewPassword = opt.NewPassword
 	_, err := c.Send(req)
 	return err
 }
@@ -8653,10 +8506,9 @@ func (c *Client) RecoverPassword(recoveryCode string, opts ...*RecoverPasswordOp
 	req := &RecoverPassword{
 		RecoveryCode: recoveryCode,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.NewHint = opts[0].NewHint
-		req.NewPassword = opts[0].NewPassword
-	}
+	opt := getVariadic(opts, &RecoverPasswordOpts{})
+	req.NewHint = opt.NewHint
+	req.NewPassword = opt.NewPassword
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -8699,9 +8551,8 @@ func (c *Client) RegisterUser(firstName string, lastName string, opts ...*Regist
 		FirstName: firstName,
 		LastName:  lastName,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.DisableNotification = opts[0].DisableNotification
-	}
+	opt := getVariadic(opts, &RegisterUserOpts{})
+	req.DisableNotification = opt.DisableNotification
 	_, err := c.Send(req)
 	return err
 }
@@ -8719,11 +8570,10 @@ type RemoveAllFilesFromDownloadsOpts struct {
 // RemoveAllFilesFromDownloads Removes all files from the file download list
 func (c *Client) RemoveAllFilesFromDownloads(opts ...*RemoveAllFilesFromDownloadsOpts) error {
 	req := &RemoveAllFilesFromDownloads{}
-	if len(opts) > 0 && opts[0] != nil {
-		req.DeleteFromCache = opts[0].DeleteFromCache
-		req.OnlyActive = opts[0].OnlyActive
-		req.OnlyCompleted = opts[0].OnlyCompleted
-	}
+	opt := getVariadic(opts, &RemoveAllFilesFromDownloadsOpts{})
+	req.DeleteFromCache = opt.DeleteFromCache
+	req.OnlyActive = opt.OnlyActive
+	req.OnlyCompleted = opt.OnlyCompleted
 	_, err := c.Send(req)
 	return err
 }
@@ -8775,9 +8625,8 @@ func (c *Client) RemoveFileFromDownloads(fileId int32, opts ...*RemoveFileFromDo
 	req := &RemoveFileFromDownloads{
 		FileId: fileId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.DeleteFromCache = opts[0].DeleteFromCache
-	}
+	opt := getVariadic(opts, &RemoveFileFromDownloadsOpts{})
+	req.DeleteFromCache = opt.DeleteFromCache
 	_, err := c.Send(req)
 	return err
 }
@@ -8921,9 +8770,8 @@ func (c *Client) RemoveRecentSticker(sticker InputFile, opts ...*RemoveRecentSti
 	req := &RemoveRecentSticker{
 		Sticker: sticker,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsAttached = opts[0].IsAttached
-	}
+	opt := getVariadic(opts, &RemoveRecentStickerOpts{})
+	req.IsAttached = opt.IsAttached
 	_, err := c.Send(req)
 	return err
 }
@@ -9328,9 +9176,8 @@ type ResendAuthenticationCodeOpts struct {
 // ResendAuthenticationCode Resends an authentication code to the user. Works only when the current authorization state is authorizationStateWaitCode, the next_code_type of the result is not null
 func (c *Client) ResendAuthenticationCode(opts ...*ResendAuthenticationCodeOpts) error {
 	req := &ResendAuthenticationCode{}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Reason = opts[0].Reason
-	}
+	opt := getVariadic(opts, &ResendAuthenticationCodeOpts{})
+	req.Reason = opt.Reason
 	_, err := c.Send(req)
 	return err
 }
@@ -9368,9 +9215,8 @@ func (c *Client) ResendMessages(chatId int64, messageIds []int64, paidMessageSta
 		MessageIds:           messageIds,
 		PaidMessageStarCount: paidMessageStarCount,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Quote = opts[0].Quote
-	}
+	opt := getVariadic(opts, &ResendMessagesOpts{})
+	req.Quote = opt.Quote
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -9387,9 +9233,8 @@ type ResendPhoneNumberCodeOpts struct {
 // ResendPhoneNumberCode Resends the authentication code sent to a phone number. Works only if the previously received authenticationCodeInfo next_code_type was not null and the server-specified timeout has passed
 func (c *Client) ResendPhoneNumberCode(opts ...*ResendPhoneNumberCodeOpts) (*AuthenticationCodeInfo, error) {
 	req := &ResendPhoneNumberCode{}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Reason = opts[0].Reason
-	}
+	opt := getVariadic(opts, &ResendPhoneNumberCodeOpts{})
+	req.Reason = opt.Reason
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -9553,9 +9398,8 @@ func (c *Client) SearchCallMessages(limit int32, offset string, opts ...*SearchC
 		Limit:  limit,
 		Offset: offset,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.OnlyMissed = opts[0].OnlyMissed
-	}
+	opt := getVariadic(opts, &SearchCallMessagesOpts{})
+	req.OnlyMissed = opt.OnlyMissed
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -9589,9 +9433,8 @@ func (c *Client) SearchChatMembers(chatId int64, limit int32, query string, opts
 		Limit:  limit,
 		Query:  query,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Filter = opts[0].Filter
-	}
+	opt := getVariadic(opts, &SearchChatMembersOpts{})
+	req.Filter = opt.Filter
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -9618,11 +9461,10 @@ func (c *Client) SearchChatMessages(chatId int64, fromMessageId int64, limit int
 		Offset:        offset,
 		Query:         query,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Filter = opts[0].Filter
-		req.SenderId = opts[0].SenderId
-		req.TopicId = opts[0].TopicId
-	}
+	opt := getVariadic(opts, &SearchChatMessagesOpts{})
+	req.Filter = opt.Filter
+	req.SenderId = opt.SenderId
+	req.TopicId = opt.TopicId
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -9680,9 +9522,8 @@ func (c *Client) SearchContacts(limit int32, opts ...*SearchContactsOpts) (*User
 	req := &SearchContacts{
 		Limit: limit,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Query = opts[0].Query
-	}
+	opt := getVariadic(opts, &SearchContactsOpts{})
+	req.Query = opt.Query
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -9701,9 +9542,8 @@ func (c *Client) SearchEmojis(text string, opts ...*SearchEmojisOpts) (*EmojiKey
 	req := &SearchEmojis{
 		Text: text,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.InputLanguageCodes = opts[0].InputLanguageCodes
-	}
+	opt := getVariadic(opts, &SearchEmojisOpts{})
+	req.InputLanguageCodes = opt.InputLanguageCodes
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -9727,11 +9567,10 @@ func (c *Client) SearchFileDownloads(limit int32, offset string, opts ...*Search
 		Limit:  limit,
 		Offset: offset,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.OnlyActive = opts[0].OnlyActive
-		req.OnlyCompleted = opts[0].OnlyCompleted
-		req.Query = opts[0].Query
-	}
+	opt := getVariadic(opts, &SearchFileDownloadsOpts{})
+	req.OnlyActive = opt.OnlyActive
+	req.OnlyCompleted = opt.OnlyCompleted
+	req.Query = opt.Query
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -9756,10 +9595,9 @@ func (c *Client) SearchGiftsForResale(attributes []UpgradedGiftAttributeId, gift
 		Offset:     offset,
 		Order:      order,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ForCrafting = opts[0].ForCrafting
-		req.ForStars = opts[0].ForStars
-	}
+	opt := getVariadic(opts, &SearchGiftsForResaleOpts{})
+	req.ForCrafting = opt.ForCrafting
+	req.ForStars = opt.ForStars
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -9813,11 +9651,10 @@ func (c *Client) SearchMessages(limit int32, maxDate int32, minDate int32, offse
 		Offset:  offset,
 		Query:   query,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ChatList = opts[0].ChatList
-		req.ChatTypeFilter = opts[0].ChatTypeFilter
-		req.Filter = opts[0].Filter
-	}
+	opt := getVariadic(opts, &SearchMessagesOpts{})
+	req.ChatList = opt.ChatList
+	req.ChatTypeFilter = opt.ChatTypeFilter
+	req.Filter = opt.Filter
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -9977,9 +9814,8 @@ func (c *Client) SearchSavedMessages(fromMessageId int64, limit int32, offset in
 		Query:                query,
 		SavedMessagesTopicId: savedMessagesTopicId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Tag = opts[0].Tag
-	}
+	opt := getVariadic(opts, &SearchSavedMessagesOpts{})
+	req.Tag = opt.Tag
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -10001,9 +9837,8 @@ func (c *Client) SearchSecretMessages(chatId int64, limit int32, offset string, 
 		Offset: offset,
 		Query:  query,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Filter = opts[0].Filter
-	}
+	opt := getVariadic(opts, &SearchSecretMessagesOpts{})
+	req.Filter = opt.Filter
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -10027,10 +9862,9 @@ func (c *Client) SearchStickers(emojis string, limit int32, offset int32, sticke
 		Offset:      offset,
 		StickerType: stickerType,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.InputLanguageCodes = opts[0].InputLanguageCodes
-		req.Query = opts[0].Query
-	}
+	opt := getVariadic(opts, &SearchStickersOpts{})
+	req.InputLanguageCodes = opt.InputLanguageCodes
+	req.Query = opt.Query
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -10049,9 +9883,8 @@ func (c *Client) SearchStickerSet(name string, opts ...*SearchStickerSetOpts) (*
 	req := &SearchStickerSet{
 		Name: name,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IgnoreCache = opts[0].IgnoreCache
-	}
+	opt := getVariadic(opts, &SearchStickerSetOpts{})
+	req.IgnoreCache = opt.IgnoreCache
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -10085,9 +9918,8 @@ func (c *Client) SearchStringsByPrefix(limit int32, query string, strings []stri
 		Query:   query,
 		Strings: strings,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ReturnNoneForEmptyQuery = opts[0].ReturnNoneForEmptyQuery
-	}
+	opt := getVariadic(opts, &SearchStringsByPrefixOpts{})
+	req.ReturnNoneForEmptyQuery = opt.ReturnNoneForEmptyQuery
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -10118,9 +9950,8 @@ func (c *Client) SearchUserByPhoneNumber(phoneNumber string, opts ...*SearchUser
 	req := &SearchUserByPhoneNumber{
 		PhoneNumber: phoneNumber,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.OnlyLocal = opts[0].OnlyLocal
-	}
+	opt := getVariadic(opts, &SearchUserByPhoneNumberOpts{})
+	req.OnlyLocal = opt.OnlyLocal
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -10206,12 +10037,11 @@ func (c *Client) SendBusinessMessage(businessConnectionId string, chatId int64, 
 		EffectId:             effectId,
 		InputMessageContent:  inputMessageContent,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.DisableNotification = opts[0].DisableNotification
-		req.ProtectContent = opts[0].ProtectContent
-		req.ReplyMarkup = opts[0].ReplyMarkup
-		req.ReplyTo = opts[0].ReplyTo
-	}
+	opt := getVariadic(opts, &SendBusinessMessageOpts{})
+	req.DisableNotification = opt.DisableNotification
+	req.ProtectContent = opt.ProtectContent
+	req.ReplyMarkup = opt.ReplyMarkup
+	req.ReplyTo = opt.ReplyTo
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -10237,11 +10067,10 @@ func (c *Client) SendBusinessMessageAlbum(businessConnectionId string, chatId in
 		EffectId:             effectId,
 		InputMessageContents: inputMessageContents,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.DisableNotification = opts[0].DisableNotification
-		req.ProtectContent = opts[0].ProtectContent
-		req.ReplyTo = opts[0].ReplyTo
-	}
+	opt := getVariadic(opts, &SendBusinessMessageAlbumOpts{})
+	req.DisableNotification = opt.DisableNotification
+	req.ProtectContent = opt.ProtectContent
+	req.ReplyTo = opt.ReplyTo
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -10305,10 +10134,9 @@ func (c *Client) SendChatAction(businessConnectionId string, chatId int64, opts 
 		BusinessConnectionId: businessConnectionId,
 		ChatId:               chatId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Action = opts[0].Action
-		req.TopicId = opts[0].TopicId
-	}
+	opt := getVariadic(opts, &SendChatActionOpts{})
+	req.Action = opt.Action
+	req.TopicId = opt.TopicId
 	_, err := c.Send(req)
 	return err
 }
@@ -10353,10 +10181,9 @@ func (c *Client) SendGift(giftId int64, ownerId MessageSender, text *FormattedTe
 		OwnerId: ownerId,
 		Text:    text,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsPrivate = opts[0].IsPrivate
-		req.PayForUpgrade = opts[0].PayForUpgrade
-	}
+	opt := getVariadic(opts, &SendGiftOpts{})
+	req.IsPrivate = opt.IsPrivate
+	req.PayForUpgrade = opt.PayForUpgrade
 	_, err := c.Send(req)
 	return err
 }
@@ -10404,12 +10231,11 @@ func (c *Client) SendInlineQueryResultMessage(chatId int64, queryId int64, resul
 		QueryId:  queryId,
 		ResultId: resultId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.HideViaBot = opts[0].HideViaBot
-		req.Options = opts[0].Options
-		req.ReplyTo = opts[0].ReplyTo
-		req.TopicId = opts[0].TopicId
-	}
+	opt := getVariadic(opts, &SendInlineQueryResultMessageOpts{})
+	req.HideViaBot = opt.HideViaBot
+	req.Options = opt.Options
+	req.ReplyTo = opt.ReplyTo
+	req.TopicId = opt.TopicId
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -10435,12 +10261,11 @@ func (c *Client) SendMessage(chatId int64, inputMessageContent InputMessageConte
 		ChatId:              chatId,
 		InputMessageContent: inputMessageContent,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Options = opts[0].Options
-		req.ReplyMarkup = opts[0].ReplyMarkup
-		req.ReplyTo = opts[0].ReplyTo
-		req.TopicId = opts[0].TopicId
-	}
+	opt := getVariadic(opts, &SendMessageOpts{})
+	req.Options = opt.Options
+	req.ReplyMarkup = opt.ReplyMarkup
+	req.ReplyTo = opt.ReplyTo
+	req.TopicId = opt.TopicId
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -10464,11 +10289,10 @@ func (c *Client) SendMessageAlbum(chatId int64, inputMessageContents []InputMess
 		ChatId:               chatId,
 		InputMessageContents: inputMessageContents,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Options = opts[0].Options
-		req.ReplyTo = opts[0].ReplyTo
-		req.TopicId = opts[0].TopicId
-	}
+	opt := getVariadic(opts, &SendMessageAlbumOpts{})
+	req.Options = opt.Options
+	req.ReplyTo = opt.ReplyTo
+	req.TopicId = opt.TopicId
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -10515,9 +10339,8 @@ func (c *Client) SendPaymentForm(inputInvoice InputInvoice, orderInfoId string, 
 		ShippingOptionId: shippingOptionId,
 		TipAmount:        tipAmount,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Credentials = opts[0].Credentials
-	}
+	opt := getVariadic(opts, &SendPaymentFormOpts{})
+	req.Credentials = opt.Credentials
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -10537,9 +10360,8 @@ func (c *Client) SendPhoneNumberCode(phoneNumber string, typeField PhoneNumberCo
 		PhoneNumber: phoneNumber,
 		Type:        typeField,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Settings = opts[0].Settings
-	}
+	opt := getVariadic(opts, &SendPhoneNumberCodeOpts{})
+	req.Settings = opt.Settings
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -10597,9 +10419,8 @@ func (c *Client) SendTextMessageDraft(chatId int64, draftId int64, forumTopicId 
 		DraftId:      draftId,
 		ForumTopicId: forumTopicId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Text = opts[0].Text
-	}
+	opt := getVariadic(opts, &SendTextMessageDraftOpts{})
+	req.Text = opt.Text
 	_, err := c.Send(req)
 	return err
 }
@@ -10696,9 +10517,8 @@ func (c *Client) SetAuthenticationPhoneNumber(phoneNumber string, opts ...*SetAu
 	req := &SetAuthenticationPhoneNumber{
 		PhoneNumber: phoneNumber,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Settings = opts[0].Settings
-	}
+	opt := getVariadic(opts, &SetAuthenticationPhoneNumberOpts{})
+	req.Settings = opt.Settings
 	_, err := c.Send(req)
 	return err
 }
@@ -10717,9 +10537,8 @@ func (c *Client) SetAuthenticationPremiumPurchaseTransaction(amount int64, curre
 		PremiumDayCount: premiumDayCount,
 		Transaction:     transaction,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsRestore = opts[0].IsRestore
-	}
+	opt := getVariadic(opts, &SetAuthenticationPremiumPurchaseTransactionOpts{})
+	req.IsRestore = opt.IsRestore
 	_, err := c.Send(req)
 	return err
 }
@@ -10745,9 +10564,8 @@ func (c *Client) SetAutosaveSettings(scope AutosaveSettingsScope, opts ...*SetAu
 	req := &SetAutosaveSettings{
 		Scope: scope,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Settings = opts[0].Settings
-	}
+	opt := getVariadic(opts, &SetAutosaveSettingsOpts{})
+	req.Settings = opt.Settings
 	_, err := c.Send(req)
 	return err
 }
@@ -10770,9 +10588,8 @@ type SetBirthdateOpts struct {
 // SetBirthdate Changes the birthdate of the current user
 func (c *Client) SetBirthdate(opts ...*SetBirthdateOpts) error {
 	req := &SetBirthdate{}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Birthdate = opts[0].Birthdate
-	}
+	opt := getVariadic(opts, &SetBirthdateOpts{})
+	req.Birthdate = opt.Birthdate
 	_, err := c.Send(req)
 	return err
 }
@@ -10821,9 +10638,8 @@ func (c *Client) SetBotProfilePhoto(botUserId int64, opts ...*SetBotProfilePhoto
 	req := &SetBotProfilePhoto{
 		BotUserId: botUserId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Photo = opts[0].Photo
-	}
+	opt := getVariadic(opts, &SetBotProfilePhotoOpts{})
+	req.Photo = opt.Photo
 	_, err := c.Send(req)
 	return err
 }
@@ -10882,10 +10698,9 @@ func (c *Client) SetBusinessAccountProfilePhoto(businessConnectionId string, opt
 	req := &SetBusinessAccountProfilePhoto{
 		BusinessConnectionId: businessConnectionId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsPublic = opts[0].IsPublic
-		req.Photo = opts[0].Photo
-	}
+	opt := getVariadic(opts, &SetBusinessAccountProfilePhotoOpts{})
+	req.IsPublic = opt.IsPublic
+	req.Photo = opt.Photo
 	_, err := c.Send(req)
 	return err
 }
@@ -10909,9 +10724,8 @@ type SetBusinessAwayMessageSettingsOpts struct {
 // SetBusinessAwayMessageSettings Changes the business away message settings of the current user. Requires Telegram Business subscription
 func (c *Client) SetBusinessAwayMessageSettings(opts ...*SetBusinessAwayMessageSettingsOpts) error {
 	req := &SetBusinessAwayMessageSettings{}
-	if len(opts) > 0 && opts[0] != nil {
-		req.AwayMessageSettings = opts[0].AwayMessageSettings
-	}
+	opt := getVariadic(opts, &SetBusinessAwayMessageSettingsOpts{})
+	req.AwayMessageSettings = opt.AwayMessageSettings
 	_, err := c.Send(req)
 	return err
 }
@@ -10934,9 +10748,8 @@ type SetBusinessGreetingMessageSettingsOpts struct {
 // SetBusinessGreetingMessageSettings Changes the business greeting message settings of the current user. Requires Telegram Business subscription
 func (c *Client) SetBusinessGreetingMessageSettings(opts ...*SetBusinessGreetingMessageSettingsOpts) error {
 	req := &SetBusinessGreetingMessageSettings{}
-	if len(opts) > 0 && opts[0] != nil {
-		req.GreetingMessageSettings = opts[0].GreetingMessageSettings
-	}
+	opt := getVariadic(opts, &SetBusinessGreetingMessageSettingsOpts{})
+	req.GreetingMessageSettings = opt.GreetingMessageSettings
 	_, err := c.Send(req)
 	return err
 }
@@ -10950,9 +10763,8 @@ type SetBusinessLocationOpts struct {
 // SetBusinessLocation Changes the business location of the current user. Requires Telegram Business subscription
 func (c *Client) SetBusinessLocation(opts ...*SetBusinessLocationOpts) error {
 	req := &SetBusinessLocation{}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Location = opts[0].Location
-	}
+	opt := getVariadic(opts, &SetBusinessLocationOpts{})
+	req.Location = opt.Location
 	_, err := c.Send(req)
 	return err
 }
@@ -10970,9 +10782,8 @@ func (c *Client) SetBusinessMessageIsPinned(businessConnectionId string, chatId 
 		ChatId:               chatId,
 		MessageId:            messageId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsPinned = opts[0].IsPinned
-	}
+	opt := getVariadic(opts, &SetBusinessMessageIsPinnedOpts{})
+	req.IsPinned = opt.IsPinned
 	_, err := c.Send(req)
 	return err
 }
@@ -10986,9 +10797,8 @@ type SetBusinessOpeningHoursOpts struct {
 // SetBusinessOpeningHours Changes the business opening hours of the current user. Requires Telegram Business subscription
 func (c *Client) SetBusinessOpeningHours(opts ...*SetBusinessOpeningHoursOpts) error {
 	req := &SetBusinessOpeningHours{}
-	if len(opts) > 0 && opts[0] != nil {
-		req.OpeningHours = opts[0].OpeningHours
-	}
+	opt := getVariadic(opts, &SetBusinessOpeningHoursOpts{})
+	req.OpeningHours = opt.OpeningHours
 	_, err := c.Send(req)
 	return err
 }
@@ -11002,9 +10812,8 @@ type SetBusinessStartPageOpts struct {
 // SetBusinessStartPage Changes the business start page of the current user. Requires Telegram Business subscription
 func (c *Client) SetBusinessStartPage(opts ...*SetBusinessStartPageOpts) error {
 	req := &SetBusinessStartPage{}
-	if len(opts) > 0 && opts[0] != nil {
-		req.StartPage = opts[0].StartPage
-	}
+	opt := getVariadic(opts, &SetBusinessStartPageOpts{})
+	req.StartPage = opt.StartPage
 	_, err := c.Send(req)
 	return err
 }
@@ -11041,9 +10850,8 @@ func (c *Client) SetChatAffiliateProgram(chatId int64, opts ...*SetChatAffiliate
 	req := &SetChatAffiliateProgram{
 		ChatId: chatId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Parameters = opts[0].Parameters
-	}
+	opt := getVariadic(opts, &SetChatAffiliateProgramOpts{})
+	req.Parameters = opt.Parameters
 	_, err := c.Send(req)
 	return err
 }
@@ -11074,11 +10882,10 @@ func (c *Client) SetChatBackground(chatId int64, darkThemeDimming int32, opts ..
 		ChatId:           chatId,
 		DarkThemeDimming: darkThemeDimming,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Background = opts[0].Background
-		req.OnlyForSelf = opts[0].OnlyForSelf
-		req.Type = opts[0].Type
-	}
+	opt := getVariadic(opts, &SetChatBackgroundOpts{})
+	req.Background = opt.Background
+	req.OnlyForSelf = opt.OnlyForSelf
+	req.Type = opt.Type
 	_, err := c.Send(req)
 	return err
 }
@@ -11115,9 +10922,8 @@ func (c *Client) SetChatDirectMessagesGroup(chatId int64, paidMessageStarCount i
 		ChatId:               chatId,
 		PaidMessageStarCount: paidMessageStarCount,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsEnabled = opts[0].IsEnabled
-	}
+	opt := getVariadic(opts, &SetChatDirectMessagesGroupOpts{})
+	req.IsEnabled = opt.IsEnabled
 	_, err := c.Send(req)
 	return err
 }
@@ -11145,10 +10951,9 @@ func (c *Client) SetChatDraftMessage(chatId int64, opts ...*SetChatDraftMessageO
 	req := &SetChatDraftMessage{
 		ChatId: chatId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.DraftMessage = opts[0].DraftMessage
-		req.TopicId = opts[0].TopicId
-	}
+	opt := getVariadic(opts, &SetChatDraftMessageOpts{})
+	req.DraftMessage = opt.DraftMessage
+	req.TopicId = opt.TopicId
 	_, err := c.Send(req)
 	return err
 }
@@ -11164,9 +10969,8 @@ func (c *Client) SetChatEmojiStatus(chatId int64, opts ...*SetChatEmojiStatusOpt
 	req := &SetChatEmojiStatus{
 		ChatId: chatId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.EmojiStatus = opts[0].EmojiStatus
-	}
+	opt := getVariadic(opts, &SetChatEmojiStatusOpts{})
+	req.EmojiStatus = opt.EmojiStatus
 	_, err := c.Send(req)
 	return err
 }
@@ -11264,9 +11068,8 @@ func (c *Client) SetChatPhoto(chatId int64, opts ...*SetChatPhotoOpts) error {
 	req := &SetChatPhoto{
 		ChatId: chatId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Photo = opts[0].Photo
-	}
+	opt := getVariadic(opts, &SetChatPhotoOpts{})
+	req.Photo = opt.Photo
 	_, err := c.Send(req)
 	return err
 }
@@ -11313,9 +11116,8 @@ func (c *Client) SetChatTheme(chatId int64, opts ...*SetChatThemeOpts) error {
 	req := &SetChatTheme{
 		ChatId: chatId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Theme = opts[0].Theme
-	}
+	opt := getVariadic(opts, &SetChatThemeOpts{})
+	req.Theme = opt.Theme
 	_, err := c.Send(req)
 	return err
 }
@@ -11351,9 +11153,8 @@ func (c *Client) SetCommands(commands []BotCommand, languageCode string, opts ..
 		Commands:     commands,
 		LanguageCode: languageCode,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Scope = opts[0].Scope
-	}
+	opt := getVariadic(opts, &SetCommandsOpts{})
+	req.Scope = opt.Scope
 	_, err := c.Send(req)
 	return err
 }
@@ -11410,11 +11211,10 @@ type SetDefaultBackgroundOpts struct {
 // SetDefaultBackground Sets default background for chats; adds the background to the list of installed backgrounds
 func (c *Client) SetDefaultBackground(opts ...*SetDefaultBackgroundOpts) (*Background, error) {
 	req := &SetDefaultBackground{}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Background = opts[0].Background
-		req.ForDarkTheme = opts[0].ForDarkTheme
-		req.Type = opts[0].Type
-	}
+	opt := getVariadic(opts, &SetDefaultBackgroundOpts{})
+	req.Background = opt.Background
+	req.ForDarkTheme = opt.ForDarkTheme
+	req.Type = opt.Type
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -11431,9 +11231,8 @@ type SetDefaultChannelAdministratorRightsOpts struct {
 // SetDefaultChannelAdministratorRights Sets default administrator rights for adding the bot to channel chats; for bots only
 func (c *Client) SetDefaultChannelAdministratorRights(opts ...*SetDefaultChannelAdministratorRightsOpts) error {
 	req := &SetDefaultChannelAdministratorRights{}
-	if len(opts) > 0 && opts[0] != nil {
-		req.DefaultChannelAdministratorRights = opts[0].DefaultChannelAdministratorRights
-	}
+	opt := getVariadic(opts, &SetDefaultChannelAdministratorRightsOpts{})
+	req.DefaultChannelAdministratorRights = opt.DefaultChannelAdministratorRights
 	_, err := c.Send(req)
 	return err
 }
@@ -11447,9 +11246,8 @@ type SetDefaultGroupAdministratorRightsOpts struct {
 // SetDefaultGroupAdministratorRights Sets default administrator rights for adding the bot to basic group and supergroup chats; for bots only
 func (c *Client) SetDefaultGroupAdministratorRights(opts ...*SetDefaultGroupAdministratorRightsOpts) error {
 	req := &SetDefaultGroupAdministratorRights{}
-	if len(opts) > 0 && opts[0] != nil {
-		req.DefaultGroupAdministratorRights = opts[0].DefaultGroupAdministratorRights
-	}
+	opt := getVariadic(opts, &SetDefaultGroupAdministratorRightsOpts{})
+	req.DefaultGroupAdministratorRights = opt.DefaultGroupAdministratorRights
 	_, err := c.Send(req)
 	return err
 }
@@ -11484,9 +11282,8 @@ func (c *Client) SetDirectMessagesChatTopicIsMarkedAsUnread(chatId int64, topicI
 		ChatId:  chatId,
 		TopicId: topicId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsMarkedAsUnread = opts[0].IsMarkedAsUnread
-	}
+	opt := getVariadic(opts, &SetDirectMessagesChatTopicIsMarkedAsUnreadOpts{})
+	req.IsMarkedAsUnread = opt.IsMarkedAsUnread
 	_, err := c.Send(req)
 	return err
 }
@@ -11500,9 +11297,8 @@ type SetEmojiStatusOpts struct {
 // SetEmojiStatus Changes the emoji status of the current user; for Telegram Premium users only
 func (c *Client) SetEmojiStatus(opts ...*SetEmojiStatusOpts) error {
 	req := &SetEmojiStatus{}
-	if len(opts) > 0 && opts[0] != nil {
-		req.EmojiStatus = opts[0].EmojiStatus
-	}
+	opt := getVariadic(opts, &SetEmojiStatusOpts{})
+	req.EmojiStatus = opt.EmojiStatus
 	_, err := c.Send(req)
 	return err
 }
@@ -11545,10 +11341,9 @@ func (c *Client) SetGameScore(chatId int64, messageId int64, score int32, userId
 		Score:     score,
 		UserId:    userId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.EditMessage = opts[0].EditMessage
-		req.Force = opts[0].Force
-	}
+	opt := getVariadic(opts, &SetGameScoreOpts{})
+	req.EditMessage = opt.EditMessage
+	req.Force = opt.Force
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -11581,9 +11376,8 @@ func (c *Client) SetGiftResalePrice(receivedGiftId string, opts ...*SetGiftResal
 	req := &SetGiftResalePrice{
 		ReceivedGiftId: receivedGiftId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Price = opts[0].Price
-	}
+	opt := getVariadic(opts, &SetGiftResalePriceOpts{})
+	req.Price = opt.Price
 	_, err := c.Send(req)
 	return err
 }
@@ -11619,9 +11413,8 @@ func (c *Client) SetGroupCallParticipantIsSpeaking(audioSource int32, groupCallI
 		AudioSource: audioSource,
 		GroupCallId: groupCallId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsSpeaking = opts[0].IsSpeaking
-	}
+	opt := getVariadic(opts, &SetGroupCallParticipantIsSpeakingOpts{})
+	req.IsSpeaking = opt.IsSpeaking
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -11664,10 +11457,9 @@ func (c *Client) SetInlineGameScore(inlineMessageId string, score int32, userId 
 		Score:           score,
 		UserId:          userId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.EditMessage = opts[0].EditMessage
-		req.Force = opts[0].Force
-	}
+	opt := getVariadic(opts, &SetInlineGameScoreOpts{})
+	req.EditMessage = opt.EditMessage
+	req.Force = opt.Force
 	_, err := c.Send(req)
 	return err
 }
@@ -11763,9 +11555,8 @@ func (c *Client) SetMessageFactCheck(chatId int64, messageId int64, opts ...*Set
 		ChatId:    chatId,
 		MessageId: messageId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Text = opts[0].Text
-	}
+	opt := getVariadic(opts, &SetMessageFactCheckOpts{})
+	req.Text = opt.Text
 	_, err := c.Send(req)
 	return err
 }
@@ -11783,9 +11574,8 @@ func (c *Client) SetMessageReactions(chatId int64, messageId int64, reactionType
 		MessageId:     messageId,
 		ReactionTypes: reactionTypes,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsBig = opts[0].IsBig
-	}
+	opt := getVariadic(opts, &SetMessageReactionsOpts{})
+	req.IsBig = opt.IsBig
 	_, err := c.Send(req)
 	return err
 }
@@ -11801,9 +11591,8 @@ func (c *Client) SetMessageSenderBlockList(senderId MessageSender, opts ...*SetM
 	req := &SetMessageSenderBlockList{
 		SenderId: senderId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.BlockList = opts[0].BlockList
-	}
+	opt := getVariadic(opts, &SetMessageSenderBlockListOpts{})
+	req.BlockList = opt.BlockList
 	_, err := c.Send(req)
 	return err
 }
@@ -11838,9 +11627,8 @@ type SetNetworkTypeOpts struct {
 // SetNetworkType Sets the current network type. Can be called before authorization. Calling this method forces all network connections to reopen, mitigating the delay in switching between different networks,
 func (c *Client) SetNetworkType(opts ...*SetNetworkTypeOpts) error {
 	req := &SetNetworkType{}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Type = opts[0].Type
-	}
+	opt := getVariadic(opts, &SetNetworkTypeOpts{})
+	req.Type = opt.Type
 	_, err := c.Send(req)
 	return err
 }
@@ -11865,9 +11653,8 @@ func (c *Client) SetOption(name string, opts ...*SetOptionOpts) error {
 	req := &SetOption{
 		Name: name,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Value = opts[0].Value
-	}
+	opt := getVariadic(opts, &SetOptionOpts{})
+	req.Value = opt.Value
 	_, err := c.Send(req)
 	return err
 }
@@ -11923,12 +11710,11 @@ func (c *Client) SetPassword(oldPassword string, opts ...*SetPasswordOpts) (*Pas
 	req := &SetPassword{
 		OldPassword: oldPassword,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.NewHint = opts[0].NewHint
-		req.NewPassword = opts[0].NewPassword
-		req.NewRecoveryEmailAddress = opts[0].NewRecoveryEmailAddress
-		req.SetRecoveryEmailAddress = opts[0].SetRecoveryEmailAddress
-	}
+	opt := getVariadic(opts, &SetPasswordOpts{})
+	req.NewHint = opt.NewHint
+	req.NewPassword = opt.NewPassword
+	req.NewRecoveryEmailAddress = opt.NewRecoveryEmailAddress
+	req.SetRecoveryEmailAddress = opt.SetRecoveryEmailAddress
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -12026,9 +11812,8 @@ func (c *Client) SetProfilePhoto(photo InputChatPhoto, opts ...*SetProfilePhotoO
 	req := &SetProfilePhoto{
 		Photo: photo,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsPublic = opts[0].IsPublic
-	}
+	opt := getVariadic(opts, &SetProfilePhotoOpts{})
+	req.IsPublic = opt.IsPublic
 	_, err := c.Send(req)
 	return err
 }
@@ -12125,9 +11910,8 @@ func (c *Client) SetStickerMaskPosition(sticker InputFile, opts ...*SetStickerMa
 	req := &SetStickerMaskPosition{
 		Sticker: sticker,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.MaskPosition = opts[0].MaskPosition
-	}
+	opt := getVariadic(opts, &SetStickerMaskPositionOpts{})
+	req.MaskPosition = opt.MaskPosition
 	_, err := c.Send(req)
 	return err
 }
@@ -12156,10 +11940,9 @@ func (c *Client) SetStickerSetThumbnail(name string, userId int64, opts ...*SetS
 		Name:   name,
 		UserId: userId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Format = opts[0].Format
-		req.Thumbnail = opts[0].Thumbnail
-	}
+	opt := getVariadic(opts, &SetStickerSetThumbnailOpts{})
+	req.Format = opt.Format
+	req.Thumbnail = opt.Thumbnail
 	_, err := c.Send(req)
 	return err
 }
@@ -12212,10 +11995,9 @@ func (c *Client) SetStoryReaction(storyId int32, storyPosterChatId int64, opts .
 		StoryId:           storyId,
 		StoryPosterChatId: storyPosterChatId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ReactionType = opts[0].ReactionType
-		req.UpdateRecentReactions = opts[0].UpdateRecentReactions
-	}
+	opt := getVariadic(opts, &SetStoryReactionOpts{})
+	req.ReactionType = opt.ReactionType
+	req.UpdateRecentReactions = opt.UpdateRecentReactions
 	_, err := c.Send(req)
 	return err
 }
@@ -12297,13 +12079,12 @@ func (c *Client) SetTdlibParameters(apiHash string, apiId int32, applicationVers
 		SystemLanguageCode:    systemLanguageCode,
 		SystemVersion:         systemVersion,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.UseChatInfoDatabase = opts[0].UseChatInfoDatabase
-		req.UseFileDatabase = opts[0].UseFileDatabase
-		req.UseMessageDatabase = opts[0].UseMessageDatabase
-		req.UseSecretChats = opts[0].UseSecretChats
-		req.UseTestDc = opts[0].UseTestDc
-	}
+	opt := getVariadic(opts, &SetTdlibParametersOpts{})
+	req.UseChatInfoDatabase = opt.UseChatInfoDatabase
+	req.UseFileDatabase = opt.UseFileDatabase
+	req.UseMessageDatabase = opt.UseMessageDatabase
+	req.UseSecretChats = opt.UseSecretChats
+	req.UseTestDc = opt.UseTestDc
 	_, err := c.Send(req)
 	return err
 }
@@ -12328,9 +12109,8 @@ func (c *Client) SetUserEmojiStatus(userId int64, opts ...*SetUserEmojiStatusOpt
 	req := &SetUserEmojiStatus{
 		UserId: userId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.EmojiStatus = opts[0].EmojiStatus
-	}
+	opt := getVariadic(opts, &SetUserEmojiStatusOpts{})
+	req.EmojiStatus = opt.EmojiStatus
 	_, err := c.Send(req)
 	return err
 }
@@ -12365,9 +12145,8 @@ func (c *Client) SetUserPersonalProfilePhoto(userId int64, opts ...*SetUserPerso
 	req := &SetUserPersonalProfilePhoto{
 		UserId: userId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.Photo = opts[0].Photo
-	}
+	opt := getVariadic(opts, &SetUserPersonalProfilePhotoOpts{})
+	req.Photo = opt.Photo
 	_, err := c.Send(req)
 	return err
 }
@@ -12428,9 +12207,8 @@ func (c *Client) ShareChatWithBot(buttonId int32, sharedChatId int64, source Key
 		SharedChatId: sharedChatId,
 		Source:       source,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.OnlyCheck = opts[0].OnlyCheck
-	}
+	opt := getVariadic(opts, &ShareChatWithBotOpts{})
+	req.OnlyCheck = opt.OnlyCheck
 	_, err := c.Send(req)
 	return err
 }
@@ -12457,9 +12235,8 @@ func (c *Client) ShareUsersWithBot(buttonId int32, sharedUserIds []int64, source
 		SharedUserIds: sharedUserIds,
 		Source:        source,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.OnlyCheck = opts[0].OnlyCheck
-	}
+	opt := getVariadic(opts, &ShareUsersWithBotOpts{})
+	req.OnlyCheck = opt.OnlyCheck
 	_, err := c.Send(req)
 	return err
 }
@@ -12478,10 +12255,9 @@ func (c *Client) StartGroupCallRecording(groupCallId int32, title string, opts .
 		GroupCallId: groupCallId,
 		Title:       title,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.RecordVideo = opts[0].RecordVideo
-		req.UsePortraitOrientation = opts[0].UsePortraitOrientation
-	}
+	opt := getVariadic(opts, &StartGroupCallRecordingOpts{})
+	req.RecordVideo = opt.RecordVideo
+	req.UsePortraitOrientation = opt.UsePortraitOrientation
 	_, err := c.Send(req)
 	return err
 }
@@ -12517,11 +12293,10 @@ func (c *Client) StartLiveStory(chatId int64, paidMessageStarCount int64, privac
 		PaidMessageStarCount: paidMessageStarCount,
 		PrivacySettings:      privacySettings,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.EnableMessages = opts[0].EnableMessages
-		req.IsRtmpStream = opts[0].IsRtmpStream
-		req.ProtectContent = opts[0].ProtectContent
-	}
+	opt := getVariadic(opts, &StartLiveStoryOpts{})
+	req.EnableMessages = opt.EnableMessages
+	req.IsRtmpStream = opt.IsRtmpStream
+	req.ProtectContent = opt.ProtectContent
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -12551,9 +12326,8 @@ func (c *Client) StopBusinessPoll(businessConnectionId string, chatId int64, mes
 		ChatId:               chatId,
 		MessageId:            messageId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ReplyMarkup = opts[0].ReplyMarkup
-	}
+	opt := getVariadic(opts, &StopBusinessPollOpts{})
+	req.ReplyMarkup = opt.ReplyMarkup
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -12573,9 +12347,8 @@ func (c *Client) StopPoll(chatId int64, messageId int64, opts ...*StopPollOpts) 
 		ChatId:    chatId,
 		MessageId: messageId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ReplyMarkup = opts[0].ReplyMarkup
-	}
+	opt := getVariadic(opts, &StopPollOpts{})
+	req.ReplyMarkup = opt.ReplyMarkup
 	_, err := c.Send(req)
 	return err
 }
@@ -12787,9 +12560,8 @@ type ToggleAllDownloadsArePausedOpts struct {
 // ToggleAllDownloadsArePaused Changes pause state of all files in the file download list
 func (c *Client) ToggleAllDownloadsArePaused(opts ...*ToggleAllDownloadsArePausedOpts) error {
 	req := &ToggleAllDownloadsArePaused{}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ArePaused = opts[0].ArePaused
-	}
+	opt := getVariadic(opts, &ToggleAllDownloadsArePausedOpts{})
+	req.ArePaused = opt.ArePaused
 	_, err := c.Send(req)
 	return err
 }
@@ -12805,9 +12577,8 @@ func (c *Client) ToggleBotCanManageEmojiStatus(botUserId int64, opts ...*ToggleB
 	req := &ToggleBotCanManageEmojiStatus{
 		BotUserId: botUserId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.CanManageEmojiStatus = opts[0].CanManageEmojiStatus
-	}
+	opt := getVariadic(opts, &ToggleBotCanManageEmojiStatusOpts{})
+	req.CanManageEmojiStatus = opt.CanManageEmojiStatus
 	_, err := c.Send(req)
 	return err
 }
@@ -12825,10 +12596,9 @@ func (c *Client) ToggleBotIsAddedToAttachmentMenu(botUserId int64, opts ...*Togg
 	req := &ToggleBotIsAddedToAttachmentMenu{
 		BotUserId: botUserId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.AllowWriteAccess = opts[0].AllowWriteAccess
-		req.IsAdded = opts[0].IsAdded
-	}
+	opt := getVariadic(opts, &ToggleBotIsAddedToAttachmentMenuOpts{})
+	req.AllowWriteAccess = opt.AllowWriteAccess
+	req.IsAdded = opt.IsAdded
 	_, err := c.Send(req)
 	return err
 }
@@ -12845,9 +12615,8 @@ func (c *Client) ToggleBotUsernameIsActive(botUserId int64, username string, opt
 		BotUserId: botUserId,
 		Username:  username,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsActive = opts[0].IsActive
-	}
+	opt := getVariadic(opts, &ToggleBotUsernameIsActiveOpts{})
+	req.IsActive = opt.IsActive
 	_, err := c.Send(req)
 	return err
 }
@@ -12863,9 +12632,8 @@ func (c *Client) ToggleBusinessConnectedBotChatIsPaused(chatId int64, opts ...*T
 	req := &ToggleBusinessConnectedBotChatIsPaused{
 		ChatId: chatId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsPaused = opts[0].IsPaused
-	}
+	opt := getVariadic(opts, &ToggleBusinessConnectedBotChatIsPausedOpts{})
+	req.IsPaused = opt.IsPaused
 	_, err := c.Send(req)
 	return err
 }
@@ -12881,9 +12649,8 @@ func (c *Client) ToggleChatDefaultDisableNotification(chatId int64, opts ...*Tog
 	req := &ToggleChatDefaultDisableNotification{
 		ChatId: chatId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.DefaultDisableNotification = opts[0].DefaultDisableNotification
-	}
+	opt := getVariadic(opts, &ToggleChatDefaultDisableNotificationOpts{})
+	req.DefaultDisableNotification = opt.DefaultDisableNotification
 	_, err := c.Send(req)
 	return err
 }
@@ -12897,9 +12664,8 @@ type ToggleChatFolderTagsOpts struct {
 // ToggleChatFolderTags Toggles whether chat folder tags are enabled
 func (c *Client) ToggleChatFolderTags(opts ...*ToggleChatFolderTagsOpts) error {
 	req := &ToggleChatFolderTags{}
-	if len(opts) > 0 && opts[0] != nil {
-		req.AreTagsEnabled = opts[0].AreTagsEnabled
-	}
+	opt := getVariadic(opts, &ToggleChatFolderTagsOpts{})
+	req.AreTagsEnabled = opt.AreTagsEnabled
 	_, err := c.Send(req)
 	return err
 }
@@ -12915,9 +12681,8 @@ func (c *Client) ToggleChatGiftNotifications(chatId int64, opts ...*ToggleChatGi
 	req := &ToggleChatGiftNotifications{
 		ChatId: chatId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.AreEnabled = opts[0].AreEnabled
-	}
+	opt := getVariadic(opts, &ToggleChatGiftNotificationsOpts{})
+	req.AreEnabled = opt.AreEnabled
 	_, err := c.Send(req)
 	return err
 }
@@ -12933,9 +12698,8 @@ func (c *Client) ToggleChatHasProtectedContent(chatId int64, opts ...*ToggleChat
 	req := &ToggleChatHasProtectedContent{
 		ChatId: chatId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.HasProtectedContent = opts[0].HasProtectedContent
-	}
+	opt := getVariadic(opts, &ToggleChatHasProtectedContentOpts{})
+	req.HasProtectedContent = opt.HasProtectedContent
 	_, err := c.Send(req)
 	return err
 }
@@ -12951,9 +12715,8 @@ func (c *Client) ToggleChatIsMarkedAsUnread(chatId int64, opts ...*ToggleChatIsM
 	req := &ToggleChatIsMarkedAsUnread{
 		ChatId: chatId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsMarkedAsUnread = opts[0].IsMarkedAsUnread
-	}
+	opt := getVariadic(opts, &ToggleChatIsMarkedAsUnreadOpts{})
+	req.IsMarkedAsUnread = opt.IsMarkedAsUnread
 	_, err := c.Send(req)
 	return err
 }
@@ -12970,9 +12733,8 @@ func (c *Client) ToggleChatIsPinned(chatId int64, chatList ChatList, opts ...*To
 		ChatId:   chatId,
 		ChatList: chatList,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsPinned = opts[0].IsPinned
-	}
+	opt := getVariadic(opts, &ToggleChatIsPinnedOpts{})
+	req.IsPinned = opt.IsPinned
 	_, err := c.Send(req)
 	return err
 }
@@ -12988,9 +12750,8 @@ func (c *Client) ToggleChatIsTranslatable(chatId int64, opts ...*ToggleChatIsTra
 	req := &ToggleChatIsTranslatable{
 		ChatId: chatId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsTranslatable = opts[0].IsTranslatable
-	}
+	opt := getVariadic(opts, &ToggleChatIsTranslatableOpts{})
+	req.IsTranslatable = opt.IsTranslatable
 	_, err := c.Send(req)
 	return err
 }
@@ -13006,9 +12767,8 @@ func (c *Client) ToggleChatViewAsTopics(chatId int64, opts ...*ToggleChatViewAsT
 	req := &ToggleChatViewAsTopics{
 		ChatId: chatId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ViewAsTopics = opts[0].ViewAsTopics
-	}
+	opt := getVariadic(opts, &ToggleChatViewAsTopicsOpts{})
+	req.ViewAsTopics = opt.ViewAsTopics
 	_, err := c.Send(req)
 	return err
 }
@@ -13027,10 +12787,9 @@ func (c *Client) ToggleDirectMessagesChatTopicCanSendUnpaidMessages(chatId int64
 		ChatId:  chatId,
 		TopicId: topicId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.CanSendUnpaidMessages = opts[0].CanSendUnpaidMessages
-		req.RefundPayments = opts[0].RefundPayments
-	}
+	opt := getVariadic(opts, &ToggleDirectMessagesChatTopicCanSendUnpaidMessagesOpts{})
+	req.CanSendUnpaidMessages = opt.CanSendUnpaidMessages
+	req.RefundPayments = opt.RefundPayments
 	_, err := c.Send(req)
 	return err
 }
@@ -13046,9 +12805,8 @@ func (c *Client) ToggleDownloadIsPaused(fileId int32, opts ...*ToggleDownloadIsP
 	req := &ToggleDownloadIsPaused{
 		FileId: fileId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsPaused = opts[0].IsPaused
-	}
+	opt := getVariadic(opts, &ToggleDownloadIsPausedOpts{})
+	req.IsPaused = opt.IsPaused
 	_, err := c.Send(req)
 	return err
 }
@@ -13065,9 +12823,8 @@ func (c *Client) ToggleForumTopicIsClosed(chatId int64, forumTopicId int32, opts
 		ChatId:       chatId,
 		ForumTopicId: forumTopicId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsClosed = opts[0].IsClosed
-	}
+	opt := getVariadic(opts, &ToggleForumTopicIsClosedOpts{})
+	req.IsClosed = opt.IsClosed
 	_, err := c.Send(req)
 	return err
 }
@@ -13084,9 +12841,8 @@ func (c *Client) ToggleForumTopicIsPinned(chatId int64, forumTopicId int32, opts
 		ChatId:       chatId,
 		ForumTopicId: forumTopicId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsPinned = opts[0].IsPinned
-	}
+	opt := getVariadic(opts, &ToggleForumTopicIsPinnedOpts{})
+	req.IsPinned = opt.IsPinned
 	_, err := c.Send(req)
 	return err
 }
@@ -13102,9 +12858,8 @@ func (c *Client) ToggleGeneralForumTopicIsHidden(chatId int64, opts ...*ToggleGe
 	req := &ToggleGeneralForumTopicIsHidden{
 		ChatId: chatId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsHidden = opts[0].IsHidden
-	}
+	opt := getVariadic(opts, &ToggleGeneralForumTopicIsHiddenOpts{})
+	req.IsHidden = opt.IsHidden
 	_, err := c.Send(req)
 	return err
 }
@@ -13120,9 +12875,8 @@ func (c *Client) ToggleGiftIsSaved(receivedGiftId string, opts ...*ToggleGiftIsS
 	req := &ToggleGiftIsSaved{
 		ReceivedGiftId: receivedGiftId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsSaved = opts[0].IsSaved
-	}
+	opt := getVariadic(opts, &ToggleGiftIsSavedOpts{})
+	req.IsSaved = opt.IsSaved
 	_, err := c.Send(req)
 	return err
 }
@@ -13138,9 +12892,8 @@ func (c *Client) ToggleGroupCallAreMessagesAllowed(groupCallId int32, opts ...*T
 	req := &ToggleGroupCallAreMessagesAllowed{
 		GroupCallId: groupCallId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.AreMessagesAllowed = opts[0].AreMessagesAllowed
-	}
+	opt := getVariadic(opts, &ToggleGroupCallAreMessagesAllowedOpts{})
+	req.AreMessagesAllowed = opt.AreMessagesAllowed
 	_, err := c.Send(req)
 	return err
 }
@@ -13156,9 +12909,8 @@ func (c *Client) ToggleGroupCallIsMyVideoEnabled(groupCallId int32, opts ...*Tog
 	req := &ToggleGroupCallIsMyVideoEnabled{
 		GroupCallId: groupCallId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsMyVideoEnabled = opts[0].IsMyVideoEnabled
-	}
+	opt := getVariadic(opts, &ToggleGroupCallIsMyVideoEnabledOpts{})
+	req.IsMyVideoEnabled = opt.IsMyVideoEnabled
 	_, err := c.Send(req)
 	return err
 }
@@ -13174,9 +12926,8 @@ func (c *Client) ToggleGroupCallIsMyVideoPaused(groupCallId int32, opts ...*Togg
 	req := &ToggleGroupCallIsMyVideoPaused{
 		GroupCallId: groupCallId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsMyVideoPaused = opts[0].IsMyVideoPaused
-	}
+	opt := getVariadic(opts, &ToggleGroupCallIsMyVideoPausedOpts{})
+	req.IsMyVideoPaused = opt.IsMyVideoPaused
 	_, err := c.Send(req)
 	return err
 }
@@ -13193,9 +12944,8 @@ func (c *Client) ToggleGroupCallParticipantIsHandRaised(groupCallId int32, parti
 		GroupCallId:   groupCallId,
 		ParticipantId: participantId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsHandRaised = opts[0].IsHandRaised
-	}
+	opt := getVariadic(opts, &ToggleGroupCallParticipantIsHandRaisedOpts{})
+	req.IsHandRaised = opt.IsHandRaised
 	_, err := c.Send(req)
 	return err
 }
@@ -13212,9 +12962,8 @@ func (c *Client) ToggleGroupCallParticipantIsMuted(groupCallId int32, participan
 		GroupCallId:   groupCallId,
 		ParticipantId: participantId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsMuted = opts[0].IsMuted
-	}
+	opt := getVariadic(opts, &ToggleGroupCallParticipantIsMutedOpts{})
+	req.IsMuted = opt.IsMuted
 	_, err := c.Send(req)
 	return err
 }
@@ -13230,9 +12979,8 @@ func (c *Client) ToggleGroupCallScreenSharingIsPaused(groupCallId int32, opts ..
 	req := &ToggleGroupCallScreenSharingIsPaused{
 		GroupCallId: groupCallId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsPaused = opts[0].IsPaused
-	}
+	opt := getVariadic(opts, &ToggleGroupCallScreenSharingIsPausedOpts{})
+	req.IsPaused = opt.IsPaused
 	_, err := c.Send(req)
 	return err
 }
@@ -13246,9 +12994,8 @@ type ToggleHasSponsoredMessagesEnabledOpts struct {
 // ToggleHasSponsoredMessagesEnabled Toggles whether the current user has sponsored messages enabled. The setting has no effect for users without Telegram Premium for which sponsored messages are always enabled
 func (c *Client) ToggleHasSponsoredMessagesEnabled(opts ...*ToggleHasSponsoredMessagesEnabledOpts) error {
 	req := &ToggleHasSponsoredMessagesEnabled{}
-	if len(opts) > 0 && opts[0] != nil {
-		req.HasSponsoredMessagesEnabled = opts[0].HasSponsoredMessagesEnabled
-	}
+	opt := getVariadic(opts, &ToggleHasSponsoredMessagesEnabledOpts{})
+	req.HasSponsoredMessagesEnabled = opt.HasSponsoredMessagesEnabled
 	_, err := c.Send(req)
 	return err
 }
@@ -13264,9 +13011,8 @@ func (c *Client) ToggleSavedMessagesTopicIsPinned(savedMessagesTopicId int64, op
 	req := &ToggleSavedMessagesTopicIsPinned{
 		SavedMessagesTopicId: savedMessagesTopicId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsPinned = opts[0].IsPinned
-	}
+	opt := getVariadic(opts, &ToggleSavedMessagesTopicIsPinnedOpts{})
+	req.IsPinned = opt.IsPinned
 	_, err := c.Send(req)
 	return err
 }
@@ -13282,9 +13028,8 @@ func (c *Client) ToggleSessionCanAcceptCalls(sessionId int64, opts ...*ToggleSes
 	req := &ToggleSessionCanAcceptCalls{
 		SessionId: sessionId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.CanAcceptCalls = opts[0].CanAcceptCalls
-	}
+	opt := getVariadic(opts, &ToggleSessionCanAcceptCallsOpts{})
+	req.CanAcceptCalls = opt.CanAcceptCalls
 	_, err := c.Send(req)
 	return err
 }
@@ -13300,9 +13045,8 @@ func (c *Client) ToggleSessionCanAcceptSecretChats(sessionId int64, opts ...*Tog
 	req := &ToggleSessionCanAcceptSecretChats{
 		SessionId: sessionId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.CanAcceptSecretChats = opts[0].CanAcceptSecretChats
-	}
+	opt := getVariadic(opts, &ToggleSessionCanAcceptSecretChatsOpts{})
+	req.CanAcceptSecretChats = opt.CanAcceptSecretChats
 	_, err := c.Send(req)
 	return err
 }
@@ -13319,9 +13063,8 @@ func (c *Client) ToggleStoryIsPostedToChatPage(storyId int32, storyPosterChatId 
 		StoryId:           storyId,
 		StoryPosterChatId: storyPosterChatId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsPostedToChatPage = opts[0].IsPostedToChatPage
-	}
+	opt := getVariadic(opts, &ToggleStoryIsPostedToChatPageOpts{})
+	req.IsPostedToChatPage = opt.IsPostedToChatPage
 	_, err := c.Send(req)
 	return err
 }
@@ -13337,9 +13080,8 @@ func (c *Client) ToggleSupergroupCanHaveSponsoredMessages(supergroupId int64, op
 	req := &ToggleSupergroupCanHaveSponsoredMessages{
 		SupergroupId: supergroupId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.CanHaveSponsoredMessages = opts[0].CanHaveSponsoredMessages
-	}
+	opt := getVariadic(opts, &ToggleSupergroupCanHaveSponsoredMessagesOpts{})
+	req.CanHaveSponsoredMessages = opt.CanHaveSponsoredMessages
 	_, err := c.Send(req)
 	return err
 }
@@ -13355,9 +13097,8 @@ func (c *Client) ToggleSupergroupHasAggressiveAntiSpamEnabled(supergroupId int64
 	req := &ToggleSupergroupHasAggressiveAntiSpamEnabled{
 		SupergroupId: supergroupId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.HasAggressiveAntiSpamEnabled = opts[0].HasAggressiveAntiSpamEnabled
-	}
+	opt := getVariadic(opts, &ToggleSupergroupHasAggressiveAntiSpamEnabledOpts{})
+	req.HasAggressiveAntiSpamEnabled = opt.HasAggressiveAntiSpamEnabled
 	_, err := c.Send(req)
 	return err
 }
@@ -13373,9 +13114,8 @@ func (c *Client) ToggleSupergroupHasAutomaticTranslation(supergroupId int64, opt
 	req := &ToggleSupergroupHasAutomaticTranslation{
 		SupergroupId: supergroupId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.HasAutomaticTranslation = opts[0].HasAutomaticTranslation
-	}
+	opt := getVariadic(opts, &ToggleSupergroupHasAutomaticTranslationOpts{})
+	req.HasAutomaticTranslation = opt.HasAutomaticTranslation
 	_, err := c.Send(req)
 	return err
 }
@@ -13391,9 +13131,8 @@ func (c *Client) ToggleSupergroupHasHiddenMembers(supergroupId int64, opts ...*T
 	req := &ToggleSupergroupHasHiddenMembers{
 		SupergroupId: supergroupId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.HasHiddenMembers = opts[0].HasHiddenMembers
-	}
+	opt := getVariadic(opts, &ToggleSupergroupHasHiddenMembersOpts{})
+	req.HasHiddenMembers = opt.HasHiddenMembers
 	_, err := c.Send(req)
 	return err
 }
@@ -13409,9 +13148,8 @@ func (c *Client) ToggleSupergroupIsAllHistoryAvailable(supergroupId int64, opts 
 	req := &ToggleSupergroupIsAllHistoryAvailable{
 		SupergroupId: supergroupId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsAllHistoryAvailable = opts[0].IsAllHistoryAvailable
-	}
+	opt := getVariadic(opts, &ToggleSupergroupIsAllHistoryAvailableOpts{})
+	req.IsAllHistoryAvailable = opt.IsAllHistoryAvailable
 	_, err := c.Send(req)
 	return err
 }
@@ -13438,10 +13176,9 @@ func (c *Client) ToggleSupergroupIsForum(supergroupId int64, opts ...*ToggleSupe
 	req := &ToggleSupergroupIsForum{
 		SupergroupId: supergroupId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.HasForumTabs = opts[0].HasForumTabs
-		req.IsForum = opts[0].IsForum
-	}
+	opt := getVariadic(opts, &ToggleSupergroupIsForumOpts{})
+	req.HasForumTabs = opt.HasForumTabs
+	req.IsForum = opt.IsForum
 	_, err := c.Send(req)
 	return err
 }
@@ -13457,9 +13194,8 @@ func (c *Client) ToggleSupergroupJoinByRequest(supergroupId int64, opts ...*Togg
 	req := &ToggleSupergroupJoinByRequest{
 		SupergroupId: supergroupId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.JoinByRequest = opts[0].JoinByRequest
-	}
+	opt := getVariadic(opts, &ToggleSupergroupJoinByRequestOpts{})
+	req.JoinByRequest = opt.JoinByRequest
 	_, err := c.Send(req)
 	return err
 }
@@ -13475,9 +13211,8 @@ func (c *Client) ToggleSupergroupJoinToSendMessages(supergroupId int64, opts ...
 	req := &ToggleSupergroupJoinToSendMessages{
 		SupergroupId: supergroupId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.JoinToSendMessages = opts[0].JoinToSendMessages
-	}
+	opt := getVariadic(opts, &ToggleSupergroupJoinToSendMessagesOpts{})
+	req.JoinToSendMessages = opt.JoinToSendMessages
 	_, err := c.Send(req)
 	return err
 }
@@ -13495,10 +13230,9 @@ func (c *Client) ToggleSupergroupSignMessages(supergroupId int64, opts ...*Toggl
 	req := &ToggleSupergroupSignMessages{
 		SupergroupId: supergroupId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ShowMessageSender = opts[0].ShowMessageSender
-		req.SignMessages = opts[0].SignMessages
-	}
+	opt := getVariadic(opts, &ToggleSupergroupSignMessagesOpts{})
+	req.ShowMessageSender = opt.ShowMessageSender
+	req.SignMessages = opt.SignMessages
 	_, err := c.Send(req)
 	return err
 }
@@ -13515,9 +13249,8 @@ func (c *Client) ToggleSupergroupUsernameIsActive(supergroupId int64, username s
 		SupergroupId: supergroupId,
 		Username:     username,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsActive = opts[0].IsActive
-	}
+	opt := getVariadic(opts, &ToggleSupergroupUsernameIsActiveOpts{})
+	req.IsActive = opt.IsActive
 	_, err := c.Send(req)
 	return err
 }
@@ -13533,9 +13266,8 @@ func (c *Client) ToggleUsernameIsActive(username string, opts ...*ToggleUsername
 	req := &ToggleUsernameIsActive{
 		Username: username,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.IsActive = opts[0].IsActive
-	}
+	opt := getVariadic(opts, &ToggleUsernameIsActiveOpts{})
+	req.IsActive = opt.IsActive
 	_, err := c.Send(req)
 	return err
 }
@@ -13551,9 +13283,8 @@ func (c *Client) ToggleVideoChatEnabledStartNotification(groupCallId int32, opts
 	req := &ToggleVideoChatEnabledStartNotification{
 		GroupCallId: groupCallId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.EnabledStartNotification = opts[0].EnabledStartNotification
-	}
+	opt := getVariadic(opts, &ToggleVideoChatEnabledStartNotificationOpts{})
+	req.EnabledStartNotification = opt.EnabledStartNotification
 	_, err := c.Send(req)
 	return err
 }
@@ -13569,9 +13300,8 @@ func (c *Client) ToggleVideoChatMuteNewParticipants(groupCallId int32, opts ...*
 	req := &ToggleVideoChatMuteNewParticipants{
 		GroupCallId: groupCallId,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.MuteNewParticipants = opts[0].MuteNewParticipants
-	}
+	opt := getVariadic(opts, &ToggleVideoChatMuteNewParticipantsOpts{})
+	req.MuteNewParticipants = opt.MuteNewParticipants
 	_, err := c.Send(req)
 	return err
 }
@@ -13702,9 +13432,8 @@ func (c *Client) UpgradeGift(businessConnectionId string, receivedGiftId string,
 		ReceivedGiftId:       receivedGiftId,
 		StarCount:            starCount,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.KeepOriginalDetails = opts[0].KeepOriginalDetails
-	}
+	opt := getVariadic(opts, &UpgradeGiftOpts{})
+	req.KeepOriginalDetails = opt.KeepOriginalDetails
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -13739,10 +13468,9 @@ func (c *Client) ValidateOrderInfo(inputInvoice InputInvoice, opts ...*ValidateO
 	req := &ValidateOrderInfo{
 		InputInvoice: inputInvoice,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.AllowSave = opts[0].AllowSave
-		req.OrderInfo = opts[0].OrderInfo
-	}
+	opt := getVariadic(opts, &ValidateOrderInfoOpts{})
+	req.AllowSave = opt.AllowSave
+	req.OrderInfo = opt.OrderInfo
 	resp, err := c.Send(req)
 	if err != nil {
 		return nil, err
@@ -13764,10 +13492,9 @@ func (c *Client) ViewMessages(chatId int64, messageIds []int64, opts ...*ViewMes
 		ChatId:     chatId,
 		MessageIds: messageIds,
 	}
-	if len(opts) > 0 && opts[0] != nil {
-		req.ForceRead = opts[0].ForceRead
-		req.Source = opts[0].Source
-	}
+	opt := getVariadic(opts, &ViewMessagesOpts{})
+	req.ForceRead = opt.ForceRead
+	req.Source = opt.Source
 	_, err := c.Send(req)
 	return err
 }

@@ -61,13 +61,13 @@ func (t *UpdateNewCallbackQuery) Answer(c *Client, cacheTime int32, showAlert bo
 }
 
 // EditMessageText edits the text of the message associated with the callback query.
-func (t *UpdateNewCallbackQuery) EditMessageText(c *Client, text string, opts *EditTextMessageOpts) (*Message, error) {
-	return c.EditTextMessage(t.ChatId, t.MessageId, text, opts)
+func (t *UpdateNewCallbackQuery) EditMessageText(c *Client, text string, opts ...*EditTextMessageOpts) (*Message, error) {
+	return c.EditTextMessage(t.ChatId, t.MessageId, text, opts...)
 }
 
 // EditMessageCaption edits the caption of the message associated with the callback query.
-func (t *UpdateNewCallbackQuery) EditMessageCaption(c *Client, caption string, opts *EditCaptionOpts) (*Message, error) {
-	return c.EditCaption(t.ChatId, t.MessageId, caption, opts)
+func (t *UpdateNewCallbackQuery) EditMessageCaption(c *Client, caption string, opts ...*EditCaptionOpts) (*Message, error) {
+	return c.EditCaption(t.ChatId, t.MessageId, caption, opts...)
 }
 
 // EditMessageReplyMarkup edits the reply markup of the message associated with the callback query.

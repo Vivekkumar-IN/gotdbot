@@ -12,10 +12,8 @@ type WaitMessageOpts struct {
 }
 
 // Ask waits for a new message in the specified chat.
-func (c *Client) Ask(chatId int64, opts *WaitMessageOpts) (*Message, error) {
-	if opts == nil {
-		opts = &WaitMessageOpts{Timeout: 1 * time.Minute}
-	}
+func (c *Client) Ask(chatId int64, opts ...*WaitMessageOpts) (*Message, error) {
+	opt := getVariadic(opts, &WaitMessageOpts{Timeout: 1 * time.Minute})
 
 	filter := func(client *Client, update TlObject) bool {
 		u, ok := update.(*UpdateNewMessage)
@@ -28,18 +26,18 @@ func (c *Client) Ask(chatId int64, opts *WaitMessageOpts) (*Message, error) {
 			return false
 		}
 
-		if opts.CancellationFilter != nil && opts.CancellationFilter.Check(client, u) {
+		if opt.CancellationFilter != nil && opt.CancellationFilter.Check(client, u) {
 			return true
 		}
 
-		if opts.Filter != nil && !opts.Filter.Check(client, u) {
+		if opt.Filter != nil && !opt.Filter.Check(client, u) {
 			return false
 		}
 
 		return true
 	}
 
-	raw, err := c.WaitFor(filter, opts.Timeout)
+	raw, err := c.WaitFor(filter, opt.Timeout)
 	if err != nil {
 		return nil, err
 	}
@@ -47,7 +45,7 @@ func (c *Client) Ask(chatId int64, opts *WaitMessageOpts) (*Message, error) {
 	u := raw.(*UpdateNewMessage)
 	msg := u.Message
 
-	if opts.CancellationFilter != nil && opts.CancellationFilter.Check(c, u) {
+	if opt.CancellationFilter != nil && opt.CancellationFilter.Check(c, u) {
 		return nil, ConversationCancelled
 	}
 

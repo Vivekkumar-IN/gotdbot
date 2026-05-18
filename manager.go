@@ -27,6 +27,7 @@ type ClientManager struct {
 	LibraryPath string
 
 	clients   map[int]*Client
+	onNew     []func(*Client)
 	mu        sync.RWMutex
 	stop      chan struct{}
 	wg        sync.WaitGroup
@@ -42,11 +43,25 @@ func NewClientManager(LibraryPath string) *ClientManager {
 	}
 }
 
+// OnNewClient registers a callback that is called when a new client is added to the manager.
+func (m *ClientManager) OnNewClient(callback func(*Client)) {
+	m.mu.Lock()
+	m.onNew = append(m.onNew, callback)
+	m.mu.Unlock()
+}
+
 func (m *ClientManager) AddClient(c *Client) {
 	m.mu.Lock()
-	defer m.mu.Unlock()
 	m.clients[c.clientID] = c
 	c.manager = m
+	onNew := make([]func(*Client), len(m.onNew))
+	copy(onNew, m.onNew)
+	m.mu.Unlock()
+
+	for _, cb := range onNew {
+		cb(c)
+	}
+
 	m.Start()
 }
 

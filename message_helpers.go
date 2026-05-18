@@ -542,279 +542,233 @@ func (m *Message) Restrict(c *Client, permissions *ChatPermissions, restrictedUn
 }
 
 // React reacts to the current message.
-func (m *Message) React(c *Client, reactionTypes []ReactionType, opts *SetMessageReactionsOpts) error {
-	return c.SetMessageReactions(m.ChatId, m.Id, reactionTypes, opts)
+func (m *Message) React(c *Client, reactionTypes []ReactionType, opts ...*SetMessageReactionsOpts) error {
+	return c.SetMessageReactions(m.ChatId, m.Id, reactionTypes, opts...)
 }
 
 // Action sends a chat action to a specific chat.
-func (m *Message) Action(c *Client, opts *SendChatActionOpts) error {
-	if opts == nil {
-		opts = &SendChatActionOpts{Action: ChatActionTyping{}}
-	}
-	return c.SendChatAction("", m.ChatId, opts)
+func (m *Message) Action(c *Client, opts ...*SendChatActionOpts) error {
+	opt := getVariadic(opts, &SendChatActionOpts{Action: ChatActionTyping{}})
+	return c.SendChatAction("", m.ChatId, opt)
 }
 
 // ReplyText replies to the message with text.
-func (m *Message) ReplyText(c *Client, text string, opts *SendTextMessageOpts) (*Message, error) {
-	if opts == nil {
-		opts = &SendTextMessageOpts{}
-	}
+func (m *Message) ReplyText(c *Client, text string, opts ...*SendTextMessageOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendTextMessageOpts{})
 
-	if opts.ReplyToMessageID == 0 {
-		opts.ReplyToMessageID = m.Id
+	if opt.ReplyToMessageID == 0 {
+		opt.ReplyToMessageID = m.Id
 	}
-	return c.SendTextMessage(m.ChatId, text, opts)
+	return c.SendTextMessage(m.ChatId, text, opt)
 }
 
 // ReplyAlbum replies to the message with an album.
-func (m *Message) ReplyAlbum(c *Client, inputMessageContents []InputMessageContent, opts *SendMessageAlbumOpts) (*Messages, error) {
-	if opts == nil {
-		opts = &SendMessageAlbumOpts{}
-	}
-	if opts.ReplyTo == nil {
-		opts.ReplyTo = &InputMessageReplyToMessage{
+func (m *Message) ReplyAlbum(c *Client, inputMessageContents []InputMessageContent, opts ...*SendMessageAlbumOpts) (*Messages, error) {
+	opt := getVariadic(opts, &SendMessageAlbumOpts{})
+	if opt.ReplyTo == nil {
+		opt.ReplyTo = &InputMessageReplyToMessage{
 			MessageId: m.Id,
 		}
 	}
-	return c.SendMessageAlbum(m.ChatId, inputMessageContents, opts)
+	return c.SendMessageAlbum(m.ChatId, inputMessageContents, opt)
 }
 
 // ReplyAnimation replies to the message with animation.
-func (m *Message) ReplyAnimation(c *Client, animation InputFile, opts *SendAnimationOpts) (*Message, error) {
-	if opts == nil {
-		opts = &SendAnimationOpts{}
+func (m *Message) ReplyAnimation(c *Client, animation InputFile, opts ...*SendAnimationOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendAnimationOpts{})
+	if opt.ReplyToMessageID == 0 {
+		opt.ReplyToMessageID = m.Id
 	}
-	if opts.ReplyToMessageID == 0 {
-		opts.ReplyToMessageID = m.Id
-	}
-	return c.SendAnimation(m.ChatId, animation, opts)
+	return c.SendAnimation(m.ChatId, animation, opt)
 }
 
 // ReplyAudio replies to the message with audio.
-func (m *Message) ReplyAudio(c *Client, audio InputFile, opts *SendAudioOpts) (*Message, error) {
-	if opts == nil {
-		opts = &SendAudioOpts{}
+func (m *Message) ReplyAudio(c *Client, audio InputFile, opts ...*SendAudioOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendAudioOpts{})
+	if opt.ReplyToMessageID == 0 {
+		opt.ReplyToMessageID = m.Id
 	}
-	if opts.ReplyToMessageID == 0 {
-		opts.ReplyToMessageID = m.Id
-	}
-	return c.SendAudio(m.ChatId, audio, opts)
+	return c.SendAudio(m.ChatId, audio, opt)
 }
 
 // ReplyDocument replies to the message with a document.
-func (m *Message) ReplyDocument(c *Client, document InputFile, opts *SendDocumentOpts) (*Message, error) {
-	if opts == nil {
-		opts = &SendDocumentOpts{}
+func (m *Message) ReplyDocument(c *Client, document InputFile, opts ...*SendDocumentOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendDocumentOpts{})
+	if opt.ReplyToMessageID == 0 {
+		opt.ReplyToMessageID = m.Id
 	}
-	if opts.ReplyToMessageID == 0 {
-		opts.ReplyToMessageID = m.Id
-	}
-	return c.SendDocument(m.ChatId, document, opts)
+	return c.SendDocument(m.ChatId, document, opt)
 }
 
 // ReplyPhoto replies to the message with a photo.
-func (m *Message) ReplyPhoto(c *Client, photo InputFile, opts *SendPhotoOpts) (*Message, error) {
-	if opts == nil {
-		opts = &SendPhotoOpts{}
+func (m *Message) ReplyPhoto(c *Client, photo InputFile, opts ...*SendPhotoOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendPhotoOpts{})
+	if opt.ReplyToMessageID == 0 {
+		opt.ReplyToMessageID = m.Id
 	}
-	if opts.ReplyToMessageID == 0 {
-		opts.ReplyToMessageID = m.Id
-	}
-	return c.SendPhoto(m.ChatId, photo, opts)
+	return c.SendPhoto(m.ChatId, photo, opt)
 }
 
 // ReplyVideo replies to the message with a video.
-func (m *Message) ReplyVideo(c *Client, video InputFile, opts *SendVideoOpts) (*Message, error) {
-	if opts == nil {
-		opts = &SendVideoOpts{}
+func (m *Message) ReplyVideo(c *Client, video InputFile, opts ...*SendVideoOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendVideoOpts{})
+	if opt.ReplyToMessageID == 0 {
+		opt.ReplyToMessageID = m.Id
 	}
-	if opts.ReplyToMessageID == 0 {
-		opts.ReplyToMessageID = m.Id
-	}
-	return c.SendVideo(m.ChatId, video, opts)
+	return c.SendVideo(m.ChatId, video, opt)
 }
 
 // ReplyVideoNote replies to the message with a video note.
-func (m *Message) ReplyVideoNote(c *Client, videoNote InputFile, opts *SendVideoNoteOpts) (*Message, error) {
-	if opts == nil {
-		opts = &SendVideoNoteOpts{}
+func (m *Message) ReplyVideoNote(c *Client, videoNote InputFile, opts ...*SendVideoNoteOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendVideoNoteOpts{})
+	if opt.ReplyToMessageID == 0 {
+		opt.ReplyToMessageID = m.Id
 	}
-	if opts.ReplyToMessageID == 0 {
-		opts.ReplyToMessageID = m.Id
-	}
-	return c.SendVideoNote(m.ChatId, videoNote, opts)
+	return c.SendVideoNote(m.ChatId, videoNote, opt)
 }
 
 // ReplyVoice replies to the message with a voice note.
-func (m *Message) ReplyVoice(c *Client, voice InputFile, opts *SendVoiceOpts) (*Message, error) {
-	if opts == nil {
-		opts = &SendVoiceOpts{}
+func (m *Message) ReplyVoice(c *Client, voice InputFile, opts ...*SendVoiceOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendVoiceOpts{})
+	if opt.ReplyToMessageID == 0 {
+		opt.ReplyToMessageID = m.Id
 	}
-	if opts.ReplyToMessageID == 0 {
-		opts.ReplyToMessageID = m.Id
-	}
-	return c.SendVoice(m.ChatId, voice, opts)
+	return c.SendVoice(m.ChatId, voice, opt)
 }
 
 // ReplySticker replies to the message with a sticker.
-func (m *Message) ReplySticker(c *Client, sticker InputFile, opts *SendStickerOpts) (*Message, error) {
-	if opts == nil {
-		opts = &SendStickerOpts{}
+func (m *Message) ReplySticker(c *Client, sticker InputFile, opts ...*SendStickerOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendStickerOpts{})
+	if opt.ReplyToMessageID == 0 {
+		opt.ReplyToMessageID = m.Id
 	}
-	if opts.ReplyToMessageID == 0 {
-		opts.ReplyToMessageID = m.Id
-	}
-	return c.SendSticker(m.ChatId, sticker, opts)
+	return c.SendSticker(m.ChatId, sticker, opt)
 }
 
 // Copy copies message to chat.
-func (m *Message) Copy(c *Client, chatId int64, opts *SendCopyOpts) (*Message, error) {
-	return c.SendCopy(chatId, m.ChatId, m.Id, opts)
+func (m *Message) Copy(c *Client, chatId int64, opts ...*SendCopyOpts) (*Message, error) {
+	return c.SendCopy(chatId, m.ChatId, m.Id, opts...)
 }
 
 // Forward forwards message to chat.
-func (m *Message) Forward(c *Client, chatId int64, opts *ForwardMessageOpts) (*Message, error) {
-	return c.ForwardMessage(chatId, m.ChatId, m.Id, opts)
+func (m *Message) Forward(c *Client, chatId int64, opts ...*ForwardMessageOpts) (*Message, error) {
+	return c.ForwardMessage(chatId, m.ChatId, m.Id, opts...)
 }
 
 // EditText edits a text message.
-func (m *Message) EditText(c *Client, text string, opts *EditTextMessageOpts) (*Message, error) {
-	return c.EditTextMessage(m.ChatId, m.Id, text, opts)
+func (m *Message) EditText(c *Client, text string, opts ...*EditTextMessageOpts) (*Message, error) {
+	return c.EditTextMessage(m.ChatId, m.Id, text, opts...)
 }
 
 // EditCaption edits the caption of a message.
-func (m *Message) EditCaption(c *Client, caption string, opts *EditCaptionOpts) (*Message, error) {
-	return c.EditCaption(m.ChatId, m.Id, caption, opts)
+func (m *Message) EditCaption(c *Client, caption string, opts ...*EditCaptionOpts) (*Message, error) {
+	return c.EditCaption(m.ChatId, m.Id, caption, opts...)
 }
 
 // ReplyChecklist replies to the message with a checklist.
-func (m *Message) ReplyChecklist(c *Client, checklist *InputChecklist, opts *SendChecklistOpts) (*Message, error) {
-	if opts == nil {
-		opts = &SendChecklistOpts{}
+func (m *Message) ReplyChecklist(c *Client, checklist *InputChecklist, opts ...*SendChecklistOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendChecklistOpts{})
+	if opt.ReplyToMessageID == 0 {
+		opt.ReplyToMessageID = m.Id
 	}
-	if opts.ReplyToMessageID == 0 {
-		opts.ReplyToMessageID = m.Id
-	}
-	return c.SendChecklist(m.ChatId, checklist, opts)
+	return c.SendChecklist(m.ChatId, checklist, opt)
 }
 
 // ReplyContact replies to the message with a contact.
-func (m *Message) ReplyContact(c *Client, contact *Contact, opts *SendContactOpts) (*Message, error) {
-	if opts == nil {
-		opts = &SendContactOpts{}
+func (m *Message) ReplyContact(c *Client, contact *Contact, opts ...*SendContactOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendContactOpts{})
+	if opt.ReplyToMessageID == 0 {
+		opt.ReplyToMessageID = m.Id
 	}
-	if opts.ReplyToMessageID == 0 {
-		opts.ReplyToMessageID = m.Id
-	}
-	return c.SendContact(m.ChatId, contact, opts)
+	return c.SendContact(m.ChatId, contact, opt)
 }
 
 // ReplyDice replies to the message with a dice.
-func (m *Message) ReplyDice(c *Client, emoji string, opts *SendDiceOpts) (*Message, error) {
-	if opts == nil {
-		opts = &SendDiceOpts{}
+func (m *Message) ReplyDice(c *Client, emoji string, opts ...*SendDiceOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendDiceOpts{})
+	if opt.ReplyToMessageID == 0 {
+		opt.ReplyToMessageID = m.Id
 	}
-	if opts.ReplyToMessageID == 0 {
-		opts.ReplyToMessageID = m.Id
-	}
-	return c.SendDice(m.ChatId, emoji, opts)
+	return c.SendDice(m.ChatId, emoji, opt)
 }
 
 // ReplyGame replies to the message with a game.
-func (m *Message) ReplyGame(c *Client, botUserId int64, gameShortName string, opts *SendGameOpts) (*Message, error) {
-	if opts == nil {
-		opts = &SendGameOpts{}
+func (m *Message) ReplyGame(c *Client, botUserId int64, gameShortName string, opts ...*SendGameOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendGameOpts{})
+	if opt.ReplyToMessageID == 0 {
+		opt.ReplyToMessageID = m.Id
 	}
-	if opts.ReplyToMessageID == 0 {
-		opts.ReplyToMessageID = m.Id
-	}
-	return c.SendGame(m.ChatId, botUserId, gameShortName, opts)
+	return c.SendGame(m.ChatId, botUserId, gameShortName, opt)
 }
 
 // ReplyInvoice replies to the message with an invoice.
-func (m *Message) ReplyInvoice(c *Client, invoice *Invoice, title string, description string, payload []byte, opts *SendInvoiceOpts) (*Message, error) {
-	if opts == nil {
-		opts = &SendInvoiceOpts{}
+func (m *Message) ReplyInvoice(c *Client, invoice *Invoice, title string, description string, payload []byte, opts ...*SendInvoiceOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendInvoiceOpts{})
+	if opt.ReplyToMessageID == 0 {
+		opt.ReplyToMessageID = m.Id
 	}
-	if opts.ReplyToMessageID == 0 {
-		opts.ReplyToMessageID = m.Id
-	}
-	return c.SendInvoice(m.ChatId, invoice, title, description, payload, opts)
+	return c.SendInvoice(m.ChatId, invoice, title, description, payload, opt)
 }
 
 // ReplyLocation replies to the message with a location.
-func (m *Message) ReplyLocation(c *Client, location *Location, opts *SendLocationOpts) (*Message, error) {
-	if opts == nil {
-		opts = &SendLocationOpts{}
+func (m *Message) ReplyLocation(c *Client, location *Location, opts ...*SendLocationOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendLocationOpts{})
+	if opt.ReplyToMessageID == 0 {
+		opt.ReplyToMessageID = m.Id
 	}
-	if opts.ReplyToMessageID == 0 {
-		opts.ReplyToMessageID = m.Id
-	}
-	return c.SendLocation(m.ChatId, location, opts)
+	return c.SendLocation(m.ChatId, location, opt)
 }
 
 // ReplyPaidMedia replies to the message with paid media.
-func (m *Message) ReplyPaidMedia(c *Client, starCount int64, paidMedia []InputPaidMedia, opts *SendPaidMediaOpts) (*Message, error) {
-	if opts == nil {
-		opts = &SendPaidMediaOpts{}
+func (m *Message) ReplyPaidMedia(c *Client, starCount int64, paidMedia []InputPaidMedia, opts ...*SendPaidMediaOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendPaidMediaOpts{})
+	if opt.ReplyToMessageID == 0 {
+		opt.ReplyToMessageID = m.Id
 	}
-	if opts.ReplyToMessageID == 0 {
-		opts.ReplyToMessageID = m.Id
-	}
-	return c.SendPaidMedia(m.ChatId, starCount, paidMedia, opts)
+	return c.SendPaidMedia(m.ChatId, starCount, paidMedia, opt)
 }
 
 // ReplyPoll replies to the message with a poll.
-func (m *Message) ReplyPoll(c *Client, question string, options []InputPollOption, opts *SendPollOpts) (*Message, error) {
-	if opts == nil {
-		opts = &SendPollOpts{}
+func (m *Message) ReplyPoll(c *Client, question string, options []InputPollOption, opts ...*SendPollOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendPollOpts{})
+	if opt.ReplyToMessageID == 0 {
+		opt.ReplyToMessageID = m.Id
 	}
-	if opts.ReplyToMessageID == 0 {
-		opts.ReplyToMessageID = m.Id
-	}
-	return c.SendPoll(m.ChatId, question, options, opts)
+	return c.SendPoll(m.ChatId, question, options, opt)
 }
 
 // ReplyStakeDice replies to the message with a stake dice.
-func (m *Message) ReplyStakeDice(c *Client, stakeToncoinAmount int64, stateHash string, opts *SendStakeDiceOpts) (*Message, error) {
-	if opts == nil {
-		opts = &SendStakeDiceOpts{}
+func (m *Message) ReplyStakeDice(c *Client, stakeToncoinAmount int64, stateHash string, opts ...*SendStakeDiceOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendStakeDiceOpts{})
+	if opt.ReplyToMessageID == 0 {
+		opt.ReplyToMessageID = m.Id
 	}
-	if opts.ReplyToMessageID == 0 {
-		opts.ReplyToMessageID = m.Id
-	}
-	return c.SendStakeDice(m.ChatId, stakeToncoinAmount, stateHash, opts)
+	return c.SendStakeDice(m.ChatId, stakeToncoinAmount, stateHash, opt)
 }
 
 // ReplyStory replies to the message with a story.
-func (m *Message) ReplyStory(c *Client, storyPosterChatId int64, storyId int32, opts *SendStoryOpts) (*Message, error) {
-	if opts == nil {
-		opts = &SendStoryOpts{}
+func (m *Message) ReplyStory(c *Client, storyPosterChatId int64, storyId int32, opts ...*SendStoryOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendStoryOpts{})
+	if opt.ReplyToMessageID == 0 {
+		opt.ReplyToMessageID = m.Id
 	}
-	if opts.ReplyToMessageID == 0 {
-		opts.ReplyToMessageID = m.Id
-	}
-	return c.SendStory(m.ChatId, storyPosterChatId, storyId, opts)
+	return c.SendStory(m.ChatId, storyPosterChatId, storyId, opt)
 }
 
 // ReplyVenue replies to the message with a venue.
-func (m *Message) ReplyVenue(c *Client, venue *Venue, opts *SendVenueOpts) (*Message, error) {
-	if opts == nil {
-		opts = &SendVenueOpts{}
+func (m *Message) ReplyVenue(c *Client, venue *Venue, opts ...*SendVenueOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendVenueOpts{})
+	if opt.ReplyToMessageID == 0 {
+		opt.ReplyToMessageID = m.Id
 	}
-	if opts.ReplyToMessageID == 0 {
-		opts.ReplyToMessageID = m.Id
-	}
-	return c.SendVenue(m.ChatId, venue, opts)
+	return c.SendVenue(m.ChatId, venue, opt)
 }
 
 // ReplyCopy replies to the message by copying another message.
-func (m *Message) ReplyCopy(c *Client, fromChatId int64, messageId int64, opts *SendCopyOpts) (*Message, error) {
-	if opts == nil {
-		opts = &SendCopyOpts{}
+func (m *Message) ReplyCopy(c *Client, fromChatId int64, messageId int64, opts ...*SendCopyOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendCopyOpts{})
+	if opt.ReplyToMessageID == 0 {
+		opt.ReplyToMessageID = m.Id
 	}
-	if opts.ReplyToMessageID == 0 {
-		opts.ReplyToMessageID = m.Id
-	}
-	return c.SendCopy(m.ChatId, fromChatId, messageId, opts)
+	return c.SendCopy(m.ChatId, fromChatId, messageId, opt)
 }

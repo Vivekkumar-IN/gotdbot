@@ -668,7 +668,6 @@ func toOptionValue(v interface{}) OptionValue {
 	}
 }
 
-
 // AddCommandHandler registers a command handler for UpdateNewMessage updates.
 func (c *Client) AddCommandHandler(command string, hn HandlerFunc[UpdateNewMessage], f ...Filter) Handle {
 	filters := append([]Filter{FilterCommand(command)}, f...)
@@ -687,7 +686,6 @@ func (c *Client) AddRawHandler(hn RawHandlerFunc, f ...Filter) Handle {
 
 	return h
 }
-
 
 // RemoveHandler removes a registered update handler.
 func (c *Client) RemoveHandler(h Handle) {
@@ -764,7 +762,6 @@ func (c *Client) processUpdate(update TlObject) {
 		c.handleMu.RLock()
 		typeHandlers := c.handlers[tp]
 		rawHandlers := c.handlers[UpdateTypeRaw]
-		
 
 		handlers := make([]Handle, 0, len(typeHandlers)+len(rawHandlers))
 		i, j := 0, 0

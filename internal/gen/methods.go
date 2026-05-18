@@ -107,15 +107,14 @@ func generateMethods(functions []TLType, classes map[string]*TLClass) {
 		sb.WriteString("\t}\n")
 
 		if hasOptional {
-			sb.WriteString("\tif len(opts) > 0 && opts[0] != nil {\n")
+			fmt.Fprintf(&sb, "\topt := getVariadic(opts, &%s{})\n", optsStructName)
 			for _, p := range fn.Params {
 				if !p.IsOptional && p.Type != "Bool" {
 					continue
 				}
 				fieldName := toCamelCase(p.Name)
-				fmt.Fprintf(&sb, "\t\treq.%s = opts[0].%s\n", fieldName, fieldName)
+				fmt.Fprintf(&sb, "\treq.%s = opt.%s\n", fieldName, fieldName)
 			}
-			sb.WriteString("\t}\n")
 		}
 
 		if isOk {
