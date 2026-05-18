@@ -3,10 +3,12 @@
 
 package gotdbot
 
-import "encoding/json"
-import "fmt"
-import "strings"
-import "strconv"
+import (
+	"encoding/json"
+	"fmt"
+	"strconv"
+	"strings"
+)
 
 // AccentColor Contains information about supported accent color for user/chat name, background of empty chat photo, replies to messages and link previews
 type AccentColor struct {

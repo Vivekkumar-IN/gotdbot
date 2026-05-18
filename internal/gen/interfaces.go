@@ -71,8 +71,8 @@ func generateTypes(types []TLType, classes map[string]*TLClass) {
 	var sb strings.Builder
 	sb.WriteString(header)
 	sb.WriteString("package gotdbot\n\n")
-	sb.WriteString("import \"encoding/json\"\n")
-	sb.WriteString("import \"fmt\"\nimport \"strings\"\nimport \"strconv\"\n\n")
+	sb.WriteString("import (\n\t\"encoding/json\"\n")
+	sb.WriteString("\t\"fmt\"\n\t\"strings\"\n\t\"strconv\"\n)\n\n")
 
 	for _, t := range types {
 		structName := toCamelCase(t.Name)

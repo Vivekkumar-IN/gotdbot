@@ -671,7 +671,7 @@ func toOptionValue(v interface{}) OptionValue {
 // AddCommandHandler registers a command handler for UpdateNewMessage updates.
 func (c *Client) AddCommandHandler(command string, hn HandlerFunc[UpdateNewMessage], f ...Filter) Handle {
 	filters := append([]Filter{FilterCommand(command)}, f...)
-	return c.AddNewMessageHandler(hn, filters...)
+	return c.AddNewMessageHandler(hn, filters...).SetPriority(10)
 }
 
 // AddRawHandler registers a raw handler that accepts any update satisfying the filters.
