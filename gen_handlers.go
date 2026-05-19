@@ -2795,6 +2795,8 @@ func ExtractChatID(u TlObject) int64 {
 		return upd.ChatId
 	case *UpdateForumTopic:
 		return upd.ChatId
+	case *UpdateManagedBot:
+		return upd.UserId
 	case *UpdateMessageContainsUnreadPollVotes:
 		return upd.ChatId
 	case *UpdateMessageContent:
@@ -2831,24 +2833,57 @@ func ExtractChatID(u TlObject) int64 {
 		return upd.ChatId
 	case *UpdateMessageUnreadReactions:
 		return upd.ChatId
+	case *UpdateNewBusinessCallbackQuery:
+		return upd.SenderUserId
 	case *UpdateNewCallbackQuery:
 		return upd.ChatId
+	case *UpdateNewChat:
+		if upd.Chat != nil {
+			return upd.Chat.Id
+		}
 	case *UpdateNewChatJoinRequest:
 		return upd.ChatId
+	case *UpdateNewChosenInlineResult:
+		return upd.SenderUserId
+	case *UpdateNewGroupCallPaidReaction:
+		if up, ok := upd.SenderId.(*MessageSenderUser); ok {
+			return up.UserId
+		}
+		if up, ok := upd.SenderId.(*MessageSenderChat); ok {
+			return up.ChatId
+		}
 	case *UpdateNewGuestQuery:
 		if upd.Message != nil {
 			return upd.Message.ChatId
 		}
+	case *UpdateNewInlineCallbackQuery:
+		return upd.SenderUserId
+	case *UpdateNewInlineQuery:
+		return upd.SenderUserId
 	case *UpdateNewMessage:
 		if upd.Message != nil {
 			return upd.Message.ChatId
 		}
+	case *UpdateNewPreCheckoutQuery:
+		return upd.SenderUserId
+	case *UpdateNewShippingQuery:
+		return upd.SenderUserId
 	case *UpdateNotificationGroup:
 		return upd.ChatId
+	case *UpdatePaidMediaPurchased:
+		return upd.UserId
 	case *UpdatePendingTextMessage:
 		return upd.ChatId
 	case *UpdateTopicMessageCount:
 		return upd.ChatId
+	case *UpdateUser:
+		if upd.User != nil {
+			return upd.User.Id
+		}
+	case *UpdateUserFullInfo:
+		return upd.UserId
+	case *UpdateUserStatus:
+		return upd.UserId
 	case *UpdateVideoPublished:
 		return upd.ChatId
 	}

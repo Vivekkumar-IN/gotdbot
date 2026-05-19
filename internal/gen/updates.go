@@ -78,6 +78,11 @@ func generateUpdates(types []TLType) {
 
 		hasMessage := false
 		hasChatId := false
+		hasChat := false
+		hasUser := false
+		hasSenderUserId := false
+		hasUserId := false
+		hasSenderId := false
 
 		for _, p := range t.Params {
 			switch p.Name {
@@ -87,15 +92,49 @@ func generateUpdates(types []TLType) {
 				}
 			case "chat_id":
 				hasChatId = true
+			case "sender_user_id":
+				hasSenderUserId = true
+			case "user_id":
+				hasUserId = true
+			case "sender_id":
+				hasSenderId = true
+			default:
+				if p.Type == "chat" {
+					hasChat = true
+				}
+				if p.Type == "user" {
+					hasUser = true
+				}
 			}
 		}
 
-		if hasMessage || hasChatId {
+		if hasMessage || hasChatId || hasChat || hasUser || hasSenderUserId || hasUserId || hasSenderId {
 			w("\tcase *%s:\n", typeName)
 			if hasChatId {
 				w("\t\treturn upd.ChatId\n")
 			} else if hasMessage {
 				w("\t\tif upd.Message != nil { return upd.Message.ChatId }\n")
+			} else if hasChat {
+				for _, p := range t.Params {
+					if p.Type == "chat" {
+						w("\t\tif upd.%s != nil { return upd.%s.Id }\n", toCamelCase(p.Name), toCamelCase(p.Name))
+						break
+					}
+				}
+			} else if hasUser {
+				for _, p := range t.Params {
+					if p.Type == "user" {
+						w("\t\tif upd.%s != nil { return upd.%s.Id }\n", toCamelCase(p.Name), toCamelCase(p.Name))
+						break
+					}
+				}
+			} else if hasSenderUserId {
+				w("\t\treturn upd.SenderUserId\n")
+			} else if hasUserId {
+				w("\t\treturn upd.UserId\n")
+			} else if hasSenderId {
+				w("\t\tif up, ok := upd.SenderId.(*MessageSenderUser); ok { return up.UserId }\n")
+				w("\t\tif up, ok := upd.SenderId.(*MessageSenderChat); ok { return up.ChatId }\n")
 			}
 		}
 	}
