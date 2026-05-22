@@ -1,8 +1,8 @@
 # gotdbot
 
-![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/AshokShau/gotdbot)
-[![Go Reference](https://pkg.go.dev/badge/github.com/AshokShau/gotdbot.svg)](https://pkg.go.dev/github.com/AshokShau/gotdbot)
-[![License](https://img.shields.io/github/license/AshokShau/gotdbot)](LICENSE)
+![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/Vivekkumar-IN/gotdbot)
+[![Go Reference](https://pkg.go.dev/badge/github.com/Vivekkumar-IN/gotdbot.svg)](https://pkg.go.dev/github.com/Vivekkumar-IN/gotdbot)
+[![License](https://img.shields.io/github/license/Vivekkumar-IN/gotdbot)](LICENSE)
 
 **gotdbot** is a powerful, pure Go wrapper for [TDLib](https://github.com/tdlib/td) (Telegram Database Library). It provides a simple and idiomatic way to build Telegram clients and bots using Go.
 
@@ -14,10 +14,9 @@ Current Version: **v0.9.2** and TDLib **v1.8.64**.
 
 - **Pure Go**: No CGO mess in your application code (uses `purego` to load `libtdjson`).
 - **High Performance**: Direct binding to TDLib's JSON interface.
-- **Dispatcher System**: Built-in update dispatcher with middleware-style handlers.
+- **Handler-first API**: Simple update handling with built-in handlers and filters.
 - **Filters**: Powerful and composable filters for message matching.
 - **Type-Safe**: Fully generated Go structs for all TDLib types and methods.
-- **Context Aware**: Easy access to effective messages, chats, and users.
 
 ---
 
@@ -35,17 +34,17 @@ Current Version: **v0.9.2** and TDLib **v1.8.64**.
   * **Alternative**: run
 
     ```bash
-    go run github.com/AshokShau/gotdbot/scripts/tools@latest
+    go run github.com/Vivekkumar-IN/gotdbot/scripts/tools@latest v1.8.64
     ```
 
-    to automatically download the latest precompiled TDLib binaries.
+    to download precompiled TDLib binaries for a fixed version.
 
 ---
 
 ## Installation
 
 ```bash
-go get github.com/AshokShau/gotdbot
+go get github.com/Vivekkumar-IN/gotdbot
 ```
 
 ---

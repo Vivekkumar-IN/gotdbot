@@ -4,11 +4,13 @@ import (
 	"archive/tar"
 	"archive/zip"
 	"compress/gzip"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
 	"os"
 	"path/filepath"
+	"regexp"
 	"runtime"
 	"strings"
 )
@@ -16,8 +18,29 @@ import (
 const (
 	repoOwner = "FallenProjects"
 	repoName  = "tdlib-build"
-	version   = "v1.8.64"
 )
+
+var versionPattern = regexp.MustCompile(`^v?\d+\.\d+\.\d+$`)
+
+func resolveVersion(args []string) (string, error) {
+	if len(args) == 0 {
+		return "", errors.New("please provide a version")
+	}
+
+	userVersion := strings.TrimSpace(args[0])
+	if userVersion == "" {
+		return "", errors.New("please provide a version")
+	}
+	if !versionPattern.MatchString(userVersion) {
+		return "", fmt.Errorf("invalid version format: %q (expected version like vX.Y.Z)", userVersion)
+	}
+
+	if !strings.HasPrefix(userVersion, "v") {
+		userVersion = "v" + userVersion
+	}
+
+	return userVersion, nil
+}
 
 // writeFile writes from an io.Reader to a file named name and ensures the file
 // is closed on all paths.
@@ -47,6 +70,11 @@ func writeFileFromReadCloser(name string, rc io.ReadCloser) error {
 }
 
 func main() {
+	targetVersion, err := resolveVersion(os.Args[1:])
+	if err != nil {
+		panic(err)
+	}
+
 	goos := runtime.GOOS
 	goarch := runtime.GOARCH
 
@@ -89,9 +117,9 @@ func main() {
 		panic("unsupported OS: " + goos + "please build TDLib manually following https://tdlib.github.io/td/build.html?language=Go")
 	}
 
-	downloadURL := fmt.Sprintf("https://github.com/%s/%s/releases/download/%s/%s", repoOwner, repoName, version, filename)
+	downloadURL := fmt.Sprintf("https://github.com/%s/%s/releases/download/%s/%s", repoOwner, repoName, targetVersion, filename)
 
-	fmt.Printf("Downloading %s from %s...\n", filename, downloadURL)
+	fmt.Printf("Downloading %s (%s) from %s...\n", filename, targetVersion, downloadURL)
 	resp, err := http.Get(downloadURL)
 	if err != nil {
 		panic(err)
@@ -99,7 +127,10 @@ func main() {
 
 	defer resp.Body.Close()
 	if resp.StatusCode != http.StatusOK {
-		panic("failed to download: " + resp.Status)
+		if resp.StatusCode == http.StatusNotFound {
+			panic(fmt.Sprintf("release not found for version %s (%s)", targetVersion, resp.Status))
+		}
+		panic(fmt.Sprintf("failed to download %s: %s", filename, resp.Status))
 	}
 
 	tmpFile, err := os.CreateTemp("", "tdjson-archive-*")

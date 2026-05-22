@@ -2,7 +2,11 @@ package tdjson
 
 import (
 	"fmt"
+	"os"
+	"path/filepath"
 	"runtime"
+	"sort"
+	"strings"
 	"unsafe"
 
 	"github.com/ebitengine/purego"
@@ -24,7 +28,7 @@ func Init(libPath string) error {
 	}
 
 	if libPath == "" {
-		libPath = getDefaultLibName()
+		libPath = getDefaultLibPath()
 	}
 
 	lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -54,6 +58,33 @@ func getDefaultLibName() string {
 	default:
 		return "libtdjson.so"
 	}
+}
+
+func getDefaultLibPath() string {
+	libName := getDefaultLibName()
+
+	entries, err := os.ReadDir(".")
+	if err != nil {
+		return libName
+	}
+
+	var versioned []string
+	prefix := libName + "."
+	for _, entry := range entries {
+		if entry.IsDir() {
+			continue
+		}
+		name := entry.Name()
+		if strings.HasPrefix(name, prefix) {
+			versioned = append(versioned, name)
+		}
+	}
+	if len(versioned) == 0 {
+		return libName
+	}
+
+	sort.Strings(versioned)
+	return filepath.Clean(versioned[len(versioned)-1])
 }
 
 // CreateClientID returns an opaque identifier of a new TDLib instance.
