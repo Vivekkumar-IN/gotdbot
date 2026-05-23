@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
+	"sync"
 	"unsafe"
 
 	"github.com/ebitengine/purego"
