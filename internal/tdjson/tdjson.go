@@ -189,10 +189,18 @@ func getTDLibVersion(libPath string) (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("failed to load tdjson library from %s: %w", libPath, err)
 	}
+	defer purego.Dlclose(lib)
 
-	purego.RegisterLibFunc(&tdExecute, lib, "td_execute")
+	var execute func(*byte) uintptr
+	purego.RegisterLibFunc(&execute, lib, "td_execute")
 
-	resp := Execute(`{"@type":"getOption","name":"version"}`)
+	req := `{"@type":"getOption","name":"version"}`
+	reqBytes := append([]byte(req), 0)
+	ptr := execute(&reqBytes[0])
+	if ptr == 0 {
+		return "", fmt.Errorf("td_execute returned nil for version query")
+	}
+	resp := goString(ptr)
 
 	var result struct {
 		Value string `json:"value"`
