@@ -1,11 +1,11 @@
 package tdjson
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 	"path/filepath"
 	"runtime"
-	"sort"
 	"strings"
 	"unsafe"
 
@@ -22,13 +22,34 @@ var (
 )
 
 // Init initializes the TDLib JSON interface by loading the library.
-func Init(libPath string) error {
+func Init(libPath, version string) error {
 	if libLoaded {
 		return nil
 	}
 
-	if libPath == "" {
-		libPath = getDefaultLibPath()
+	if libPath != "" {
+		if !filepath.IsAbs(libPath) {
+			abs, err := filepath.Abs(libPath)
+			if err != nil {
+				return fmt.Errorf("failed to resolve tdjson binary path: %w", err)
+			}
+			libPath = abs
+		}
+		bv, err := getTDLibVersion(libPath)
+		if err != nil {
+			return err
+		}
+		if bv != version {
+			return fmt.Errorf(
+				"tdlib version mismatch: expected %s but binary is %s; please provide the correct tdjson binary",
+				version, bv,
+			)
+		}
+	} else {
+		libPath = getLibPath(version)
+		if libPath == "" {
+			return fmt.Errorf("tdjson library not found for version %s; provide the correct binary in the client options", version)
+		}
 	}
 
 	lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
@@ -43,12 +64,11 @@ func Init(libPath string) error {
 
 	libLoaded = true
 
-	// disables internal TDLib logging
-	req := `{"@type": "setLogStream", "log_stream": {"@type": "logStreamEmpty"}}`
-	Execute(req)
+	// disable internal TDLib logging
+	Execute(`{"@type": "setLogStream", "log_stream": {"@type": "logStreamEmpty"}}`)
+
 	return nil
 }
-
 func getDefaultLibName() string {
 	switch runtime.GOOS {
 	case "windows":
@@ -60,31 +80,56 @@ func getDefaultLibName() string {
 	}
 }
 
-func getDefaultLibPath() string {
+// getLibPath scans the working directory for a tdjson lib matching version.
+// It checks files with the pattern "<libName>.<anything>" first,
+// then falls back to the bare libName if nothing matched.
+func getLibPath(version string) string {
 	libName := getDefaultLibName()
 
 	entries, err := os.ReadDir(".")
 	if err != nil {
-		return libName
+		return ""
 	}
 
-	var versioned []string
 	prefix := libName + "."
+
 	for _, entry := range entries {
 		if entry.IsDir() {
 			continue
 		}
+
 		name := entry.Name()
-		if strings.HasPrefix(name, prefix) {
-			versioned = append(versioned, name)
+		if !strings.HasPrefix(name, prefix) {
+			continue
+		}
+
+		abs, err := filepath.Abs(name)
+		if err != nil {
+			continue
+		}
+
+		bv, err := getTDLibVersion(abs)
+		if err != nil {
+			continue
+		}
+
+		if bv == version {
+			return abs
 		}
 	}
-	if len(versioned) == 0 {
-		return libName
+
+	// fallback: try bare libName (e.g. libtdjson.so with no version suffix)
+	abs, err := filepath.Abs(libName)
+	if err != nil {
+		return ""
 	}
 
-	sort.Strings(versioned)
-	return filepath.Clean(versioned[len(versioned)-1])
+	bv, err := getTDLibVersion(abs)
+	if err != nil || bv != version {
+		return ""
+	}
+
+	return abs
 }
 
 // CreateClientID returns an opaque identifier of a new TDLib instance.
@@ -92,14 +137,14 @@ func CreateClientID() int {
 	return int(tdCreateClientId())
 }
 
-// Send sends request to the TDLib client. May be called from any thread.
+// Send sends a request to the TDLib client. May be called from any thread.
 func Send(clientID int, request string) {
 	reqBytes := append([]byte(request), 0)
 	tdSend(int32(clientID), &reqBytes[0])
 }
 
 // Receive receives incoming updates and request responses.
-// Returns a JSON-serialized update or request response, or an empty string if the timeout expires.
+// Returns a JSON-serialized update or an empty string if the timeout expires.
 func Receive(timeout float64) string {
 	ptr := tdReceive(timeout)
 	if ptr == 0 {
@@ -109,7 +154,7 @@ func Receive(timeout float64) string {
 }
 
 // Execute synchronously executes a TDLib request.
-// Returns a JSON-serialized request response.
+// Returns a JSON-serialized response.
 func Execute(request string) string {
 	reqBytes := append([]byte(request), 0)
 	ptr := tdExecute(&reqBytes[0])
@@ -136,6 +181,25 @@ func goString(ptr uintptr) string {
 		return ""
 	}
 
-	bytes := unsafe.Slice((*byte)(unsafe.Pointer(ptr)), length)
-	return string(bytes)
+	return string(unsafe.Slice((*byte)(unsafe.Pointer(ptr)), length))
+}
+
+func getTDLibVersion(libPath string) (string, error) {
+	lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+	if err != nil {
+		return "", fmt.Errorf("failed to load tdjson library from %s: %w", libPath, err)
+	}
+
+	purego.RegisterLibFunc(&tdExecute, lib, "td_execute")
+
+	resp := Execute(`{"@type":"getOption","name":"version"}`)
+
+	var result struct {
+		Value string `json:"value"`
+	}
+	if err := json.Unmarshal([]byte(resp), &result); err != nil {
+		return "", fmt.Errorf("failed to parse version response: %w", err)
+	}
+
+	return "v" + result.Value, nil
 }

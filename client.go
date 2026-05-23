@@ -112,7 +112,7 @@ func NewClient(apiID int32, apiHash, tokenOrPhone string, config *ClientOpts) (*
 		}
 	}
 
-	if err := tdjson.Init(config.LibraryPath); err != nil {
+	if err := tdjson.Init(config.LibraryPath, TDLibVersion); err != nil {
 		return nil, err
 	}
 
