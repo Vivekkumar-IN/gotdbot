@@ -18,12 +18,18 @@ var (
 	tdReceive        func(float64) uintptr
 	tdExecute        func(*byte) uintptr
 
-	libLoaded bool
+	loader struct {
+		mu   sync.Mutex
+		done bool
+	}
 )
 
 // Init initializes the TDLib JSON interface by loading the library.
 func Init(libPath, version string) error {
-	if libLoaded {
+	loader.mu.Lock()
+	defer loader.mu.Unlock()
+
+	if loader.done {
 		return nil
 	}
 
@@ -62,7 +68,7 @@ func Init(libPath, version string) error {
 	purego.RegisterLibFunc(&tdReceive, lib, "td_receive")
 	purego.RegisterLibFunc(&tdExecute, lib, "td_execute")
 
-	libLoaded = true
+	loader.done = true
 
 	// disable internal TDLib logging
 	Execute(`{"@type": "setLogStream", "log_stream": {"@type": "logStreamEmpty"}}`)
