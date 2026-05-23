@@ -114,7 +114,7 @@ func (m *ClientManager) RegisterClient(apiID int32, apiHash, tokenOrPhone string
 
 func (m *ClientManager) Start() {
 	m.once.Do(func() {
-		_ = tdjson.Init(m.LibraryPath)
+		_ = tdjson.Init(m.LibraryPath, TDLibVersion)
 		m.wg.Add(1)
 		go m.receiver()
 	})
