@@ -675,7 +675,7 @@ func (c *Client) AddCommandHandler(command string, hn HandlerFunc[UpdateNewMessa
 }
 
 // AddRawHandler registers a raw handler that accepts any update satisfying the filters.
-func (c *Client) AddRawHandler(hn RawHandlerFunc, f ...Filter) Handle {
+func (c *Client) AddRawHandler(hn RawHandler, f ...Filter) Handle {
 	h := &rawHandle{
 		client:  c,
 		handler: hn,
@@ -789,7 +789,7 @@ func (c *Client) processUpdate(update TlObject) {
 				}
 
 				h := handlers[i]
-				if h.Check(c, update) {
+				if h.IsMatch(c, update) {
 					groupHandled = true
 					err := h.Execute(c, update)
 
