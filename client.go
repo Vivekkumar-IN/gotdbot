@@ -56,6 +56,9 @@ type Client struct {
 	waiterCount int64
 	wMu         sync.RWMutex
 
+	Options   map[string]interface{}
+	optionsMu sync.RWMutex
+
 	// PanicHandler handles panics during update processing.
 	PanicHandler func(client *Client, update TlObject, r any)
 
@@ -138,6 +141,7 @@ func NewClient(apiID int32, apiHash, tokenOrPhone string, config *ClientOpts) (*
 		authErrorChan: make(chan error, 1),
 		handlers:      make(map[UpdateType][]Handle),
 		waiters:       make(map[string]*Waiter),
+		Options:       make(map[string]interface{}),
 	}
 
 	if config.PanicHandler != nil {
@@ -160,6 +164,8 @@ func NewClient(apiID int32, apiHash, tokenOrPhone string, config *ClientOpts) (*
 	c.AddAuthorizationStateHandler(c.authHandler).SetGroup(-999)
 	c.AddMessageSendSucceededHandler(c.messageSendSucceededHandler).SetGroup(-998)
 	c.AddMessageSendFailedHandler(c.messageSendFailedHandler).SetGroup(-997)
+	c.AddOptionHandler(c.optionHandler).SetGroup(-996)
+	c.AddUserHandler(c.updateUserHandler).SetGroup(-995)
 	c.AddConnectionStateHandler(c.connectionStateHandler).SetGroup(-2)
 	return c, nil
 }
@@ -429,6 +435,38 @@ func (c *Client) messageSendFailedHandler(client *Client, u *UpdateMessageSendFa
 		ch.(chan TlObject) <- u
 		c.pendingMessages.Delete(key)
 	}
+	return nil
+}
+
+func (c *Client) optionHandler(_ *Client, u *UpdateOption) error {
+	c.optionsMu.Lock()
+	defer c.optionsMu.Unlock()
+
+	switch v := u.Value.(type) {
+	case *OptionValueBoolean:
+		c.Options[u.Name] = v.Value
+	case *OptionValueInteger:
+		c.Options[u.Name] = v.Value
+	case *OptionValueString:
+		c.Options[u.Name] = v.Value
+	case *OptionValueEmpty:
+		c.Options[u.Name] = nil
+	}
+
+	return nil
+}
+
+func (c *Client) updateUserHandler(_ *Client, u *UpdateUser) error {
+	if !c.isAuthorized || c.Me == nil {
+		return nil
+	}
+
+	if u.User == nil || u.User.Id != c.Me.Id {
+		return nil
+	}
+
+	c.Me = u.User
+
 	return nil
 }
 
