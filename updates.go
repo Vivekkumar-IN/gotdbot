@@ -21,6 +21,9 @@ type (
 
 	HandlerFunc[T any] func(*Client, *T) error
 
+	// MessageHandlerFunc handles the Message carried by an UpdateNewMessage.
+	MessageHandlerFunc = HandlerFunc[Message]
+
 	RawHandler func(*Client, TlObject) error
 
 	handle[T any] struct {

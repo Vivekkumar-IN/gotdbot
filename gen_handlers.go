@@ -202,6 +202,11 @@ func (c *Client) AddAccentColorsHandler(hn HandlerFunc[UpdateAccentColors], f ..
 	return h
 }
 
+// OnAccentColors registers a handler for UpdateAccentColors updates.
+func (c *Client) OnAccentColors(hn HandlerFunc[UpdateAccentColors], f ...Filter) Handle {
+	return c.AddAccentColorsHandler(hn, f...)
+}
+
 // AddActiveEmojiReactionsHandler registers a handler for UpdateActiveEmojiReactions updates.
 func (c *Client) AddActiveEmojiReactionsHandler(hn HandlerFunc[UpdateActiveEmojiReactions], f ...Filter) Handle {
 	h := &handle[UpdateActiveEmojiReactions]{
@@ -214,6 +219,11 @@ func (c *Client) AddActiveEmojiReactionsHandler(hn HandlerFunc[UpdateActiveEmoji
 	c.addHandler(UpdateTypeActiveEmojiReactions, h)
 
 	return h
+}
+
+// OnActiveEmojiReactions registers a handler for UpdateActiveEmojiReactions updates.
+func (c *Client) OnActiveEmojiReactions(hn HandlerFunc[UpdateActiveEmojiReactions], f ...Filter) Handle {
+	return c.AddActiveEmojiReactionsHandler(hn, f...)
 }
 
 // AddActiveGiftAuctionsHandler registers a handler for UpdateActiveGiftAuctions updates.
@@ -230,6 +240,11 @@ func (c *Client) AddActiveGiftAuctionsHandler(hn HandlerFunc[UpdateActiveGiftAuc
 	return h
 }
 
+// OnActiveGiftAuctions registers a handler for UpdateActiveGiftAuctions updates.
+func (c *Client) OnActiveGiftAuctions(hn HandlerFunc[UpdateActiveGiftAuctions], f ...Filter) Handle {
+	return c.AddActiveGiftAuctionsHandler(hn, f...)
+}
+
 // AddActiveLiveLocationMessagesHandler registers a handler for UpdateActiveLiveLocationMessages updates.
 func (c *Client) AddActiveLiveLocationMessagesHandler(hn HandlerFunc[UpdateActiveLiveLocationMessages], f ...Filter) Handle {
 	h := &handle[UpdateActiveLiveLocationMessages]{
@@ -242,6 +257,11 @@ func (c *Client) AddActiveLiveLocationMessagesHandler(hn HandlerFunc[UpdateActiv
 	c.addHandler(UpdateTypeActiveLiveLocationMessages, h)
 
 	return h
+}
+
+// OnActiveLiveLocationMessages registers a handler for UpdateActiveLiveLocationMessages updates.
+func (c *Client) OnActiveLiveLocationMessages(hn HandlerFunc[UpdateActiveLiveLocationMessages], f ...Filter) Handle {
+	return c.AddActiveLiveLocationMessagesHandler(hn, f...)
 }
 
 // AddActiveNotificationsHandler registers a handler for UpdateActiveNotifications updates.
@@ -258,6 +278,11 @@ func (c *Client) AddActiveNotificationsHandler(hn HandlerFunc[UpdateActiveNotifi
 	return h
 }
 
+// OnActiveNotifications registers a handler for UpdateActiveNotifications updates.
+func (c *Client) OnActiveNotifications(hn HandlerFunc[UpdateActiveNotifications], f ...Filter) Handle {
+	return c.AddActiveNotificationsHandler(hn, f...)
+}
+
 // AddAgeVerificationParametersHandler registers a handler for UpdateAgeVerificationParameters updates.
 func (c *Client) AddAgeVerificationParametersHandler(hn HandlerFunc[UpdateAgeVerificationParameters], f ...Filter) Handle {
 	h := &handle[UpdateAgeVerificationParameters]{
@@ -270,6 +295,11 @@ func (c *Client) AddAgeVerificationParametersHandler(hn HandlerFunc[UpdateAgeVer
 	c.addHandler(UpdateTypeAgeVerificationParameters, h)
 
 	return h
+}
+
+// OnAgeVerificationParameters registers a handler for UpdateAgeVerificationParameters updates.
+func (c *Client) OnAgeVerificationParameters(hn HandlerFunc[UpdateAgeVerificationParameters], f ...Filter) Handle {
+	return c.AddAgeVerificationParametersHandler(hn, f...)
 }
 
 // AddAnimatedEmojiMessageClickedHandler registers a handler for UpdateAnimatedEmojiMessageClicked updates.
@@ -286,6 +316,11 @@ func (c *Client) AddAnimatedEmojiMessageClickedHandler(hn HandlerFunc[UpdateAnim
 	return h
 }
 
+// OnAnimatedEmojiMessageClicked registers a handler for UpdateAnimatedEmojiMessageClicked updates.
+func (c *Client) OnAnimatedEmojiMessageClicked(hn HandlerFunc[UpdateAnimatedEmojiMessageClicked], f ...Filter) Handle {
+	return c.AddAnimatedEmojiMessageClickedHandler(hn, f...)
+}
+
 // AddAnimationSearchParametersHandler registers a handler for UpdateAnimationSearchParameters updates.
 func (c *Client) AddAnimationSearchParametersHandler(hn HandlerFunc[UpdateAnimationSearchParameters], f ...Filter) Handle {
 	h := &handle[UpdateAnimationSearchParameters]{
@@ -298,6 +333,11 @@ func (c *Client) AddAnimationSearchParametersHandler(hn HandlerFunc[UpdateAnimat
 	c.addHandler(UpdateTypeAnimationSearchParameters, h)
 
 	return h
+}
+
+// OnAnimationSearchParameters registers a handler for UpdateAnimationSearchParameters updates.
+func (c *Client) OnAnimationSearchParameters(hn HandlerFunc[UpdateAnimationSearchParameters], f ...Filter) Handle {
+	return c.AddAnimationSearchParametersHandler(hn, f...)
 }
 
 // AddApplicationRecaptchaVerificationRequiredHandler registers a handler for UpdateApplicationRecaptchaVerificationRequired updates.
@@ -314,6 +354,11 @@ func (c *Client) AddApplicationRecaptchaVerificationRequiredHandler(hn HandlerFu
 	return h
 }
 
+// OnApplicationRecaptchaVerificationRequired registers a handler for UpdateApplicationRecaptchaVerificationRequired updates.
+func (c *Client) OnApplicationRecaptchaVerificationRequired(hn HandlerFunc[UpdateApplicationRecaptchaVerificationRequired], f ...Filter) Handle {
+	return c.AddApplicationRecaptchaVerificationRequiredHandler(hn, f...)
+}
+
 // AddApplicationVerificationRequiredHandler registers a handler for UpdateApplicationVerificationRequired updates.
 func (c *Client) AddApplicationVerificationRequiredHandler(hn HandlerFunc[UpdateApplicationVerificationRequired], f ...Filter) Handle {
 	h := &handle[UpdateApplicationVerificationRequired]{
@@ -326,6 +371,11 @@ func (c *Client) AddApplicationVerificationRequiredHandler(hn HandlerFunc[Update
 	c.addHandler(UpdateTypeApplicationVerificationRequired, h)
 
 	return h
+}
+
+// OnApplicationVerificationRequired registers a handler for UpdateApplicationVerificationRequired updates.
+func (c *Client) OnApplicationVerificationRequired(hn HandlerFunc[UpdateApplicationVerificationRequired], f ...Filter) Handle {
+	return c.AddApplicationVerificationRequiredHandler(hn, f...)
 }
 
 // AddAttachmentMenuBotsHandler registers a handler for UpdateAttachmentMenuBots updates.
@@ -342,6 +392,11 @@ func (c *Client) AddAttachmentMenuBotsHandler(hn HandlerFunc[UpdateAttachmentMen
 	return h
 }
 
+// OnAttachmentMenuBots registers a handler for UpdateAttachmentMenuBots updates.
+func (c *Client) OnAttachmentMenuBots(hn HandlerFunc[UpdateAttachmentMenuBots], f ...Filter) Handle {
+	return c.AddAttachmentMenuBotsHandler(hn, f...)
+}
+
 // AddAuthorizationStateHandler registers a handler for UpdateAuthorizationState updates.
 func (c *Client) AddAuthorizationStateHandler(hn HandlerFunc[UpdateAuthorizationState], f ...Filter) Handle {
 	h := &handle[UpdateAuthorizationState]{
@@ -354,6 +409,11 @@ func (c *Client) AddAuthorizationStateHandler(hn HandlerFunc[UpdateAuthorization
 	c.addHandler(UpdateTypeAuthorizationState, h)
 
 	return h
+}
+
+// OnAuthorizationState registers a handler for UpdateAuthorizationState updates.
+func (c *Client) OnAuthorizationState(hn HandlerFunc[UpdateAuthorizationState], f ...Filter) Handle {
+	return c.AddAuthorizationStateHandler(hn, f...)
 }
 
 // AddAutosaveSettingsHandler registers a handler for UpdateAutosaveSettings updates.
@@ -370,6 +430,11 @@ func (c *Client) AddAutosaveSettingsHandler(hn HandlerFunc[UpdateAutosaveSetting
 	return h
 }
 
+// OnAutosaveSettings registers a handler for UpdateAutosaveSettings updates.
+func (c *Client) OnAutosaveSettings(hn HandlerFunc[UpdateAutosaveSettings], f ...Filter) Handle {
+	return c.AddAutosaveSettingsHandler(hn, f...)
+}
+
 // AddAvailableMessageEffectsHandler registers a handler for UpdateAvailableMessageEffects updates.
 func (c *Client) AddAvailableMessageEffectsHandler(hn HandlerFunc[UpdateAvailableMessageEffects], f ...Filter) Handle {
 	h := &handle[UpdateAvailableMessageEffects]{
@@ -382,6 +447,11 @@ func (c *Client) AddAvailableMessageEffectsHandler(hn HandlerFunc[UpdateAvailabl
 	c.addHandler(UpdateTypeAvailableMessageEffects, h)
 
 	return h
+}
+
+// OnAvailableMessageEffects registers a handler for UpdateAvailableMessageEffects updates.
+func (c *Client) OnAvailableMessageEffects(hn HandlerFunc[UpdateAvailableMessageEffects], f ...Filter) Handle {
+	return c.AddAvailableMessageEffectsHandler(hn, f...)
 }
 
 // AddBasicGroupHandler registers a handler for UpdateBasicGroup updates.
@@ -398,6 +468,11 @@ func (c *Client) AddBasicGroupHandler(hn HandlerFunc[UpdateBasicGroup], f ...Fil
 	return h
 }
 
+// OnBasicGroup registers a handler for UpdateBasicGroup updates.
+func (c *Client) OnBasicGroup(hn HandlerFunc[UpdateBasicGroup], f ...Filter) Handle {
+	return c.AddBasicGroupHandler(hn, f...)
+}
+
 // AddBasicGroupFullInfoHandler registers a handler for UpdateBasicGroupFullInfo updates.
 func (c *Client) AddBasicGroupFullInfoHandler(hn HandlerFunc[UpdateBasicGroupFullInfo], f ...Filter) Handle {
 	h := &handle[UpdateBasicGroupFullInfo]{
@@ -410,6 +485,11 @@ func (c *Client) AddBasicGroupFullInfoHandler(hn HandlerFunc[UpdateBasicGroupFul
 	c.addHandler(UpdateTypeBasicGroupFullInfo, h)
 
 	return h
+}
+
+// OnBasicGroupFullInfo registers a handler for UpdateBasicGroupFullInfo updates.
+func (c *Client) OnBasicGroupFullInfo(hn HandlerFunc[UpdateBasicGroupFullInfo], f ...Filter) Handle {
+	return c.AddBasicGroupFullInfoHandler(hn, f...)
 }
 
 // AddBusinessConnectionHandler registers a handler for UpdateBusinessConnection updates.
@@ -426,6 +506,11 @@ func (c *Client) AddBusinessConnectionHandler(hn HandlerFunc[UpdateBusinessConne
 	return h
 }
 
+// OnBusinessConnection registers a handler for UpdateBusinessConnection updates.
+func (c *Client) OnBusinessConnection(hn HandlerFunc[UpdateBusinessConnection], f ...Filter) Handle {
+	return c.AddBusinessConnectionHandler(hn, f...)
+}
+
 // AddBusinessMessageEditedHandler registers a handler for UpdateBusinessMessageEdited updates.
 func (c *Client) AddBusinessMessageEditedHandler(hn HandlerFunc[UpdateBusinessMessageEdited], f ...Filter) Handle {
 	h := &handle[UpdateBusinessMessageEdited]{
@@ -438,6 +523,11 @@ func (c *Client) AddBusinessMessageEditedHandler(hn HandlerFunc[UpdateBusinessMe
 	c.addHandler(UpdateTypeBusinessMessageEdited, h)
 
 	return h
+}
+
+// OnBusinessMessageEdited registers a handler for UpdateBusinessMessageEdited updates.
+func (c *Client) OnBusinessMessageEdited(hn HandlerFunc[UpdateBusinessMessageEdited], f ...Filter) Handle {
+	return c.AddBusinessMessageEditedHandler(hn, f...)
 }
 
 // AddBusinessMessagesDeletedHandler registers a handler for UpdateBusinessMessagesDeleted updates.
@@ -454,6 +544,11 @@ func (c *Client) AddBusinessMessagesDeletedHandler(hn HandlerFunc[UpdateBusiness
 	return h
 }
 
+// OnBusinessMessagesDeleted registers a handler for UpdateBusinessMessagesDeleted updates.
+func (c *Client) OnBusinessMessagesDeleted(hn HandlerFunc[UpdateBusinessMessagesDeleted], f ...Filter) Handle {
+	return c.AddBusinessMessagesDeletedHandler(hn, f...)
+}
+
 // AddCallHandler registers a handler for UpdateCall updates.
 func (c *Client) AddCallHandler(hn HandlerFunc[UpdateCall], f ...Filter) Handle {
 	h := &handle[UpdateCall]{
@@ -466,6 +561,11 @@ func (c *Client) AddCallHandler(hn HandlerFunc[UpdateCall], f ...Filter) Handle 
 	c.addHandler(UpdateTypeCall, h)
 
 	return h
+}
+
+// OnCall registers a handler for UpdateCall updates.
+func (c *Client) OnCall(hn HandlerFunc[UpdateCall], f ...Filter) Handle {
+	return c.AddCallHandler(hn, f...)
 }
 
 // AddChatAccentColorsHandler registers a handler for UpdateChatAccentColors updates.
@@ -482,6 +582,11 @@ func (c *Client) AddChatAccentColorsHandler(hn HandlerFunc[UpdateChatAccentColor
 	return h
 }
 
+// OnChatAccentColors registers a handler for UpdateChatAccentColors updates.
+func (c *Client) OnChatAccentColors(hn HandlerFunc[UpdateChatAccentColors], f ...Filter) Handle {
+	return c.AddChatAccentColorsHandler(hn, f...)
+}
+
 // AddChatActionHandler registers a handler for UpdateChatAction updates.
 func (c *Client) AddChatActionHandler(hn HandlerFunc[UpdateChatAction], f ...Filter) Handle {
 	h := &handle[UpdateChatAction]{
@@ -494,6 +599,11 @@ func (c *Client) AddChatActionHandler(hn HandlerFunc[UpdateChatAction], f ...Fil
 	c.addHandler(UpdateTypeChatAction, h)
 
 	return h
+}
+
+// OnChatAction registers a handler for UpdateChatAction updates.
+func (c *Client) OnChatAction(hn HandlerFunc[UpdateChatAction], f ...Filter) Handle {
+	return c.AddChatActionHandler(hn, f...)
 }
 
 // AddChatActionBarHandler registers a handler for UpdateChatActionBar updates.
@@ -510,6 +620,11 @@ func (c *Client) AddChatActionBarHandler(hn HandlerFunc[UpdateChatActionBar], f 
 	return h
 }
 
+// OnChatActionBar registers a handler for UpdateChatActionBar updates.
+func (c *Client) OnChatActionBar(hn HandlerFunc[UpdateChatActionBar], f ...Filter) Handle {
+	return c.AddChatActionBarHandler(hn, f...)
+}
+
 // AddChatActiveStoriesHandler registers a handler for UpdateChatActiveStories updates.
 func (c *Client) AddChatActiveStoriesHandler(hn HandlerFunc[UpdateChatActiveStories], f ...Filter) Handle {
 	h := &handle[UpdateChatActiveStories]{
@@ -522,6 +637,11 @@ func (c *Client) AddChatActiveStoriesHandler(hn HandlerFunc[UpdateChatActiveStor
 	c.addHandler(UpdateTypeChatActiveStories, h)
 
 	return h
+}
+
+// OnChatActiveStories registers a handler for UpdateChatActiveStories updates.
+func (c *Client) OnChatActiveStories(hn HandlerFunc[UpdateChatActiveStories], f ...Filter) Handle {
+	return c.AddChatActiveStoriesHandler(hn, f...)
 }
 
 // AddChatAddedToListHandler registers a handler for UpdateChatAddedToList updates.
@@ -538,6 +658,11 @@ func (c *Client) AddChatAddedToListHandler(hn HandlerFunc[UpdateChatAddedToList]
 	return h
 }
 
+// OnChatAddedToList registers a handler for UpdateChatAddedToList updates.
+func (c *Client) OnChatAddedToList(hn HandlerFunc[UpdateChatAddedToList], f ...Filter) Handle {
+	return c.AddChatAddedToListHandler(hn, f...)
+}
+
 // AddChatAvailableReactionsHandler registers a handler for UpdateChatAvailableReactions updates.
 func (c *Client) AddChatAvailableReactionsHandler(hn HandlerFunc[UpdateChatAvailableReactions], f ...Filter) Handle {
 	h := &handle[UpdateChatAvailableReactions]{
@@ -550,6 +675,11 @@ func (c *Client) AddChatAvailableReactionsHandler(hn HandlerFunc[UpdateChatAvail
 	c.addHandler(UpdateTypeChatAvailableReactions, h)
 
 	return h
+}
+
+// OnChatAvailableReactions registers a handler for UpdateChatAvailableReactions updates.
+func (c *Client) OnChatAvailableReactions(hn HandlerFunc[UpdateChatAvailableReactions], f ...Filter) Handle {
+	return c.AddChatAvailableReactionsHandler(hn, f...)
 }
 
 // AddChatBackgroundHandler registers a handler for UpdateChatBackground updates.
@@ -566,6 +696,11 @@ func (c *Client) AddChatBackgroundHandler(hn HandlerFunc[UpdateChatBackground], 
 	return h
 }
 
+// OnChatBackground registers a handler for UpdateChatBackground updates.
+func (c *Client) OnChatBackground(hn HandlerFunc[UpdateChatBackground], f ...Filter) Handle {
+	return c.AddChatBackgroundHandler(hn, f...)
+}
+
 // AddChatBlockListHandler registers a handler for UpdateChatBlockList updates.
 func (c *Client) AddChatBlockListHandler(hn HandlerFunc[UpdateChatBlockList], f ...Filter) Handle {
 	h := &handle[UpdateChatBlockList]{
@@ -578,6 +713,11 @@ func (c *Client) AddChatBlockListHandler(hn HandlerFunc[UpdateChatBlockList], f 
 	c.addHandler(UpdateTypeChatBlockList, h)
 
 	return h
+}
+
+// OnChatBlockList registers a handler for UpdateChatBlockList updates.
+func (c *Client) OnChatBlockList(hn HandlerFunc[UpdateChatBlockList], f ...Filter) Handle {
+	return c.AddChatBlockListHandler(hn, f...)
 }
 
 // AddChatBoostHandler registers a handler for UpdateChatBoost updates.
@@ -594,6 +734,11 @@ func (c *Client) AddChatBoostHandler(hn HandlerFunc[UpdateChatBoost], f ...Filte
 	return h
 }
 
+// OnChatBoost registers a handler for UpdateChatBoost updates.
+func (c *Client) OnChatBoost(hn HandlerFunc[UpdateChatBoost], f ...Filter) Handle {
+	return c.AddChatBoostHandler(hn, f...)
+}
+
 // AddChatBusinessBotManageBarHandler registers a handler for UpdateChatBusinessBotManageBar updates.
 func (c *Client) AddChatBusinessBotManageBarHandler(hn HandlerFunc[UpdateChatBusinessBotManageBar], f ...Filter) Handle {
 	h := &handle[UpdateChatBusinessBotManageBar]{
@@ -606,6 +751,11 @@ func (c *Client) AddChatBusinessBotManageBarHandler(hn HandlerFunc[UpdateChatBus
 	c.addHandler(UpdateTypeChatBusinessBotManageBar, h)
 
 	return h
+}
+
+// OnChatBusinessBotManageBar registers a handler for UpdateChatBusinessBotManageBar updates.
+func (c *Client) OnChatBusinessBotManageBar(hn HandlerFunc[UpdateChatBusinessBotManageBar], f ...Filter) Handle {
+	return c.AddChatBusinessBotManageBarHandler(hn, f...)
 }
 
 // AddChatDefaultDisableNotificationHandler registers a handler for UpdateChatDefaultDisableNotification updates.
@@ -622,6 +772,11 @@ func (c *Client) AddChatDefaultDisableNotificationHandler(hn HandlerFunc[UpdateC
 	return h
 }
 
+// OnChatDefaultDisableNotification registers a handler for UpdateChatDefaultDisableNotification updates.
+func (c *Client) OnChatDefaultDisableNotification(hn HandlerFunc[UpdateChatDefaultDisableNotification], f ...Filter) Handle {
+	return c.AddChatDefaultDisableNotificationHandler(hn, f...)
+}
+
 // AddChatDraftMessageHandler registers a handler for UpdateChatDraftMessage updates.
 func (c *Client) AddChatDraftMessageHandler(hn HandlerFunc[UpdateChatDraftMessage], f ...Filter) Handle {
 	h := &handle[UpdateChatDraftMessage]{
@@ -634,6 +789,11 @@ func (c *Client) AddChatDraftMessageHandler(hn HandlerFunc[UpdateChatDraftMessag
 	c.addHandler(UpdateTypeChatDraftMessage, h)
 
 	return h
+}
+
+// OnChatDraftMessage registers a handler for UpdateChatDraftMessage updates.
+func (c *Client) OnChatDraftMessage(hn HandlerFunc[UpdateChatDraftMessage], f ...Filter) Handle {
+	return c.AddChatDraftMessageHandler(hn, f...)
 }
 
 // AddChatEmojiStatusHandler registers a handler for UpdateChatEmojiStatus updates.
@@ -650,6 +810,11 @@ func (c *Client) AddChatEmojiStatusHandler(hn HandlerFunc[UpdateChatEmojiStatus]
 	return h
 }
 
+// OnChatEmojiStatus registers a handler for UpdateChatEmojiStatus updates.
+func (c *Client) OnChatEmojiStatus(hn HandlerFunc[UpdateChatEmojiStatus], f ...Filter) Handle {
+	return c.AddChatEmojiStatusHandler(hn, f...)
+}
+
 // AddChatFoldersHandler registers a handler for UpdateChatFolders updates.
 func (c *Client) AddChatFoldersHandler(hn HandlerFunc[UpdateChatFolders], f ...Filter) Handle {
 	h := &handle[UpdateChatFolders]{
@@ -662,6 +827,11 @@ func (c *Client) AddChatFoldersHandler(hn HandlerFunc[UpdateChatFolders], f ...F
 	c.addHandler(UpdateTypeChatFolders, h)
 
 	return h
+}
+
+// OnChatFolders registers a handler for UpdateChatFolders updates.
+func (c *Client) OnChatFolders(hn HandlerFunc[UpdateChatFolders], f ...Filter) Handle {
+	return c.AddChatFoldersHandler(hn, f...)
 }
 
 // AddChatHasProtectedContentHandler registers a handler for UpdateChatHasProtectedContent updates.
@@ -678,6 +848,11 @@ func (c *Client) AddChatHasProtectedContentHandler(hn HandlerFunc[UpdateChatHasP
 	return h
 }
 
+// OnChatHasProtectedContent registers a handler for UpdateChatHasProtectedContent updates.
+func (c *Client) OnChatHasProtectedContent(hn HandlerFunc[UpdateChatHasProtectedContent], f ...Filter) Handle {
+	return c.AddChatHasProtectedContentHandler(hn, f...)
+}
+
 // AddChatHasScheduledMessagesHandler registers a handler for UpdateChatHasScheduledMessages updates.
 func (c *Client) AddChatHasScheduledMessagesHandler(hn HandlerFunc[UpdateChatHasScheduledMessages], f ...Filter) Handle {
 	h := &handle[UpdateChatHasScheduledMessages]{
@@ -690,6 +865,11 @@ func (c *Client) AddChatHasScheduledMessagesHandler(hn HandlerFunc[UpdateChatHas
 	c.addHandler(UpdateTypeChatHasScheduledMessages, h)
 
 	return h
+}
+
+// OnChatHasScheduledMessages registers a handler for UpdateChatHasScheduledMessages updates.
+func (c *Client) OnChatHasScheduledMessages(hn HandlerFunc[UpdateChatHasScheduledMessages], f ...Filter) Handle {
+	return c.AddChatHasScheduledMessagesHandler(hn, f...)
 }
 
 // AddChatIsMarkedAsUnreadHandler registers a handler for UpdateChatIsMarkedAsUnread updates.
@@ -706,6 +886,11 @@ func (c *Client) AddChatIsMarkedAsUnreadHandler(hn HandlerFunc[UpdateChatIsMarke
 	return h
 }
 
+// OnChatIsMarkedAsUnread registers a handler for UpdateChatIsMarkedAsUnread updates.
+func (c *Client) OnChatIsMarkedAsUnread(hn HandlerFunc[UpdateChatIsMarkedAsUnread], f ...Filter) Handle {
+	return c.AddChatIsMarkedAsUnreadHandler(hn, f...)
+}
+
 // AddChatIsTranslatableHandler registers a handler for UpdateChatIsTranslatable updates.
 func (c *Client) AddChatIsTranslatableHandler(hn HandlerFunc[UpdateChatIsTranslatable], f ...Filter) Handle {
 	h := &handle[UpdateChatIsTranslatable]{
@@ -718,6 +903,11 @@ func (c *Client) AddChatIsTranslatableHandler(hn HandlerFunc[UpdateChatIsTransla
 	c.addHandler(UpdateTypeChatIsTranslatable, h)
 
 	return h
+}
+
+// OnChatIsTranslatable registers a handler for UpdateChatIsTranslatable updates.
+func (c *Client) OnChatIsTranslatable(hn HandlerFunc[UpdateChatIsTranslatable], f ...Filter) Handle {
+	return c.AddChatIsTranslatableHandler(hn, f...)
 }
 
 // AddChatLastMessageHandler registers a handler for UpdateChatLastMessage updates.
@@ -734,6 +924,11 @@ func (c *Client) AddChatLastMessageHandler(hn HandlerFunc[UpdateChatLastMessage]
 	return h
 }
 
+// OnChatLastMessage registers a handler for UpdateChatLastMessage updates.
+func (c *Client) OnChatLastMessage(hn HandlerFunc[UpdateChatLastMessage], f ...Filter) Handle {
+	return c.AddChatLastMessageHandler(hn, f...)
+}
+
 // AddChatMemberHandler registers a handler for UpdateChatMember updates.
 func (c *Client) AddChatMemberHandler(hn HandlerFunc[UpdateChatMember], f ...Filter) Handle {
 	h := &handle[UpdateChatMember]{
@@ -746,6 +941,11 @@ func (c *Client) AddChatMemberHandler(hn HandlerFunc[UpdateChatMember], f ...Fil
 	c.addHandler(UpdateTypeChatMember, h)
 
 	return h
+}
+
+// OnChatMember registers a handler for UpdateChatMember updates.
+func (c *Client) OnChatMember(hn HandlerFunc[UpdateChatMember], f ...Filter) Handle {
+	return c.AddChatMemberHandler(hn, f...)
 }
 
 // AddChatMessageAutoDeleteTimeHandler registers a handler for UpdateChatMessageAutoDeleteTime updates.
@@ -762,6 +962,11 @@ func (c *Client) AddChatMessageAutoDeleteTimeHandler(hn HandlerFunc[UpdateChatMe
 	return h
 }
 
+// OnChatMessageAutoDeleteTime registers a handler for UpdateChatMessageAutoDeleteTime updates.
+func (c *Client) OnChatMessageAutoDeleteTime(hn HandlerFunc[UpdateChatMessageAutoDeleteTime], f ...Filter) Handle {
+	return c.AddChatMessageAutoDeleteTimeHandler(hn, f...)
+}
+
 // AddChatMessageSenderHandler registers a handler for UpdateChatMessageSender updates.
 func (c *Client) AddChatMessageSenderHandler(hn HandlerFunc[UpdateChatMessageSender], f ...Filter) Handle {
 	h := &handle[UpdateChatMessageSender]{
@@ -774,6 +979,11 @@ func (c *Client) AddChatMessageSenderHandler(hn HandlerFunc[UpdateChatMessageSen
 	c.addHandler(UpdateTypeChatMessageSender, h)
 
 	return h
+}
+
+// OnChatMessageSender registers a handler for UpdateChatMessageSender updates.
+func (c *Client) OnChatMessageSender(hn HandlerFunc[UpdateChatMessageSender], f ...Filter) Handle {
+	return c.AddChatMessageSenderHandler(hn, f...)
 }
 
 // AddChatNotificationSettingsHandler registers a handler for UpdateChatNotificationSettings updates.
@@ -790,6 +1000,11 @@ func (c *Client) AddChatNotificationSettingsHandler(hn HandlerFunc[UpdateChatNot
 	return h
 }
 
+// OnChatNotificationSettings registers a handler for UpdateChatNotificationSettings updates.
+func (c *Client) OnChatNotificationSettings(hn HandlerFunc[UpdateChatNotificationSettings], f ...Filter) Handle {
+	return c.AddChatNotificationSettingsHandler(hn, f...)
+}
+
 // AddChatOnlineMemberCountHandler registers a handler for UpdateChatOnlineMemberCount updates.
 func (c *Client) AddChatOnlineMemberCountHandler(hn HandlerFunc[UpdateChatOnlineMemberCount], f ...Filter) Handle {
 	h := &handle[UpdateChatOnlineMemberCount]{
@@ -802,6 +1017,11 @@ func (c *Client) AddChatOnlineMemberCountHandler(hn HandlerFunc[UpdateChatOnline
 	c.addHandler(UpdateTypeChatOnlineMemberCount, h)
 
 	return h
+}
+
+// OnChatOnlineMemberCount registers a handler for UpdateChatOnlineMemberCount updates.
+func (c *Client) OnChatOnlineMemberCount(hn HandlerFunc[UpdateChatOnlineMemberCount], f ...Filter) Handle {
+	return c.AddChatOnlineMemberCountHandler(hn, f...)
 }
 
 // AddChatPendingJoinRequestsHandler registers a handler for UpdateChatPendingJoinRequests updates.
@@ -818,6 +1038,11 @@ func (c *Client) AddChatPendingJoinRequestsHandler(hn HandlerFunc[UpdateChatPend
 	return h
 }
 
+// OnChatPendingJoinRequests registers a handler for UpdateChatPendingJoinRequests updates.
+func (c *Client) OnChatPendingJoinRequests(hn HandlerFunc[UpdateChatPendingJoinRequests], f ...Filter) Handle {
+	return c.AddChatPendingJoinRequestsHandler(hn, f...)
+}
+
 // AddChatPermissionsHandler registers a handler for UpdateChatPermissions updates.
 func (c *Client) AddChatPermissionsHandler(hn HandlerFunc[UpdateChatPermissions], f ...Filter) Handle {
 	h := &handle[UpdateChatPermissions]{
@@ -830,6 +1055,11 @@ func (c *Client) AddChatPermissionsHandler(hn HandlerFunc[UpdateChatPermissions]
 	c.addHandler(UpdateTypeChatPermissions, h)
 
 	return h
+}
+
+// OnChatPermissions registers a handler for UpdateChatPermissions updates.
+func (c *Client) OnChatPermissions(hn HandlerFunc[UpdateChatPermissions], f ...Filter) Handle {
+	return c.AddChatPermissionsHandler(hn, f...)
 }
 
 // AddChatPhotoHandler registers a handler for UpdateChatPhoto updates.
@@ -846,6 +1076,11 @@ func (c *Client) AddChatPhotoHandler(hn HandlerFunc[UpdateChatPhoto], f ...Filte
 	return h
 }
 
+// OnChatPhoto registers a handler for UpdateChatPhoto updates.
+func (c *Client) OnChatPhoto(hn HandlerFunc[UpdateChatPhoto], f ...Filter) Handle {
+	return c.AddChatPhotoHandler(hn, f...)
+}
+
 // AddChatPositionHandler registers a handler for UpdateChatPosition updates.
 func (c *Client) AddChatPositionHandler(hn HandlerFunc[UpdateChatPosition], f ...Filter) Handle {
 	h := &handle[UpdateChatPosition]{
@@ -858,6 +1093,11 @@ func (c *Client) AddChatPositionHandler(hn HandlerFunc[UpdateChatPosition], f ..
 	c.addHandler(UpdateTypeChatPosition, h)
 
 	return h
+}
+
+// OnChatPosition registers a handler for UpdateChatPosition updates.
+func (c *Client) OnChatPosition(hn HandlerFunc[UpdateChatPosition], f ...Filter) Handle {
+	return c.AddChatPositionHandler(hn, f...)
 }
 
 // AddChatReadInboxHandler registers a handler for UpdateChatReadInbox updates.
@@ -874,6 +1114,11 @@ func (c *Client) AddChatReadInboxHandler(hn HandlerFunc[UpdateChatReadInbox], f 
 	return h
 }
 
+// OnChatReadInbox registers a handler for UpdateChatReadInbox updates.
+func (c *Client) OnChatReadInbox(hn HandlerFunc[UpdateChatReadInbox], f ...Filter) Handle {
+	return c.AddChatReadInboxHandler(hn, f...)
+}
+
 // AddChatReadOutboxHandler registers a handler for UpdateChatReadOutbox updates.
 func (c *Client) AddChatReadOutboxHandler(hn HandlerFunc[UpdateChatReadOutbox], f ...Filter) Handle {
 	h := &handle[UpdateChatReadOutbox]{
@@ -886,6 +1131,11 @@ func (c *Client) AddChatReadOutboxHandler(hn HandlerFunc[UpdateChatReadOutbox], 
 	c.addHandler(UpdateTypeChatReadOutbox, h)
 
 	return h
+}
+
+// OnChatReadOutbox registers a handler for UpdateChatReadOutbox updates.
+func (c *Client) OnChatReadOutbox(hn HandlerFunc[UpdateChatReadOutbox], f ...Filter) Handle {
+	return c.AddChatReadOutboxHandler(hn, f...)
 }
 
 // AddChatRemovedFromListHandler registers a handler for UpdateChatRemovedFromList updates.
@@ -902,6 +1152,11 @@ func (c *Client) AddChatRemovedFromListHandler(hn HandlerFunc[UpdateChatRemovedF
 	return h
 }
 
+// OnChatRemovedFromList registers a handler for UpdateChatRemovedFromList updates.
+func (c *Client) OnChatRemovedFromList(hn HandlerFunc[UpdateChatRemovedFromList], f ...Filter) Handle {
+	return c.AddChatRemovedFromListHandler(hn, f...)
+}
+
 // AddChatReplyMarkupHandler registers a handler for UpdateChatReplyMarkup updates.
 func (c *Client) AddChatReplyMarkupHandler(hn HandlerFunc[UpdateChatReplyMarkup], f ...Filter) Handle {
 	h := &handle[UpdateChatReplyMarkup]{
@@ -914,6 +1169,11 @@ func (c *Client) AddChatReplyMarkupHandler(hn HandlerFunc[UpdateChatReplyMarkup]
 	c.addHandler(UpdateTypeChatReplyMarkup, h)
 
 	return h
+}
+
+// OnChatReplyMarkup registers a handler for UpdateChatReplyMarkup updates.
+func (c *Client) OnChatReplyMarkup(hn HandlerFunc[UpdateChatReplyMarkup], f ...Filter) Handle {
+	return c.AddChatReplyMarkupHandler(hn, f...)
 }
 
 // AddChatRevenueAmountHandler registers a handler for UpdateChatRevenueAmount updates.
@@ -930,6 +1190,11 @@ func (c *Client) AddChatRevenueAmountHandler(hn HandlerFunc[UpdateChatRevenueAmo
 	return h
 }
 
+// OnChatRevenueAmount registers a handler for UpdateChatRevenueAmount updates.
+func (c *Client) OnChatRevenueAmount(hn HandlerFunc[UpdateChatRevenueAmount], f ...Filter) Handle {
+	return c.AddChatRevenueAmountHandler(hn, f...)
+}
+
 // AddChatThemeHandler registers a handler for UpdateChatTheme updates.
 func (c *Client) AddChatThemeHandler(hn HandlerFunc[UpdateChatTheme], f ...Filter) Handle {
 	h := &handle[UpdateChatTheme]{
@@ -942,6 +1207,11 @@ func (c *Client) AddChatThemeHandler(hn HandlerFunc[UpdateChatTheme], f ...Filte
 	c.addHandler(UpdateTypeChatTheme, h)
 
 	return h
+}
+
+// OnChatTheme registers a handler for UpdateChatTheme updates.
+func (c *Client) OnChatTheme(hn HandlerFunc[UpdateChatTheme], f ...Filter) Handle {
+	return c.AddChatThemeHandler(hn, f...)
 }
 
 // AddChatTitleHandler registers a handler for UpdateChatTitle updates.
@@ -958,6 +1228,11 @@ func (c *Client) AddChatTitleHandler(hn HandlerFunc[UpdateChatTitle], f ...Filte
 	return h
 }
 
+// OnChatTitle registers a handler for UpdateChatTitle updates.
+func (c *Client) OnChatTitle(hn HandlerFunc[UpdateChatTitle], f ...Filter) Handle {
+	return c.AddChatTitleHandler(hn, f...)
+}
+
 // AddChatUnreadMentionCountHandler registers a handler for UpdateChatUnreadMentionCount updates.
 func (c *Client) AddChatUnreadMentionCountHandler(hn HandlerFunc[UpdateChatUnreadMentionCount], f ...Filter) Handle {
 	h := &handle[UpdateChatUnreadMentionCount]{
@@ -970,6 +1245,11 @@ func (c *Client) AddChatUnreadMentionCountHandler(hn HandlerFunc[UpdateChatUnrea
 	c.addHandler(UpdateTypeChatUnreadMentionCount, h)
 
 	return h
+}
+
+// OnChatUnreadMentionCount registers a handler for UpdateChatUnreadMentionCount updates.
+func (c *Client) OnChatUnreadMentionCount(hn HandlerFunc[UpdateChatUnreadMentionCount], f ...Filter) Handle {
+	return c.AddChatUnreadMentionCountHandler(hn, f...)
 }
 
 // AddChatUnreadPollVoteCountHandler registers a handler for UpdateChatUnreadPollVoteCount updates.
@@ -986,6 +1266,11 @@ func (c *Client) AddChatUnreadPollVoteCountHandler(hn HandlerFunc[UpdateChatUnre
 	return h
 }
 
+// OnChatUnreadPollVoteCount registers a handler for UpdateChatUnreadPollVoteCount updates.
+func (c *Client) OnChatUnreadPollVoteCount(hn HandlerFunc[UpdateChatUnreadPollVoteCount], f ...Filter) Handle {
+	return c.AddChatUnreadPollVoteCountHandler(hn, f...)
+}
+
 // AddChatUnreadReactionCountHandler registers a handler for UpdateChatUnreadReactionCount updates.
 func (c *Client) AddChatUnreadReactionCountHandler(hn HandlerFunc[UpdateChatUnreadReactionCount], f ...Filter) Handle {
 	h := &handle[UpdateChatUnreadReactionCount]{
@@ -998,6 +1283,11 @@ func (c *Client) AddChatUnreadReactionCountHandler(hn HandlerFunc[UpdateChatUnre
 	c.addHandler(UpdateTypeChatUnreadReactionCount, h)
 
 	return h
+}
+
+// OnChatUnreadReactionCount registers a handler for UpdateChatUnreadReactionCount updates.
+func (c *Client) OnChatUnreadReactionCount(hn HandlerFunc[UpdateChatUnreadReactionCount], f ...Filter) Handle {
+	return c.AddChatUnreadReactionCountHandler(hn, f...)
 }
 
 // AddChatVideoChatHandler registers a handler for UpdateChatVideoChat updates.
@@ -1014,6 +1304,11 @@ func (c *Client) AddChatVideoChatHandler(hn HandlerFunc[UpdateChatVideoChat], f 
 	return h
 }
 
+// OnChatVideoChat registers a handler for UpdateChatVideoChat updates.
+func (c *Client) OnChatVideoChat(hn HandlerFunc[UpdateChatVideoChat], f ...Filter) Handle {
+	return c.AddChatVideoChatHandler(hn, f...)
+}
+
 // AddChatViewAsTopicsHandler registers a handler for UpdateChatViewAsTopics updates.
 func (c *Client) AddChatViewAsTopicsHandler(hn HandlerFunc[UpdateChatViewAsTopics], f ...Filter) Handle {
 	h := &handle[UpdateChatViewAsTopics]{
@@ -1026,6 +1321,11 @@ func (c *Client) AddChatViewAsTopicsHandler(hn HandlerFunc[UpdateChatViewAsTopic
 	c.addHandler(UpdateTypeChatViewAsTopics, h)
 
 	return h
+}
+
+// OnChatViewAsTopics registers a handler for UpdateChatViewAsTopics updates.
+func (c *Client) OnChatViewAsTopics(hn HandlerFunc[UpdateChatViewAsTopics], f ...Filter) Handle {
+	return c.AddChatViewAsTopicsHandler(hn, f...)
 }
 
 // AddConnectionStateHandler registers a handler for UpdateConnectionState updates.
@@ -1042,6 +1342,11 @@ func (c *Client) AddConnectionStateHandler(hn HandlerFunc[UpdateConnectionState]
 	return h
 }
 
+// OnConnectionState registers a handler for UpdateConnectionState updates.
+func (c *Client) OnConnectionState(hn HandlerFunc[UpdateConnectionState], f ...Filter) Handle {
+	return c.AddConnectionStateHandler(hn, f...)
+}
+
 // AddContactCloseBirthdaysHandler registers a handler for UpdateContactCloseBirthdays updates.
 func (c *Client) AddContactCloseBirthdaysHandler(hn HandlerFunc[UpdateContactCloseBirthdays], f ...Filter) Handle {
 	h := &handle[UpdateContactCloseBirthdays]{
@@ -1054,6 +1359,11 @@ func (c *Client) AddContactCloseBirthdaysHandler(hn HandlerFunc[UpdateContactClo
 	c.addHandler(UpdateTypeContactCloseBirthdays, h)
 
 	return h
+}
+
+// OnContactCloseBirthdays registers a handler for UpdateContactCloseBirthdays updates.
+func (c *Client) OnContactCloseBirthdays(hn HandlerFunc[UpdateContactCloseBirthdays], f ...Filter) Handle {
+	return c.AddContactCloseBirthdaysHandler(hn, f...)
 }
 
 // AddDefaultBackgroundHandler registers a handler for UpdateDefaultBackground updates.
@@ -1070,6 +1380,11 @@ func (c *Client) AddDefaultBackgroundHandler(hn HandlerFunc[UpdateDefaultBackgro
 	return h
 }
 
+// OnDefaultBackground registers a handler for UpdateDefaultBackground updates.
+func (c *Client) OnDefaultBackground(hn HandlerFunc[UpdateDefaultBackground], f ...Filter) Handle {
+	return c.AddDefaultBackgroundHandler(hn, f...)
+}
+
 // AddDefaultPaidReactionTypeHandler registers a handler for UpdateDefaultPaidReactionType updates.
 func (c *Client) AddDefaultPaidReactionTypeHandler(hn HandlerFunc[UpdateDefaultPaidReactionType], f ...Filter) Handle {
 	h := &handle[UpdateDefaultPaidReactionType]{
@@ -1082,6 +1397,11 @@ func (c *Client) AddDefaultPaidReactionTypeHandler(hn HandlerFunc[UpdateDefaultP
 	c.addHandler(UpdateTypeDefaultPaidReactionType, h)
 
 	return h
+}
+
+// OnDefaultPaidReactionType registers a handler for UpdateDefaultPaidReactionType updates.
+func (c *Client) OnDefaultPaidReactionType(hn HandlerFunc[UpdateDefaultPaidReactionType], f ...Filter) Handle {
+	return c.AddDefaultPaidReactionTypeHandler(hn, f...)
 }
 
 // AddDefaultReactionTypeHandler registers a handler for UpdateDefaultReactionType updates.
@@ -1098,6 +1418,11 @@ func (c *Client) AddDefaultReactionTypeHandler(hn HandlerFunc[UpdateDefaultReact
 	return h
 }
 
+// OnDefaultReactionType registers a handler for UpdateDefaultReactionType updates.
+func (c *Client) OnDefaultReactionType(hn HandlerFunc[UpdateDefaultReactionType], f ...Filter) Handle {
+	return c.AddDefaultReactionTypeHandler(hn, f...)
+}
+
 // AddDeleteMessagesHandler registers a handler for UpdateDeleteMessages updates.
 func (c *Client) AddDeleteMessagesHandler(hn HandlerFunc[UpdateDeleteMessages], f ...Filter) Handle {
 	h := &handle[UpdateDeleteMessages]{
@@ -1110,6 +1435,11 @@ func (c *Client) AddDeleteMessagesHandler(hn HandlerFunc[UpdateDeleteMessages], 
 	c.addHandler(UpdateTypeDeleteMessages, h)
 
 	return h
+}
+
+// OnDeleteMessages registers a handler for UpdateDeleteMessages updates.
+func (c *Client) OnDeleteMessages(hn HandlerFunc[UpdateDeleteMessages], f ...Filter) Handle {
+	return c.AddDeleteMessagesHandler(hn, f...)
 }
 
 // AddDiceEmojisHandler registers a handler for UpdateDiceEmojis updates.
@@ -1126,6 +1456,11 @@ func (c *Client) AddDiceEmojisHandler(hn HandlerFunc[UpdateDiceEmojis], f ...Fil
 	return h
 }
 
+// OnDiceEmojis registers a handler for UpdateDiceEmojis updates.
+func (c *Client) OnDiceEmojis(hn HandlerFunc[UpdateDiceEmojis], f ...Filter) Handle {
+	return c.AddDiceEmojisHandler(hn, f...)
+}
+
 // AddDirectMessagesChatTopicHandler registers a handler for UpdateDirectMessagesChatTopic updates.
 func (c *Client) AddDirectMessagesChatTopicHandler(hn HandlerFunc[UpdateDirectMessagesChatTopic], f ...Filter) Handle {
 	h := &handle[UpdateDirectMessagesChatTopic]{
@@ -1138,6 +1473,11 @@ func (c *Client) AddDirectMessagesChatTopicHandler(hn HandlerFunc[UpdateDirectMe
 	c.addHandler(UpdateTypeDirectMessagesChatTopic, h)
 
 	return h
+}
+
+// OnDirectMessagesChatTopic registers a handler for UpdateDirectMessagesChatTopic updates.
+func (c *Client) OnDirectMessagesChatTopic(hn HandlerFunc[UpdateDirectMessagesChatTopic], f ...Filter) Handle {
+	return c.AddDirectMessagesChatTopicHandler(hn, f...)
 }
 
 // AddEmojiChatThemesHandler registers a handler for UpdateEmojiChatThemes updates.
@@ -1154,6 +1494,11 @@ func (c *Client) AddEmojiChatThemesHandler(hn HandlerFunc[UpdateEmojiChatThemes]
 	return h
 }
 
+// OnEmojiChatThemes registers a handler for UpdateEmojiChatThemes updates.
+func (c *Client) OnEmojiChatThemes(hn HandlerFunc[UpdateEmojiChatThemes], f ...Filter) Handle {
+	return c.AddEmojiChatThemesHandler(hn, f...)
+}
+
 // AddFavoriteStickersHandler registers a handler for UpdateFavoriteStickers updates.
 func (c *Client) AddFavoriteStickersHandler(hn HandlerFunc[UpdateFavoriteStickers], f ...Filter) Handle {
 	h := &handle[UpdateFavoriteStickers]{
@@ -1166,6 +1511,11 @@ func (c *Client) AddFavoriteStickersHandler(hn HandlerFunc[UpdateFavoriteSticker
 	c.addHandler(UpdateTypeFavoriteStickers, h)
 
 	return h
+}
+
+// OnFavoriteStickers registers a handler for UpdateFavoriteStickers updates.
+func (c *Client) OnFavoriteStickers(hn HandlerFunc[UpdateFavoriteStickers], f ...Filter) Handle {
+	return c.AddFavoriteStickersHandler(hn, f...)
 }
 
 // AddFileHandler registers a handler for UpdateFile updates.
@@ -1182,6 +1532,11 @@ func (c *Client) AddFileHandler(hn HandlerFunc[UpdateFile], f ...Filter) Handle 
 	return h
 }
 
+// OnFile registers a handler for UpdateFile updates.
+func (c *Client) OnFile(hn HandlerFunc[UpdateFile], f ...Filter) Handle {
+	return c.AddFileHandler(hn, f...)
+}
+
 // AddFileAddedToDownloadsHandler registers a handler for UpdateFileAddedToDownloads updates.
 func (c *Client) AddFileAddedToDownloadsHandler(hn HandlerFunc[UpdateFileAddedToDownloads], f ...Filter) Handle {
 	h := &handle[UpdateFileAddedToDownloads]{
@@ -1194,6 +1549,11 @@ func (c *Client) AddFileAddedToDownloadsHandler(hn HandlerFunc[UpdateFileAddedTo
 	c.addHandler(UpdateTypeFileAddedToDownloads, h)
 
 	return h
+}
+
+// OnFileAddedToDownloads registers a handler for UpdateFileAddedToDownloads updates.
+func (c *Client) OnFileAddedToDownloads(hn HandlerFunc[UpdateFileAddedToDownloads], f ...Filter) Handle {
+	return c.AddFileAddedToDownloadsHandler(hn, f...)
 }
 
 // AddFileDownloadHandler registers a handler for UpdateFileDownload updates.
@@ -1210,6 +1570,11 @@ func (c *Client) AddFileDownloadHandler(hn HandlerFunc[UpdateFileDownload], f ..
 	return h
 }
 
+// OnFileDownload registers a handler for UpdateFileDownload updates.
+func (c *Client) OnFileDownload(hn HandlerFunc[UpdateFileDownload], f ...Filter) Handle {
+	return c.AddFileDownloadHandler(hn, f...)
+}
+
 // AddFileDownloadsHandler registers a handler for UpdateFileDownloads updates.
 func (c *Client) AddFileDownloadsHandler(hn HandlerFunc[UpdateFileDownloads], f ...Filter) Handle {
 	h := &handle[UpdateFileDownloads]{
@@ -1222,6 +1587,11 @@ func (c *Client) AddFileDownloadsHandler(hn HandlerFunc[UpdateFileDownloads], f 
 	c.addHandler(UpdateTypeFileDownloads, h)
 
 	return h
+}
+
+// OnFileDownloads registers a handler for UpdateFileDownloads updates.
+func (c *Client) OnFileDownloads(hn HandlerFunc[UpdateFileDownloads], f ...Filter) Handle {
+	return c.AddFileDownloadsHandler(hn, f...)
 }
 
 // AddFileGenerationStartHandler registers a handler for UpdateFileGenerationStart updates.
@@ -1238,6 +1608,11 @@ func (c *Client) AddFileGenerationStartHandler(hn HandlerFunc[UpdateFileGenerati
 	return h
 }
 
+// OnFileGenerationStart registers a handler for UpdateFileGenerationStart updates.
+func (c *Client) OnFileGenerationStart(hn HandlerFunc[UpdateFileGenerationStart], f ...Filter) Handle {
+	return c.AddFileGenerationStartHandler(hn, f...)
+}
+
 // AddFileGenerationStopHandler registers a handler for UpdateFileGenerationStop updates.
 func (c *Client) AddFileGenerationStopHandler(hn HandlerFunc[UpdateFileGenerationStop], f ...Filter) Handle {
 	h := &handle[UpdateFileGenerationStop]{
@@ -1250,6 +1625,11 @@ func (c *Client) AddFileGenerationStopHandler(hn HandlerFunc[UpdateFileGeneratio
 	c.addHandler(UpdateTypeFileGenerationStop, h)
 
 	return h
+}
+
+// OnFileGenerationStop registers a handler for UpdateFileGenerationStop updates.
+func (c *Client) OnFileGenerationStop(hn HandlerFunc[UpdateFileGenerationStop], f ...Filter) Handle {
+	return c.AddFileGenerationStopHandler(hn, f...)
 }
 
 // AddFileRemovedFromDownloadsHandler registers a handler for UpdateFileRemovedFromDownloads updates.
@@ -1266,6 +1646,11 @@ func (c *Client) AddFileRemovedFromDownloadsHandler(hn HandlerFunc[UpdateFileRem
 	return h
 }
 
+// OnFileRemovedFromDownloads registers a handler for UpdateFileRemovedFromDownloads updates.
+func (c *Client) OnFileRemovedFromDownloads(hn HandlerFunc[UpdateFileRemovedFromDownloads], f ...Filter) Handle {
+	return c.AddFileRemovedFromDownloadsHandler(hn, f...)
+}
+
 // AddForumTopicHandler registers a handler for UpdateForumTopic updates.
 func (c *Client) AddForumTopicHandler(hn HandlerFunc[UpdateForumTopic], f ...Filter) Handle {
 	h := &handle[UpdateForumTopic]{
@@ -1278,6 +1663,11 @@ func (c *Client) AddForumTopicHandler(hn HandlerFunc[UpdateForumTopic], f ...Fil
 	c.addHandler(UpdateTypeForumTopic, h)
 
 	return h
+}
+
+// OnForumTopic registers a handler for UpdateForumTopic updates.
+func (c *Client) OnForumTopic(hn HandlerFunc[UpdateForumTopic], f ...Filter) Handle {
+	return c.AddForumTopicHandler(hn, f...)
 }
 
 // AddForumTopicInfoHandler registers a handler for UpdateForumTopicInfo updates.
@@ -1294,6 +1684,11 @@ func (c *Client) AddForumTopicInfoHandler(hn HandlerFunc[UpdateForumTopicInfo], 
 	return h
 }
 
+// OnForumTopicInfo registers a handler for UpdateForumTopicInfo updates.
+func (c *Client) OnForumTopicInfo(hn HandlerFunc[UpdateForumTopicInfo], f ...Filter) Handle {
+	return c.AddForumTopicInfoHandler(hn, f...)
+}
+
 // AddFreezeStateHandler registers a handler for UpdateFreezeState updates.
 func (c *Client) AddFreezeStateHandler(hn HandlerFunc[UpdateFreezeState], f ...Filter) Handle {
 	h := &handle[UpdateFreezeState]{
@@ -1306,6 +1701,11 @@ func (c *Client) AddFreezeStateHandler(hn HandlerFunc[UpdateFreezeState], f ...F
 	c.addHandler(UpdateTypeFreezeState, h)
 
 	return h
+}
+
+// OnFreezeState registers a handler for UpdateFreezeState updates.
+func (c *Client) OnFreezeState(hn HandlerFunc[UpdateFreezeState], f ...Filter) Handle {
+	return c.AddFreezeStateHandler(hn, f...)
 }
 
 // AddGiftAuctionStateHandler registers a handler for UpdateGiftAuctionState updates.
@@ -1322,6 +1722,11 @@ func (c *Client) AddGiftAuctionStateHandler(hn HandlerFunc[UpdateGiftAuctionStat
 	return h
 }
 
+// OnGiftAuctionState registers a handler for UpdateGiftAuctionState updates.
+func (c *Client) OnGiftAuctionState(hn HandlerFunc[UpdateGiftAuctionState], f ...Filter) Handle {
+	return c.AddGiftAuctionStateHandler(hn, f...)
+}
+
 // AddGroupCallHandler registers a handler for UpdateGroupCall updates.
 func (c *Client) AddGroupCallHandler(hn HandlerFunc[UpdateGroupCall], f ...Filter) Handle {
 	h := &handle[UpdateGroupCall]{
@@ -1334,6 +1739,11 @@ func (c *Client) AddGroupCallHandler(hn HandlerFunc[UpdateGroupCall], f ...Filte
 	c.addHandler(UpdateTypeGroupCall, h)
 
 	return h
+}
+
+// OnGroupCall registers a handler for UpdateGroupCall updates.
+func (c *Client) OnGroupCall(hn HandlerFunc[UpdateGroupCall], f ...Filter) Handle {
+	return c.AddGroupCallHandler(hn, f...)
 }
 
 // AddGroupCallMessageLevelsHandler registers a handler for UpdateGroupCallMessageLevels updates.
@@ -1350,6 +1760,11 @@ func (c *Client) AddGroupCallMessageLevelsHandler(hn HandlerFunc[UpdateGroupCall
 	return h
 }
 
+// OnGroupCallMessageLevels registers a handler for UpdateGroupCallMessageLevels updates.
+func (c *Client) OnGroupCallMessageLevels(hn HandlerFunc[UpdateGroupCallMessageLevels], f ...Filter) Handle {
+	return c.AddGroupCallMessageLevelsHandler(hn, f...)
+}
+
 // AddGroupCallMessagesDeletedHandler registers a handler for UpdateGroupCallMessagesDeleted updates.
 func (c *Client) AddGroupCallMessagesDeletedHandler(hn HandlerFunc[UpdateGroupCallMessagesDeleted], f ...Filter) Handle {
 	h := &handle[UpdateGroupCallMessagesDeleted]{
@@ -1362,6 +1777,11 @@ func (c *Client) AddGroupCallMessagesDeletedHandler(hn HandlerFunc[UpdateGroupCa
 	c.addHandler(UpdateTypeGroupCallMessagesDeleted, h)
 
 	return h
+}
+
+// OnGroupCallMessagesDeleted registers a handler for UpdateGroupCallMessagesDeleted updates.
+func (c *Client) OnGroupCallMessagesDeleted(hn HandlerFunc[UpdateGroupCallMessagesDeleted], f ...Filter) Handle {
+	return c.AddGroupCallMessagesDeletedHandler(hn, f...)
 }
 
 // AddGroupCallMessageSendFailedHandler registers a handler for UpdateGroupCallMessageSendFailed updates.
@@ -1378,6 +1798,11 @@ func (c *Client) AddGroupCallMessageSendFailedHandler(hn HandlerFunc[UpdateGroup
 	return h
 }
 
+// OnGroupCallMessageSendFailed registers a handler for UpdateGroupCallMessageSendFailed updates.
+func (c *Client) OnGroupCallMessageSendFailed(hn HandlerFunc[UpdateGroupCallMessageSendFailed], f ...Filter) Handle {
+	return c.AddGroupCallMessageSendFailedHandler(hn, f...)
+}
+
 // AddGroupCallParticipantHandler registers a handler for UpdateGroupCallParticipant updates.
 func (c *Client) AddGroupCallParticipantHandler(hn HandlerFunc[UpdateGroupCallParticipant], f ...Filter) Handle {
 	h := &handle[UpdateGroupCallParticipant]{
@@ -1390,6 +1815,11 @@ func (c *Client) AddGroupCallParticipantHandler(hn HandlerFunc[UpdateGroupCallPa
 	c.addHandler(UpdateTypeGroupCallParticipant, h)
 
 	return h
+}
+
+// OnGroupCallParticipant registers a handler for UpdateGroupCallParticipant updates.
+func (c *Client) OnGroupCallParticipant(hn HandlerFunc[UpdateGroupCallParticipant], f ...Filter) Handle {
+	return c.AddGroupCallParticipantHandler(hn, f...)
 }
 
 // AddGroupCallParticipantsHandler registers a handler for UpdateGroupCallParticipants updates.
@@ -1406,6 +1836,11 @@ func (c *Client) AddGroupCallParticipantsHandler(hn HandlerFunc[UpdateGroupCallP
 	return h
 }
 
+// OnGroupCallParticipants registers a handler for UpdateGroupCallParticipants updates.
+func (c *Client) OnGroupCallParticipants(hn HandlerFunc[UpdateGroupCallParticipants], f ...Filter) Handle {
+	return c.AddGroupCallParticipantsHandler(hn, f...)
+}
+
 // AddGroupCallVerificationStateHandler registers a handler for UpdateGroupCallVerificationState updates.
 func (c *Client) AddGroupCallVerificationStateHandler(hn HandlerFunc[UpdateGroupCallVerificationState], f ...Filter) Handle {
 	h := &handle[UpdateGroupCallVerificationState]{
@@ -1418,6 +1853,11 @@ func (c *Client) AddGroupCallVerificationStateHandler(hn HandlerFunc[UpdateGroup
 	c.addHandler(UpdateTypeGroupCallVerificationState, h)
 
 	return h
+}
+
+// OnGroupCallVerificationState registers a handler for UpdateGroupCallVerificationState updates.
+func (c *Client) OnGroupCallVerificationState(hn HandlerFunc[UpdateGroupCallVerificationState], f ...Filter) Handle {
+	return c.AddGroupCallVerificationStateHandler(hn, f...)
 }
 
 // AddHavePendingNotificationsHandler registers a handler for UpdateHavePendingNotifications updates.
@@ -1434,6 +1874,11 @@ func (c *Client) AddHavePendingNotificationsHandler(hn HandlerFunc[UpdateHavePen
 	return h
 }
 
+// OnHavePendingNotifications registers a handler for UpdateHavePendingNotifications updates.
+func (c *Client) OnHavePendingNotifications(hn HandlerFunc[UpdateHavePendingNotifications], f ...Filter) Handle {
+	return c.AddHavePendingNotificationsHandler(hn, f...)
+}
+
 // AddInstalledStickerSetsHandler registers a handler for UpdateInstalledStickerSets updates.
 func (c *Client) AddInstalledStickerSetsHandler(hn HandlerFunc[UpdateInstalledStickerSets], f ...Filter) Handle {
 	h := &handle[UpdateInstalledStickerSets]{
@@ -1446,6 +1891,11 @@ func (c *Client) AddInstalledStickerSetsHandler(hn HandlerFunc[UpdateInstalledSt
 	c.addHandler(UpdateTypeInstalledStickerSets, h)
 
 	return h
+}
+
+// OnInstalledStickerSets registers a handler for UpdateInstalledStickerSets updates.
+func (c *Client) OnInstalledStickerSets(hn HandlerFunc[UpdateInstalledStickerSets], f ...Filter) Handle {
+	return c.AddInstalledStickerSetsHandler(hn, f...)
 }
 
 // AddLanguagePackStringsHandler registers a handler for UpdateLanguagePackStrings updates.
@@ -1462,6 +1912,11 @@ func (c *Client) AddLanguagePackStringsHandler(hn HandlerFunc[UpdateLanguagePack
 	return h
 }
 
+// OnLanguagePackStrings registers a handler for UpdateLanguagePackStrings updates.
+func (c *Client) OnLanguagePackStrings(hn HandlerFunc[UpdateLanguagePackStrings], f ...Filter) Handle {
+	return c.AddLanguagePackStringsHandler(hn, f...)
+}
+
 // AddLiveStoryTopDonorsHandler registers a handler for UpdateLiveStoryTopDonors updates.
 func (c *Client) AddLiveStoryTopDonorsHandler(hn HandlerFunc[UpdateLiveStoryTopDonors], f ...Filter) Handle {
 	h := &handle[UpdateLiveStoryTopDonors]{
@@ -1474,6 +1929,11 @@ func (c *Client) AddLiveStoryTopDonorsHandler(hn HandlerFunc[UpdateLiveStoryTopD
 	c.addHandler(UpdateTypeLiveStoryTopDonors, h)
 
 	return h
+}
+
+// OnLiveStoryTopDonors registers a handler for UpdateLiveStoryTopDonors updates.
+func (c *Client) OnLiveStoryTopDonors(hn HandlerFunc[UpdateLiveStoryTopDonors], f ...Filter) Handle {
+	return c.AddLiveStoryTopDonorsHandler(hn, f...)
 }
 
 // AddManagedBotHandler registers a handler for UpdateManagedBot updates.
@@ -1490,6 +1950,11 @@ func (c *Client) AddManagedBotHandler(hn HandlerFunc[UpdateManagedBot], f ...Fil
 	return h
 }
 
+// OnManagedBot registers a handler for UpdateManagedBot updates.
+func (c *Client) OnManagedBot(hn HandlerFunc[UpdateManagedBot], f ...Filter) Handle {
+	return c.AddManagedBotHandler(hn, f...)
+}
+
 // AddMessageContainsUnreadPollVotesHandler registers a handler for UpdateMessageContainsUnreadPollVotes updates.
 func (c *Client) AddMessageContainsUnreadPollVotesHandler(hn HandlerFunc[UpdateMessageContainsUnreadPollVotes], f ...Filter) Handle {
 	h := &handle[UpdateMessageContainsUnreadPollVotes]{
@@ -1502,6 +1967,11 @@ func (c *Client) AddMessageContainsUnreadPollVotesHandler(hn HandlerFunc[UpdateM
 	c.addHandler(UpdateTypeMessageContainsUnreadPollVotes, h)
 
 	return h
+}
+
+// OnMessageContainsUnreadPollVotes registers a handler for UpdateMessageContainsUnreadPollVotes updates.
+func (c *Client) OnMessageContainsUnreadPollVotes(hn HandlerFunc[UpdateMessageContainsUnreadPollVotes], f ...Filter) Handle {
+	return c.AddMessageContainsUnreadPollVotesHandler(hn, f...)
 }
 
 // AddMessageContentHandler registers a handler for UpdateMessageContent updates.
@@ -1518,6 +1988,11 @@ func (c *Client) AddMessageContentHandler(hn HandlerFunc[UpdateMessageContent], 
 	return h
 }
 
+// OnMessageContent registers a handler for UpdateMessageContent updates.
+func (c *Client) OnMessageContent(hn HandlerFunc[UpdateMessageContent], f ...Filter) Handle {
+	return c.AddMessageContentHandler(hn, f...)
+}
+
 // AddMessageContentOpenedHandler registers a handler for UpdateMessageContentOpened updates.
 func (c *Client) AddMessageContentOpenedHandler(hn HandlerFunc[UpdateMessageContentOpened], f ...Filter) Handle {
 	h := &handle[UpdateMessageContentOpened]{
@@ -1530,6 +2005,11 @@ func (c *Client) AddMessageContentOpenedHandler(hn HandlerFunc[UpdateMessageCont
 	c.addHandler(UpdateTypeMessageContentOpened, h)
 
 	return h
+}
+
+// OnMessageContentOpened registers a handler for UpdateMessageContentOpened updates.
+func (c *Client) OnMessageContentOpened(hn HandlerFunc[UpdateMessageContentOpened], f ...Filter) Handle {
+	return c.AddMessageContentOpenedHandler(hn, f...)
 }
 
 // AddMessageEditedHandler registers a handler for UpdateMessageEdited updates.
@@ -1546,6 +2026,11 @@ func (c *Client) AddMessageEditedHandler(hn HandlerFunc[UpdateMessageEdited], f 
 	return h
 }
 
+// OnMessageEdited registers a handler for UpdateMessageEdited updates.
+func (c *Client) OnMessageEdited(hn HandlerFunc[UpdateMessageEdited], f ...Filter) Handle {
+	return c.AddMessageEditedHandler(hn, f...)
+}
+
 // AddMessageFactCheckHandler registers a handler for UpdateMessageFactCheck updates.
 func (c *Client) AddMessageFactCheckHandler(hn HandlerFunc[UpdateMessageFactCheck], f ...Filter) Handle {
 	h := &handle[UpdateMessageFactCheck]{
@@ -1558,6 +2043,11 @@ func (c *Client) AddMessageFactCheckHandler(hn HandlerFunc[UpdateMessageFactChec
 	c.addHandler(UpdateTypeMessageFactCheck, h)
 
 	return h
+}
+
+// OnMessageFactCheck registers a handler for UpdateMessageFactCheck updates.
+func (c *Client) OnMessageFactCheck(hn HandlerFunc[UpdateMessageFactCheck], f ...Filter) Handle {
+	return c.AddMessageFactCheckHandler(hn, f...)
 }
 
 // AddMessageInteractionInfoHandler registers a handler for UpdateMessageInteractionInfo updates.
@@ -1574,6 +2064,11 @@ func (c *Client) AddMessageInteractionInfoHandler(hn HandlerFunc[UpdateMessageIn
 	return h
 }
 
+// OnMessageInteractionInfo registers a handler for UpdateMessageInteractionInfo updates.
+func (c *Client) OnMessageInteractionInfo(hn HandlerFunc[UpdateMessageInteractionInfo], f ...Filter) Handle {
+	return c.AddMessageInteractionInfoHandler(hn, f...)
+}
+
 // AddMessageIsPinnedHandler registers a handler for UpdateMessageIsPinned updates.
 func (c *Client) AddMessageIsPinnedHandler(hn HandlerFunc[UpdateMessageIsPinned], f ...Filter) Handle {
 	h := &handle[UpdateMessageIsPinned]{
@@ -1586,6 +2081,11 @@ func (c *Client) AddMessageIsPinnedHandler(hn HandlerFunc[UpdateMessageIsPinned]
 	c.addHandler(UpdateTypeMessageIsPinned, h)
 
 	return h
+}
+
+// OnMessageIsPinned registers a handler for UpdateMessageIsPinned updates.
+func (c *Client) OnMessageIsPinned(hn HandlerFunc[UpdateMessageIsPinned], f ...Filter) Handle {
+	return c.AddMessageIsPinnedHandler(hn, f...)
 }
 
 // AddMessageLiveLocationViewedHandler registers a handler for UpdateMessageLiveLocationViewed updates.
@@ -1602,6 +2102,11 @@ func (c *Client) AddMessageLiveLocationViewedHandler(hn HandlerFunc[UpdateMessag
 	return h
 }
 
+// OnMessageLiveLocationViewed registers a handler for UpdateMessageLiveLocationViewed updates.
+func (c *Client) OnMessageLiveLocationViewed(hn HandlerFunc[UpdateMessageLiveLocationViewed], f ...Filter) Handle {
+	return c.AddMessageLiveLocationViewedHandler(hn, f...)
+}
+
 // AddMessageMentionReadHandler registers a handler for UpdateMessageMentionRead updates.
 func (c *Client) AddMessageMentionReadHandler(hn HandlerFunc[UpdateMessageMentionRead], f ...Filter) Handle {
 	h := &handle[UpdateMessageMentionRead]{
@@ -1614,6 +2119,11 @@ func (c *Client) AddMessageMentionReadHandler(hn HandlerFunc[UpdateMessageMentio
 	c.addHandler(UpdateTypeMessageMentionRead, h)
 
 	return h
+}
+
+// OnMessageMentionRead registers a handler for UpdateMessageMentionRead updates.
+func (c *Client) OnMessageMentionRead(hn HandlerFunc[UpdateMessageMentionRead], f ...Filter) Handle {
+	return c.AddMessageMentionReadHandler(hn, f...)
 }
 
 // AddMessageReactionHandler registers a handler for UpdateMessageReaction updates.
@@ -1630,6 +2140,11 @@ func (c *Client) AddMessageReactionHandler(hn HandlerFunc[UpdateMessageReaction]
 	return h
 }
 
+// OnMessageReaction registers a handler for UpdateMessageReaction updates.
+func (c *Client) OnMessageReaction(hn HandlerFunc[UpdateMessageReaction], f ...Filter) Handle {
+	return c.AddMessageReactionHandler(hn, f...)
+}
+
 // AddMessageReactionsHandler registers a handler for UpdateMessageReactions updates.
 func (c *Client) AddMessageReactionsHandler(hn HandlerFunc[UpdateMessageReactions], f ...Filter) Handle {
 	h := &handle[UpdateMessageReactions]{
@@ -1642,6 +2157,11 @@ func (c *Client) AddMessageReactionsHandler(hn HandlerFunc[UpdateMessageReaction
 	c.addHandler(UpdateTypeMessageReactions, h)
 
 	return h
+}
+
+// OnMessageReactions registers a handler for UpdateMessageReactions updates.
+func (c *Client) OnMessageReactions(hn HandlerFunc[UpdateMessageReactions], f ...Filter) Handle {
+	return c.AddMessageReactionsHandler(hn, f...)
 }
 
 // AddMessageSendAcknowledgedHandler registers a handler for UpdateMessageSendAcknowledged updates.
@@ -1658,6 +2178,11 @@ func (c *Client) AddMessageSendAcknowledgedHandler(hn HandlerFunc[UpdateMessageS
 	return h
 }
 
+// OnMessageSendAcknowledged registers a handler for UpdateMessageSendAcknowledged updates.
+func (c *Client) OnMessageSendAcknowledged(hn HandlerFunc[UpdateMessageSendAcknowledged], f ...Filter) Handle {
+	return c.AddMessageSendAcknowledgedHandler(hn, f...)
+}
+
 // AddMessageSendFailedHandler registers a handler for UpdateMessageSendFailed updates.
 func (c *Client) AddMessageSendFailedHandler(hn HandlerFunc[UpdateMessageSendFailed], f ...Filter) Handle {
 	h := &handle[UpdateMessageSendFailed]{
@@ -1670,6 +2195,11 @@ func (c *Client) AddMessageSendFailedHandler(hn HandlerFunc[UpdateMessageSendFai
 	c.addHandler(UpdateTypeMessageSendFailed, h)
 
 	return h
+}
+
+// OnMessageSendFailed registers a handler for UpdateMessageSendFailed updates.
+func (c *Client) OnMessageSendFailed(hn HandlerFunc[UpdateMessageSendFailed], f ...Filter) Handle {
+	return c.AddMessageSendFailedHandler(hn, f...)
 }
 
 // AddMessageSendSucceededHandler registers a handler for UpdateMessageSendSucceeded updates.
@@ -1686,6 +2216,11 @@ func (c *Client) AddMessageSendSucceededHandler(hn HandlerFunc[UpdateMessageSend
 	return h
 }
 
+// OnMessageSendSucceeded registers a handler for UpdateMessageSendSucceeded updates.
+func (c *Client) OnMessageSendSucceeded(hn HandlerFunc[UpdateMessageSendSucceeded], f ...Filter) Handle {
+	return c.AddMessageSendSucceededHandler(hn, f...)
+}
+
 // AddMessageSuggestedPostInfoHandler registers a handler for UpdateMessageSuggestedPostInfo updates.
 func (c *Client) AddMessageSuggestedPostInfoHandler(hn HandlerFunc[UpdateMessageSuggestedPostInfo], f ...Filter) Handle {
 	h := &handle[UpdateMessageSuggestedPostInfo]{
@@ -1698,6 +2233,11 @@ func (c *Client) AddMessageSuggestedPostInfoHandler(hn HandlerFunc[UpdateMessage
 	c.addHandler(UpdateTypeMessageSuggestedPostInfo, h)
 
 	return h
+}
+
+// OnMessageSuggestedPostInfo registers a handler for UpdateMessageSuggestedPostInfo updates.
+func (c *Client) OnMessageSuggestedPostInfo(hn HandlerFunc[UpdateMessageSuggestedPostInfo], f ...Filter) Handle {
+	return c.AddMessageSuggestedPostInfoHandler(hn, f...)
 }
 
 // AddMessageUnreadReactionsHandler registers a handler for UpdateMessageUnreadReactions updates.
@@ -1714,6 +2254,11 @@ func (c *Client) AddMessageUnreadReactionsHandler(hn HandlerFunc[UpdateMessageUn
 	return h
 }
 
+// OnMessageUnreadReactions registers a handler for UpdateMessageUnreadReactions updates.
+func (c *Client) OnMessageUnreadReactions(hn HandlerFunc[UpdateMessageUnreadReactions], f ...Filter) Handle {
+	return c.AddMessageUnreadReactionsHandler(hn, f...)
+}
+
 // AddNewBusinessCallbackQueryHandler registers a handler for UpdateNewBusinessCallbackQuery updates.
 func (c *Client) AddNewBusinessCallbackQueryHandler(hn HandlerFunc[UpdateNewBusinessCallbackQuery], f ...Filter) Handle {
 	h := &handle[UpdateNewBusinessCallbackQuery]{
@@ -1726,6 +2271,11 @@ func (c *Client) AddNewBusinessCallbackQueryHandler(hn HandlerFunc[UpdateNewBusi
 	c.addHandler(UpdateTypeNewBusinessCallbackQuery, h)
 
 	return h
+}
+
+// OnNewBusinessCallbackQuery registers a handler for UpdateNewBusinessCallbackQuery updates.
+func (c *Client) OnNewBusinessCallbackQuery(hn HandlerFunc[UpdateNewBusinessCallbackQuery], f ...Filter) Handle {
+	return c.AddNewBusinessCallbackQueryHandler(hn, f...)
 }
 
 // AddNewBusinessMessageHandler registers a handler for UpdateNewBusinessMessage updates.
@@ -1742,6 +2292,11 @@ func (c *Client) AddNewBusinessMessageHandler(hn HandlerFunc[UpdateNewBusinessMe
 	return h
 }
 
+// OnNewBusinessMessage registers a handler for UpdateNewBusinessMessage updates.
+func (c *Client) OnNewBusinessMessage(hn HandlerFunc[UpdateNewBusinessMessage], f ...Filter) Handle {
+	return c.AddNewBusinessMessageHandler(hn, f...)
+}
+
 // AddNewCallbackQueryHandler registers a handler for UpdateNewCallbackQuery updates.
 func (c *Client) AddNewCallbackQueryHandler(hn HandlerFunc[UpdateNewCallbackQuery], f ...Filter) Handle {
 	h := &handle[UpdateNewCallbackQuery]{
@@ -1754,6 +2309,11 @@ func (c *Client) AddNewCallbackQueryHandler(hn HandlerFunc[UpdateNewCallbackQuer
 	c.addHandler(UpdateTypeNewCallbackQuery, h)
 
 	return h
+}
+
+// OnNewCallbackQuery registers a handler for UpdateNewCallbackQuery updates.
+func (c *Client) OnNewCallbackQuery(hn HandlerFunc[UpdateNewCallbackQuery], f ...Filter) Handle {
+	return c.AddNewCallbackQueryHandler(hn, f...)
 }
 
 // AddNewCallSignalingDataHandler registers a handler for UpdateNewCallSignalingData updates.
@@ -1770,6 +2330,11 @@ func (c *Client) AddNewCallSignalingDataHandler(hn HandlerFunc[UpdateNewCallSign
 	return h
 }
 
+// OnNewCallSignalingData registers a handler for UpdateNewCallSignalingData updates.
+func (c *Client) OnNewCallSignalingData(hn HandlerFunc[UpdateNewCallSignalingData], f ...Filter) Handle {
+	return c.AddNewCallSignalingDataHandler(hn, f...)
+}
+
 // AddNewChatHandler registers a handler for UpdateNewChat updates.
 func (c *Client) AddNewChatHandler(hn HandlerFunc[UpdateNewChat], f ...Filter) Handle {
 	h := &handle[UpdateNewChat]{
@@ -1782,6 +2347,11 @@ func (c *Client) AddNewChatHandler(hn HandlerFunc[UpdateNewChat], f ...Filter) H
 	c.addHandler(UpdateTypeNewChat, h)
 
 	return h
+}
+
+// OnNewChat registers a handler for UpdateNewChat updates.
+func (c *Client) OnNewChat(hn HandlerFunc[UpdateNewChat], f ...Filter) Handle {
+	return c.AddNewChatHandler(hn, f...)
 }
 
 // AddNewChatJoinRequestHandler registers a handler for UpdateNewChatJoinRequest updates.
@@ -1798,6 +2368,11 @@ func (c *Client) AddNewChatJoinRequestHandler(hn HandlerFunc[UpdateNewChatJoinRe
 	return h
 }
 
+// OnNewChatJoinRequest registers a handler for UpdateNewChatJoinRequest updates.
+func (c *Client) OnNewChatJoinRequest(hn HandlerFunc[UpdateNewChatJoinRequest], f ...Filter) Handle {
+	return c.AddNewChatJoinRequestHandler(hn, f...)
+}
+
 // AddNewChosenInlineResultHandler registers a handler for UpdateNewChosenInlineResult updates.
 func (c *Client) AddNewChosenInlineResultHandler(hn HandlerFunc[UpdateNewChosenInlineResult], f ...Filter) Handle {
 	h := &handle[UpdateNewChosenInlineResult]{
@@ -1810,6 +2385,11 @@ func (c *Client) AddNewChosenInlineResultHandler(hn HandlerFunc[UpdateNewChosenI
 	c.addHandler(UpdateTypeNewChosenInlineResult, h)
 
 	return h
+}
+
+// OnNewChosenInlineResult registers a handler for UpdateNewChosenInlineResult updates.
+func (c *Client) OnNewChosenInlineResult(hn HandlerFunc[UpdateNewChosenInlineResult], f ...Filter) Handle {
+	return c.AddNewChosenInlineResultHandler(hn, f...)
 }
 
 // AddNewCustomEventHandler registers a handler for UpdateNewCustomEvent updates.
@@ -1826,6 +2406,11 @@ func (c *Client) AddNewCustomEventHandler(hn HandlerFunc[UpdateNewCustomEvent], 
 	return h
 }
 
+// OnNewCustomEvent registers a handler for UpdateNewCustomEvent updates.
+func (c *Client) OnNewCustomEvent(hn HandlerFunc[UpdateNewCustomEvent], f ...Filter) Handle {
+	return c.AddNewCustomEventHandler(hn, f...)
+}
+
 // AddNewCustomQueryHandler registers a handler for UpdateNewCustomQuery updates.
 func (c *Client) AddNewCustomQueryHandler(hn HandlerFunc[UpdateNewCustomQuery], f ...Filter) Handle {
 	h := &handle[UpdateNewCustomQuery]{
@@ -1838,6 +2423,11 @@ func (c *Client) AddNewCustomQueryHandler(hn HandlerFunc[UpdateNewCustomQuery], 
 	c.addHandler(UpdateTypeNewCustomQuery, h)
 
 	return h
+}
+
+// OnNewCustomQuery registers a handler for UpdateNewCustomQuery updates.
+func (c *Client) OnNewCustomQuery(hn HandlerFunc[UpdateNewCustomQuery], f ...Filter) Handle {
+	return c.AddNewCustomQueryHandler(hn, f...)
 }
 
 // AddNewGroupCallMessageHandler registers a handler for UpdateNewGroupCallMessage updates.
@@ -1854,6 +2444,11 @@ func (c *Client) AddNewGroupCallMessageHandler(hn HandlerFunc[UpdateNewGroupCall
 	return h
 }
 
+// OnNewGroupCallMessage registers a handler for UpdateNewGroupCallMessage updates.
+func (c *Client) OnNewGroupCallMessage(hn HandlerFunc[UpdateNewGroupCallMessage], f ...Filter) Handle {
+	return c.AddNewGroupCallMessageHandler(hn, f...)
+}
+
 // AddNewGroupCallPaidReactionHandler registers a handler for UpdateNewGroupCallPaidReaction updates.
 func (c *Client) AddNewGroupCallPaidReactionHandler(hn HandlerFunc[UpdateNewGroupCallPaidReaction], f ...Filter) Handle {
 	h := &handle[UpdateNewGroupCallPaidReaction]{
@@ -1866,6 +2461,11 @@ func (c *Client) AddNewGroupCallPaidReactionHandler(hn HandlerFunc[UpdateNewGrou
 	c.addHandler(UpdateTypeNewGroupCallPaidReaction, h)
 
 	return h
+}
+
+// OnNewGroupCallPaidReaction registers a handler for UpdateNewGroupCallPaidReaction updates.
+func (c *Client) OnNewGroupCallPaidReaction(hn HandlerFunc[UpdateNewGroupCallPaidReaction], f ...Filter) Handle {
+	return c.AddNewGroupCallPaidReactionHandler(hn, f...)
 }
 
 // AddNewGuestQueryHandler registers a handler for UpdateNewGuestQuery updates.
@@ -1882,6 +2482,11 @@ func (c *Client) AddNewGuestQueryHandler(hn HandlerFunc[UpdateNewGuestQuery], f 
 	return h
 }
 
+// OnNewGuestQuery registers a handler for UpdateNewGuestQuery updates.
+func (c *Client) OnNewGuestQuery(hn HandlerFunc[UpdateNewGuestQuery], f ...Filter) Handle {
+	return c.AddNewGuestQueryHandler(hn, f...)
+}
+
 // AddNewInlineCallbackQueryHandler registers a handler for UpdateNewInlineCallbackQuery updates.
 func (c *Client) AddNewInlineCallbackQueryHandler(hn HandlerFunc[UpdateNewInlineCallbackQuery], f ...Filter) Handle {
 	h := &handle[UpdateNewInlineCallbackQuery]{
@@ -1896,6 +2501,11 @@ func (c *Client) AddNewInlineCallbackQueryHandler(hn HandlerFunc[UpdateNewInline
 	return h
 }
 
+// OnNewInlineCallbackQuery registers a handler for UpdateNewInlineCallbackQuery updates.
+func (c *Client) OnNewInlineCallbackQuery(hn HandlerFunc[UpdateNewInlineCallbackQuery], f ...Filter) Handle {
+	return c.AddNewInlineCallbackQueryHandler(hn, f...)
+}
+
 // AddNewInlineQueryHandler registers a handler for UpdateNewInlineQuery updates.
 func (c *Client) AddNewInlineQueryHandler(hn HandlerFunc[UpdateNewInlineQuery], f ...Filter) Handle {
 	h := &handle[UpdateNewInlineQuery]{
@@ -1908,6 +2518,11 @@ func (c *Client) AddNewInlineQueryHandler(hn HandlerFunc[UpdateNewInlineQuery], 
 	c.addHandler(UpdateTypeNewInlineQuery, h)
 
 	return h
+}
+
+// OnNewInlineQuery registers a handler for UpdateNewInlineQuery updates.
+func (c *Client) OnNewInlineQuery(hn HandlerFunc[UpdateNewInlineQuery], f ...Filter) Handle {
+	return c.AddNewInlineQueryHandler(hn, f...)
 }
 
 // AddNewMessageHandler registers a handler for UpdateNewMessage updates.
@@ -1925,6 +2540,11 @@ func (c *Client) AddNewMessageHandler(hn HandlerFunc[UpdateNewMessage], f ...Fil
 	return h
 }
 
+// OnNewMessage registers a handler for UpdateNewMessage updates.
+func (c *Client) OnNewMessage(hn HandlerFunc[UpdateNewMessage], f ...Filter) Handle {
+	return c.AddNewMessageHandler(hn, f...)
+}
+
 // AddNewOauthRequestHandler registers a handler for UpdateNewOauthRequest updates.
 func (c *Client) AddNewOauthRequestHandler(hn HandlerFunc[UpdateNewOauthRequest], f ...Filter) Handle {
 	h := &handle[UpdateNewOauthRequest]{
@@ -1937,6 +2557,11 @@ func (c *Client) AddNewOauthRequestHandler(hn HandlerFunc[UpdateNewOauthRequest]
 	c.addHandler(UpdateTypeNewOauthRequest, h)
 
 	return h
+}
+
+// OnNewOauthRequest registers a handler for UpdateNewOauthRequest updates.
+func (c *Client) OnNewOauthRequest(hn HandlerFunc[UpdateNewOauthRequest], f ...Filter) Handle {
+	return c.AddNewOauthRequestHandler(hn, f...)
 }
 
 // AddNewPreCheckoutQueryHandler registers a handler for UpdateNewPreCheckoutQuery updates.
@@ -1953,6 +2578,11 @@ func (c *Client) AddNewPreCheckoutQueryHandler(hn HandlerFunc[UpdateNewPreChecko
 	return h
 }
 
+// OnNewPreCheckoutQuery registers a handler for UpdateNewPreCheckoutQuery updates.
+func (c *Client) OnNewPreCheckoutQuery(hn HandlerFunc[UpdateNewPreCheckoutQuery], f ...Filter) Handle {
+	return c.AddNewPreCheckoutQueryHandler(hn, f...)
+}
+
 // AddNewShippingQueryHandler registers a handler for UpdateNewShippingQuery updates.
 func (c *Client) AddNewShippingQueryHandler(hn HandlerFunc[UpdateNewShippingQuery], f ...Filter) Handle {
 	h := &handle[UpdateNewShippingQuery]{
@@ -1965,6 +2595,11 @@ func (c *Client) AddNewShippingQueryHandler(hn HandlerFunc[UpdateNewShippingQuer
 	c.addHandler(UpdateTypeNewShippingQuery, h)
 
 	return h
+}
+
+// OnNewShippingQuery registers a handler for UpdateNewShippingQuery updates.
+func (c *Client) OnNewShippingQuery(hn HandlerFunc[UpdateNewShippingQuery], f ...Filter) Handle {
+	return c.AddNewShippingQueryHandler(hn, f...)
 }
 
 // AddNotificationHandler registers a handler for UpdateNotification updates.
@@ -1981,6 +2616,11 @@ func (c *Client) AddNotificationHandler(hn HandlerFunc[UpdateNotification], f ..
 	return h
 }
 
+// OnNotification registers a handler for UpdateNotification updates.
+func (c *Client) OnNotification(hn HandlerFunc[UpdateNotification], f ...Filter) Handle {
+	return c.AddNotificationHandler(hn, f...)
+}
+
 // AddNotificationGroupHandler registers a handler for UpdateNotificationGroup updates.
 func (c *Client) AddNotificationGroupHandler(hn HandlerFunc[UpdateNotificationGroup], f ...Filter) Handle {
 	h := &handle[UpdateNotificationGroup]{
@@ -1993,6 +2633,11 @@ func (c *Client) AddNotificationGroupHandler(hn HandlerFunc[UpdateNotificationGr
 	c.addHandler(UpdateTypeNotificationGroup, h)
 
 	return h
+}
+
+// OnNotificationGroup registers a handler for UpdateNotificationGroup updates.
+func (c *Client) OnNotificationGroup(hn HandlerFunc[UpdateNotificationGroup], f ...Filter) Handle {
+	return c.AddNotificationGroupHandler(hn, f...)
 }
 
 // AddOptionHandler registers a handler for UpdateOption updates.
@@ -2009,6 +2654,11 @@ func (c *Client) AddOptionHandler(hn HandlerFunc[UpdateOption], f ...Filter) Han
 	return h
 }
 
+// OnOption registers a handler for UpdateOption updates.
+func (c *Client) OnOption(hn HandlerFunc[UpdateOption], f ...Filter) Handle {
+	return c.AddOptionHandler(hn, f...)
+}
+
 // AddOwnedStarCountHandler registers a handler for UpdateOwnedStarCount updates.
 func (c *Client) AddOwnedStarCountHandler(hn HandlerFunc[UpdateOwnedStarCount], f ...Filter) Handle {
 	h := &handle[UpdateOwnedStarCount]{
@@ -2021,6 +2671,11 @@ func (c *Client) AddOwnedStarCountHandler(hn HandlerFunc[UpdateOwnedStarCount], 
 	c.addHandler(UpdateTypeOwnedStarCount, h)
 
 	return h
+}
+
+// OnOwnedStarCount registers a handler for UpdateOwnedStarCount updates.
+func (c *Client) OnOwnedStarCount(hn HandlerFunc[UpdateOwnedStarCount], f ...Filter) Handle {
+	return c.AddOwnedStarCountHandler(hn, f...)
 }
 
 // AddOwnedTonCountHandler registers a handler for UpdateOwnedTonCount updates.
@@ -2037,6 +2692,11 @@ func (c *Client) AddOwnedTonCountHandler(hn HandlerFunc[UpdateOwnedTonCount], f 
 	return h
 }
 
+// OnOwnedTonCount registers a handler for UpdateOwnedTonCount updates.
+func (c *Client) OnOwnedTonCount(hn HandlerFunc[UpdateOwnedTonCount], f ...Filter) Handle {
+	return c.AddOwnedTonCountHandler(hn, f...)
+}
+
 // AddPaidMediaPurchasedHandler registers a handler for UpdatePaidMediaPurchased updates.
 func (c *Client) AddPaidMediaPurchasedHandler(hn HandlerFunc[UpdatePaidMediaPurchased], f ...Filter) Handle {
 	h := &handle[UpdatePaidMediaPurchased]{
@@ -2049,6 +2709,11 @@ func (c *Client) AddPaidMediaPurchasedHandler(hn HandlerFunc[UpdatePaidMediaPurc
 	c.addHandler(UpdateTypePaidMediaPurchased, h)
 
 	return h
+}
+
+// OnPaidMediaPurchased registers a handler for UpdatePaidMediaPurchased updates.
+func (c *Client) OnPaidMediaPurchased(hn HandlerFunc[UpdatePaidMediaPurchased], f ...Filter) Handle {
+	return c.AddPaidMediaPurchasedHandler(hn, f...)
 }
 
 // AddPendingTextMessageHandler registers a handler for UpdatePendingTextMessage updates.
@@ -2065,6 +2730,11 @@ func (c *Client) AddPendingTextMessageHandler(hn HandlerFunc[UpdatePendingTextMe
 	return h
 }
 
+// OnPendingTextMessage registers a handler for UpdatePendingTextMessage updates.
+func (c *Client) OnPendingTextMessage(hn HandlerFunc[UpdatePendingTextMessage], f ...Filter) Handle {
+	return c.AddPendingTextMessageHandler(hn, f...)
+}
+
 // AddPollHandler registers a handler for UpdatePoll updates.
 func (c *Client) AddPollHandler(hn HandlerFunc[UpdatePoll], f ...Filter) Handle {
 	h := &handle[UpdatePoll]{
@@ -2077,6 +2747,11 @@ func (c *Client) AddPollHandler(hn HandlerFunc[UpdatePoll], f ...Filter) Handle 
 	c.addHandler(UpdateTypePoll, h)
 
 	return h
+}
+
+// OnPoll registers a handler for UpdatePoll updates.
+func (c *Client) OnPoll(hn HandlerFunc[UpdatePoll], f ...Filter) Handle {
+	return c.AddPollHandler(hn, f...)
 }
 
 // AddPollAnswerHandler registers a handler for UpdatePollAnswer updates.
@@ -2093,6 +2768,11 @@ func (c *Client) AddPollAnswerHandler(hn HandlerFunc[UpdatePollAnswer], f ...Fil
 	return h
 }
 
+// OnPollAnswer registers a handler for UpdatePollAnswer updates.
+func (c *Client) OnPollAnswer(hn HandlerFunc[UpdatePollAnswer], f ...Filter) Handle {
+	return c.AddPollAnswerHandler(hn, f...)
+}
+
 // AddProfileAccentColorsHandler registers a handler for UpdateProfileAccentColors updates.
 func (c *Client) AddProfileAccentColorsHandler(hn HandlerFunc[UpdateProfileAccentColors], f ...Filter) Handle {
 	h := &handle[UpdateProfileAccentColors]{
@@ -2105,6 +2785,11 @@ func (c *Client) AddProfileAccentColorsHandler(hn HandlerFunc[UpdateProfileAccen
 	c.addHandler(UpdateTypeProfileAccentColors, h)
 
 	return h
+}
+
+// OnProfileAccentColors registers a handler for UpdateProfileAccentColors updates.
+func (c *Client) OnProfileAccentColors(hn HandlerFunc[UpdateProfileAccentColors], f ...Filter) Handle {
+	return c.AddProfileAccentColorsHandler(hn, f...)
 }
 
 // AddQuickReplyShortcutHandler registers a handler for UpdateQuickReplyShortcut updates.
@@ -2121,6 +2806,11 @@ func (c *Client) AddQuickReplyShortcutHandler(hn HandlerFunc[UpdateQuickReplySho
 	return h
 }
 
+// OnQuickReplyShortcut registers a handler for UpdateQuickReplyShortcut updates.
+func (c *Client) OnQuickReplyShortcut(hn HandlerFunc[UpdateQuickReplyShortcut], f ...Filter) Handle {
+	return c.AddQuickReplyShortcutHandler(hn, f...)
+}
+
 // AddQuickReplyShortcutDeletedHandler registers a handler for UpdateQuickReplyShortcutDeleted updates.
 func (c *Client) AddQuickReplyShortcutDeletedHandler(hn HandlerFunc[UpdateQuickReplyShortcutDeleted], f ...Filter) Handle {
 	h := &handle[UpdateQuickReplyShortcutDeleted]{
@@ -2133,6 +2823,11 @@ func (c *Client) AddQuickReplyShortcutDeletedHandler(hn HandlerFunc[UpdateQuickR
 	c.addHandler(UpdateTypeQuickReplyShortcutDeleted, h)
 
 	return h
+}
+
+// OnQuickReplyShortcutDeleted registers a handler for UpdateQuickReplyShortcutDeleted updates.
+func (c *Client) OnQuickReplyShortcutDeleted(hn HandlerFunc[UpdateQuickReplyShortcutDeleted], f ...Filter) Handle {
+	return c.AddQuickReplyShortcutDeletedHandler(hn, f...)
 }
 
 // AddQuickReplyShortcutMessagesHandler registers a handler for UpdateQuickReplyShortcutMessages updates.
@@ -2149,6 +2844,11 @@ func (c *Client) AddQuickReplyShortcutMessagesHandler(hn HandlerFunc[UpdateQuick
 	return h
 }
 
+// OnQuickReplyShortcutMessages registers a handler for UpdateQuickReplyShortcutMessages updates.
+func (c *Client) OnQuickReplyShortcutMessages(hn HandlerFunc[UpdateQuickReplyShortcutMessages], f ...Filter) Handle {
+	return c.AddQuickReplyShortcutMessagesHandler(hn, f...)
+}
+
 // AddQuickReplyShortcutsHandler registers a handler for UpdateQuickReplyShortcuts updates.
 func (c *Client) AddQuickReplyShortcutsHandler(hn HandlerFunc[UpdateQuickReplyShortcuts], f ...Filter) Handle {
 	h := &handle[UpdateQuickReplyShortcuts]{
@@ -2161,6 +2861,11 @@ func (c *Client) AddQuickReplyShortcutsHandler(hn HandlerFunc[UpdateQuickReplySh
 	c.addHandler(UpdateTypeQuickReplyShortcuts, h)
 
 	return h
+}
+
+// OnQuickReplyShortcuts registers a handler for UpdateQuickReplyShortcuts updates.
+func (c *Client) OnQuickReplyShortcuts(hn HandlerFunc[UpdateQuickReplyShortcuts], f ...Filter) Handle {
+	return c.AddQuickReplyShortcutsHandler(hn, f...)
 }
 
 // AddReactionNotificationSettingsHandler registers a handler for UpdateReactionNotificationSettings updates.
@@ -2177,6 +2882,11 @@ func (c *Client) AddReactionNotificationSettingsHandler(hn HandlerFunc[UpdateRea
 	return h
 }
 
+// OnReactionNotificationSettings registers a handler for UpdateReactionNotificationSettings updates.
+func (c *Client) OnReactionNotificationSettings(hn HandlerFunc[UpdateReactionNotificationSettings], f ...Filter) Handle {
+	return c.AddReactionNotificationSettingsHandler(hn, f...)
+}
+
 // AddRecentStickersHandler registers a handler for UpdateRecentStickers updates.
 func (c *Client) AddRecentStickersHandler(hn HandlerFunc[UpdateRecentStickers], f ...Filter) Handle {
 	h := &handle[UpdateRecentStickers]{
@@ -2189,6 +2899,11 @@ func (c *Client) AddRecentStickersHandler(hn HandlerFunc[UpdateRecentStickers], 
 	c.addHandler(UpdateTypeRecentStickers, h)
 
 	return h
+}
+
+// OnRecentStickers registers a handler for UpdateRecentStickers updates.
+func (c *Client) OnRecentStickers(hn HandlerFunc[UpdateRecentStickers], f ...Filter) Handle {
+	return c.AddRecentStickersHandler(hn, f...)
 }
 
 // AddSavedAnimationsHandler registers a handler for UpdateSavedAnimations updates.
@@ -2205,6 +2920,11 @@ func (c *Client) AddSavedAnimationsHandler(hn HandlerFunc[UpdateSavedAnimations]
 	return h
 }
 
+// OnSavedAnimations registers a handler for UpdateSavedAnimations updates.
+func (c *Client) OnSavedAnimations(hn HandlerFunc[UpdateSavedAnimations], f ...Filter) Handle {
+	return c.AddSavedAnimationsHandler(hn, f...)
+}
+
 // AddSavedMessagesTagsHandler registers a handler for UpdateSavedMessagesTags updates.
 func (c *Client) AddSavedMessagesTagsHandler(hn HandlerFunc[UpdateSavedMessagesTags], f ...Filter) Handle {
 	h := &handle[UpdateSavedMessagesTags]{
@@ -2217,6 +2937,11 @@ func (c *Client) AddSavedMessagesTagsHandler(hn HandlerFunc[UpdateSavedMessagesT
 	c.addHandler(UpdateTypeSavedMessagesTags, h)
 
 	return h
+}
+
+// OnSavedMessagesTags registers a handler for UpdateSavedMessagesTags updates.
+func (c *Client) OnSavedMessagesTags(hn HandlerFunc[UpdateSavedMessagesTags], f ...Filter) Handle {
+	return c.AddSavedMessagesTagsHandler(hn, f...)
 }
 
 // AddSavedMessagesTopicHandler registers a handler for UpdateSavedMessagesTopic updates.
@@ -2233,6 +2958,11 @@ func (c *Client) AddSavedMessagesTopicHandler(hn HandlerFunc[UpdateSavedMessages
 	return h
 }
 
+// OnSavedMessagesTopic registers a handler for UpdateSavedMessagesTopic updates.
+func (c *Client) OnSavedMessagesTopic(hn HandlerFunc[UpdateSavedMessagesTopic], f ...Filter) Handle {
+	return c.AddSavedMessagesTopicHandler(hn, f...)
+}
+
 // AddSavedMessagesTopicCountHandler registers a handler for UpdateSavedMessagesTopicCount updates.
 func (c *Client) AddSavedMessagesTopicCountHandler(hn HandlerFunc[UpdateSavedMessagesTopicCount], f ...Filter) Handle {
 	h := &handle[UpdateSavedMessagesTopicCount]{
@@ -2245,6 +2975,11 @@ func (c *Client) AddSavedMessagesTopicCountHandler(hn HandlerFunc[UpdateSavedMes
 	c.addHandler(UpdateTypeSavedMessagesTopicCount, h)
 
 	return h
+}
+
+// OnSavedMessagesTopicCount registers a handler for UpdateSavedMessagesTopicCount updates.
+func (c *Client) OnSavedMessagesTopicCount(hn HandlerFunc[UpdateSavedMessagesTopicCount], f ...Filter) Handle {
+	return c.AddSavedMessagesTopicCountHandler(hn, f...)
 }
 
 // AddSavedNotificationSoundsHandler registers a handler for UpdateSavedNotificationSounds updates.
@@ -2261,6 +2996,11 @@ func (c *Client) AddSavedNotificationSoundsHandler(hn HandlerFunc[UpdateSavedNot
 	return h
 }
 
+// OnSavedNotificationSounds registers a handler for UpdateSavedNotificationSounds updates.
+func (c *Client) OnSavedNotificationSounds(hn HandlerFunc[UpdateSavedNotificationSounds], f ...Filter) Handle {
+	return c.AddSavedNotificationSoundsHandler(hn, f...)
+}
+
 // AddScopeNotificationSettingsHandler registers a handler for UpdateScopeNotificationSettings updates.
 func (c *Client) AddScopeNotificationSettingsHandler(hn HandlerFunc[UpdateScopeNotificationSettings], f ...Filter) Handle {
 	h := &handle[UpdateScopeNotificationSettings]{
@@ -2273,6 +3013,11 @@ func (c *Client) AddScopeNotificationSettingsHandler(hn HandlerFunc[UpdateScopeN
 	c.addHandler(UpdateTypeScopeNotificationSettings, h)
 
 	return h
+}
+
+// OnScopeNotificationSettings registers a handler for UpdateScopeNotificationSettings updates.
+func (c *Client) OnScopeNotificationSettings(hn HandlerFunc[UpdateScopeNotificationSettings], f ...Filter) Handle {
+	return c.AddScopeNotificationSettingsHandler(hn, f...)
 }
 
 // AddSecretChatHandler registers a handler for UpdateSecretChat updates.
@@ -2289,6 +3034,11 @@ func (c *Client) AddSecretChatHandler(hn HandlerFunc[UpdateSecretChat], f ...Fil
 	return h
 }
 
+// OnSecretChat registers a handler for UpdateSecretChat updates.
+func (c *Client) OnSecretChat(hn HandlerFunc[UpdateSecretChat], f ...Filter) Handle {
+	return c.AddSecretChatHandler(hn, f...)
+}
+
 // AddServiceNotificationHandler registers a handler for UpdateServiceNotification updates.
 func (c *Client) AddServiceNotificationHandler(hn HandlerFunc[UpdateServiceNotification], f ...Filter) Handle {
 	h := &handle[UpdateServiceNotification]{
@@ -2301,6 +3051,11 @@ func (c *Client) AddServiceNotificationHandler(hn HandlerFunc[UpdateServiceNotif
 	c.addHandler(UpdateTypeServiceNotification, h)
 
 	return h
+}
+
+// OnServiceNotification registers a handler for UpdateServiceNotification updates.
+func (c *Client) OnServiceNotification(hn HandlerFunc[UpdateServiceNotification], f ...Filter) Handle {
+	return c.AddServiceNotificationHandler(hn, f...)
 }
 
 // AddSpeechRecognitionTrialHandler registers a handler for UpdateSpeechRecognitionTrial updates.
@@ -2317,6 +3072,11 @@ func (c *Client) AddSpeechRecognitionTrialHandler(hn HandlerFunc[UpdateSpeechRec
 	return h
 }
 
+// OnSpeechRecognitionTrial registers a handler for UpdateSpeechRecognitionTrial updates.
+func (c *Client) OnSpeechRecognitionTrial(hn HandlerFunc[UpdateSpeechRecognitionTrial], f ...Filter) Handle {
+	return c.AddSpeechRecognitionTrialHandler(hn, f...)
+}
+
 // AddSpeedLimitNotificationHandler registers a handler for UpdateSpeedLimitNotification updates.
 func (c *Client) AddSpeedLimitNotificationHandler(hn HandlerFunc[UpdateSpeedLimitNotification], f ...Filter) Handle {
 	h := &handle[UpdateSpeedLimitNotification]{
@@ -2329,6 +3089,11 @@ func (c *Client) AddSpeedLimitNotificationHandler(hn HandlerFunc[UpdateSpeedLimi
 	c.addHandler(UpdateTypeSpeedLimitNotification, h)
 
 	return h
+}
+
+// OnSpeedLimitNotification registers a handler for UpdateSpeedLimitNotification updates.
+func (c *Client) OnSpeedLimitNotification(hn HandlerFunc[UpdateSpeedLimitNotification], f ...Filter) Handle {
+	return c.AddSpeedLimitNotificationHandler(hn, f...)
 }
 
 // AddStakeDiceStateHandler registers a handler for UpdateStakeDiceState updates.
@@ -2345,6 +3110,11 @@ func (c *Client) AddStakeDiceStateHandler(hn HandlerFunc[UpdateStakeDiceState], 
 	return h
 }
 
+// OnStakeDiceState registers a handler for UpdateStakeDiceState updates.
+func (c *Client) OnStakeDiceState(hn HandlerFunc[UpdateStakeDiceState], f ...Filter) Handle {
+	return c.AddStakeDiceStateHandler(hn, f...)
+}
+
 // AddStarRevenueStatusHandler registers a handler for UpdateStarRevenueStatus updates.
 func (c *Client) AddStarRevenueStatusHandler(hn HandlerFunc[UpdateStarRevenueStatus], f ...Filter) Handle {
 	h := &handle[UpdateStarRevenueStatus]{
@@ -2357,6 +3127,11 @@ func (c *Client) AddStarRevenueStatusHandler(hn HandlerFunc[UpdateStarRevenueSta
 	c.addHandler(UpdateTypeStarRevenueStatus, h)
 
 	return h
+}
+
+// OnStarRevenueStatus registers a handler for UpdateStarRevenueStatus updates.
+func (c *Client) OnStarRevenueStatus(hn HandlerFunc[UpdateStarRevenueStatus], f ...Filter) Handle {
+	return c.AddStarRevenueStatusHandler(hn, f...)
 }
 
 // AddStickerSetHandler registers a handler for UpdateStickerSet updates.
@@ -2373,6 +3148,11 @@ func (c *Client) AddStickerSetHandler(hn HandlerFunc[UpdateStickerSet], f ...Fil
 	return h
 }
 
+// OnStickerSet registers a handler for UpdateStickerSet updates.
+func (c *Client) OnStickerSet(hn HandlerFunc[UpdateStickerSet], f ...Filter) Handle {
+	return c.AddStickerSetHandler(hn, f...)
+}
+
 // AddStoryHandler registers a handler for UpdateStory updates.
 func (c *Client) AddStoryHandler(hn HandlerFunc[UpdateStory], f ...Filter) Handle {
 	h := &handle[UpdateStory]{
@@ -2385,6 +3165,11 @@ func (c *Client) AddStoryHandler(hn HandlerFunc[UpdateStory], f ...Filter) Handl
 	c.addHandler(UpdateTypeStory, h)
 
 	return h
+}
+
+// OnStory registers a handler for UpdateStory updates.
+func (c *Client) OnStory(hn HandlerFunc[UpdateStory], f ...Filter) Handle {
+	return c.AddStoryHandler(hn, f...)
 }
 
 // AddStoryDeletedHandler registers a handler for UpdateStoryDeleted updates.
@@ -2401,6 +3186,11 @@ func (c *Client) AddStoryDeletedHandler(hn HandlerFunc[UpdateStoryDeleted], f ..
 	return h
 }
 
+// OnStoryDeleted registers a handler for UpdateStoryDeleted updates.
+func (c *Client) OnStoryDeleted(hn HandlerFunc[UpdateStoryDeleted], f ...Filter) Handle {
+	return c.AddStoryDeletedHandler(hn, f...)
+}
+
 // AddStoryListChatCountHandler registers a handler for UpdateStoryListChatCount updates.
 func (c *Client) AddStoryListChatCountHandler(hn HandlerFunc[UpdateStoryListChatCount], f ...Filter) Handle {
 	h := &handle[UpdateStoryListChatCount]{
@@ -2413,6 +3203,11 @@ func (c *Client) AddStoryListChatCountHandler(hn HandlerFunc[UpdateStoryListChat
 	c.addHandler(UpdateTypeStoryListChatCount, h)
 
 	return h
+}
+
+// OnStoryListChatCount registers a handler for UpdateStoryListChatCount updates.
+func (c *Client) OnStoryListChatCount(hn HandlerFunc[UpdateStoryListChatCount], f ...Filter) Handle {
+	return c.AddStoryListChatCountHandler(hn, f...)
 }
 
 // AddStoryPostFailedHandler registers a handler for UpdateStoryPostFailed updates.
@@ -2429,6 +3224,11 @@ func (c *Client) AddStoryPostFailedHandler(hn HandlerFunc[UpdateStoryPostFailed]
 	return h
 }
 
+// OnStoryPostFailed registers a handler for UpdateStoryPostFailed updates.
+func (c *Client) OnStoryPostFailed(hn HandlerFunc[UpdateStoryPostFailed], f ...Filter) Handle {
+	return c.AddStoryPostFailedHandler(hn, f...)
+}
+
 // AddStoryPostSucceededHandler registers a handler for UpdateStoryPostSucceeded updates.
 func (c *Client) AddStoryPostSucceededHandler(hn HandlerFunc[UpdateStoryPostSucceeded], f ...Filter) Handle {
 	h := &handle[UpdateStoryPostSucceeded]{
@@ -2441,6 +3241,11 @@ func (c *Client) AddStoryPostSucceededHandler(hn HandlerFunc[UpdateStoryPostSucc
 	c.addHandler(UpdateTypeStoryPostSucceeded, h)
 
 	return h
+}
+
+// OnStoryPostSucceeded registers a handler for UpdateStoryPostSucceeded updates.
+func (c *Client) OnStoryPostSucceeded(hn HandlerFunc[UpdateStoryPostSucceeded], f ...Filter) Handle {
+	return c.AddStoryPostSucceededHandler(hn, f...)
 }
 
 // AddStoryStealthModeHandler registers a handler for UpdateStoryStealthMode updates.
@@ -2457,6 +3262,11 @@ func (c *Client) AddStoryStealthModeHandler(hn HandlerFunc[UpdateStoryStealthMod
 	return h
 }
 
+// OnStoryStealthMode registers a handler for UpdateStoryStealthMode updates.
+func (c *Client) OnStoryStealthMode(hn HandlerFunc[UpdateStoryStealthMode], f ...Filter) Handle {
+	return c.AddStoryStealthModeHandler(hn, f...)
+}
+
 // AddSuggestedActionsHandler registers a handler for UpdateSuggestedActions updates.
 func (c *Client) AddSuggestedActionsHandler(hn HandlerFunc[UpdateSuggestedActions], f ...Filter) Handle {
 	h := &handle[UpdateSuggestedActions]{
@@ -2469,6 +3279,11 @@ func (c *Client) AddSuggestedActionsHandler(hn HandlerFunc[UpdateSuggestedAction
 	c.addHandler(UpdateTypeSuggestedActions, h)
 
 	return h
+}
+
+// OnSuggestedActions registers a handler for UpdateSuggestedActions updates.
+func (c *Client) OnSuggestedActions(hn HandlerFunc[UpdateSuggestedActions], f ...Filter) Handle {
+	return c.AddSuggestedActionsHandler(hn, f...)
 }
 
 // AddSupergroupHandler registers a handler for UpdateSupergroup updates.
@@ -2485,6 +3300,11 @@ func (c *Client) AddSupergroupHandler(hn HandlerFunc[UpdateSupergroup], f ...Fil
 	return h
 }
 
+// OnSupergroup registers a handler for UpdateSupergroup updates.
+func (c *Client) OnSupergroup(hn HandlerFunc[UpdateSupergroup], f ...Filter) Handle {
+	return c.AddSupergroupHandler(hn, f...)
+}
+
 // AddSupergroupFullInfoHandler registers a handler for UpdateSupergroupFullInfo updates.
 func (c *Client) AddSupergroupFullInfoHandler(hn HandlerFunc[UpdateSupergroupFullInfo], f ...Filter) Handle {
 	h := &handle[UpdateSupergroupFullInfo]{
@@ -2497,6 +3317,11 @@ func (c *Client) AddSupergroupFullInfoHandler(hn HandlerFunc[UpdateSupergroupFul
 	c.addHandler(UpdateTypeSupergroupFullInfo, h)
 
 	return h
+}
+
+// OnSupergroupFullInfo registers a handler for UpdateSupergroupFullInfo updates.
+func (c *Client) OnSupergroupFullInfo(hn HandlerFunc[UpdateSupergroupFullInfo], f ...Filter) Handle {
+	return c.AddSupergroupFullInfoHandler(hn, f...)
 }
 
 // AddTermsOfServiceHandler registers a handler for UpdateTermsOfService updates.
@@ -2513,6 +3338,11 @@ func (c *Client) AddTermsOfServiceHandler(hn HandlerFunc[UpdateTermsOfService], 
 	return h
 }
 
+// OnTermsOfService registers a handler for UpdateTermsOfService updates.
+func (c *Client) OnTermsOfService(hn HandlerFunc[UpdateTermsOfService], f ...Filter) Handle {
+	return c.AddTermsOfServiceHandler(hn, f...)
+}
+
 // AddTextCompositionStylesHandler registers a handler for UpdateTextCompositionStyles updates.
 func (c *Client) AddTextCompositionStylesHandler(hn HandlerFunc[UpdateTextCompositionStyles], f ...Filter) Handle {
 	h := &handle[UpdateTextCompositionStyles]{
@@ -2525,6 +3355,11 @@ func (c *Client) AddTextCompositionStylesHandler(hn HandlerFunc[UpdateTextCompos
 	c.addHandler(UpdateTypeTextCompositionStyles, h)
 
 	return h
+}
+
+// OnTextCompositionStyles registers a handler for UpdateTextCompositionStyles updates.
+func (c *Client) OnTextCompositionStyles(hn HandlerFunc[UpdateTextCompositionStyles], f ...Filter) Handle {
+	return c.AddTextCompositionStylesHandler(hn, f...)
 }
 
 // AddTonRevenueStatusHandler registers a handler for UpdateTonRevenueStatus updates.
@@ -2541,6 +3376,11 @@ func (c *Client) AddTonRevenueStatusHandler(hn HandlerFunc[UpdateTonRevenueStatu
 	return h
 }
 
+// OnTonRevenueStatus registers a handler for UpdateTonRevenueStatus updates.
+func (c *Client) OnTonRevenueStatus(hn HandlerFunc[UpdateTonRevenueStatus], f ...Filter) Handle {
+	return c.AddTonRevenueStatusHandler(hn, f...)
+}
+
 // AddTopicMessageCountHandler registers a handler for UpdateTopicMessageCount updates.
 func (c *Client) AddTopicMessageCountHandler(hn HandlerFunc[UpdateTopicMessageCount], f ...Filter) Handle {
 	h := &handle[UpdateTopicMessageCount]{
@@ -2553,6 +3393,11 @@ func (c *Client) AddTopicMessageCountHandler(hn HandlerFunc[UpdateTopicMessageCo
 	c.addHandler(UpdateTypeTopicMessageCount, h)
 
 	return h
+}
+
+// OnTopicMessageCount registers a handler for UpdateTopicMessageCount updates.
+func (c *Client) OnTopicMessageCount(hn HandlerFunc[UpdateTopicMessageCount], f ...Filter) Handle {
+	return c.AddTopicMessageCountHandler(hn, f...)
 }
 
 // AddTrendingStickerSetsHandler registers a handler for UpdateTrendingStickerSets updates.
@@ -2569,6 +3414,11 @@ func (c *Client) AddTrendingStickerSetsHandler(hn HandlerFunc[UpdateTrendingStic
 	return h
 }
 
+// OnTrendingStickerSets registers a handler for UpdateTrendingStickerSets updates.
+func (c *Client) OnTrendingStickerSets(hn HandlerFunc[UpdateTrendingStickerSets], f ...Filter) Handle {
+	return c.AddTrendingStickerSetsHandler(hn, f...)
+}
+
 // AddTrustedMiniAppBotsHandler registers a handler for UpdateTrustedMiniAppBots updates.
 func (c *Client) AddTrustedMiniAppBotsHandler(hn HandlerFunc[UpdateTrustedMiniAppBots], f ...Filter) Handle {
 	h := &handle[UpdateTrustedMiniAppBots]{
@@ -2581,6 +3431,11 @@ func (c *Client) AddTrustedMiniAppBotsHandler(hn HandlerFunc[UpdateTrustedMiniAp
 	c.addHandler(UpdateTypeTrustedMiniAppBots, h)
 
 	return h
+}
+
+// OnTrustedMiniAppBots registers a handler for UpdateTrustedMiniAppBots updates.
+func (c *Client) OnTrustedMiniAppBots(hn HandlerFunc[UpdateTrustedMiniAppBots], f ...Filter) Handle {
+	return c.AddTrustedMiniAppBotsHandler(hn, f...)
 }
 
 // AddUnconfirmedSessionHandler registers a handler for UpdateUnconfirmedSession updates.
@@ -2597,6 +3452,11 @@ func (c *Client) AddUnconfirmedSessionHandler(hn HandlerFunc[UpdateUnconfirmedSe
 	return h
 }
 
+// OnUnconfirmedSession registers a handler for UpdateUnconfirmedSession updates.
+func (c *Client) OnUnconfirmedSession(hn HandlerFunc[UpdateUnconfirmedSession], f ...Filter) Handle {
+	return c.AddUnconfirmedSessionHandler(hn, f...)
+}
+
 // AddUnreadChatCountHandler registers a handler for UpdateUnreadChatCount updates.
 func (c *Client) AddUnreadChatCountHandler(hn HandlerFunc[UpdateUnreadChatCount], f ...Filter) Handle {
 	h := &handle[UpdateUnreadChatCount]{
@@ -2609,6 +3469,11 @@ func (c *Client) AddUnreadChatCountHandler(hn HandlerFunc[UpdateUnreadChatCount]
 	c.addHandler(UpdateTypeUnreadChatCount, h)
 
 	return h
+}
+
+// OnUnreadChatCount registers a handler for UpdateUnreadChatCount updates.
+func (c *Client) OnUnreadChatCount(hn HandlerFunc[UpdateUnreadChatCount], f ...Filter) Handle {
+	return c.AddUnreadChatCountHandler(hn, f...)
 }
 
 // AddUnreadMessageCountHandler registers a handler for UpdateUnreadMessageCount updates.
@@ -2625,6 +3490,11 @@ func (c *Client) AddUnreadMessageCountHandler(hn HandlerFunc[UpdateUnreadMessage
 	return h
 }
 
+// OnUnreadMessageCount registers a handler for UpdateUnreadMessageCount updates.
+func (c *Client) OnUnreadMessageCount(hn HandlerFunc[UpdateUnreadMessageCount], f ...Filter) Handle {
+	return c.AddUnreadMessageCountHandler(hn, f...)
+}
+
 // AddUserHandler registers a handler for UpdateUser updates.
 func (c *Client) AddUserHandler(hn HandlerFunc[UpdateUser], f ...Filter) Handle {
 	h := &handle[UpdateUser]{
@@ -2637,6 +3507,11 @@ func (c *Client) AddUserHandler(hn HandlerFunc[UpdateUser], f ...Filter) Handle 
 	c.addHandler(UpdateTypeUser, h)
 
 	return h
+}
+
+// OnUser registers a handler for UpdateUser updates.
+func (c *Client) OnUser(hn HandlerFunc[UpdateUser], f ...Filter) Handle {
+	return c.AddUserHandler(hn, f...)
 }
 
 // AddUserFullInfoHandler registers a handler for UpdateUserFullInfo updates.
@@ -2653,6 +3528,11 @@ func (c *Client) AddUserFullInfoHandler(hn HandlerFunc[UpdateUserFullInfo], f ..
 	return h
 }
 
+// OnUserFullInfo registers a handler for UpdateUserFullInfo updates.
+func (c *Client) OnUserFullInfo(hn HandlerFunc[UpdateUserFullInfo], f ...Filter) Handle {
+	return c.AddUserFullInfoHandler(hn, f...)
+}
+
 // AddUserPrivacySettingRulesHandler registers a handler for UpdateUserPrivacySettingRules updates.
 func (c *Client) AddUserPrivacySettingRulesHandler(hn HandlerFunc[UpdateUserPrivacySettingRules], f ...Filter) Handle {
 	h := &handle[UpdateUserPrivacySettingRules]{
@@ -2665,6 +3545,11 @@ func (c *Client) AddUserPrivacySettingRulesHandler(hn HandlerFunc[UpdateUserPriv
 	c.addHandler(UpdateTypeUserPrivacySettingRules, h)
 
 	return h
+}
+
+// OnUserPrivacySettingRules registers a handler for UpdateUserPrivacySettingRules updates.
+func (c *Client) OnUserPrivacySettingRules(hn HandlerFunc[UpdateUserPrivacySettingRules], f ...Filter) Handle {
+	return c.AddUserPrivacySettingRulesHandler(hn, f...)
 }
 
 // AddUserStatusHandler registers a handler for UpdateUserStatus updates.
@@ -2681,6 +3566,11 @@ func (c *Client) AddUserStatusHandler(hn HandlerFunc[UpdateUserStatus], f ...Fil
 	return h
 }
 
+// OnUserStatus registers a handler for UpdateUserStatus updates.
+func (c *Client) OnUserStatus(hn HandlerFunc[UpdateUserStatus], f ...Filter) Handle {
+	return c.AddUserStatusHandler(hn, f...)
+}
+
 // AddVideoPublishedHandler registers a handler for UpdateVideoPublished updates.
 func (c *Client) AddVideoPublishedHandler(hn HandlerFunc[UpdateVideoPublished], f ...Filter) Handle {
 	h := &handle[UpdateVideoPublished]{
@@ -2695,6 +3585,11 @@ func (c *Client) AddVideoPublishedHandler(hn HandlerFunc[UpdateVideoPublished], 
 	return h
 }
 
+// OnVideoPublished registers a handler for UpdateVideoPublished updates.
+func (c *Client) OnVideoPublished(hn HandlerFunc[UpdateVideoPublished], f ...Filter) Handle {
+	return c.AddVideoPublishedHandler(hn, f...)
+}
+
 // AddWebAppMessageSentHandler registers a handler for UpdateWebAppMessageSent updates.
 func (c *Client) AddWebAppMessageSentHandler(hn HandlerFunc[UpdateWebAppMessageSent], f ...Filter) Handle {
 	h := &handle[UpdateWebAppMessageSent]{
@@ -2707,6 +3602,11 @@ func (c *Client) AddWebAppMessageSentHandler(hn HandlerFunc[UpdateWebAppMessageS
 	c.addHandler(UpdateTypeWebAppMessageSent, h)
 
 	return h
+}
+
+// OnWebAppMessageSent registers a handler for UpdateWebAppMessageSent updates.
+func (c *Client) OnWebAppMessageSent(hn HandlerFunc[UpdateWebAppMessageSent], f ...Filter) Handle {
+	return c.AddWebAppMessageSentHandler(hn, f...)
 }
 
 func ExtractChatID(u TlObject) int64 {

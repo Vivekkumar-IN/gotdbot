@@ -9,6 +9,8 @@ import (
 	"fmt"
 	"log/slog"
 	"os"
+	"strconv"
+
 	"os/signal"
 	"regexp"
 	"runtime/debug"
@@ -534,7 +536,26 @@ func (c *Client) Send(req TlObject) (TlObject, error) {
 }
 
 func (c *Client) handleAutoRetry(req map[string]interface{}, errObj *Error, isChatAttemptedLoad, isMessageAttemptedLoad *bool) bool {
-	if errObj.Code != 400 || c.config.AutoRetry == nil {
+	if c.config.AutoRetry == nil {
+		return false
+	}
+
+	if errObj.Code == 429 && c.config.AutoRetry.MaxFloodWait > 0 {
+		prefix := "Too Many Requests: retry after "
+		if strings.HasPrefix(errObj.Message, prefix) {
+			seconds, err := strconv.Atoi(strings.TrimPrefix(errObj.Message, prefix))
+			if err == nil {
+				waitTime := time.Duration(seconds) * time.Second
+				if waitTime <= c.config.AutoRetry.MaxFloodWait {
+					c.Logger.Info("Flood wait", "seconds", seconds)
+					time.Sleep(waitTime)
+					return true
+				}
+			}
+		}
+	}
+
+	if errObj.Code != 400 {
 		return false
 	}
 
@@ -706,10 +727,35 @@ func toOptionValue(v interface{}) OptionValue {
 	}
 }
 
-// AddCommandHandler registers a command handler for UpdateNewMessage updates.
-func (c *Client) AddCommandHandler(command string, hn HandlerFunc[UpdateNewMessage], f ...Filter) Handle {
+// AddMessageHandler registers a handler for non-nil Message values carried by UpdateNewMessage updates.
+func (c *Client) AddMessageHandler(hn MessageHandlerFunc, f ...Filter) Handle {
+	return c.AddNewMessageHandler(func(c *Client, u *UpdateNewMessage) error {
+		if u.Message == nil {
+			return nil
+		}
+		return hn(c, u.Message)
+	}, f...)
+}
+
+// AddCommandHandler registers a command handler for non-nil Message values carried by UpdateNewMessage updates.
+func (c *Client) AddCommandHandler(command string, hn MessageHandlerFunc, f ...Filter) Handle {
 	filters := append([]Filter{FilterCommand(command)}, f...)
-	return c.AddNewMessageHandler(hn, filters...).SetPriority(10)
+	return c.AddMessageHandler(hn, filters...).SetPriority(10)
+}
+
+// OnCommand registers a command handler.
+func (c *Client) OnCommand(command string, hn MessageHandlerFunc, f ...Filter) Handle {
+	return c.AddCommandHandler(command, hn, f...)
+}
+
+// OnMessage registers a message handler.
+func (c *Client) OnMessage(hn MessageHandlerFunc, f ...Filter) Handle {
+	return c.AddMessageHandler(hn, f...)
+}
+
+// OnRaw registers a raw handler that accepts any update satisfying the filters.
+func (c *Client) OnRaw(hn RawHandler, f ...Filter) Handle {
+	return c.AddRawHandler(hn, f...)
 }
 
 // AddRawHandler registers a raw handler that accepts any update satisfying the filters.
