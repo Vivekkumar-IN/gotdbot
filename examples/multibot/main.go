@@ -21,8 +21,8 @@ func main() {
 	// OnNewClient fires once per bot when it is registered.
 	// All handlers are attached here so every bot shares the same logic.
 	manager.OnNewClient(func(c *gotdbot.Client) {
-		c.AddNewMessageHandler(echoHandler, gotdbot.FilterPrivate)
-		c.AddCommandHandler("start", startHandler)
+		c.OnMessage(echoHandler, gotdbot.FilterPrivate)
+		c.OnCommand("start", startHandler)
 	})
 
 	for _, token := range strings.Split(tokensStr, ",") {
@@ -50,15 +50,12 @@ func main() {
 	manager.Idle()
 }
 
-func echoHandler(client *gotdbot.Client, update *gotdbot.UpdateNewMessage) error {
-	m := update.Message
-
-	_, err := m.ReplyText(client, m.Text())
+func echoHandler(client *gotdbot.Client, msg *gotdbot.Message) error {
+	_, err := msg.ReplyText(client, msg.Text())
 	return err
 }
 
-func startHandler(client *gotdbot.Client, update *gotdbot.UpdateNewMessage) error {
-	m := update.Message
-	_, err := m.ReplyText(client, "Hello! I'm alive and running 🚀")
+func startHandler(client *gotdbot.Client, msg *gotdbot.Message) error {
+	_, err := msg.ReplyText(client, "Hello! I'm alive and running 🚀")
 	return err
 }

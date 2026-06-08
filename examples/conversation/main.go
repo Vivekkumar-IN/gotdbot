@@ -21,47 +21,45 @@ func main() {
 		panic(err)
 	}
 
-	client.AddCommandHandler("start", func(c *gotdbot.Client, u *gotdbot.UpdateNewMessage) error {
-		msg := u.Message
-		_, err := msg.ReplyText(c, "Welcome! Use /survey to start the survey.\nSend /cancel to stop talking to me", nil)
+	client.OnCommand("start", func(client *gotdbot.Client, msg *gotdbot.Message) error {
+		_, err := msg.ReplyText(client, "Welcome! Use /survey to start the survey.\nSend /cancel to stop talking to me")
 		return err
 	})
 
-	client.AddCommandHandler("survey", func(c *gotdbot.Client, u *gotdbot.UpdateNewMessage) error {
-		msg := u.Message
+	client.OnCommand("survey", func(client *gotdbot.Client, msg *gotdbot.Message) error {
 		chatId := msg.ChatId
 
 		timeOut := 30 * time.Second
 		stopFilter := gotdbot.FilterText.And(gotdbot.FilterSenderID(msg.SenderID())).And(gotdbot.FilterCommand("cancel"))
 
-		_, err = msg.ReplyText(c, "What is your name?", nil)
+		_, err = msg.ReplyText(client, "What is your name?")
 		if err != nil {
 			return err
 		}
 
-		nameMsg, err := c.Ask(chatId, &gotdbot.WaitMessageOpts{Timeout: timeOut, Filter: gotdbot.FilterText.And(gotdbot.FilterSenderID(msg.SenderID())), CancellationFilter: stopFilter})
+		nameMsg, err := client.Ask(chatId, &gotdbot.WaitMessageOpts{Timeout: timeOut, Filter: gotdbot.FilterText.And(gotdbot.FilterSenderID(msg.SenderID())), CancellationFilter: stopFilter})
 		if err != nil {
-			_, _ = msg.ReplyText(c, err.Error(), nil)
+			_, _ = msg.ReplyText(client, err.Error())
 			return nil
 		}
 
-		_, err = msg.ReplyText(c, fmt.Sprintf("I see! Please send me a photo of yourself, %s.", nameMsg.Text()), &gotdbot.SendTextMessageOpts{ReplyMarkup: &gotdbot.ReplyMarkupForceReply{InputFieldPlaceholder: "Send a picture"}})
+		_, err = msg.ReplyText(client, fmt.Sprintf("I see! Please send me a photo of yourself, %s.", nameMsg.Text()), &gotdbot.SendTextMessageOpts{ReplyMarkup: &gotdbot.ReplyMarkupForceReply{InputFieldPlaceholder: "Send a picture"}})
 		if err != nil {
 			return err
 		}
 
-		picMsg, err := c.Ask(chatId, &gotdbot.WaitMessageOpts{Timeout: timeOut, Filter: gotdbot.FilterPhoto.And(gotdbot.FilterSenderID(msg.SenderID())), CancellationFilter: stopFilter})
+		picMsg, err := client.Ask(chatId, &gotdbot.WaitMessageOpts{Timeout: timeOut, Filter: gotdbot.FilterPhoto.And(gotdbot.FilterSenderID(msg.SenderID())), CancellationFilter: stopFilter})
 		if err != nil {
 			if errors.Is(err, gotdbot.ConversationCancelled) {
-				_, _ = msg.ReplyText(c, "Survey cancelled. Send /survey to start again.", nil)
+				_, _ = msg.ReplyText(client, "Survey cancelled. Send /survey to start again.")
 				return nil
 			}
 
-			_, _ = msg.ReplyText(c, "Timeout !", nil)
+			_, _ = msg.ReplyText(client, "Timeout !")
 			return nil
 		}
 
-		_, err = msg.ReplyPhoto(c, gotdbot.InputFileRemote{Id: picMsg.RemoteFileID()}, &gotdbot.SendPhotoOpts{Caption: fmt.Sprintf("Nice to meet you, %s!", nameMsg.Text())})
+		_, err = msg.ReplyPhoto(client, gotdbot.GetInputFile(picMsg.RemoteFileID()), &gotdbot.SendPhotoOpts{Caption: fmt.Sprintf("Nice to meet you, %s!", nameMsg.Text())})
 		if err != nil {
 			return err
 		}

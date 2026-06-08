@@ -7,7 +7,8 @@ import (
 	"strings"
 )
 
-func GetFormattedText(c *Client, text string, entities []TextEntity, parseMode string) (*FormattedText, error) {
+// GetFormattedText returns a FormattedText object from the given text, entities and parse mode.
+func (c *Client) GetFormattedText(text string, entities []TextEntity, parseMode string) (*FormattedText, error) {
 	if len(entities) > 0 {
 		return &FormattedText{
 			Text:     text,
@@ -124,7 +125,7 @@ type SendTextMessageOpts struct {
 func (c *Client) SendTextMessage(chatId int64, text string, opts ...*SendTextMessageOpts) (*Message, error) {
 	opt := getVariadic(opts, &SendTextMessageOpts{})
 
-	formattedText, err := GetFormattedText(c, text, opt.Entities, opt.ParseMode)
+	formattedText, err := c.GetFormattedText(text, opt.Entities, opt.ParseMode)
 	if err != nil {
 		return nil, err
 	}
@@ -177,7 +178,7 @@ type SendPhotoOpts struct {
 func (c *Client) SendPhoto(chatId int64, photo InputFile, opts ...*SendPhotoOpts) (*Message, error) {
 	opt := getVariadic(opts, &SendPhotoOpts{})
 
-	caption, err := GetFormattedText(c, opt.Caption, opt.CaptionEntities, opt.ParseMode)
+	caption, err := c.GetFormattedText(opt.Caption, opt.CaptionEntities, opt.ParseMode)
 	if err != nil {
 		return nil, err
 	}
@@ -229,7 +230,7 @@ type SendVideoOpts struct {
 func (c *Client) SendVideo(chatId int64, video InputFile, opts ...*SendVideoOpts) (*Message, error) {
 	opt := getVariadic(opts, &SendVideoOpts{})
 
-	caption, err := GetFormattedText(c, opt.Caption, opt.CaptionEntities, opt.ParseMode)
+	caption, err := c.GetFormattedText(opt.Caption, opt.CaptionEntities, opt.ParseMode)
 	if err != nil {
 		return nil, err
 	}
@@ -281,7 +282,7 @@ type SendAnimationOpts struct {
 func (c *Client) SendAnimation(chatId int64, animation InputFile, opts ...*SendAnimationOpts) (*Message, error) {
 	opt := getVariadic(opts, &SendAnimationOpts{})
 
-	caption, err := GetFormattedText(c, opt.Caption, opt.CaptionEntities, opt.ParseMode)
+	caption, err := c.GetFormattedText(opt.Caption, opt.CaptionEntities, opt.ParseMode)
 	if err != nil {
 		return nil, err
 	}
@@ -329,7 +330,7 @@ type SendAudioOpts struct {
 func (c *Client) SendAudio(chatId int64, audio InputFile, opts ...*SendAudioOpts) (*Message, error) {
 	opt := getVariadic(opts, &SendAudioOpts{})
 
-	caption, err := GetFormattedText(c, opt.Caption, opt.CaptionEntities, opt.ParseMode)
+	caption, err := c.GetFormattedText(opt.Caption, opt.CaptionEntities, opt.ParseMode)
 	if err != nil {
 		return nil, err
 	}
@@ -373,7 +374,7 @@ type SendDocumentOpts struct {
 func (c *Client) SendDocument(chatId int64, document InputFile, opts ...*SendDocumentOpts) (*Message, error) {
 	opt := getVariadic(opts, &SendDocumentOpts{})
 
-	caption, err := GetFormattedText(c, opt.Caption, opt.CaptionEntities, opt.ParseMode)
+	caption, err := c.GetFormattedText(opt.Caption, opt.CaptionEntities, opt.ParseMode)
 	if err != nil {
 		return nil, err
 	}
@@ -415,7 +416,7 @@ type SendVoiceOpts struct {
 func (c *Client) SendVoice(chatId int64, voice InputFile, opts ...*SendVoiceOpts) (*Message, error) {
 	opt := getVariadic(opts, &SendVoiceOpts{})
 
-	caption, err := GetFormattedText(c, opt.Caption, opt.CaptionEntities, opt.ParseMode)
+	caption, err := c.GetFormattedText(opt.Caption, opt.CaptionEntities, opt.ParseMode)
 	if err != nil {
 		return nil, err
 	}
@@ -529,7 +530,7 @@ type SendCopyOpts struct {
 func (c *Client) SendCopy(chatId int64, fromChatId int64, messageId int64, opts ...*SendCopyOpts) (*Message, error) {
 	opt := getVariadic(opts, &SendCopyOpts{})
 
-	caption, err := GetFormattedText(c, opt.NewCaption, opt.NewCaptionEntities, opt.ParseMode)
+	caption, err := c.GetFormattedText(opt.NewCaption, opt.NewCaptionEntities, opt.ParseMode)
 	if err != nil {
 		return nil, err
 	}
@@ -597,7 +598,7 @@ func (c *Client) EditTextMessage(chatId int64, messageId int64, text string, opt
 		}
 	}
 
-	formattedText, err := GetFormattedText(c, text, opt.Entities, opt.ParseMode)
+	formattedText, err := c.GetFormattedText(text, opt.Entities, opt.ParseMode)
 	if err != nil {
 		return nil, err
 	}
@@ -638,7 +639,7 @@ func (c *Client) EditCaption(chatId int64, messageId int64, caption string, opts
 		}
 	}
 
-	formattedText, err := GetFormattedText(c, caption, opt.Entities, opt.ParseMode)
+	formattedText, err := c.GetFormattedText(caption, opt.Entities, opt.ParseMode)
 	if err != nil {
 		return nil, err
 	}
@@ -824,7 +825,7 @@ type SendInvoiceOpts struct {
 // SendInvoice sends an invoice to chat
 func (c *Client) SendInvoice(chatId int64, invoice *Invoice, title string, description string, payload []byte, opts ...*SendInvoiceOpts) (*Message, error) {
 	opt := getVariadic(opts, &SendInvoiceOpts{})
-	paidMediaCaption, err := GetFormattedText(c, opt.PaidMediaCaption, opt.PaidMediaEntities, opt.ParseMode)
+	paidMediaCaption, err := c.GetFormattedText(opt.PaidMediaCaption, opt.PaidMediaEntities, opt.ParseMode)
 	if err != nil {
 		return nil, err
 	}
@@ -905,7 +906,7 @@ type SendPaidMediaOpts struct {
 // SendPaidMedia sends paid media to chat
 func (c *Client) SendPaidMedia(chatId int64, starCount int64, paidMedia []InputPaidMedia, opts ...*SendPaidMediaOpts) (*Message, error) {
 	opt := getVariadic(opts, &SendPaidMediaOpts{})
-	caption, err := GetFormattedText(c, opt.Caption, opt.CaptionEntities, opt.ParseMode)
+	caption, err := c.GetFormattedText(opt.Caption, opt.CaptionEntities, opt.ParseMode)
 	if err != nil {
 		return nil, err
 	}
@@ -953,11 +954,11 @@ type SendPollOpts struct {
 // SendPoll sends a poll to chat
 func (c *Client) SendPoll(chatId int64, question string, options []InputPollOption, opts ...*SendPollOpts) (*Message, error) {
 	opt := getVariadic(opts, &SendPollOpts{})
-	formattedQuestion, err := GetFormattedText(c, question, opt.QuestionEntities, opt.ParseMode)
+	formattedQuestion, err := c.GetFormattedText(question, opt.QuestionEntities, opt.ParseMode)
 	if err != nil {
 		return nil, err
 	}
-	description, err := GetFormattedText(c, opt.Description, opt.DescriptionEntities, opt.ParseMode)
+	description, err := c.GetFormattedText(opt.Description, opt.DescriptionEntities, opt.ParseMode)
 	if err != nil {
 		return nil, err
 	}

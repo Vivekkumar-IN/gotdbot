@@ -72,49 +72,47 @@ type Client struct {
 	Me *User
 }
 
-func NewClient(apiID int32, apiHash, tokenOrPhone string, config *ClientOpts) (*Client, error) {
+func NewClient(apiID int32, apiHash, tokenOrPhone string, opts ...*ClientOpts) (*Client, error) {
 	tokenOrPhone = strings.TrimSpace(tokenOrPhone)
-	if config == nil {
-		config = DefaultClientConfig()
-	} else {
-		def := DefaultClientConfig()
-		if config.UseFileDatabase == nil {
-			config.UseFileDatabase = def.UseFileDatabase
-		}
-		if config.UseChatInfoDatabase == nil {
-			config.UseChatInfoDatabase = def.UseChatInfoDatabase
-		}
-		if config.UseMessageDatabase == nil {
-			config.UseMessageDatabase = def.UseMessageDatabase
-		}
-		if config.SystemLanguageCode == "" {
-			config.SystemLanguageCode = def.SystemLanguageCode
-		}
-		if config.DeviceModel == "" {
-			config.DeviceModel = def.DeviceModel
-		}
-		if config.SystemVersion == "" {
-			config.SystemVersion = def.SystemVersion
-		}
-		if config.ApplicationVersion == "" {
-			config.ApplicationVersion = def.ApplicationVersion
-		}
-		if config.DatabaseDirectory == "" {
-			config.DatabaseDirectory = def.DatabaseDirectory
-		}
-		if config.FilesDirectory == "" {
-			config.FilesDirectory = def.FilesDirectory
-		}
-		if config.Logger == nil {
-			config.Logger = def.Logger
-		}
-		if config.AuthorizationTimeout == 0 {
-			config.AuthorizationTimeout = def.AuthorizationTimeout
-		}
+	config := getVariadic(opts, DefaultClientConfig())
 
-		if config.AutoRetry == nil {
-			config.AutoRetry = def.AutoRetry
-		}
+	def := DefaultClientConfig()
+	if config.UseFileDatabase == nil {
+		config.UseFileDatabase = def.UseFileDatabase
+	}
+	if config.UseChatInfoDatabase == nil {
+		config.UseChatInfoDatabase = def.UseChatInfoDatabase
+	}
+	if config.UseMessageDatabase == nil {
+		config.UseMessageDatabase = def.UseMessageDatabase
+	}
+	if config.SystemLanguageCode == "" {
+		config.SystemLanguageCode = def.SystemLanguageCode
+	}
+	if config.DeviceModel == "" {
+		config.DeviceModel = def.DeviceModel
+	}
+	if config.SystemVersion == "" {
+		config.SystemVersion = def.SystemVersion
+	}
+	if config.ApplicationVersion == "" {
+		config.ApplicationVersion = def.ApplicationVersion
+	}
+	if config.DatabaseDirectory == "" {
+		config.DatabaseDirectory = def.DatabaseDirectory
+	}
+	if config.FilesDirectory == "" {
+		config.FilesDirectory = def.FilesDirectory
+	}
+	if config.Logger == nil {
+		config.Logger = def.Logger
+	}
+	if config.AuthorizationTimeout == 0 {
+		config.AuthorizationTimeout = def.AuthorizationTimeout
+	}
+
+	if config.AutoRetry == nil {
+		config.AutoRetry = def.AutoRetry
 	}
 
 	if err := tdjson.Init(config.LibraryPath, TDLibVersion); err != nil {

@@ -30,19 +30,18 @@ func main() {
 		panic(err)
 	}
 
-	client.AddCommandHandler("start", func(c *gotdbot.Client, u *gotdbot.UpdateNewMessage) error {
-		msg := u.Message
+	client.AddCommandHandler("start", func(client *gotdbot.Client, msg *gotdbot.Message) error {
 		userId := msg.SenderID()
 
-		err := msg.Action(c, &gotdbot.SendChatActionOpts{Action: &gotdbot.ChatActionTyping{}})
+		err := msg.Action(client, &gotdbot.SendChatActionOpts{Action: &gotdbot.ChatActionTyping{}})
 		if err != nil {
-			c.Logger.Error("Failed to send chat action", "err", err)
+			client.Logger.Error("Failed to send chat action", "err", err)
 			return err
 		}
 
-		c.Logger.Info("Received /start command", "user_id", userId)
+		client.Logger.Info("Received /start command", "user_id", userId)
 
-		user, err := c.GetUser(userId)
+		user, err := client.GetUser(userId)
 		userName := "User"
 		if err == nil {
 			userName = user.FirstName
@@ -65,26 +64,26 @@ func main() {
 			},
 		}
 
-		msg, err = msg.ReplyText(c, text, &gotdbot.SendTextMessageOpts{
+		msg, err = msg.ReplyText(client, text, &gotdbot.SendTextMessageOpts{
 			ReplyMarkup: kb,
 			ParseMode:   "HTML",
 		})
 		if err != nil {
-			c.Logger.Error("Failed to send welcome message", "err", err)
+			client.Logger.Error("Failed to send welcome message", "err", err)
 			return err
 		}
 
-		link, err := msg.GetLink(c)
+		link, err := msg.GetLink(client)
 		if err != nil {
-			c.Logger.Error("Failed to get message link", "err", err)
+			client.Logger.Error("Failed to get message link", "err", err)
 		} else {
-			c.Logger.Info("Sent welcome message", "link", link.Link)
+			client.Logger.Info("Sent welcome message", "link", link.Link)
 		}
 		return nil
 	})
 
 	// /inline - Send message with inline keyboard buttons
-	client.AddCommandHandler("inline", func(c *gotdbot.Client, u *gotdbot.UpdateNewMessage) error {
+	client.AddCommandHandler("inline", func(client *gotdbot.Client, msg *gotdbot.Message) error {
 		kb := &gotdbot.ReplyMarkupInlineKeyboard{
 			Rows: [][]gotdbot.InlineKeyboardButton{
 				{
@@ -106,9 +105,9 @@ func main() {
 			},
 		}
 
-		text, err := c.ParseText("This is a Inline keyboard", "Markdown")
+		text, err := client.ParseText("This is a Inline keyboard", "Markdown")
 		if err != nil {
-			c.Logger.Error("Failed to parse text", "err", err)
+			client.Logger.Error("Failed to parse text", "err", err)
 			return err
 		}
 
@@ -117,18 +116,18 @@ func main() {
 			ReplyMarkup: kb,
 		}
 
-		message, err := c.SendMessage(u.Message.ChatId, content, opts)
+		message, err := client.SendMessage(msg.ChatId, content, opts)
 		if err != nil {
-			c.Logger.Error("Failed to send message", "err", err)
+			client.Logger.Error("Failed to send message", "err", err)
 			return err
 		}
-		c.Logger.Info("Sent message with inline", "message_id", message.Id)
+		client.Logger.Info("Sent message with inline", "message_id", message.Id)
 
 		return nil
 	})
 
 	// /keyboard - Send message with reply keyboard
-	client.AddCommandHandler("keyboard", func(c *gotdbot.Client, u *gotdbot.UpdateNewMessage) error {
+	client.AddCommandHandler("keyboard", func(client *gotdbot.Client, msg *gotdbot.Message) error {
 		kb := &gotdbot.ReplyMarkupShowKeyboard{
 			Rows: [][]gotdbot.KeyboardButton{
 				{
@@ -156,17 +155,17 @@ func main() {
 			ReplyMarkup: kb,
 		}
 
-		message, err := c.SendMessage(u.Message.ChatId, content, opts)
+		message, err := client.SendMessage(msg.ChatId, content, opts)
 		if err != nil {
-			c.Logger.Error("Failed to send message", "err", err)
+			client.Logger.Error("Failed to send message", "err", err)
 			return err
 		}
-		c.Logger.Info("Sent message with keyboard", "message_id", message.Id)
+		client.Logger.Info("Sent message with keyboard", "message_id", message.Id)
 		return nil
 	})
 
 	// /remove - Remove keyboard
-	client.AddCommandHandler("remove", func(c *gotdbot.Client, u *gotdbot.UpdateNewMessage) error {
+	client.AddCommandHandler("remove", func(client *gotdbot.Client, msg *gotdbot.Message) error {
 		content := &gotdbot.InputMessageText{
 			Text: &gotdbot.FormattedText{
 				Text: "Keyboards removed",
@@ -177,12 +176,12 @@ func main() {
 			ReplyMarkup: &gotdbot.ReplyMarkupRemoveKeyboard{},
 		}
 
-		_, err := c.SendMessage(u.Message.ChatId, content, opts)
+		_, err := client.SendMessage(msg.ChatId, content, opts)
 		return err
 	})
 
 	// /force - Force reply
-	client.AddCommandHandler("force", func(c *gotdbot.Client, u *gotdbot.UpdateNewMessage) error {
+	client.AddCommandHandler("force", func(client *gotdbot.Client, msg *gotdbot.Message) error {
 		content := &gotdbot.InputMessageText{
 			Text: &gotdbot.FormattedText{
 				Text: "This is a force reply",
@@ -193,15 +192,15 @@ func main() {
 			ReplyMarkup: &gotdbot.ReplyMarkupForceReply{},
 		}
 
-		_, err := c.SendMessage(u.Message.ChatId, content, opts)
+		_, err := client.SendMessage(msg.ChatId, content, opts)
 
-		// _, err = u.Message.ReplyText(c, "This is a force reply", &gotdbot.SendTextMessageOpts{ReplyMarkup: &gotdbot.ReplyMarkupForceReply{}})
+		// _, err = msg.ReplyText(client, "This is a force reply", &gotdbot.SendTextMessageOpts{ReplyMarkup: &gotdbot.ReplyMarkupForceReply{}})
 		return err
 	})
 
 	// CallbackQuery Handler
-	client.AddNewCallbackQueryHandler(func(c *gotdbot.Client, u *gotdbot.UpdateNewCallbackQuery) error {
-		c.Logger.Info("Received callback query", "message_id", u.MessageId, "chat_id", u.ChatId)
+	client.AddNewCallbackQueryHandler(func(client *gotdbot.Client, u *gotdbot.UpdateNewCallbackQuery) error {
+		client.Logger.Info("Received callback query", "message_id", u.MessageId, "chat_id", u.ChatId)
 		var data string
 		if u.Payload != nil {
 			if p, ok := u.Payload.(*gotdbot.CallbackQueryPayloadData); ok {
@@ -231,12 +230,12 @@ func main() {
 				},
 			}
 
-			_, err = c.EditMessageText(u.ChatId, inputContent, u.MessageId, &gotdbot.EditMessageTextOpts{
+			_, err = client.EditMessageText(u.ChatId, inputContent, u.MessageId, &gotdbot.EditMessageTextOpts{
 				ReplyMarkup: kb,
 			})
 
 			if err != nil {
-				c.Logger.Error("Failed to edit message", "error", err)
+				client.Logger.Error("Failed to edit message", "error", err)
 			}
 		}
 

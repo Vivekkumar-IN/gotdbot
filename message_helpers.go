@@ -501,8 +501,8 @@ func (m *Message) GetMessageProperties(c *Client) (*MessageProperties, error) {
 }
 
 // GetMessageLink returns the message link.
-func (m *Message) GetMessageLink(c *Client, checklistTaskId int32, mediaTimestamp int32, pollOptionId string, opts *GetMessageLinkOpts) (*MessageLink, error) {
-	return c.GetMessageLink(m.ChatId, checklistTaskId, mediaTimestamp, m.Id, pollOptionId, opts)
+func (m *Message) GetMessageLink(c *Client, checklistTaskId int32, mediaTimestamp int32, pollOptionId string, opts ...*GetMessageLinkOpts) (*MessageLink, error) {
+	return c.GetMessageLink(m.ChatId, checklistTaskId, mediaTimestamp, m.Id, pollOptionId, opts...)
 }
 
 // GetRepliedMessage returns the replied message.
