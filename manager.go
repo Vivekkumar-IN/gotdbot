@@ -90,7 +90,7 @@ func (m *ClientManager) GetClients() []*Client {
 
 // RegisterClient creates a new client, adds it to the manager, and starts it.
 func (m *ClientManager) RegisterClient(apiID int32, apiHash, tokenOrPhone string, opts ...*ClientOpts) (*Client, error) {
-	config := getVariadic(opts, DefaultClientConfig())
+	config := getVariadic(opts, &ClientOpts{})
 	if config.LibraryPath == "" {
 		config.LibraryPath = m.LibraryPath
 	}

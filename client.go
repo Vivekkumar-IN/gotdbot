@@ -11,6 +11,8 @@ import (
 	"os"
 	"strconv"
 
+	"runtime"
+
 	"os/signal"
 	"regexp"
 	"runtime/debug"
@@ -74,45 +76,49 @@ type Client struct {
 
 func NewClient(apiID int32, apiHash, tokenOrPhone string, opts ...*ClientOpts) (*Client, error) {
 	tokenOrPhone = strings.TrimSpace(tokenOrPhone)
-	config := getVariadic(opts, DefaultClientConfig())
+	config := getVariadic(opts, &ClientOpts{})
 
-	def := DefaultClientConfig()
 	if config.UseFileDatabase == nil {
-		config.UseFileDatabase = def.UseFileDatabase
+		config.UseFileDatabase = Bool(true)
 	}
 	if config.UseChatInfoDatabase == nil {
-		config.UseChatInfoDatabase = def.UseChatInfoDatabase
+		config.UseChatInfoDatabase = Bool(true)
 	}
 	if config.UseMessageDatabase == nil {
-		config.UseMessageDatabase = def.UseMessageDatabase
+		config.UseMessageDatabase = Bool(true)
 	}
 	if config.SystemLanguageCode == "" {
-		config.SystemLanguageCode = def.SystemLanguageCode
+		config.SystemLanguageCode = "en"
 	}
 	if config.DeviceModel == "" {
-		config.DeviceModel = def.DeviceModel
+		config.DeviceModel = "Gotdbot"
 	}
 	if config.SystemVersion == "" {
-		config.SystemVersion = def.SystemVersion
+		config.SystemVersion = runtime.GOOS
 	}
 	if config.ApplicationVersion == "" {
-		config.ApplicationVersion = def.ApplicationVersion
+		config.ApplicationVersion = "Gotdbot " + Version
 	}
 	if config.DatabaseDirectory == "" {
-		config.DatabaseDirectory = def.DatabaseDirectory
-	}
-	if config.FilesDirectory == "" {
-		config.FilesDirectory = def.FilesDirectory
+		config.DatabaseDirectory = "database"
 	}
 	if config.Logger == nil {
-		config.Logger = def.Logger
+		config.Logger = slog.New(slog.NewTextHandler(os.Stdout, nil))
 	}
 	if config.AuthorizationTimeout == 0 {
-		config.AuthorizationTimeout = def.AuthorizationTimeout
+		config.AuthorizationTimeout = 60 * time.Second
+	}
+
+	if config.LogVerbosityLevel == 0 {
+		config.LogVerbosityLevel = 2
 	}
 
 	if config.AutoRetry == nil {
-		config.AutoRetry = def.AutoRetry
+		config.AutoRetry = &AutoRetry{}
+	}
+
+	if config.CommandPrefixes == "" {
+		config.CommandPrefixes = "/"
 	}
 
 	if err := tdjson.Init(config.LibraryPath, TDLibVersion); err != nil {
@@ -739,6 +745,11 @@ func (c *Client) AddMessageHandler(hn MessageHandlerFunc, f ...Filter) Handle {
 func (c *Client) AddCommandHandler(command string, hn MessageHandlerFunc, f ...Filter) Handle {
 	filters := append([]Filter{FilterCommand(command)}, f...)
 	return c.AddMessageHandler(hn, filters...).SetPriority(10)
+}
+
+// OnCallback registers a handler for UpdateNewCallbackQuery updates.
+func (c *Client) OnCallback(hn HandlerFunc[UpdateNewCallbackQuery], f ...Filter) Handle {
+	return c.AddNewCallbackQueryHandler(hn, f...)
 }
 
 // OnCommand registers a command handler.

@@ -36,7 +36,7 @@ type (
 	}
 )
 
-const UpdateTypeRaw UpdateType = "__raw__"
+const UpdateTypeRaw UpdateType = "*"
 
 func (h *handle[T]) SetGroup(group int) Handle {
 	h.group.Store(int32(group))

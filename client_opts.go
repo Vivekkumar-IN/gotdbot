@@ -2,8 +2,6 @@ package gotdbot
 
 import (
 	"log/slog"
-	"os"
-	"runtime"
 	"time"
 )
 
@@ -192,28 +190,5 @@ func (o *TDLibOptions) forEachSet(fn func(name string, value interface{})) {
 	}
 	if o.UtcTimeOffset != 0 {
 		fn("utc_time_offset", o.UtcTimeOffset)
-	}
-}
-
-func DefaultClientConfig() *ClientOpts {
-	return &ClientOpts{
-		DatabaseDirectory:       "database",
-		FilesDirectory:          "",
-		DatabaseEncryptionKey:   "",
-		UseFileDatabase:         Bool(true),
-		UseChatInfoDatabase:     Bool(true),
-		UseMessageDatabase:      Bool(true),
-		UseSecretChats:          false,
-		LoadMessagesBeforeReply: false,
-		SystemLanguageCode:      "en",
-		DeviceModel:             "Gotdbot",
-		SystemVersion:           runtime.GOOS,
-		ApplicationVersion:      "Gotdbot " + Version,
-		Logger:                  slog.New(slog.NewTextHandler(os.Stdout, nil)),
-		QrMode:                  false,
-		AuthorizationTimeout:    60 * time.Second,
-		LogVerbosityLevel:       2,
-		AutoRetry:               &AutoRetry{},
-		CommandPrefixes:         "/",
 	}
 }

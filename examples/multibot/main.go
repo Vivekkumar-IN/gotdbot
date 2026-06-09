@@ -36,9 +36,10 @@ func main() {
 		botID := strings.Split(token, ":")[0]
 		dbDir := fmt.Sprintf("tdlib-data-%s", botID)
 
-		config := gotdbot.DefaultClientConfig()
-		config.DatabaseDirectory = dbDir
-		config.FilesDirectory = dbDir + "/files"
+		config := &gotdbot.ClientOpts{
+			DatabaseDirectory: dbDir,
+			FilesDirectory:    dbDir + "/files",
+		}
 
 		if _, err := manager.RegisterClient(apiID, apiHash, token, config); err != nil {
 			log.Printf("Failed to start bot %s: %v", token, err)
