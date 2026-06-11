@@ -23,7 +23,7 @@ func main() {
 
 	var startTime = time.Now()
 
-	client.AddCommandHandler("start", func(c *gotdbot.Client, u *gotdbot.UpdateNewMessage) error {
+	client.AddCommandHandler("start", func(client *gotdbot.Client, msg *gotdbot.Message) error {
 		kb := &gotdbot.ReplyMarkupInlineKeyboard{
 			Rows: [][]gotdbot.InlineKeyboardButton{
 				{
@@ -37,32 +37,21 @@ func main() {
 			},
 		}
 
-		content := &gotdbot.InputMessageText{
-			Text: &gotdbot.FormattedText{
-				Text: "Hello! I am an echo bot powered by gotdbot " + gotdbot.Version,
-			},
-		}
-
-		opts := &gotdbot.SendMessageOpts{
-			ReplyTo: &gotdbot.InputMessageReplyToMessage{
-				MessageId: u.Message.Id,
-			},
+		_, err := msg.ReplyText(client, "Hello! I am an echo bot powered by gotdbot "+gotdbot.Version, &gotdbot.SendTextMessageOpts{
 			ReplyMarkup: kb,
-		}
-
-		_, err := c.SendMessage(u.Message.ChatId, content, opts)
+		})
 		if err != nil {
-			log.Printf("Error sending message: %v", err)
+			client.Logger.Errorf("Error sending message: %v", err)
 		}
 		return nil
 	})
 
-	client.AddDeleteMessagesHandler(func(c *gotdbot.Client, u *gotdbot.UpdateDeleteMessages) error {
-		log.Printf("Messages deleted: %v (ChatID %d)", u.MessageIds, u.ChatId)
+	client.AddDeleteMessagesHandler(func(client *gotdbot.Client, u *gotdbot.UpdateDeleteMessages) error {
+		client.Logger.Infof("Messages deleted: ids=%v, chat_id=%d", u.MessageIds, u.ChatId)
 		return nil
 	})
 
-	client.AddCommandHandler("go", func(c *gotdbot.Client, u *gotdbot.UpdateNewMessage) error {
+	client.AddCommandHandler("go", func(client *gotdbot.Client, msg *gotdbot.Message) error {
 		var m runtime.MemStats
 		runtime.ReadMemStats(&m)
 
@@ -88,12 +77,12 @@ func main() {
 			m.NumGC,
 		)
 
-		_, err := c.SendTextMessage(u.Message.ChatId, reply, &gotdbot.SendTextMessageOpts{ReplyToMessageID: u.Message.Id})
+		_, err := msg.ReplyText(client, reply)
 		return err
 	})
 
-	client.AddNewMessageHandler(func(c *gotdbot.Client, u *gotdbot.UpdateNewMessage) error {
-		_, err := c.ForwardMessages(u.Message.ChatId, u.Message.ChatId, []int64{u.Message.Id}, &gotdbot.ForwardMessagesOpts{SendCopy: true})
+	client.OnMessage(func(client *gotdbot.Client, msg *gotdbot.Message) error {
+		_, err := msg.Copy(client, msg.ChatId)
 		return err
 	}, gotdbot.FilterPrivate)
 
@@ -107,6 +96,6 @@ func main() {
 	if me.Usernames != nil && len(me.Usernames.ActiveUsernames) > 0 {
 		username = me.Usernames.ActiveUsernames[0]
 	}
-	client.Logger.Info("Logged in", "username", username, "id", me.Id)
+	client.Logger.Infof("Logged in: username=%s, id=%d", username, me.Id)
 	client.Idle()
 }

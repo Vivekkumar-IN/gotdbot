@@ -14,14 +14,17 @@ type (
 		GetGroup() int
 		SetPriority(priority int) Handle
 		GetPriority() int
-		Check(*Client, TlObject) bool
+		IsMatch(*Client, TlObject) bool
 		Execute(*Client, TlObject) error
 		GetType() UpdateType
 	}
 
 	HandlerFunc[T any] func(*Client, *T) error
 
-	RawHandlerFunc func(*Client, TlObject) error
+	// MessageHandlerFunc handles the Message carried by an UpdateNewMessage.
+	MessageHandlerFunc = HandlerFunc[Message]
+
+	RawHandler func(*Client, TlObject) error
 
 	handle[T any] struct {
 		client   *Client
@@ -33,7 +36,7 @@ type (
 	}
 )
 
-const UpdateTypeRaw UpdateType = "__raw__"
+const UpdateTypeRaw UpdateType = "*"
 
 func (h *handle[T]) SetGroup(group int) Handle {
 	h.group.Store(int32(group))
@@ -92,7 +95,7 @@ func (h *handle[T]) isOutgoingFilter(f Filter) bool {
 	return false
 }
 
-func (h *handle[T]) Check(c *Client, update TlObject) bool {
+func (h *handle[T]) IsMatch(c *Client, update TlObject) bool {
 	u, ok := any(update).(*T)
 	if !ok {
 		return false
@@ -122,7 +125,7 @@ func (h *handle[T]) Execute(c *Client, update TlObject) error {
 
 type rawHandle struct {
 	client   *Client
-	handler  RawHandlerFunc
+	handler  RawHandler
 	filters  []Filter
 	group    atomic.Int32
 	priority atomic.Int32
@@ -156,7 +159,7 @@ func (h *rawHandle) GetType() UpdateType {
 	return UpdateTypeRaw
 }
 
-func (h *rawHandle) Check(c *Client, update TlObject) bool {
+func (h *rawHandle) IsMatch(c *Client, update TlObject) bool {
 	for _, f := range h.filters {
 		if !f.CheckAny(c, update) {
 			return false
@@ -181,28 +184,28 @@ type Filter interface {
 }
 
 type filterFunc struct {
-	check    func(*Client, *UpdateNewMessage) bool
-	checkCB  func(*Client, *UpdateNewCallbackQuery) bool
-	checkAny func(*Client, TlObject) bool
+	msgFn func(*Client, *UpdateNewMessage) bool
+	cbFn  func(*Client, *UpdateNewCallbackQuery) bool
+	anyFn func(*Client, TlObject) bool
 }
 
 func (f *filterFunc) Check(c *Client, u *UpdateNewMessage) bool {
-	if f.check != nil {
-		return f.check(c, u)
+	if f.msgFn != nil {
+		return f.msgFn(c, u)
 	}
 	return true
 }
 
 func (f *filterFunc) CheckCB(c *Client, u *UpdateNewCallbackQuery) bool {
-	if f.checkCB != nil {
-		return f.checkCB(c, u)
+	if f.cbFn != nil {
+		return f.cbFn(c, u)
 	}
 	return true
 }
 
 func (f *filterFunc) CheckAny(c *Client, u TlObject) bool {
-	if f.checkAny != nil {
-		return f.checkAny(c, u)
+	if f.anyFn != nil {
+		return f.anyFn(c, u)
 	}
 	switch upd := u.(type) {
 	case *UpdateNewMessage:
@@ -210,7 +213,7 @@ func (f *filterFunc) CheckAny(c *Client, u TlObject) bool {
 	case *UpdateNewCallbackQuery:
 		return f.CheckCB(c, upd)
 	}
-	return f.check == nil && f.checkCB == nil
+	return f.msgFn == nil && f.cbFn == nil
 }
 
 func (f *filterFunc) And(other Filter) Filter {
@@ -359,6 +362,39 @@ func (f *notFilter) Not() Filter {
 	return f.filter
 }
 
+func And(filters ...Filter) Filter {
+	if len(filters) == 0 {
+		return FilterAll
+	}
+	return &andFilter{filters: filters}
+}
+
+func Or(filters ...Filter) Filter {
+	if len(filters) == 0 {
+		return FilterAll
+	}
+	return &orFilter{filters: filters}
+}
+
+func Not(filter Filter) Filter {
+	if nf, ok := filter.(*notFilter); ok {
+		return nf.filter
+	}
+	return &notFilter{filter: filter}
+}
+
+func FilterCustomMessage(fn func(*Client, *UpdateNewMessage) bool) Filter {
+	return &filterFunc{msgFn: fn}
+}
+
+func FilterCustomCallback(fn func(*Client, *UpdateNewCallbackQuery) bool) Filter {
+	return &filterFunc{cbFn: fn}
+}
+
+func FilterCustomAny(fn func(*Client, TlObject) bool) Filter {
+	return &filterFunc{anyFn: fn}
+}
+
 // --- Default Filters ---
 
 type outgoingFilter struct {
@@ -373,63 +409,63 @@ var (
 	FilterAll Filter = &filterFunc{}
 
 	FilterIncoming Filter = &filterFunc{
-		check: func(_ *Client, u *UpdateNewMessage) bool {
+		msgFn: func(_ *Client, u *UpdateNewMessage) bool {
 			return u.Message != nil && !u.Message.IsOutgoing
 		},
 	}
 
 	FilterOutgoing Filter = &outgoingFilter{
 		Filter: &filterFunc{
-			check: func(_ *Client, u *UpdateNewMessage) bool {
+			msgFn: func(_ *Client, u *UpdateNewMessage) bool {
 				return u.Message != nil && u.Message.IsOutgoing
 			},
 		},
 	}
 
 	FilterPrivate Filter = &filterFunc{
-		check: func(_ *Client, u *UpdateNewMessage) bool {
+		msgFn: func(_ *Client, u *UpdateNewMessage) bool {
 			return u.Message != nil && u.Message.ChatId > 0
 		},
-		checkCB: func(_ *Client, u *UpdateNewCallbackQuery) bool {
+		cbFn: func(_ *Client, u *UpdateNewCallbackQuery) bool {
 			return u.ChatId > 0
 		},
-		checkAny: func(_ *Client, u TlObject) bool {
+		anyFn: func(_ *Client, u TlObject) bool {
 			id := ExtractChatID(u)
 			return id > 0
 		},
 	}
 
 	FilterGroup Filter = &filterFunc{
-		check: func(_ *Client, u *UpdateNewMessage) bool {
+		msgFn: func(_ *Client, u *UpdateNewMessage) bool {
 			return u.Message != nil && u.Message.IsGroup()
 		},
-		checkCB: func(_ *Client, u *UpdateNewCallbackQuery) bool {
+		cbFn: func(_ *Client, u *UpdateNewCallbackQuery) bool {
 			return u.ChatId < 0 && !isSupergroupOrChannelID(u.ChatId)
 		},
-		checkAny: func(_ *Client, u TlObject) bool {
+		anyFn: func(_ *Client, u TlObject) bool {
 			id := ExtractChatID(u)
 			return id < 0 && !isSupergroupOrChannelID(id)
 		},
 	}
 
 	FilterChannel Filter = &filterFunc{
-		check: func(_ *Client, u *UpdateNewMessage) bool {
+		msgFn: func(_ *Client, u *UpdateNewMessage) bool {
 			return u.Message != nil && u.Message.IsSupergroupOrChannel()
 		},
-		checkCB: func(_ *Client, u *UpdateNewCallbackQuery) bool {
+		cbFn: func(_ *Client, u *UpdateNewCallbackQuery) bool {
 			return isSupergroupOrChannelID(u.ChatId)
 		},
-		checkAny: func(_ *Client, u TlObject) bool {
+		anyFn: func(_ *Client, u TlObject) bool {
 			id := ExtractChatID(u)
 			return isSupergroupOrChannelID(id)
 		},
 	}
 
 	FilterReply Filter = &filterFunc{
-		check: func(_ *Client, u *UpdateNewMessage) bool {
+		msgFn: func(_ *Client, u *UpdateNewMessage) bool {
 			return u.Message != nil && u.Message.ReplyTo != nil
 		},
-		checkAny: func(_ *Client, u TlObject) bool {
+		anyFn: func(_ *Client, u TlObject) bool {
 			if upd, ok := u.(*UpdateNewMessage); ok {
 				return upd.Message != nil && upd.Message.ReplyTo != nil
 			}
@@ -438,10 +474,10 @@ var (
 	}
 
 	FilterForward Filter = &filterFunc{
-		check: func(_ *Client, u *UpdateNewMessage) bool {
+		msgFn: func(_ *Client, u *UpdateNewMessage) bool {
 			return u.Message != nil && u.Message.ForwardInfo != nil
 		},
-		checkAny: func(_ *Client, u TlObject) bool {
+		anyFn: func(_ *Client, u TlObject) bool {
 			if upd, ok := u.(*UpdateNewMessage); ok {
 				return upd.Message != nil && upd.Message.ForwardInfo != nil
 			}
@@ -450,14 +486,14 @@ var (
 	}
 
 	FilterEdited Filter = &filterFunc{
-		checkAny: func(_ *Client, u TlObject) bool {
+		anyFn: func(_ *Client, u TlObject) bool {
 			_, ok := u.(*UpdateMessageEdited)
 			return ok
 		},
 	}
 
 	FilterText Filter = &filterFunc{
-		check: func(_ *Client, u *UpdateNewMessage) bool {
+		msgFn: func(_ *Client, u *UpdateNewMessage) bool {
 			if u.Message == nil {
 				return false
 			}
@@ -466,7 +502,7 @@ var (
 	}
 
 	FilterPhoto Filter = &filterFunc{
-		check: func(_ *Client, u *UpdateNewMessage) bool {
+		msgFn: func(_ *Client, u *UpdateNewMessage) bool {
 			if u.Message == nil || u.Message.Content == nil {
 				return false
 			}
@@ -476,7 +512,7 @@ var (
 	}
 
 	FilterVideo Filter = &filterFunc{
-		check: func(_ *Client, u *UpdateNewMessage) bool {
+		msgFn: func(_ *Client, u *UpdateNewMessage) bool {
 			if u.Message == nil || u.Message.Content == nil {
 				return false
 			}
@@ -486,7 +522,7 @@ var (
 	}
 
 	FilterAnimation Filter = &filterFunc{
-		check: func(_ *Client, u *UpdateNewMessage) bool {
+		msgFn: func(_ *Client, u *UpdateNewMessage) bool {
 			if u.Message == nil || u.Message.Content == nil {
 				return false
 			}
@@ -496,7 +532,7 @@ var (
 	}
 
 	FilterAudio Filter = &filterFunc{
-		check: func(_ *Client, u *UpdateNewMessage) bool {
+		msgFn: func(_ *Client, u *UpdateNewMessage) bool {
 			if u.Message == nil || u.Message.Content == nil {
 				return false
 			}
@@ -506,7 +542,7 @@ var (
 	}
 
 	FilterDocument Filter = &filterFunc{
-		check: func(_ *Client, u *UpdateNewMessage) bool {
+		msgFn: func(_ *Client, u *UpdateNewMessage) bool {
 			if u.Message == nil || u.Message.Content == nil {
 				return false
 			}
@@ -516,7 +552,7 @@ var (
 	}
 
 	FilterSticker Filter = &filterFunc{
-		check: func(_ *Client, u *UpdateNewMessage) bool {
+		msgFn: func(_ *Client, u *UpdateNewMessage) bool {
 			if u.Message == nil || u.Message.Content == nil {
 				return false
 			}
@@ -526,7 +562,7 @@ var (
 	}
 
 	FilterVideoNote Filter = &filterFunc{
-		check: func(_ *Client, u *UpdateNewMessage) bool {
+		msgFn: func(_ *Client, u *UpdateNewMessage) bool {
 			if u.Message == nil || u.Message.Content == nil {
 				return false
 			}
@@ -536,7 +572,7 @@ var (
 	}
 
 	FilterVoiceNote Filter = &filterFunc{
-		check: func(_ *Client, u *UpdateNewMessage) bool {
+		msgFn: func(_ *Client, u *UpdateNewMessage) bool {
 			if u.Message == nil || u.Message.Content == nil {
 				return false
 			}
@@ -548,13 +584,13 @@ var (
 
 func FilterChatID(id int64) Filter {
 	return &filterFunc{
-		check: func(_ *Client, u *UpdateNewMessage) bool {
+		msgFn: func(_ *Client, u *UpdateNewMessage) bool {
 			return u.Message != nil && u.Message.ChatId == id
 		},
-		checkCB: func(_ *Client, u *UpdateNewCallbackQuery) bool {
+		cbFn: func(_ *Client, u *UpdateNewCallbackQuery) bool {
 			return u.ChatId == id
 		},
-		checkAny: func(_ *Client, u TlObject) bool {
+		anyFn: func(_ *Client, u TlObject) bool {
 			return ExtractChatID(u) == id
 		},
 	}
@@ -562,13 +598,13 @@ func FilterChatID(id int64) Filter {
 
 func FilterSenderID(id int64) Filter {
 	return &filterFunc{
-		check: func(_ *Client, u *UpdateNewMessage) bool {
+		msgFn: func(_ *Client, u *UpdateNewMessage) bool {
 			return u.Message != nil && u.Message.SenderID() == id
 		},
-		checkCB: func(_ *Client, u *UpdateNewCallbackQuery) bool {
+		cbFn: func(_ *Client, u *UpdateNewCallbackQuery) bool {
 			return u.SenderUserId == id
 		},
-		checkAny: func(_ *Client, u TlObject) bool {
+		anyFn: func(_ *Client, u TlObject) bool {
 			return ExtractSenderID(u) == id
 		},
 	}
@@ -576,7 +612,7 @@ func FilterSenderID(id int64) Filter {
 
 func FilterCommand(command string) Filter {
 	return &filterFunc{
-		check: func(c *Client, u *UpdateNewMessage) bool {
+		msgFn: func(c *Client, u *UpdateNewMessage) bool {
 			if u.Message == nil {
 				return false
 			}
@@ -612,13 +648,13 @@ func FilterCommand(command string) Filter {
 
 func FilterContains(match string) Filter {
 	return &filterFunc{
-		check: func(_ *Client, u *UpdateNewMessage) bool {
+		msgFn: func(_ *Client, u *UpdateNewMessage) bool {
 			if u.Message == nil {
 				return false
 			}
 			return strings.Contains(u.Message.GetText(), match)
 		},
-		checkCB: func(_ *Client, u *UpdateNewCallbackQuery) bool {
+		cbFn: func(_ *Client, u *UpdateNewCallbackQuery) bool {
 			return strings.Contains(u.DataString(), match)
 		},
 	}
@@ -626,13 +662,13 @@ func FilterContains(match string) Filter {
 
 func FilterPrefix(prefix string) Filter {
 	return &filterFunc{
-		check: func(_ *Client, u *UpdateNewMessage) bool {
+		msgFn: func(_ *Client, u *UpdateNewMessage) bool {
 			if u.Message == nil {
 				return false
 			}
 			return strings.HasPrefix(u.Message.GetText(), prefix)
 		},
-		checkCB: func(_ *Client, u *UpdateNewCallbackQuery) bool {
+		cbFn: func(_ *Client, u *UpdateNewCallbackQuery) bool {
 			return strings.HasPrefix(u.DataString(), prefix)
 		},
 	}
@@ -640,7 +676,7 @@ func FilterPrefix(prefix string) Filter {
 
 func FilterSuffix(suffix string) Filter {
 	return &filterFunc{
-		checkCB: func(_ *Client, u *UpdateNewCallbackQuery) bool {
+		cbFn: func(_ *Client, u *UpdateNewCallbackQuery) bool {
 			return strings.HasSuffix(u.DataString(), suffix)
 		},
 	}
@@ -648,13 +684,13 @@ func FilterSuffix(suffix string) Filter {
 
 func FilterEqual(match string) Filter {
 	return &filterFunc{
-		check: func(_ *Client, u *UpdateNewMessage) bool {
+		msgFn: func(_ *Client, u *UpdateNewMessage) bool {
 			if u.Message == nil {
 				return false
 			}
 			return u.Message.GetText() == match
 		},
-		checkCB: func(_ *Client, u *UpdateNewCallbackQuery) bool {
+		cbFn: func(_ *Client, u *UpdateNewCallbackQuery) bool {
 			return u.DataString() == match
 		},
 	}
@@ -664,18 +700,18 @@ func FilterRegex(pattern string) Filter {
 	reg, err := regexp.Compile(pattern)
 	if err != nil {
 		return &filterFunc{
-			check:   func(_ *Client, _ *UpdateNewMessage) bool { return false },
-			checkCB: func(_ *Client, _ *UpdateNewCallbackQuery) bool { return false },
+			msgFn: func(_ *Client, _ *UpdateNewMessage) bool { return false },
+			cbFn:  func(_ *Client, _ *UpdateNewCallbackQuery) bool { return false },
 		}
 	}
 	return &filterFunc{
-		check: func(_ *Client, u *UpdateNewMessage) bool {
+		msgFn: func(_ *Client, u *UpdateNewMessage) bool {
 			if u.Message == nil {
 				return false
 			}
 			return reg.MatchString(u.Message.GetText())
 		},
-		checkCB: func(_ *Client, u *UpdateNewCallbackQuery) bool {
+		cbFn: func(_ *Client, u *UpdateNewCallbackQuery) bool {
 			data := u.CallbackData()
 			if data == nil {
 				return false

@@ -1,15 +1,15 @@
 package gotdbot
 
 import (
-	"log/slog"
-	"os"
-	"runtime"
 	"time"
+
+	"github.com/Vivekkumar-IN/gotdbot/logger"
 )
 
 type AutoRetry struct {
 	ChatNotFound    bool
 	MessageNotFound bool
+	MaxFloodWait    time.Duration
 }
 
 type ClientOpts struct {
@@ -28,13 +28,14 @@ type ClientOpts struct {
 	SystemVersion           string
 	ApplicationVersion      string
 	TDLibOptions            *TDLibOptions
-	Logger                  *slog.Logger
+	Logger                  logger.Logger
 	QrMode                  bool
 	AuthorizationTimeout    time.Duration
 	LogVerbosityLevel       int32
 	LogStream               LogStream
 	AutoRetry               *AutoRetry
 	CommandPrefixes         string
+	ParseMode               string
 
 	// PanicHandler handles panics during update processing.
 	PanicHandler func(client *Client, update TlObject, r any)
@@ -191,28 +192,5 @@ func (o *TDLibOptions) forEachSet(fn func(name string, value interface{})) {
 	}
 	if o.UtcTimeOffset != 0 {
 		fn("utc_time_offset", o.UtcTimeOffset)
-	}
-}
-
-func DefaultClientConfig() *ClientOpts {
-	return &ClientOpts{
-		DatabaseDirectory:       "database",
-		FilesDirectory:          "",
-		DatabaseEncryptionKey:   "",
-		UseFileDatabase:         Bool(true),
-		UseChatInfoDatabase:     Bool(true),
-		UseMessageDatabase:      Bool(true),
-		UseSecretChats:          false,
-		LoadMessagesBeforeReply: false,
-		SystemLanguageCode:      "en",
-		DeviceModel:             "Gotdbot",
-		SystemVersion:           runtime.GOOS,
-		ApplicationVersion:      "Gotdbot " + Version,
-		Logger:                  slog.New(slog.NewTextHandler(os.Stdout, nil)),
-		QrMode:                  false,
-		AuthorizationTimeout:    60 * time.Second,
-		LogVerbosityLevel:       2,
-		AutoRetry:               &AutoRetry{},
-		CommandPrefixes:         "/",
 	}
 }

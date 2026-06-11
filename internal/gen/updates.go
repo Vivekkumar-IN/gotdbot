@@ -65,6 +65,14 @@ func generateUpdates(types []TLType) {
 }
 
 `, constName)
+
+		onMethodName := "On" + strings.TrimPrefix(typ, "Update")
+		w("// %s registers a handler for %s updates.\n", onMethodName, typ)
+		w(`func (c *Client) %s(hn HandlerFunc[%s], f ...Filter) Handle {
+	return c.%s(hn, f...)
+}
+
+`, onMethodName, typ, methodName)
 	}
 
 	// Generate ExtractChatID helper

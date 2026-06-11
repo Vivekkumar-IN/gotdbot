@@ -26,8 +26,8 @@ func main() {
 		panic(err)
 	}
 
-	client.AddCommandHandler("hi", func(c *gotdbot.Client, u *gotdbot.UpdateNewMessage) error {
-		_, err := u.Message.ReplyText(c, "Hi, this is from gotdbot!", nil)
+	client.OnCommand("hi", func(client *gotdbot.Client, msg *gotdbot.Message) error {
+		_, err := msg.ReplyText(client, "Hi, this is from gotdbot!")
 		return err
 	})
 

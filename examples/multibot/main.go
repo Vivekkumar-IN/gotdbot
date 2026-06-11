@@ -21,8 +21,8 @@ func main() {
 	// OnNewClient fires once per bot when it is registered.
 	// All handlers are attached here so every bot shares the same logic.
 	manager.OnNewClient(func(c *gotdbot.Client) {
-		c.AddNewMessageHandler(echoHandler, gotdbot.FilterPrivate)
-		c.AddCommandHandler("start", startHandler)
+		c.OnMessage(echoHandler, gotdbot.FilterPrivate)
+		c.OnCommand("start", startHandler)
 	})
 
 	for _, token := range strings.Split(tokensStr, ",") {
@@ -36,9 +36,10 @@ func main() {
 		botID := strings.Split(token, ":")[0]
 		dbDir := fmt.Sprintf("tdlib-data-%s", botID)
 
-		config := gotdbot.DefaultClientConfig()
-		config.DatabaseDirectory = dbDir
-		config.FilesDirectory = dbDir + "/files"
+		config := &gotdbot.ClientOpts{
+			DatabaseDirectory: dbDir,
+			FilesDirectory:    dbDir + "/files",
+		}
 
 		if _, err := manager.RegisterClient(apiID, apiHash, token, config); err != nil {
 			log.Printf("Failed to start bot %s: %v", token, err)
@@ -50,15 +51,12 @@ func main() {
 	manager.Idle()
 }
 
-func echoHandler(client *gotdbot.Client, update *gotdbot.UpdateNewMessage) error {
-	m := update.Message
-
-	_, err := m.ReplyText(client, m.Text())
+func echoHandler(client *gotdbot.Client, msg *gotdbot.Message) error {
+	_, err := msg.ReplyText(client, msg.Text())
 	return err
 }
 
-func startHandler(client *gotdbot.Client, update *gotdbot.UpdateNewMessage) error {
-	m := update.Message
-	_, err := m.ReplyText(client, "Hello! I'm alive and running 🚀")
+func startHandler(client *gotdbot.Client, msg *gotdbot.Message) error {
+	_, err := msg.ReplyText(client, "Hello! I'm alive and running 🚀")
 	return err
 }
