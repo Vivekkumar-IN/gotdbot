@@ -41,13 +41,13 @@ func main() {
 			ReplyMarkup: kb,
 		})
 		if err != nil {
-			client.Logger.Error("Error sending message", "error", err)
+			client.Logger.Errorf("Error sending message: %v", err)
 		}
 		return nil
 	})
 
 	client.AddDeleteMessagesHandler(func(client *gotdbot.Client, u *gotdbot.UpdateDeleteMessages) error {
-		client.Logger.Info("Messages deleted", "ids", u.MessageIds, "chat_id", u.ChatId)
+		client.Logger.Infof("Messages deleted: ids=%v, chat_id=%d", u.MessageIds, u.ChatId)
 		return nil
 	})
 
@@ -96,6 +96,6 @@ func main() {
 	if me.Usernames != nil && len(me.Usernames.ActiveUsernames) > 0 {
 		username = me.Usernames.ActiveUsernames[0]
 	}
-	client.Logger.Info("Logged in", "username", username, "id", me.Id)
+	client.Logger.Infof("Logged in: username=%s, id=%d", username, me.Id)
 	client.Idle()
 }

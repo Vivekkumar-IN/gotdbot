@@ -19,12 +19,12 @@ func SetLevel(level Level) { std.SetLevel(level) }
 // SetOutput sets the global logger's output writer.
 func SetOutput(w io.Writer) { std.SetOutput(w) }
 
-func Debug(v ...any)  { std.Debug(v...) }
-func Info(v ...any)   { std.Info(v...) }
-func Warn(v ...any)   { std.Warn(v...) }
-func Error(v ...any)  { std.Error(v...) }
-func Fatal(v ...any)  { std.Fatal(v...) }
-func Panic(v ...any)  { std.Panic(v...) }
+func Debug(v ...any) { std.Debug(v...) }
+func Info(v ...any)  { std.Info(v...) }
+func Warn(v ...any)  { std.Warn(v...) }
+func Error(v ...any) { std.Error(v...) }
+func Fatal(v ...any) { std.Fatal(v...) }
+func Panic(v ...any) { std.Panic(v...) }
 
 func Debugf(format string, v ...any) { std.Debugf(format, v...) }
 func Infof(format string, v ...any)  { std.Infof(format, v...) }

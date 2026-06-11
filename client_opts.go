@@ -1,8 +1,9 @@
 package gotdbot
 
 import (
-	"log/slog"
 	"time"
+
+	"github.com/Vivekkumar-IN/gotdbot/logger"
 )
 
 type AutoRetry struct {
@@ -27,13 +28,14 @@ type ClientOpts struct {
 	SystemVersion           string
 	ApplicationVersion      string
 	TDLibOptions            *TDLibOptions
-	Logger                  *slog.Logger
+	Logger                  logger.Logger
 	QrMode                  bool
 	AuthorizationTimeout    time.Duration
 	LogVerbosityLevel       int32
 	LogStream               LogStream
 	AutoRetry               *AutoRetry
 	CommandPrefixes         string
+	ParseMode               string
 
 	// PanicHandler handles panics during update processing.
 	PanicHandler func(client *Client, update TlObject, r any)

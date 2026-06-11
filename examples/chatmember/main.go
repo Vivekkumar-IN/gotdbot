@@ -22,7 +22,7 @@ func main() {
 		panic(err)
 	}
 
-	client.Logger.Info("Starting bot...")
+	client.Logger.Infof("Starting bot...")
 	// Register the UpdateChatMember handler
 	// This will trigger on any change in chat/user membership (join, leave, promote, demote, etc.)
 	client.AddChatMemberHandler(func(client *gotdbot.Client, u *gotdbot.UpdateChatMember) error {
@@ -60,7 +60,7 @@ func main() {
 			// User Left or was Kicked
 			if userId == me.Id {
 				// We left? now we can't send message, but log it.
-				client.Logger.Info("Bot left chat", "chat_id", chatId)
+				client.Logger.Infof("Bot left chat: chat_id=%d", chatId)
 				return nil
 			}
 			text = fmt.Sprintf("%s left or was kicked.", memberName)
@@ -79,17 +79,17 @@ func main() {
 			text = fmt.Sprintf("%s was demoted to Member.", memberName)
 		} else {
 			// if user unblocks the bot, we receive a status changes as Banned TO-> Member
-			client.Logger.Info("Status change", "chat_id", chatId, "user_id", userId, "old", oldStatus, "new", newStatus)
+			client.Logger.Infof("Status change: chat_id=%d, user_id=%d, old=%s, new=%s", chatId, userId, oldStatus, newStatus)
 			text = fmt.Sprintf("%s status changed: %s -> %s", memberName, oldStatus, newStatus)
 		}
 
-		client.Logger.Info("Chat member update", "chat_id", chatId, "text", text)
+		client.Logger.Infof("Chat member update: chat_id=%d, text=%s", chatId, text)
 		_, err := client.SendTextMessage(chatId, text, &gotdbot.SendTextMessageOpts{
 			ParseMode: "HTML",
 		})
 
 		if err != nil {
-			client.Logger.Error("Failed to send message", "chat_id", chatId, "error", err)
+			client.Logger.Errorf("Failed to send message: chat_id=%d, error=%v", chatId, err)
 		}
 
 		return nil

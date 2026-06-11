@@ -158,15 +158,17 @@ func (l *defaultLogger) emit(level Level, msg string) {
 	}
 }
 
-func (l *defaultLogger) log(level Level, v []any)                    { l.emit(level, fmt.Sprint(v...)) }
-func (l *defaultLogger) logf(level Level, format string, v []any)    { l.emit(level, fmt.Sprintf(format, v...)) }
+func (l *defaultLogger) log(level Level, v []any) { l.emit(level, fmt.Sprint(v...)) }
+func (l *defaultLogger) logf(level Level, format string, v []any) {
+	l.emit(level, fmt.Sprintf(format, v...))
+}
 
-func (l *defaultLogger) Debug(v ...any)  { l.log(LevelDebug, v) }
-func (l *defaultLogger) Info(v ...any)   { l.log(LevelInfo, v) }
-func (l *defaultLogger) Warn(v ...any)   { l.log(LevelWarn, v) }
-func (l *defaultLogger) Error(v ...any)  { l.log(LevelError, v) }
-func (l *defaultLogger) Fatal(v ...any)  { l.log(LevelFatal, v) }
-func (l *defaultLogger) Panic(v ...any)  { l.log(LevelPanic, v) }
+func (l *defaultLogger) Debug(v ...any) { l.log(LevelDebug, v) }
+func (l *defaultLogger) Info(v ...any)  { l.log(LevelInfo, v) }
+func (l *defaultLogger) Warn(v ...any)  { l.log(LevelWarn, v) }
+func (l *defaultLogger) Error(v ...any) { l.log(LevelError, v) }
+func (l *defaultLogger) Fatal(v ...any) { l.log(LevelFatal, v) }
+func (l *defaultLogger) Panic(v ...any) { l.log(LevelPanic, v) }
 
 func (l *defaultLogger) Debugf(format string, v ...any) { l.logf(LevelDebug, format, v) }
 func (l *defaultLogger) Infof(format string, v ...any)  { l.logf(LevelInfo, format, v) }

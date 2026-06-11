@@ -35,11 +35,11 @@ func main() {
 
 		err := msg.Action(client, &gotdbot.SendChatActionOpts{Action: &gotdbot.ChatActionTyping{}})
 		if err != nil {
-			client.Logger.Error("Failed to send chat action", "err", err)
+			client.Logger.Errorf("Failed to send chat action: %v", err)
 			return err
 		}
 
-		client.Logger.Info("Received /start command", "user_id", userId)
+		client.Logger.Infof("Received /start command: user_id=%d", userId)
 
 		user, err := client.GetUser(userId)
 		userName := "User"
@@ -69,15 +69,15 @@ func main() {
 			ParseMode:   "HTML",
 		})
 		if err != nil {
-			client.Logger.Error("Failed to send welcome message", "err", err)
+			client.Logger.Errorf("Failed to send welcome message: %v", err)
 			return err
 		}
 
 		link, err := msg.GetLink(client)
 		if err != nil {
-			client.Logger.Error("Failed to get message link", "err", err)
+			client.Logger.Errorf("Failed to get message link: %v", err)
 		} else {
-			client.Logger.Info("Sent welcome message", "link", link.Link)
+			client.Logger.Infof("Sent welcome message: %s", link.Link)
 		}
 		return nil
 	})
@@ -107,7 +107,7 @@ func main() {
 
 		text, err := client.ParseText("This is a Inline keyboard", "Markdown")
 		if err != nil {
-			client.Logger.Error("Failed to parse text", "err", err)
+			client.Logger.Errorf("Failed to parse text: %v", err)
 			return err
 		}
 
@@ -118,10 +118,10 @@ func main() {
 
 		message, err := client.SendMessage(msg.ChatId, content, opts)
 		if err != nil {
-			client.Logger.Error("Failed to send message", "err", err)
+			client.Logger.Errorf("Failed to send message: %v", err)
 			return err
 		}
-		client.Logger.Info("Sent message with inline", "message_id", message.Id)
+		client.Logger.Infof("Sent message with inline: message_id=%d", message.Id)
 
 		return nil
 	})
@@ -157,10 +157,10 @@ func main() {
 
 		message, err := client.SendMessage(msg.ChatId, content, opts)
 		if err != nil {
-			client.Logger.Error("Failed to send message", "err", err)
+			client.Logger.Errorf("Failed to send message: %v", err)
 			return err
 		}
-		client.Logger.Info("Sent message with keyboard", "message_id", message.Id)
+		client.Logger.Infof("Sent message with keyboard: message_id=%d", message.Id)
 		return nil
 	})
 
@@ -200,7 +200,7 @@ func main() {
 
 	// CallbackQuery Handler
 	client.AddNewCallbackQueryHandler(func(client *gotdbot.Client, u *gotdbot.UpdateNewCallbackQuery) error {
-		client.Logger.Info("Received callback query", "message_id", u.MessageId, "chat_id", u.ChatId)
+		client.Logger.Infof("Received callback query: message_id=%d, chat_id=%d", u.MessageId, u.ChatId)
 		var data string
 		if u.Payload != nil {
 			if p, ok := u.Payload.(*gotdbot.CallbackQueryPayloadData); ok {
@@ -235,7 +235,7 @@ func main() {
 			})
 
 			if err != nil {
-				client.Logger.Error("Failed to edit message", "error", err)
+				client.Logger.Errorf("Failed to edit message: %v", err)
 			}
 		}
 
@@ -253,7 +253,7 @@ func main() {
 		if me.Usernames != nil && len(me.Usernames.ActiveUsernames) > 0 {
 			username = me.Usernames.ActiveUsernames[0]
 		}
-		client.Logger.Info("Logged in", "username", username, "id", me.Id)
+		client.Logger.Infof("Logged in: username=%s, id=%d", username, me.Id)
 	}
 
 	client.Idle()
