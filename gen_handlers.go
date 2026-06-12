@@ -44,6 +44,7 @@ const (
 	UpdateTypeChatHasScheduledMessages                 UpdateType = "updateChatHasScheduledMessages"
 	UpdateTypeChatIsMarkedAsUnread                     UpdateType = "updateChatIsMarkedAsUnread"
 	UpdateTypeChatIsTranslatable                       UpdateType = "updateChatIsTranslatable"
+	UpdateTypeChatJoinResult                           UpdateType = "updateChatJoinResult"
 	UpdateTypeChatLastMessage                          UpdateType = "updateChatLastMessage"
 	UpdateTypeChatMember                               UpdateType = "updateChatMember"
 	UpdateTypeChatMessageAutoDeleteTime                UpdateType = "updateChatMessageAutoDeleteTime"
@@ -139,7 +140,7 @@ const (
 	UpdateTypeOwnedStarCount                           UpdateType = "updateOwnedStarCount"
 	UpdateTypeOwnedTonCount                            UpdateType = "updateOwnedTonCount"
 	UpdateTypePaidMediaPurchased                       UpdateType = "updatePaidMediaPurchased"
-	UpdateTypePendingTextMessage                       UpdateType = "updatePendingTextMessage"
+	UpdateTypePendingMessage                           UpdateType = "updatePendingMessage"
 	UpdateTypePoll                                     UpdateType = "updatePoll"
 	UpdateTypePollAnswer                               UpdateType = "updatePollAnswer"
 	UpdateTypeProfileAccentColors                      UpdateType = "updateProfileAccentColors"
@@ -186,6 +187,7 @@ const (
 	UpdateTypeUserStatus                               UpdateType = "updateUserStatus"
 	UpdateTypeVideoPublished                           UpdateType = "updateVideoPublished"
 	UpdateTypeWebAppMessageSent                        UpdateType = "updateWebAppMessageSent"
+	UpdateTypeWebBrowserSettings                       UpdateType = "updateWebBrowserSettings"
 )
 
 // AddAccentColorsHandler registers a handler for UpdateAccentColors updates.
@@ -198,7 +200,6 @@ func (c *Client) AddAccentColorsHandler(hn HandlerFunc[UpdateAccentColors], f ..
 	}
 
 	c.addHandler(UpdateTypeAccentColors, h)
-
 	return h
 }
 
@@ -217,7 +218,6 @@ func (c *Client) AddActiveEmojiReactionsHandler(hn HandlerFunc[UpdateActiveEmoji
 	}
 
 	c.addHandler(UpdateTypeActiveEmojiReactions, h)
-
 	return h
 }
 
@@ -236,7 +236,6 @@ func (c *Client) AddActiveGiftAuctionsHandler(hn HandlerFunc[UpdateActiveGiftAuc
 	}
 
 	c.addHandler(UpdateTypeActiveGiftAuctions, h)
-
 	return h
 }
 
@@ -255,7 +254,6 @@ func (c *Client) AddActiveLiveLocationMessagesHandler(hn HandlerFunc[UpdateActiv
 	}
 
 	c.addHandler(UpdateTypeActiveLiveLocationMessages, h)
-
 	return h
 }
 
@@ -274,7 +272,6 @@ func (c *Client) AddActiveNotificationsHandler(hn HandlerFunc[UpdateActiveNotifi
 	}
 
 	c.addHandler(UpdateTypeActiveNotifications, h)
-
 	return h
 }
 
@@ -293,7 +290,6 @@ func (c *Client) AddAgeVerificationParametersHandler(hn HandlerFunc[UpdateAgeVer
 	}
 
 	c.addHandler(UpdateTypeAgeVerificationParameters, h)
-
 	return h
 }
 
@@ -312,7 +308,6 @@ func (c *Client) AddAnimatedEmojiMessageClickedHandler(hn HandlerFunc[UpdateAnim
 	}
 
 	c.addHandler(UpdateTypeAnimatedEmojiMessageClicked, h)
-
 	return h
 }
 
@@ -331,7 +326,6 @@ func (c *Client) AddAnimationSearchParametersHandler(hn HandlerFunc[UpdateAnimat
 	}
 
 	c.addHandler(UpdateTypeAnimationSearchParameters, h)
-
 	return h
 }
 
@@ -350,7 +344,6 @@ func (c *Client) AddApplicationRecaptchaVerificationRequiredHandler(hn HandlerFu
 	}
 
 	c.addHandler(UpdateTypeApplicationRecaptchaVerificationRequired, h)
-
 	return h
 }
 
@@ -369,7 +362,6 @@ func (c *Client) AddApplicationVerificationRequiredHandler(hn HandlerFunc[Update
 	}
 
 	c.addHandler(UpdateTypeApplicationVerificationRequired, h)
-
 	return h
 }
 
@@ -388,7 +380,6 @@ func (c *Client) AddAttachmentMenuBotsHandler(hn HandlerFunc[UpdateAttachmentMen
 	}
 
 	c.addHandler(UpdateTypeAttachmentMenuBots, h)
-
 	return h
 }
 
@@ -407,7 +398,6 @@ func (c *Client) AddAuthorizationStateHandler(hn HandlerFunc[UpdateAuthorization
 	}
 
 	c.addHandler(UpdateTypeAuthorizationState, h)
-
 	return h
 }
 
@@ -426,7 +416,6 @@ func (c *Client) AddAutosaveSettingsHandler(hn HandlerFunc[UpdateAutosaveSetting
 	}
 
 	c.addHandler(UpdateTypeAutosaveSettings, h)
-
 	return h
 }
 
@@ -445,7 +434,6 @@ func (c *Client) AddAvailableMessageEffectsHandler(hn HandlerFunc[UpdateAvailabl
 	}
 
 	c.addHandler(UpdateTypeAvailableMessageEffects, h)
-
 	return h
 }
 
@@ -464,7 +452,6 @@ func (c *Client) AddBasicGroupHandler(hn HandlerFunc[UpdateBasicGroup], f ...Fil
 	}
 
 	c.addHandler(UpdateTypeBasicGroup, h)
-
 	return h
 }
 
@@ -483,7 +470,6 @@ func (c *Client) AddBasicGroupFullInfoHandler(hn HandlerFunc[UpdateBasicGroupFul
 	}
 
 	c.addHandler(UpdateTypeBasicGroupFullInfo, h)
-
 	return h
 }
 
@@ -502,7 +488,6 @@ func (c *Client) AddBusinessConnectionHandler(hn HandlerFunc[UpdateBusinessConne
 	}
 
 	c.addHandler(UpdateTypeBusinessConnection, h)
-
 	return h
 }
 
@@ -521,7 +506,6 @@ func (c *Client) AddBusinessMessageEditedHandler(hn HandlerFunc[UpdateBusinessMe
 	}
 
 	c.addHandler(UpdateTypeBusinessMessageEdited, h)
-
 	return h
 }
 
@@ -540,7 +524,6 @@ func (c *Client) AddBusinessMessagesDeletedHandler(hn HandlerFunc[UpdateBusiness
 	}
 
 	c.addHandler(UpdateTypeBusinessMessagesDeleted, h)
-
 	return h
 }
 
@@ -559,7 +542,6 @@ func (c *Client) AddCallHandler(hn HandlerFunc[UpdateCall], f ...Filter) Handle 
 	}
 
 	c.addHandler(UpdateTypeCall, h)
-
 	return h
 }
 
@@ -578,7 +560,6 @@ func (c *Client) AddChatAccentColorsHandler(hn HandlerFunc[UpdateChatAccentColor
 	}
 
 	c.addHandler(UpdateTypeChatAccentColors, h)
-
 	return h
 }
 
@@ -597,7 +578,6 @@ func (c *Client) AddChatActionHandler(hn HandlerFunc[UpdateChatAction], f ...Fil
 	}
 
 	c.addHandler(UpdateTypeChatAction, h)
-
 	return h
 }
 
@@ -616,7 +596,6 @@ func (c *Client) AddChatActionBarHandler(hn HandlerFunc[UpdateChatActionBar], f 
 	}
 
 	c.addHandler(UpdateTypeChatActionBar, h)
-
 	return h
 }
 
@@ -635,7 +614,6 @@ func (c *Client) AddChatActiveStoriesHandler(hn HandlerFunc[UpdateChatActiveStor
 	}
 
 	c.addHandler(UpdateTypeChatActiveStories, h)
-
 	return h
 }
 
@@ -654,7 +632,6 @@ func (c *Client) AddChatAddedToListHandler(hn HandlerFunc[UpdateChatAddedToList]
 	}
 
 	c.addHandler(UpdateTypeChatAddedToList, h)
-
 	return h
 }
 
@@ -673,7 +650,6 @@ func (c *Client) AddChatAvailableReactionsHandler(hn HandlerFunc[UpdateChatAvail
 	}
 
 	c.addHandler(UpdateTypeChatAvailableReactions, h)
-
 	return h
 }
 
@@ -692,7 +668,6 @@ func (c *Client) AddChatBackgroundHandler(hn HandlerFunc[UpdateChatBackground], 
 	}
 
 	c.addHandler(UpdateTypeChatBackground, h)
-
 	return h
 }
 
@@ -711,7 +686,6 @@ func (c *Client) AddChatBlockListHandler(hn HandlerFunc[UpdateChatBlockList], f 
 	}
 
 	c.addHandler(UpdateTypeChatBlockList, h)
-
 	return h
 }
 
@@ -730,7 +704,6 @@ func (c *Client) AddChatBoostHandler(hn HandlerFunc[UpdateChatBoost], f ...Filte
 	}
 
 	c.addHandler(UpdateTypeChatBoost, h)
-
 	return h
 }
 
@@ -749,7 +722,6 @@ func (c *Client) AddChatBusinessBotManageBarHandler(hn HandlerFunc[UpdateChatBus
 	}
 
 	c.addHandler(UpdateTypeChatBusinessBotManageBar, h)
-
 	return h
 }
 
@@ -768,7 +740,6 @@ func (c *Client) AddChatDefaultDisableNotificationHandler(hn HandlerFunc[UpdateC
 	}
 
 	c.addHandler(UpdateTypeChatDefaultDisableNotification, h)
-
 	return h
 }
 
@@ -787,7 +758,6 @@ func (c *Client) AddChatDraftMessageHandler(hn HandlerFunc[UpdateChatDraftMessag
 	}
 
 	c.addHandler(UpdateTypeChatDraftMessage, h)
-
 	return h
 }
 
@@ -806,7 +776,6 @@ func (c *Client) AddChatEmojiStatusHandler(hn HandlerFunc[UpdateChatEmojiStatus]
 	}
 
 	c.addHandler(UpdateTypeChatEmojiStatus, h)
-
 	return h
 }
 
@@ -825,7 +794,6 @@ func (c *Client) AddChatFoldersHandler(hn HandlerFunc[UpdateChatFolders], f ...F
 	}
 
 	c.addHandler(UpdateTypeChatFolders, h)
-
 	return h
 }
 
@@ -844,7 +812,6 @@ func (c *Client) AddChatHasProtectedContentHandler(hn HandlerFunc[UpdateChatHasP
 	}
 
 	c.addHandler(UpdateTypeChatHasProtectedContent, h)
-
 	return h
 }
 
@@ -863,7 +830,6 @@ func (c *Client) AddChatHasScheduledMessagesHandler(hn HandlerFunc[UpdateChatHas
 	}
 
 	c.addHandler(UpdateTypeChatHasScheduledMessages, h)
-
 	return h
 }
 
@@ -882,7 +848,6 @@ func (c *Client) AddChatIsMarkedAsUnreadHandler(hn HandlerFunc[UpdateChatIsMarke
 	}
 
 	c.addHandler(UpdateTypeChatIsMarkedAsUnread, h)
-
 	return h
 }
 
@@ -901,13 +866,30 @@ func (c *Client) AddChatIsTranslatableHandler(hn HandlerFunc[UpdateChatIsTransla
 	}
 
 	c.addHandler(UpdateTypeChatIsTranslatable, h)
-
 	return h
 }
 
 // OnChatIsTranslatable registers a handler for UpdateChatIsTranslatable updates.
 func (c *Client) OnChatIsTranslatable(hn HandlerFunc[UpdateChatIsTranslatable], f ...Filter) Handle {
 	return c.AddChatIsTranslatableHandler(hn, f...)
+}
+
+// AddChatJoinResultHandler registers a handler for UpdateChatJoinResult updates.
+func (c *Client) AddChatJoinResultHandler(hn HandlerFunc[UpdateChatJoinResult], f ...Filter) Handle {
+	h := &handle[UpdateChatJoinResult]{
+		client:  c,
+		handler: hn,
+		filters: f,
+		tp:      UpdateTypeChatJoinResult,
+	}
+
+	c.addHandler(UpdateTypeChatJoinResult, h)
+	return h
+}
+
+// OnChatJoinResult registers a handler for UpdateChatJoinResult updates.
+func (c *Client) OnChatJoinResult(hn HandlerFunc[UpdateChatJoinResult], f ...Filter) Handle {
+	return c.AddChatJoinResultHandler(hn, f...)
 }
 
 // AddChatLastMessageHandler registers a handler for UpdateChatLastMessage updates.
@@ -920,7 +902,6 @@ func (c *Client) AddChatLastMessageHandler(hn HandlerFunc[UpdateChatLastMessage]
 	}
 
 	c.addHandler(UpdateTypeChatLastMessage, h)
-
 	return h
 }
 
@@ -939,7 +920,6 @@ func (c *Client) AddChatMemberHandler(hn HandlerFunc[UpdateChatMember], f ...Fil
 	}
 
 	c.addHandler(UpdateTypeChatMember, h)
-
 	return h
 }
 
@@ -958,7 +938,6 @@ func (c *Client) AddChatMessageAutoDeleteTimeHandler(hn HandlerFunc[UpdateChatMe
 	}
 
 	c.addHandler(UpdateTypeChatMessageAutoDeleteTime, h)
-
 	return h
 }
 
@@ -977,7 +956,6 @@ func (c *Client) AddChatMessageSenderHandler(hn HandlerFunc[UpdateChatMessageSen
 	}
 
 	c.addHandler(UpdateTypeChatMessageSender, h)
-
 	return h
 }
 
@@ -996,7 +974,6 @@ func (c *Client) AddChatNotificationSettingsHandler(hn HandlerFunc[UpdateChatNot
 	}
 
 	c.addHandler(UpdateTypeChatNotificationSettings, h)
-
 	return h
 }
 
@@ -1015,7 +992,6 @@ func (c *Client) AddChatOnlineMemberCountHandler(hn HandlerFunc[UpdateChatOnline
 	}
 
 	c.addHandler(UpdateTypeChatOnlineMemberCount, h)
-
 	return h
 }
 
@@ -1034,7 +1010,6 @@ func (c *Client) AddChatPendingJoinRequestsHandler(hn HandlerFunc[UpdateChatPend
 	}
 
 	c.addHandler(UpdateTypeChatPendingJoinRequests, h)
-
 	return h
 }
 
@@ -1053,7 +1028,6 @@ func (c *Client) AddChatPermissionsHandler(hn HandlerFunc[UpdateChatPermissions]
 	}
 
 	c.addHandler(UpdateTypeChatPermissions, h)
-
 	return h
 }
 
@@ -1072,7 +1046,6 @@ func (c *Client) AddChatPhotoHandler(hn HandlerFunc[UpdateChatPhoto], f ...Filte
 	}
 
 	c.addHandler(UpdateTypeChatPhoto, h)
-
 	return h
 }
 
@@ -1091,7 +1064,6 @@ func (c *Client) AddChatPositionHandler(hn HandlerFunc[UpdateChatPosition], f ..
 	}
 
 	c.addHandler(UpdateTypeChatPosition, h)
-
 	return h
 }
 
@@ -1110,7 +1082,6 @@ func (c *Client) AddChatReadInboxHandler(hn HandlerFunc[UpdateChatReadInbox], f 
 	}
 
 	c.addHandler(UpdateTypeChatReadInbox, h)
-
 	return h
 }
 
@@ -1129,7 +1100,6 @@ func (c *Client) AddChatReadOutboxHandler(hn HandlerFunc[UpdateChatReadOutbox], 
 	}
 
 	c.addHandler(UpdateTypeChatReadOutbox, h)
-
 	return h
 }
 
@@ -1148,7 +1118,6 @@ func (c *Client) AddChatRemovedFromListHandler(hn HandlerFunc[UpdateChatRemovedF
 	}
 
 	c.addHandler(UpdateTypeChatRemovedFromList, h)
-
 	return h
 }
 
@@ -1167,7 +1136,6 @@ func (c *Client) AddChatReplyMarkupHandler(hn HandlerFunc[UpdateChatReplyMarkup]
 	}
 
 	c.addHandler(UpdateTypeChatReplyMarkup, h)
-
 	return h
 }
 
@@ -1186,7 +1154,6 @@ func (c *Client) AddChatRevenueAmountHandler(hn HandlerFunc[UpdateChatRevenueAmo
 	}
 
 	c.addHandler(UpdateTypeChatRevenueAmount, h)
-
 	return h
 }
 
@@ -1205,7 +1172,6 @@ func (c *Client) AddChatThemeHandler(hn HandlerFunc[UpdateChatTheme], f ...Filte
 	}
 
 	c.addHandler(UpdateTypeChatTheme, h)
-
 	return h
 }
 
@@ -1224,7 +1190,6 @@ func (c *Client) AddChatTitleHandler(hn HandlerFunc[UpdateChatTitle], f ...Filte
 	}
 
 	c.addHandler(UpdateTypeChatTitle, h)
-
 	return h
 }
 
@@ -1243,7 +1208,6 @@ func (c *Client) AddChatUnreadMentionCountHandler(hn HandlerFunc[UpdateChatUnrea
 	}
 
 	c.addHandler(UpdateTypeChatUnreadMentionCount, h)
-
 	return h
 }
 
@@ -1262,7 +1226,6 @@ func (c *Client) AddChatUnreadPollVoteCountHandler(hn HandlerFunc[UpdateChatUnre
 	}
 
 	c.addHandler(UpdateTypeChatUnreadPollVoteCount, h)
-
 	return h
 }
 
@@ -1281,7 +1244,6 @@ func (c *Client) AddChatUnreadReactionCountHandler(hn HandlerFunc[UpdateChatUnre
 	}
 
 	c.addHandler(UpdateTypeChatUnreadReactionCount, h)
-
 	return h
 }
 
@@ -1300,7 +1262,6 @@ func (c *Client) AddChatVideoChatHandler(hn HandlerFunc[UpdateChatVideoChat], f 
 	}
 
 	c.addHandler(UpdateTypeChatVideoChat, h)
-
 	return h
 }
 
@@ -1319,7 +1280,6 @@ func (c *Client) AddChatViewAsTopicsHandler(hn HandlerFunc[UpdateChatViewAsTopic
 	}
 
 	c.addHandler(UpdateTypeChatViewAsTopics, h)
-
 	return h
 }
 
@@ -1338,7 +1298,6 @@ func (c *Client) AddConnectionStateHandler(hn HandlerFunc[UpdateConnectionState]
 	}
 
 	c.addHandler(UpdateTypeConnectionState, h)
-
 	return h
 }
 
@@ -1357,7 +1316,6 @@ func (c *Client) AddContactCloseBirthdaysHandler(hn HandlerFunc[UpdateContactClo
 	}
 
 	c.addHandler(UpdateTypeContactCloseBirthdays, h)
-
 	return h
 }
 
@@ -1376,7 +1334,6 @@ func (c *Client) AddDefaultBackgroundHandler(hn HandlerFunc[UpdateDefaultBackgro
 	}
 
 	c.addHandler(UpdateTypeDefaultBackground, h)
-
 	return h
 }
 
@@ -1395,7 +1352,6 @@ func (c *Client) AddDefaultPaidReactionTypeHandler(hn HandlerFunc[UpdateDefaultP
 	}
 
 	c.addHandler(UpdateTypeDefaultPaidReactionType, h)
-
 	return h
 }
 
@@ -1414,7 +1370,6 @@ func (c *Client) AddDefaultReactionTypeHandler(hn HandlerFunc[UpdateDefaultReact
 	}
 
 	c.addHandler(UpdateTypeDefaultReactionType, h)
-
 	return h
 }
 
@@ -1433,7 +1388,6 @@ func (c *Client) AddDeleteMessagesHandler(hn HandlerFunc[UpdateDeleteMessages], 
 	}
 
 	c.addHandler(UpdateTypeDeleteMessages, h)
-
 	return h
 }
 
@@ -1452,7 +1406,6 @@ func (c *Client) AddDiceEmojisHandler(hn HandlerFunc[UpdateDiceEmojis], f ...Fil
 	}
 
 	c.addHandler(UpdateTypeDiceEmojis, h)
-
 	return h
 }
 
@@ -1471,7 +1424,6 @@ func (c *Client) AddDirectMessagesChatTopicHandler(hn HandlerFunc[UpdateDirectMe
 	}
 
 	c.addHandler(UpdateTypeDirectMessagesChatTopic, h)
-
 	return h
 }
 
@@ -1490,7 +1442,6 @@ func (c *Client) AddEmojiChatThemesHandler(hn HandlerFunc[UpdateEmojiChatThemes]
 	}
 
 	c.addHandler(UpdateTypeEmojiChatThemes, h)
-
 	return h
 }
 
@@ -1509,7 +1460,6 @@ func (c *Client) AddFavoriteStickersHandler(hn HandlerFunc[UpdateFavoriteSticker
 	}
 
 	c.addHandler(UpdateTypeFavoriteStickers, h)
-
 	return h
 }
 
@@ -1528,7 +1478,6 @@ func (c *Client) AddFileHandler(hn HandlerFunc[UpdateFile], f ...Filter) Handle 
 	}
 
 	c.addHandler(UpdateTypeFile, h)
-
 	return h
 }
 
@@ -1547,7 +1496,6 @@ func (c *Client) AddFileAddedToDownloadsHandler(hn HandlerFunc[UpdateFileAddedTo
 	}
 
 	c.addHandler(UpdateTypeFileAddedToDownloads, h)
-
 	return h
 }
 
@@ -1566,7 +1514,6 @@ func (c *Client) AddFileDownloadHandler(hn HandlerFunc[UpdateFileDownload], f ..
 	}
 
 	c.addHandler(UpdateTypeFileDownload, h)
-
 	return h
 }
 
@@ -1585,7 +1532,6 @@ func (c *Client) AddFileDownloadsHandler(hn HandlerFunc[UpdateFileDownloads], f 
 	}
 
 	c.addHandler(UpdateTypeFileDownloads, h)
-
 	return h
 }
 
@@ -1604,7 +1550,6 @@ func (c *Client) AddFileGenerationStartHandler(hn HandlerFunc[UpdateFileGenerati
 	}
 
 	c.addHandler(UpdateTypeFileGenerationStart, h)
-
 	return h
 }
 
@@ -1623,7 +1568,6 @@ func (c *Client) AddFileGenerationStopHandler(hn HandlerFunc[UpdateFileGeneratio
 	}
 
 	c.addHandler(UpdateTypeFileGenerationStop, h)
-
 	return h
 }
 
@@ -1642,7 +1586,6 @@ func (c *Client) AddFileRemovedFromDownloadsHandler(hn HandlerFunc[UpdateFileRem
 	}
 
 	c.addHandler(UpdateTypeFileRemovedFromDownloads, h)
-
 	return h
 }
 
@@ -1661,7 +1604,6 @@ func (c *Client) AddForumTopicHandler(hn HandlerFunc[UpdateForumTopic], f ...Fil
 	}
 
 	c.addHandler(UpdateTypeForumTopic, h)
-
 	return h
 }
 
@@ -1680,7 +1622,6 @@ func (c *Client) AddForumTopicInfoHandler(hn HandlerFunc[UpdateForumTopicInfo], 
 	}
 
 	c.addHandler(UpdateTypeForumTopicInfo, h)
-
 	return h
 }
 
@@ -1699,7 +1640,6 @@ func (c *Client) AddFreezeStateHandler(hn HandlerFunc[UpdateFreezeState], f ...F
 	}
 
 	c.addHandler(UpdateTypeFreezeState, h)
-
 	return h
 }
 
@@ -1718,7 +1658,6 @@ func (c *Client) AddGiftAuctionStateHandler(hn HandlerFunc[UpdateGiftAuctionStat
 	}
 
 	c.addHandler(UpdateTypeGiftAuctionState, h)
-
 	return h
 }
 
@@ -1737,7 +1676,6 @@ func (c *Client) AddGroupCallHandler(hn HandlerFunc[UpdateGroupCall], f ...Filte
 	}
 
 	c.addHandler(UpdateTypeGroupCall, h)
-
 	return h
 }
 
@@ -1756,7 +1694,6 @@ func (c *Client) AddGroupCallMessageLevelsHandler(hn HandlerFunc[UpdateGroupCall
 	}
 
 	c.addHandler(UpdateTypeGroupCallMessageLevels, h)
-
 	return h
 }
 
@@ -1775,7 +1712,6 @@ func (c *Client) AddGroupCallMessagesDeletedHandler(hn HandlerFunc[UpdateGroupCa
 	}
 
 	c.addHandler(UpdateTypeGroupCallMessagesDeleted, h)
-
 	return h
 }
 
@@ -1794,7 +1730,6 @@ func (c *Client) AddGroupCallMessageSendFailedHandler(hn HandlerFunc[UpdateGroup
 	}
 
 	c.addHandler(UpdateTypeGroupCallMessageSendFailed, h)
-
 	return h
 }
 
@@ -1813,7 +1748,6 @@ func (c *Client) AddGroupCallParticipantHandler(hn HandlerFunc[UpdateGroupCallPa
 	}
 
 	c.addHandler(UpdateTypeGroupCallParticipant, h)
-
 	return h
 }
 
@@ -1832,7 +1766,6 @@ func (c *Client) AddGroupCallParticipantsHandler(hn HandlerFunc[UpdateGroupCallP
 	}
 
 	c.addHandler(UpdateTypeGroupCallParticipants, h)
-
 	return h
 }
 
@@ -1851,7 +1784,6 @@ func (c *Client) AddGroupCallVerificationStateHandler(hn HandlerFunc[UpdateGroup
 	}
 
 	c.addHandler(UpdateTypeGroupCallVerificationState, h)
-
 	return h
 }
 
@@ -1870,7 +1802,6 @@ func (c *Client) AddHavePendingNotificationsHandler(hn HandlerFunc[UpdateHavePen
 	}
 
 	c.addHandler(UpdateTypeHavePendingNotifications, h)
-
 	return h
 }
 
@@ -1889,7 +1820,6 @@ func (c *Client) AddInstalledStickerSetsHandler(hn HandlerFunc[UpdateInstalledSt
 	}
 
 	c.addHandler(UpdateTypeInstalledStickerSets, h)
-
 	return h
 }
 
@@ -1908,7 +1838,6 @@ func (c *Client) AddLanguagePackStringsHandler(hn HandlerFunc[UpdateLanguagePack
 	}
 
 	c.addHandler(UpdateTypeLanguagePackStrings, h)
-
 	return h
 }
 
@@ -1927,7 +1856,6 @@ func (c *Client) AddLiveStoryTopDonorsHandler(hn HandlerFunc[UpdateLiveStoryTopD
 	}
 
 	c.addHandler(UpdateTypeLiveStoryTopDonors, h)
-
 	return h
 }
 
@@ -1946,7 +1874,6 @@ func (c *Client) AddManagedBotHandler(hn HandlerFunc[UpdateManagedBot], f ...Fil
 	}
 
 	c.addHandler(UpdateTypeManagedBot, h)
-
 	return h
 }
 
@@ -1965,7 +1892,6 @@ func (c *Client) AddMessageContainsUnreadPollVotesHandler(hn HandlerFunc[UpdateM
 	}
 
 	c.addHandler(UpdateTypeMessageContainsUnreadPollVotes, h)
-
 	return h
 }
 
@@ -1984,7 +1910,6 @@ func (c *Client) AddMessageContentHandler(hn HandlerFunc[UpdateMessageContent], 
 	}
 
 	c.addHandler(UpdateTypeMessageContent, h)
-
 	return h
 }
 
@@ -2003,7 +1928,6 @@ func (c *Client) AddMessageContentOpenedHandler(hn HandlerFunc[UpdateMessageCont
 	}
 
 	c.addHandler(UpdateTypeMessageContentOpened, h)
-
 	return h
 }
 
@@ -2022,7 +1946,6 @@ func (c *Client) AddMessageEditedHandler(hn HandlerFunc[UpdateMessageEdited], f 
 	}
 
 	c.addHandler(UpdateTypeMessageEdited, h)
-
 	return h
 }
 
@@ -2041,7 +1964,6 @@ func (c *Client) AddMessageFactCheckHandler(hn HandlerFunc[UpdateMessageFactChec
 	}
 
 	c.addHandler(UpdateTypeMessageFactCheck, h)
-
 	return h
 }
 
@@ -2060,7 +1982,6 @@ func (c *Client) AddMessageInteractionInfoHandler(hn HandlerFunc[UpdateMessageIn
 	}
 
 	c.addHandler(UpdateTypeMessageInteractionInfo, h)
-
 	return h
 }
 
@@ -2079,7 +2000,6 @@ func (c *Client) AddMessageIsPinnedHandler(hn HandlerFunc[UpdateMessageIsPinned]
 	}
 
 	c.addHandler(UpdateTypeMessageIsPinned, h)
-
 	return h
 }
 
@@ -2098,7 +2018,6 @@ func (c *Client) AddMessageLiveLocationViewedHandler(hn HandlerFunc[UpdateMessag
 	}
 
 	c.addHandler(UpdateTypeMessageLiveLocationViewed, h)
-
 	return h
 }
 
@@ -2117,7 +2036,6 @@ func (c *Client) AddMessageMentionReadHandler(hn HandlerFunc[UpdateMessageMentio
 	}
 
 	c.addHandler(UpdateTypeMessageMentionRead, h)
-
 	return h
 }
 
@@ -2136,7 +2054,6 @@ func (c *Client) AddMessageReactionHandler(hn HandlerFunc[UpdateMessageReaction]
 	}
 
 	c.addHandler(UpdateTypeMessageReaction, h)
-
 	return h
 }
 
@@ -2155,7 +2072,6 @@ func (c *Client) AddMessageReactionsHandler(hn HandlerFunc[UpdateMessageReaction
 	}
 
 	c.addHandler(UpdateTypeMessageReactions, h)
-
 	return h
 }
 
@@ -2174,7 +2090,6 @@ func (c *Client) AddMessageSendAcknowledgedHandler(hn HandlerFunc[UpdateMessageS
 	}
 
 	c.addHandler(UpdateTypeMessageSendAcknowledged, h)
-
 	return h
 }
 
@@ -2193,7 +2108,6 @@ func (c *Client) AddMessageSendFailedHandler(hn HandlerFunc[UpdateMessageSendFai
 	}
 
 	c.addHandler(UpdateTypeMessageSendFailed, h)
-
 	return h
 }
 
@@ -2212,7 +2126,6 @@ func (c *Client) AddMessageSendSucceededHandler(hn HandlerFunc[UpdateMessageSend
 	}
 
 	c.addHandler(UpdateTypeMessageSendSucceeded, h)
-
 	return h
 }
 
@@ -2231,7 +2144,6 @@ func (c *Client) AddMessageSuggestedPostInfoHandler(hn HandlerFunc[UpdateMessage
 	}
 
 	c.addHandler(UpdateTypeMessageSuggestedPostInfo, h)
-
 	return h
 }
 
@@ -2250,7 +2162,6 @@ func (c *Client) AddMessageUnreadReactionsHandler(hn HandlerFunc[UpdateMessageUn
 	}
 
 	c.addHandler(UpdateTypeMessageUnreadReactions, h)
-
 	return h
 }
 
@@ -2269,7 +2180,6 @@ func (c *Client) AddNewBusinessCallbackQueryHandler(hn HandlerFunc[UpdateNewBusi
 	}
 
 	c.addHandler(UpdateTypeNewBusinessCallbackQuery, h)
-
 	return h
 }
 
@@ -2288,7 +2198,6 @@ func (c *Client) AddNewBusinessMessageHandler(hn HandlerFunc[UpdateNewBusinessMe
 	}
 
 	c.addHandler(UpdateTypeNewBusinessMessage, h)
-
 	return h
 }
 
@@ -2307,7 +2216,6 @@ func (c *Client) AddNewCallbackQueryHandler(hn HandlerFunc[UpdateNewCallbackQuer
 	}
 
 	c.addHandler(UpdateTypeNewCallbackQuery, h)
-
 	return h
 }
 
@@ -2326,7 +2234,6 @@ func (c *Client) AddNewCallSignalingDataHandler(hn HandlerFunc[UpdateNewCallSign
 	}
 
 	c.addHandler(UpdateTypeNewCallSignalingData, h)
-
 	return h
 }
 
@@ -2345,7 +2252,6 @@ func (c *Client) AddNewChatHandler(hn HandlerFunc[UpdateNewChat], f ...Filter) H
 	}
 
 	c.addHandler(UpdateTypeNewChat, h)
-
 	return h
 }
 
@@ -2364,7 +2270,6 @@ func (c *Client) AddNewChatJoinRequestHandler(hn HandlerFunc[UpdateNewChatJoinRe
 	}
 
 	c.addHandler(UpdateTypeNewChatJoinRequest, h)
-
 	return h
 }
 
@@ -2383,7 +2288,6 @@ func (c *Client) AddNewChosenInlineResultHandler(hn HandlerFunc[UpdateNewChosenI
 	}
 
 	c.addHandler(UpdateTypeNewChosenInlineResult, h)
-
 	return h
 }
 
@@ -2402,7 +2306,6 @@ func (c *Client) AddNewCustomEventHandler(hn HandlerFunc[UpdateNewCustomEvent], 
 	}
 
 	c.addHandler(UpdateTypeNewCustomEvent, h)
-
 	return h
 }
 
@@ -2421,7 +2324,6 @@ func (c *Client) AddNewCustomQueryHandler(hn HandlerFunc[UpdateNewCustomQuery], 
 	}
 
 	c.addHandler(UpdateTypeNewCustomQuery, h)
-
 	return h
 }
 
@@ -2440,7 +2342,6 @@ func (c *Client) AddNewGroupCallMessageHandler(hn HandlerFunc[UpdateNewGroupCall
 	}
 
 	c.addHandler(UpdateTypeNewGroupCallMessage, h)
-
 	return h
 }
 
@@ -2459,7 +2360,6 @@ func (c *Client) AddNewGroupCallPaidReactionHandler(hn HandlerFunc[UpdateNewGrou
 	}
 
 	c.addHandler(UpdateTypeNewGroupCallPaidReaction, h)
-
 	return h
 }
 
@@ -2478,7 +2378,6 @@ func (c *Client) AddNewGuestQueryHandler(hn HandlerFunc[UpdateNewGuestQuery], f 
 	}
 
 	c.addHandler(UpdateTypeNewGuestQuery, h)
-
 	return h
 }
 
@@ -2497,7 +2396,6 @@ func (c *Client) AddNewInlineCallbackQueryHandler(hn HandlerFunc[UpdateNewInline
 	}
 
 	c.addHandler(UpdateTypeNewInlineCallbackQuery, h)
-
 	return h
 }
 
@@ -2516,7 +2414,6 @@ func (c *Client) AddNewInlineQueryHandler(hn HandlerFunc[UpdateNewInlineQuery], 
 	}
 
 	c.addHandler(UpdateTypeNewInlineQuery, h)
-
 	return h
 }
 
@@ -2536,7 +2433,6 @@ func (c *Client) AddNewMessageHandler(hn HandlerFunc[UpdateNewMessage], f ...Fil
 
 	h.applyDefaultFilters()
 	c.addHandler(UpdateTypeNewMessage, h)
-
 	return h
 }
 
@@ -2555,7 +2451,6 @@ func (c *Client) AddNewOauthRequestHandler(hn HandlerFunc[UpdateNewOauthRequest]
 	}
 
 	c.addHandler(UpdateTypeNewOauthRequest, h)
-
 	return h
 }
 
@@ -2574,7 +2469,6 @@ func (c *Client) AddNewPreCheckoutQueryHandler(hn HandlerFunc[UpdateNewPreChecko
 	}
 
 	c.addHandler(UpdateTypeNewPreCheckoutQuery, h)
-
 	return h
 }
 
@@ -2593,7 +2487,6 @@ func (c *Client) AddNewShippingQueryHandler(hn HandlerFunc[UpdateNewShippingQuer
 	}
 
 	c.addHandler(UpdateTypeNewShippingQuery, h)
-
 	return h
 }
 
@@ -2612,7 +2505,6 @@ func (c *Client) AddNotificationHandler(hn HandlerFunc[UpdateNotification], f ..
 	}
 
 	c.addHandler(UpdateTypeNotification, h)
-
 	return h
 }
 
@@ -2631,7 +2523,6 @@ func (c *Client) AddNotificationGroupHandler(hn HandlerFunc[UpdateNotificationGr
 	}
 
 	c.addHandler(UpdateTypeNotificationGroup, h)
-
 	return h
 }
 
@@ -2650,7 +2541,6 @@ func (c *Client) AddOptionHandler(hn HandlerFunc[UpdateOption], f ...Filter) Han
 	}
 
 	c.addHandler(UpdateTypeOption, h)
-
 	return h
 }
 
@@ -2669,7 +2559,6 @@ func (c *Client) AddOwnedStarCountHandler(hn HandlerFunc[UpdateOwnedStarCount], 
 	}
 
 	c.addHandler(UpdateTypeOwnedStarCount, h)
-
 	return h
 }
 
@@ -2688,7 +2577,6 @@ func (c *Client) AddOwnedTonCountHandler(hn HandlerFunc[UpdateOwnedTonCount], f 
 	}
 
 	c.addHandler(UpdateTypeOwnedTonCount, h)
-
 	return h
 }
 
@@ -2707,7 +2595,6 @@ func (c *Client) AddPaidMediaPurchasedHandler(hn HandlerFunc[UpdatePaidMediaPurc
 	}
 
 	c.addHandler(UpdateTypePaidMediaPurchased, h)
-
 	return h
 }
 
@@ -2716,23 +2603,22 @@ func (c *Client) OnPaidMediaPurchased(hn HandlerFunc[UpdatePaidMediaPurchased], 
 	return c.AddPaidMediaPurchasedHandler(hn, f...)
 }
 
-// AddPendingTextMessageHandler registers a handler for UpdatePendingTextMessage updates.
-func (c *Client) AddPendingTextMessageHandler(hn HandlerFunc[UpdatePendingTextMessage], f ...Filter) Handle {
-	h := &handle[UpdatePendingTextMessage]{
+// AddPendingMessageHandler registers a handler for UpdatePendingMessage updates.
+func (c *Client) AddPendingMessageHandler(hn HandlerFunc[UpdatePendingMessage], f ...Filter) Handle {
+	h := &handle[UpdatePendingMessage]{
 		client:  c,
 		handler: hn,
 		filters: f,
-		tp:      UpdateTypePendingTextMessage,
+		tp:      UpdateTypePendingMessage,
 	}
 
-	c.addHandler(UpdateTypePendingTextMessage, h)
-
+	c.addHandler(UpdateTypePendingMessage, h)
 	return h
 }
 
-// OnPendingTextMessage registers a handler for UpdatePendingTextMessage updates.
-func (c *Client) OnPendingTextMessage(hn HandlerFunc[UpdatePendingTextMessage], f ...Filter) Handle {
-	return c.AddPendingTextMessageHandler(hn, f...)
+// OnPendingMessage registers a handler for UpdatePendingMessage updates.
+func (c *Client) OnPendingMessage(hn HandlerFunc[UpdatePendingMessage], f ...Filter) Handle {
+	return c.AddPendingMessageHandler(hn, f...)
 }
 
 // AddPollHandler registers a handler for UpdatePoll updates.
@@ -2745,7 +2631,6 @@ func (c *Client) AddPollHandler(hn HandlerFunc[UpdatePoll], f ...Filter) Handle 
 	}
 
 	c.addHandler(UpdateTypePoll, h)
-
 	return h
 }
 
@@ -2764,7 +2649,6 @@ func (c *Client) AddPollAnswerHandler(hn HandlerFunc[UpdatePollAnswer], f ...Fil
 	}
 
 	c.addHandler(UpdateTypePollAnswer, h)
-
 	return h
 }
 
@@ -2783,7 +2667,6 @@ func (c *Client) AddProfileAccentColorsHandler(hn HandlerFunc[UpdateProfileAccen
 	}
 
 	c.addHandler(UpdateTypeProfileAccentColors, h)
-
 	return h
 }
 
@@ -2802,7 +2685,6 @@ func (c *Client) AddQuickReplyShortcutHandler(hn HandlerFunc[UpdateQuickReplySho
 	}
 
 	c.addHandler(UpdateTypeQuickReplyShortcut, h)
-
 	return h
 }
 
@@ -2821,7 +2703,6 @@ func (c *Client) AddQuickReplyShortcutDeletedHandler(hn HandlerFunc[UpdateQuickR
 	}
 
 	c.addHandler(UpdateTypeQuickReplyShortcutDeleted, h)
-
 	return h
 }
 
@@ -2840,7 +2721,6 @@ func (c *Client) AddQuickReplyShortcutMessagesHandler(hn HandlerFunc[UpdateQuick
 	}
 
 	c.addHandler(UpdateTypeQuickReplyShortcutMessages, h)
-
 	return h
 }
 
@@ -2859,7 +2739,6 @@ func (c *Client) AddQuickReplyShortcutsHandler(hn HandlerFunc[UpdateQuickReplySh
 	}
 
 	c.addHandler(UpdateTypeQuickReplyShortcuts, h)
-
 	return h
 }
 
@@ -2878,7 +2757,6 @@ func (c *Client) AddReactionNotificationSettingsHandler(hn HandlerFunc[UpdateRea
 	}
 
 	c.addHandler(UpdateTypeReactionNotificationSettings, h)
-
 	return h
 }
 
@@ -2897,7 +2775,6 @@ func (c *Client) AddRecentStickersHandler(hn HandlerFunc[UpdateRecentStickers], 
 	}
 
 	c.addHandler(UpdateTypeRecentStickers, h)
-
 	return h
 }
 
@@ -2916,7 +2793,6 @@ func (c *Client) AddSavedAnimationsHandler(hn HandlerFunc[UpdateSavedAnimations]
 	}
 
 	c.addHandler(UpdateTypeSavedAnimations, h)
-
 	return h
 }
 
@@ -2935,7 +2811,6 @@ func (c *Client) AddSavedMessagesTagsHandler(hn HandlerFunc[UpdateSavedMessagesT
 	}
 
 	c.addHandler(UpdateTypeSavedMessagesTags, h)
-
 	return h
 }
 
@@ -2954,7 +2829,6 @@ func (c *Client) AddSavedMessagesTopicHandler(hn HandlerFunc[UpdateSavedMessages
 	}
 
 	c.addHandler(UpdateTypeSavedMessagesTopic, h)
-
 	return h
 }
 
@@ -2973,7 +2847,6 @@ func (c *Client) AddSavedMessagesTopicCountHandler(hn HandlerFunc[UpdateSavedMes
 	}
 
 	c.addHandler(UpdateTypeSavedMessagesTopicCount, h)
-
 	return h
 }
 
@@ -2992,7 +2865,6 @@ func (c *Client) AddSavedNotificationSoundsHandler(hn HandlerFunc[UpdateSavedNot
 	}
 
 	c.addHandler(UpdateTypeSavedNotificationSounds, h)
-
 	return h
 }
 
@@ -3011,7 +2883,6 @@ func (c *Client) AddScopeNotificationSettingsHandler(hn HandlerFunc[UpdateScopeN
 	}
 
 	c.addHandler(UpdateTypeScopeNotificationSettings, h)
-
 	return h
 }
 
@@ -3030,7 +2901,6 @@ func (c *Client) AddSecretChatHandler(hn HandlerFunc[UpdateSecretChat], f ...Fil
 	}
 
 	c.addHandler(UpdateTypeSecretChat, h)
-
 	return h
 }
 
@@ -3049,7 +2919,6 @@ func (c *Client) AddServiceNotificationHandler(hn HandlerFunc[UpdateServiceNotif
 	}
 
 	c.addHandler(UpdateTypeServiceNotification, h)
-
 	return h
 }
 
@@ -3068,7 +2937,6 @@ func (c *Client) AddSpeechRecognitionTrialHandler(hn HandlerFunc[UpdateSpeechRec
 	}
 
 	c.addHandler(UpdateTypeSpeechRecognitionTrial, h)
-
 	return h
 }
 
@@ -3087,7 +2955,6 @@ func (c *Client) AddSpeedLimitNotificationHandler(hn HandlerFunc[UpdateSpeedLimi
 	}
 
 	c.addHandler(UpdateTypeSpeedLimitNotification, h)
-
 	return h
 }
 
@@ -3106,7 +2973,6 @@ func (c *Client) AddStakeDiceStateHandler(hn HandlerFunc[UpdateStakeDiceState], 
 	}
 
 	c.addHandler(UpdateTypeStakeDiceState, h)
-
 	return h
 }
 
@@ -3125,7 +2991,6 @@ func (c *Client) AddStarRevenueStatusHandler(hn HandlerFunc[UpdateStarRevenueSta
 	}
 
 	c.addHandler(UpdateTypeStarRevenueStatus, h)
-
 	return h
 }
 
@@ -3144,7 +3009,6 @@ func (c *Client) AddStickerSetHandler(hn HandlerFunc[UpdateStickerSet], f ...Fil
 	}
 
 	c.addHandler(UpdateTypeStickerSet, h)
-
 	return h
 }
 
@@ -3163,7 +3027,6 @@ func (c *Client) AddStoryHandler(hn HandlerFunc[UpdateStory], f ...Filter) Handl
 	}
 
 	c.addHandler(UpdateTypeStory, h)
-
 	return h
 }
 
@@ -3182,7 +3045,6 @@ func (c *Client) AddStoryDeletedHandler(hn HandlerFunc[UpdateStoryDeleted], f ..
 	}
 
 	c.addHandler(UpdateTypeStoryDeleted, h)
-
 	return h
 }
 
@@ -3201,7 +3063,6 @@ func (c *Client) AddStoryListChatCountHandler(hn HandlerFunc[UpdateStoryListChat
 	}
 
 	c.addHandler(UpdateTypeStoryListChatCount, h)
-
 	return h
 }
 
@@ -3220,7 +3081,6 @@ func (c *Client) AddStoryPostFailedHandler(hn HandlerFunc[UpdateStoryPostFailed]
 	}
 
 	c.addHandler(UpdateTypeStoryPostFailed, h)
-
 	return h
 }
 
@@ -3239,7 +3099,6 @@ func (c *Client) AddStoryPostSucceededHandler(hn HandlerFunc[UpdateStoryPostSucc
 	}
 
 	c.addHandler(UpdateTypeStoryPostSucceeded, h)
-
 	return h
 }
 
@@ -3258,7 +3117,6 @@ func (c *Client) AddStoryStealthModeHandler(hn HandlerFunc[UpdateStoryStealthMod
 	}
 
 	c.addHandler(UpdateTypeStoryStealthMode, h)
-
 	return h
 }
 
@@ -3277,7 +3135,6 @@ func (c *Client) AddSuggestedActionsHandler(hn HandlerFunc[UpdateSuggestedAction
 	}
 
 	c.addHandler(UpdateTypeSuggestedActions, h)
-
 	return h
 }
 
@@ -3296,7 +3153,6 @@ func (c *Client) AddSupergroupHandler(hn HandlerFunc[UpdateSupergroup], f ...Fil
 	}
 
 	c.addHandler(UpdateTypeSupergroup, h)
-
 	return h
 }
 
@@ -3315,7 +3171,6 @@ func (c *Client) AddSupergroupFullInfoHandler(hn HandlerFunc[UpdateSupergroupFul
 	}
 
 	c.addHandler(UpdateTypeSupergroupFullInfo, h)
-
 	return h
 }
 
@@ -3334,7 +3189,6 @@ func (c *Client) AddTermsOfServiceHandler(hn HandlerFunc[UpdateTermsOfService], 
 	}
 
 	c.addHandler(UpdateTypeTermsOfService, h)
-
 	return h
 }
 
@@ -3353,7 +3207,6 @@ func (c *Client) AddTextCompositionStylesHandler(hn HandlerFunc[UpdateTextCompos
 	}
 
 	c.addHandler(UpdateTypeTextCompositionStyles, h)
-
 	return h
 }
 
@@ -3372,7 +3225,6 @@ func (c *Client) AddTonRevenueStatusHandler(hn HandlerFunc[UpdateTonRevenueStatu
 	}
 
 	c.addHandler(UpdateTypeTonRevenueStatus, h)
-
 	return h
 }
 
@@ -3391,7 +3243,6 @@ func (c *Client) AddTopicMessageCountHandler(hn HandlerFunc[UpdateTopicMessageCo
 	}
 
 	c.addHandler(UpdateTypeTopicMessageCount, h)
-
 	return h
 }
 
@@ -3410,7 +3261,6 @@ func (c *Client) AddTrendingStickerSetsHandler(hn HandlerFunc[UpdateTrendingStic
 	}
 
 	c.addHandler(UpdateTypeTrendingStickerSets, h)
-
 	return h
 }
 
@@ -3429,7 +3279,6 @@ func (c *Client) AddTrustedMiniAppBotsHandler(hn HandlerFunc[UpdateTrustedMiniAp
 	}
 
 	c.addHandler(UpdateTypeTrustedMiniAppBots, h)
-
 	return h
 }
 
@@ -3448,7 +3297,6 @@ func (c *Client) AddUnconfirmedSessionHandler(hn HandlerFunc[UpdateUnconfirmedSe
 	}
 
 	c.addHandler(UpdateTypeUnconfirmedSession, h)
-
 	return h
 }
 
@@ -3467,7 +3315,6 @@ func (c *Client) AddUnreadChatCountHandler(hn HandlerFunc[UpdateUnreadChatCount]
 	}
 
 	c.addHandler(UpdateTypeUnreadChatCount, h)
-
 	return h
 }
 
@@ -3486,7 +3333,6 @@ func (c *Client) AddUnreadMessageCountHandler(hn HandlerFunc[UpdateUnreadMessage
 	}
 
 	c.addHandler(UpdateTypeUnreadMessageCount, h)
-
 	return h
 }
 
@@ -3505,7 +3351,6 @@ func (c *Client) AddUserHandler(hn HandlerFunc[UpdateUser], f ...Filter) Handle 
 	}
 
 	c.addHandler(UpdateTypeUser, h)
-
 	return h
 }
 
@@ -3524,7 +3369,6 @@ func (c *Client) AddUserFullInfoHandler(hn HandlerFunc[UpdateUserFullInfo], f ..
 	}
 
 	c.addHandler(UpdateTypeUserFullInfo, h)
-
 	return h
 }
 
@@ -3543,7 +3387,6 @@ func (c *Client) AddUserPrivacySettingRulesHandler(hn HandlerFunc[UpdateUserPriv
 	}
 
 	c.addHandler(UpdateTypeUserPrivacySettingRules, h)
-
 	return h
 }
 
@@ -3562,7 +3405,6 @@ func (c *Client) AddUserStatusHandler(hn HandlerFunc[UpdateUserStatus], f ...Fil
 	}
 
 	c.addHandler(UpdateTypeUserStatus, h)
-
 	return h
 }
 
@@ -3581,7 +3423,6 @@ func (c *Client) AddVideoPublishedHandler(hn HandlerFunc[UpdateVideoPublished], 
 	}
 
 	c.addHandler(UpdateTypeVideoPublished, h)
-
 	return h
 }
 
@@ -3600,13 +3441,30 @@ func (c *Client) AddWebAppMessageSentHandler(hn HandlerFunc[UpdateWebAppMessageS
 	}
 
 	c.addHandler(UpdateTypeWebAppMessageSent, h)
-
 	return h
 }
 
 // OnWebAppMessageSent registers a handler for UpdateWebAppMessageSent updates.
 func (c *Client) OnWebAppMessageSent(hn HandlerFunc[UpdateWebAppMessageSent], f ...Filter) Handle {
 	return c.AddWebAppMessageSentHandler(hn, f...)
+}
+
+// AddWebBrowserSettingsHandler registers a handler for UpdateWebBrowserSettings updates.
+func (c *Client) AddWebBrowserSettingsHandler(hn HandlerFunc[UpdateWebBrowserSettings], f ...Filter) Handle {
+	h := &handle[UpdateWebBrowserSettings]{
+		client:  c,
+		handler: hn,
+		filters: f,
+		tp:      UpdateTypeWebBrowserSettings,
+	}
+
+	c.addHandler(UpdateTypeWebBrowserSettings, h)
+	return h
+}
+
+// OnWebBrowserSettings registers a handler for UpdateWebBrowserSettings updates.
+func (c *Client) OnWebBrowserSettings(hn HandlerFunc[UpdateWebBrowserSettings], f ...Filter) Handle {
+	return c.AddWebBrowserSettingsHandler(hn, f...)
 }
 
 func ExtractChatID(u TlObject) int64 {
@@ -3646,6 +3504,8 @@ func ExtractChatID(u TlObject) int64 {
 	case *UpdateChatIsMarkedAsUnread:
 		return upd.ChatId
 	case *UpdateChatIsTranslatable:
+		return upd.ChatId
+	case *UpdateChatJoinResult:
 		return upd.ChatId
 	case *UpdateChatLastMessage:
 		return upd.ChatId
@@ -3772,7 +3632,7 @@ func ExtractChatID(u TlObject) int64 {
 		return upd.ChatId
 	case *UpdatePaidMediaPurchased:
 		return upd.UserId
-	case *UpdatePendingTextMessage:
+	case *UpdatePendingMessage:
 		return upd.ChatId
 	case *UpdateTopicMessageCount:
 		return upd.ChatId
