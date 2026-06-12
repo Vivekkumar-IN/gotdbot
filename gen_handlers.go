@@ -44,6 +44,7 @@ const (
 	UpdateTypeChatHasScheduledMessages                 UpdateType = "updateChatHasScheduledMessages"
 	UpdateTypeChatIsMarkedAsUnread                     UpdateType = "updateChatIsMarkedAsUnread"
 	UpdateTypeChatIsTranslatable                       UpdateType = "updateChatIsTranslatable"
+	UpdateTypeChatJoinResult                           UpdateType = "updateChatJoinResult"
 	UpdateTypeChatLastMessage                          UpdateType = "updateChatLastMessage"
 	UpdateTypeChatMember                               UpdateType = "updateChatMember"
 	UpdateTypeChatMessageAutoDeleteTime                UpdateType = "updateChatMessageAutoDeleteTime"
@@ -139,7 +140,7 @@ const (
 	UpdateTypeOwnedStarCount                           UpdateType = "updateOwnedStarCount"
 	UpdateTypeOwnedTonCount                            UpdateType = "updateOwnedTonCount"
 	UpdateTypePaidMediaPurchased                       UpdateType = "updatePaidMediaPurchased"
-	UpdateTypePendingTextMessage                       UpdateType = "updatePendingTextMessage"
+	UpdateTypePendingMessage                           UpdateType = "updatePendingMessage"
 	UpdateTypePoll                                     UpdateType = "updatePoll"
 	UpdateTypePollAnswer                               UpdateType = "updatePollAnswer"
 	UpdateTypeProfileAccentColors                      UpdateType = "updateProfileAccentColors"
@@ -186,6 +187,7 @@ const (
 	UpdateTypeUserStatus                               UpdateType = "updateUserStatus"
 	UpdateTypeVideoPublished                           UpdateType = "updateVideoPublished"
 	UpdateTypeWebAppMessageSent                        UpdateType = "updateWebAppMessageSent"
+	UpdateTypeWebBrowserSettings                       UpdateType = "updateWebBrowserSettings"
 )
 
 // AddAccentColorsHandler registers a handler for UpdateAccentColors updates.
@@ -908,6 +910,25 @@ func (c *Client) AddChatIsTranslatableHandler(hn HandlerFunc[UpdateChatIsTransla
 // OnChatIsTranslatable registers a handler for UpdateChatIsTranslatable updates.
 func (c *Client) OnChatIsTranslatable(hn HandlerFunc[UpdateChatIsTranslatable], f ...Filter) Handle {
 	return c.AddChatIsTranslatableHandler(hn, f...)
+}
+
+// AddChatJoinResultHandler registers a handler for UpdateChatJoinResult updates.
+func (c *Client) AddChatJoinResultHandler(hn HandlerFunc[UpdateChatJoinResult], f ...Filter) Handle {
+	h := &handle[UpdateChatJoinResult]{
+		client:  c,
+		handler: hn,
+		filters: f,
+		tp:      UpdateTypeChatJoinResult,
+	}
+
+	c.addHandler(UpdateTypeChatJoinResult, h)
+
+	return h
+}
+
+// OnChatJoinResult registers a handler for UpdateChatJoinResult updates.
+func (c *Client) OnChatJoinResult(hn HandlerFunc[UpdateChatJoinResult], f ...Filter) Handle {
+	return c.AddChatJoinResultHandler(hn, f...)
 }
 
 // AddChatLastMessageHandler registers a handler for UpdateChatLastMessage updates.
@@ -2716,23 +2737,23 @@ func (c *Client) OnPaidMediaPurchased(hn HandlerFunc[UpdatePaidMediaPurchased], 
 	return c.AddPaidMediaPurchasedHandler(hn, f...)
 }
 
-// AddPendingTextMessageHandler registers a handler for UpdatePendingTextMessage updates.
-func (c *Client) AddPendingTextMessageHandler(hn HandlerFunc[UpdatePendingTextMessage], f ...Filter) Handle {
-	h := &handle[UpdatePendingTextMessage]{
+// AddPendingMessageHandler registers a handler for UpdatePendingMessage updates.
+func (c *Client) AddPendingMessageHandler(hn HandlerFunc[UpdatePendingMessage], f ...Filter) Handle {
+	h := &handle[UpdatePendingMessage]{
 		client:  c,
 		handler: hn,
 		filters: f,
-		tp:      UpdateTypePendingTextMessage,
+		tp:      UpdateTypePendingMessage,
 	}
 
-	c.addHandler(UpdateTypePendingTextMessage, h)
+	c.addHandler(UpdateTypePendingMessage, h)
 
 	return h
 }
 
-// OnPendingTextMessage registers a handler for UpdatePendingTextMessage updates.
-func (c *Client) OnPendingTextMessage(hn HandlerFunc[UpdatePendingTextMessage], f ...Filter) Handle {
-	return c.AddPendingTextMessageHandler(hn, f...)
+// OnPendingMessage registers a handler for UpdatePendingMessage updates.
+func (c *Client) OnPendingMessage(hn HandlerFunc[UpdatePendingMessage], f ...Filter) Handle {
+	return c.AddPendingMessageHandler(hn, f...)
 }
 
 // AddPollHandler registers a handler for UpdatePoll updates.
@@ -3609,6 +3630,25 @@ func (c *Client) OnWebAppMessageSent(hn HandlerFunc[UpdateWebAppMessageSent], f 
 	return c.AddWebAppMessageSentHandler(hn, f...)
 }
 
+// AddWebBrowserSettingsHandler registers a handler for UpdateWebBrowserSettings updates.
+func (c *Client) AddWebBrowserSettingsHandler(hn HandlerFunc[UpdateWebBrowserSettings], f ...Filter) Handle {
+	h := &handle[UpdateWebBrowserSettings]{
+		client:  c,
+		handler: hn,
+		filters: f,
+		tp:      UpdateTypeWebBrowserSettings,
+	}
+
+	c.addHandler(UpdateTypeWebBrowserSettings, h)
+
+	return h
+}
+
+// OnWebBrowserSettings registers a handler for UpdateWebBrowserSettings updates.
+func (c *Client) OnWebBrowserSettings(hn HandlerFunc[UpdateWebBrowserSettings], f ...Filter) Handle {
+	return c.AddWebBrowserSettingsHandler(hn, f...)
+}
+
 func ExtractChatID(u TlObject) int64 {
 	switch upd := u.(type) {
 	case *UpdateAnimatedEmojiMessageClicked:
@@ -3646,6 +3686,8 @@ func ExtractChatID(u TlObject) int64 {
 	case *UpdateChatIsMarkedAsUnread:
 		return upd.ChatId
 	case *UpdateChatIsTranslatable:
+		return upd.ChatId
+	case *UpdateChatJoinResult:
 		return upd.ChatId
 	case *UpdateChatLastMessage:
 		return upd.ChatId
@@ -3772,7 +3814,7 @@ func ExtractChatID(u TlObject) int64 {
 		return upd.ChatId
 	case *UpdatePaidMediaPurchased:
 		return upd.UserId
-	case *UpdatePendingTextMessage:
+	case *UpdatePendingMessage:
 		return upd.ChatId
 	case *UpdateTopicMessageCount:
 		return upd.ChatId
