@@ -60,7 +60,6 @@ func generateUpdates(types []TLType) {
 		}
 
 		w(`	c.addHandler(%s, h)
-
 	return h
 }
 
