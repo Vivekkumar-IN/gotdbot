@@ -772,3 +772,35 @@ func (m *Message) ReplyCopy(c *Client, fromChatId int64, messageId int64, opts .
 	}
 	return c.SendCopy(m.ChatId, fromChatId, messageId, opt)
 }
+
+// EditContent edits the message with the given content.
+func (m *Message) EditContent(c *Client, content InputMessageContent, replyMarkup ...ReplyMarkup) (*Message, error) {
+	return c.EditContent(m.ChatId, m.Id, content, replyMarkup...)
+}
+
+// ReplyContent replies to the message with the given content.
+func (m *Message) ReplyContent(c *Client, content InputMessageContent, opts ...*SendMessageOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendMessageOpts{})
+	if opt.ReplyTo == nil {
+		opt.ReplyTo = &InputMessageReplyToMessage{MessageId: m.Id}
+	}
+	return c.SendContent(m.ChatId, content, opt)
+}
+
+// ReplyRichMessage replies to the message with a rich message.
+func (m *Message) ReplyRichMessage(c *Client, richMessage *InputRichMessage, opts ...*SendTextMessageOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendTextMessageOpts{})
+	if opt.ReplyToMessageID == 0 {
+		opt.ReplyToMessageID = m.Id
+	}
+	return c.SendRichMessage(m.ChatId, richMessage, opt)
+}
+
+// ReplyForwarded replies to the message by forwarding another message.
+func (m *Message) ReplyForwarded(c *Client, fromChatId int64, messageId int64, opts ...*SendForwardedOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendForwardedOpts{})
+	if opt.ReplyToMessageID == 0 {
+		opt.ReplyToMessageID = m.Id
+	}
+	return c.SendForwarded(m.ChatId, fromChatId, messageId, opt)
+}

@@ -4,6 +4,7 @@ package gotdbot
 
 import (
 	"bufio"
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -56,9 +57,10 @@ type Client struct {
 	handleMu sync.RWMutex
 	handlers map[UpdateType][]Handle
 
-	waiters     map[string]*Waiter
-	waiterCount int64
+	waiters     map[int64]map[string]*Waiter
+	waiterCount atomic.Int64
 	wMu         sync.RWMutex
+	requestID   atomic.Uint64
 
 	Options   map[string]interface{}
 	optionsMu sync.RWMutex
@@ -146,7 +148,7 @@ func NewClient(apiID int32, apiHash, tokenOrPhone string, opts ...*ClientOpts) (
 		closed:        make(chan struct{}),
 		authErrorChan: make(chan error, 1),
 		handlers:      make(map[UpdateType][]Handle),
-		waiters:       make(map[string]*Waiter),
+		waiters:       make(map[int64]map[string]*Waiter),
 		Options:       make(map[string]interface{}),
 	}
 
@@ -248,8 +250,8 @@ func (c *Client) processor() {
 func (c *Client) authHandler(client *Client, authState *UpdateAuthorizationState) error {
 	c.Logger.Debugf("Authorization state update: %s", authState.AuthorizationState.GetType())
 
-	switch authState.AuthorizationState.GetType() {
-	case "authorizationStateWaitTdlibParameters":
+	switch state := authState.AuthorizationState.(type) {
+	case *AuthorizationStateWaitTdlibParameters:
 		if c.config.TDLibOptions != nil {
 			c.config.TDLibOptions.forEachSet(func(k string, v interface{}) {
 				if opt := toOptionValue(v); opt != nil {
@@ -284,7 +286,7 @@ func (c *Client) authHandler(client *Client, authState *UpdateAuthorizationState
 			c.authErrorChan <- err
 		}
 
-	case "authorizationStateWaitPhoneNumber":
+	case *AuthorizationStateWaitPhoneNumber:
 		if c.botToken != "" {
 			err := c.CheckAuthenticationBotToken(c.botToken)
 			if err != nil {
@@ -318,8 +320,8 @@ func (c *Client) authHandler(client *Client, authState *UpdateAuthorizationState
 			}
 		}
 
-	case "authorizationStateWaitOtherDeviceConfirmation":
-		link := authState.AuthorizationState.(*AuthorizationStateWaitOtherDeviceConfirmation).Link
+	case *AuthorizationStateWaitOtherDeviceConfirmation:
+		link := state.Link
 		fmt.Printf("Scan the QR code below: or open the link in Telegram: %s\n", link)
 		q, err := qrcode.NewQRCode(link)
 		if err != nil {
@@ -328,10 +330,9 @@ func (c *Client) authHandler(client *Client, authState *UpdateAuthorizationState
 			fmt.Println(q.ToSmallString(false))
 		}
 
-	case "authorizationStateWaitCode":
-		codeInfo := authState.AuthorizationState.(*AuthorizationStateWaitCode).CodeInfo
-		codeType := codeInfo.Type.GetType()
-		codeType = strings.TrimPrefix(codeType, "authenticationCodeType")
+	case *AuthorizationStateWaitCode:
+		codeInfo := state.CodeInfo
+		codeType := strings.TrimPrefix(codeInfo.Type.GetType(), "authenticationCodeType")
 		reader := bufio.NewReader(os.Stdin)
 		for {
 			fmt.Printf("Enter the code received via %s: ", codeType)
@@ -348,8 +349,8 @@ func (c *Client) authHandler(client *Client, authState *UpdateAuthorizationState
 			break
 		}
 
-	case "authorizationStateWaitPassword":
-		hint := authState.AuthorizationState.(*AuthorizationStateWaitPassword).PasswordHint
+	case *AuthorizationStateWaitPassword:
+		hint := state.PasswordHint
 		reader := bufio.NewReader(os.Stdin)
 		for {
 			fmt.Printf("Enter your 2FA password (hint: %s): ", hint)
@@ -366,7 +367,7 @@ func (c *Client) authHandler(client *Client, authState *UpdateAuthorizationState
 			break
 		}
 
-	case "authorizationStateWaitRegistration":
+	case *AuthorizationStateWaitRegistration:
 		reader := bufio.NewReader(os.Stdin)
 		fmt.Print("Enter first name: ")
 		firstName, _ := reader.ReadString('\n')
@@ -380,10 +381,10 @@ func (c *Client) authHandler(client *Client, authState *UpdateAuthorizationState
 			c.Logger.Errorf("Error registering user: %v", err)
 			c.authErrorChan <- err
 		}
-	case "authorizationStateWaitPremiumPurchase":
+	case *AuthorizationStateWaitPremiumPurchase:
 		c.Logger.Infof("Account is limited and requires Telegram Premium. Please purchase Telegram Premium to continue.")
 		c.authErrorChan <- WaitPremiumPurchase
-	case "authorizationStateReady":
+	case *AuthorizationStateReady:
 		c.isAuthorized = true
 		me, err := c.GetMe()
 		if err != nil {
@@ -405,7 +406,7 @@ func (c *Client) authHandler(client *Client, authState *UpdateAuthorizationState
 		default:
 		}
 
-	case "authorizationStateClosed":
+	case *AuthorizationStateClosed:
 		if !c.isAuthorized {
 			c.authErrorChan <- fmt.Errorf("authorization closed unexpectedly")
 		}
@@ -419,8 +420,7 @@ func (c *Client) authHandler(client *Client, authState *UpdateAuthorizationState
 }
 
 func (c *Client) connectionStateHandler(client *Client, u *UpdateConnectionState) error {
-	state := u.State.GetType()
-	state = strings.TrimPrefix(state, "connectionState")
+	state := strings.TrimPrefix(u.State.GetType(), "connectionState")
 	c.Logger.Infof("Connection state changed: %s", state)
 	return nil
 }
@@ -477,6 +477,11 @@ func (c *Client) updateUserHandler(_ *Client, u *UpdateUser) error {
 }
 
 func (c *Client) Send(req TlObject) (TlObject, error) {
+	return c.SendWithContext(context.Background(), req)
+}
+
+// SendWithContext dispatches req to TDLib and waits for the response, honoring ctx.
+func (c *Client) SendWithContext(ctx context.Context, req TlObject) (TlObject, error) {
 	data, err := json.Marshal(req)
 	if err != nil {
 		return nil, err
@@ -494,7 +499,7 @@ func (c *Client) Send(req TlObject) (TlObject, error) {
 	isMessageAttemptedLoad := reqType == "getmessage" || reqType == "getmessagelocally" || reqType == "getrepliedmessage" || reqType == "getcallbackquerymessage"
 
 	for {
-		extra := fmt.Sprintf("%d", time.Now().UnixNano())
+		extra := strconv.FormatUint(c.requestID.Add(1), 10)
 		tmp["@extra"] = extra
 
 		sendData, err := json.Marshal(tmp)
@@ -512,17 +517,18 @@ func (c *Client) Send(req TlObject) (TlObject, error) {
 
 		select {
 		case res := <-ch:
-			if res.GetType() == "error" {
-				if errObj, ok := res.(*Error); ok {
-					resultErr = errObj
-					result = res
-				}
+			if errObj, ok := res.(*Error); ok {
+				resultErr = errObj
+				result = res
 			} else {
 				result = res
 			}
 		case <-time.After(30 * time.Second):
 			c.pendingRequests.Delete(extra)
 			return nil, SendTimeout
+		case <-ctx.Done():
+			c.pendingRequests.Delete(extra)
+			return nil, ctx.Err()
 		}
 
 		if resultErr == nil {
@@ -615,7 +621,7 @@ func (c *Client) handleAutoRetry(req map[string]interface{}, errObj *Error, isCh
 
 // waitMessage waits for the message to be sent and returns the final message.
 func (c *Client) waitMessage(msg *Message) (*Message, error) {
-	if msg.SendingState != nil && msg.SendingState.GetType() == "messageSendingStatePending" {
+	if _, ok := msg.SendingState.(*MessageSendingStatePending); ok {
 		key := fmt.Sprintf("%d:%d", msg.ChatId, msg.Id)
 		ch := make(chan TlObject, 1)
 		c.pendingMessages.Store(key, ch)
@@ -656,7 +662,7 @@ func (c *Client) waitMessages(msgs *Messages) (*Messages, error) {
 
 	for i := range msgs.Messages {
 		msg := &msgs.Messages[i]
-		if msg.SendingState != nil && msg.SendingState.GetType() == "messageSendingStatePending" {
+		if _, ok := msg.SendingState.(*MessageSendingStatePending); ok {
 			key := fmt.Sprintf("%d:%d", msg.ChatId, msg.Id)
 			c.pendingMessages.Store(key, ch)
 		} else {
@@ -837,10 +843,20 @@ func (c *Client) processUpdate(update TlObject) {
 		// Waiters
 		c.wMu.RLock()
 		var matchedWaiters []*Waiter
-		for _, w := range c.waiters {
-			if w.Filter(c, update) {
-				matchedWaiters = append(matchedWaiters, w)
+		var chatID int64
+		if u, ok := update.(*UpdateNewMessage); ok && u.Message != nil {
+			chatID = u.Message.ChatId
+		}
+		collectWaiters := func(id int64) {
+			for _, w := range c.waiters[id] {
+				if w.Filter(c, update) {
+					matchedWaiters = append(matchedWaiters, w)
+				}
 			}
+		}
+		collectWaiters(0)
+		if chatID != 0 {
+			collectWaiters(chatID)
 		}
 		c.wMu.RUnlock()
 
@@ -907,17 +923,28 @@ func (c *Client) processUpdate(update TlObject) {
 }
 
 func (c *Client) WaitFor(filter func(*Client, TlObject) bool, timeout time.Duration) (TlObject, error) {
+	return c.WaitForChat(0, filter, timeout)
+}
+
+// WaitForContext registers a waiter and blocks until a matching update arrives,
+// timeout occurs, or ctx is cancelled. A chatId of 0 listens globally.
+func (c *Client) WaitForContext(ctx context.Context, chatId int64, filter func(*Client, TlObject) bool, timeout time.Duration) (TlObject, error) {
 	ch := make(chan TlObject, 1)
-	idNum := atomic.AddInt64(&c.waiterCount, 1)
-	id := fmt.Sprintf("%d", idNum)
+	id := strconv.FormatInt(int64(c.waiterCount.Add(1)), 10)
 
 	c.wMu.Lock()
-	c.waiters[id] = &Waiter{Filter: filter, C: ch}
+	if c.waiters[chatId] == nil {
+		c.waiters[chatId] = make(map[string]*Waiter)
+	}
+	c.waiters[chatId][id] = &Waiter{Filter: filter, C: ch, ChatId: chatId}
 	c.wMu.Unlock()
 
 	defer func() {
 		c.wMu.Lock()
-		delete(c.waiters, id)
+		delete(c.waiters[chatId], id)
+		if len(c.waiters[chatId]) == 0 {
+			delete(c.waiters, chatId)
+		}
 		c.wMu.Unlock()
 	}()
 
@@ -926,12 +953,20 @@ func (c *Client) WaitFor(filter func(*Client, TlObject) bool, timeout time.Durat
 		return u, nil
 	case <-time.After(timeout):
 		return nil, ConversationTimeout
+	case <-ctx.Done():
+		return nil, ctx.Err()
 	}
+}
+
+// WaitForChat registers a waiter for a specific chat and blocks until a matching update arrives or timeout occurs.
+func (c *Client) WaitForChat(chatId int64, filter func(*Client, TlObject) bool, timeout time.Duration) (TlObject, error) {
+	return c.WaitForContext(context.Background(), chatId, filter, timeout)
 }
 
 type Waiter struct {
 	Filter func(*Client, TlObject) bool
 	C      chan TlObject
+	ChatId int64
 }
 
 func Bool(b bool) *bool {

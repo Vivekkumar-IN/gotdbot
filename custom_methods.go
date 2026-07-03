@@ -190,14 +190,16 @@ func (c *Client) SendPhoto(chatId int64, photo InputFile, opts ...*SendPhotoOpts
 	}
 
 	content := &InputMessagePhoto{
-		Photo:               photo,
-		Thumbnail:           opt.Thumbnail,
-		AddedStickerFileIds: opt.AddedStickerFileIds,
-		Width:               opt.Width,
-		Height:              opt.Height,
-		Caption:             caption,
-		SelfDestructType:    opt.SelfDestructType,
-		HasSpoiler:          opt.HasSpoiler,
+		Photo: &InputPhoto{
+			Photo:               photo,
+			Thumbnail:           opt.Thumbnail,
+			AddedStickerFileIds: opt.AddedStickerFileIds,
+			Width:               opt.Width,
+			Height:              opt.Height,
+		},
+		Caption:          caption,
+		SelfDestructType: opt.SelfDestructType,
+		HasSpoiler:       opt.HasSpoiler,
 	}
 
 	return c.sendMessageWithContent(chatId, content, &MessageSendOptions{
@@ -242,16 +244,18 @@ func (c *Client) SendVideo(chatId int64, video InputFile, opts ...*SendVideoOpts
 	}
 
 	content := &InputMessageVideo{
-		Video:               video,
-		Thumbnail:           opt.Thumbnail,
-		AddedStickerFileIds: opt.AddedStickerFileIds,
-		Duration:            opt.Duration,
-		Width:               opt.Width,
-		Height:              opt.Height,
-		SupportsStreaming:   opt.SupportsStreaming,
-		Caption:             caption,
-		SelfDestructType:    opt.SelfDestructType,
-		HasSpoiler:          opt.HasSpoiler,
+		Video: &InputVideo{
+			Video:               video,
+			Thumbnail:           opt.Thumbnail,
+			AddedStickerFileIds: opt.AddedStickerFileIds,
+			Duration:            opt.Duration,
+			Width:               opt.Width,
+			Height:              opt.Height,
+			SupportsStreaming:   opt.SupportsStreaming,
+		},
+		Caption:          caption,
+		SelfDestructType: opt.SelfDestructType,
+		HasSpoiler:       opt.HasSpoiler,
 	}
 
 	return c.sendMessageWithContent(chatId, content, &MessageSendOptions{
@@ -294,14 +298,16 @@ func (c *Client) SendAnimation(chatId int64, animation InputFile, opts ...*SendA
 	}
 
 	content := &InputMessageAnimation{
-		Animation:           animation,
-		Thumbnail:           opt.Thumbnail,
-		AddedStickerFileIds: opt.AddedStickerFileIds,
-		Duration:            opt.Duration,
-		Width:               opt.Width,
-		Height:              opt.Height,
-		Caption:             caption,
-		HasSpoiler:          opt.HasSpoiler,
+		Animation: &InputAnimation{
+			Animation:           animation,
+			Thumbnail:           opt.Thumbnail,
+			AddedStickerFileIds: opt.AddedStickerFileIds,
+			Duration:            opt.Duration,
+			Width:               opt.Width,
+			Height:              opt.Height,
+		},
+		Caption:    caption,
+		HasSpoiler: opt.HasSpoiler,
 	}
 
 	return c.sendMessageWithContent(chatId, content, &MessageSendOptions{
@@ -342,12 +348,14 @@ func (c *Client) SendAudio(chatId int64, audio InputFile, opts ...*SendAudioOpts
 	}
 
 	content := &InputMessageAudio{
-		Audio:               audio,
-		AlbumCoverThumbnail: opt.AlbumCoverThumbnail,
-		Title:               opt.Title,
-		Performer:           opt.Performer,
-		Duration:            opt.Duration,
-		Caption:             caption,
+		Audio: &InputAudio{
+			Audio:               audio,
+			AlbumCoverThumbnail: opt.AlbumCoverThumbnail,
+			Title:               opt.Title,
+			Performer:           opt.Performer,
+			Duration:            opt.Duration,
+		},
+		Caption: caption,
 	}
 
 	return c.sendMessageWithContent(chatId, content, &MessageSendOptions{
@@ -386,10 +394,12 @@ func (c *Client) SendDocument(chatId int64, document InputFile, opts ...*SendDoc
 	}
 
 	content := &InputMessageDocument{
-		Document:                    document,
-		Thumbnail:                   opt.Thumbnail,
-		DisableContentTypeDetection: opt.DisableContentTypeDetection,
-		Caption:                     caption,
+		Document: &InputDocument{
+			Document:                    document,
+			Thumbnail:                   opt.Thumbnail,
+			DisableContentTypeDetection: opt.DisableContentTypeDetection,
+		},
+		Caption: caption,
 	}
 
 	return c.sendMessageWithContent(chatId, content, &MessageSendOptions{
@@ -878,10 +888,7 @@ type SendLocationOpts struct {
 func (c *Client) SendLocation(chatId int64, location *Location, opts ...*SendLocationOpts) (*Message, error) {
 	opt := getVariadic(opts, &SendLocationOpts{})
 	content := &InputMessageLocation{
-		Heading:              opt.Heading,
-		LivePeriod:           opt.LivePeriod,
-		Location:             location,
-		ProximityAlertRadius: opt.ProximityAlertRadius,
+		Location: location,
 	}
 	return c.sendMessageWithContent(chatId, content, &MessageSendOptions{
 		DisableNotification: opt.DisableNotification,
@@ -1072,5 +1079,87 @@ func (c *Client) SendVenue(chatId int64, venue *Venue, opts ...*SendVenueOpts) (
 		ProtectContent:      opt.ProtectContent,
 		AllowPaidBroadcast:  opt.AllowPaidBroadcast,
 		EffectId:            opt.EffectId,
+	}, opt.TopicId, opt.Quote, opt.ReplyTo, opt.ReplyToMessageID, opt.ReplyMarkup)
+}
+
+// EditContent edits a message with the given content.
+func (c *Client) EditContent(chatId int64, messageId int64, content InputMessageContent, replyMarkup ...ReplyMarkup) (*Message, error) {
+	markup := getVariadic(replyMarkup, nil)
+	switch t := content.(type) {
+	case *InputMessageText, *InputMessageRichMessage:
+		return c.EditMessageText(chatId, content, messageId, &EditMessageTextOpts{ReplyMarkup: markup})
+	case *InputMessageAnimation, *InputMessageAudio, *InputMessageDocument, *InputMessagePhoto, *InputMessageVideo:
+		return c.EditMessageMedia(chatId, content, messageId, &EditMessageMediaOpts{ReplyMarkup: markup})
+	case *InputMessageLiveLocation:
+		return c.EditMessageLiveLocation(chatId, messageId, &EditMessageLiveLocationOpts{Location: t.Location, ReplyMarkup: markup})
+	case *InputMessageChecklist:
+		return c.EditMessageChecklist(chatId, t.Checklist, messageId, &EditMessageChecklistOpts{ReplyMarkup: markup})
+	default:
+		return nil, fmt.Errorf("unsupported content type for editing: %T", content)
+	}
+}
+
+// EditReplyMarkup edits the reply markup of a message.
+func (c *Client) EditReplyMarkup(chatId int64, messageId int64, replyMarkup ...ReplyMarkup) (*Message, error) {
+	return c.EditMessageReplyMarkup(chatId, messageId, &EditMessageReplyMarkupOpts{ReplyMarkup: getVariadic(replyMarkup, nil)})
+}
+
+// SendContent sends a message with the given content.
+func (c *Client) SendContent(chatId int64, content InputMessageContent, opts ...*SendMessageOpts) (*Message, error) {
+	return c.SendMessage(chatId, content, getVariadic(opts, &SendMessageOpts{}))
+}
+
+// SendRichMessage sends a rich message to chat.
+func (c *Client) SendRichMessage(chatId int64, richMessage *InputRichMessage, opts ...*SendTextMessageOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendTextMessageOpts{})
+	content := &InputMessageRichMessage{ClearDraft: opt.ClearDraft, Message: richMessage}
+	return c.sendMessageWithContent(chatId, content, &MessageSendOptions{
+		DisableNotification: opt.DisableNotification,
+		ProtectContent:      opt.ProtectContent,
+		AllowPaidBroadcast:  opt.AllowPaidBroadcast,
+		EffectId:            opt.EffectId,
+	}, opt.TopicId, opt.Quote, opt.ReplyTo, opt.ReplyToMessageID, opt.ReplyMarkup)
+}
+
+type SendForwardedOpts struct {
+	InGameShare                       bool
+	DisableNotification               bool
+	EffectId                          int64
+	ReplaceVideoStartTimestamp        bool
+	NewVideoStartTimestamp            int32
+	FromBackground                    bool
+	OnlyPreview                       bool
+	PaidMessageStarCount              int64
+	ProtectContent                    bool
+	SchedulingState                   MessageSchedulingState
+	SendingId                         int32
+	UpdateOrderOfInstalledStickerSets bool
+	TopicId                           MessageTopic
+	Quote                             *InputTextQuote
+	ReplyTo                           InputMessageReplyTo
+	ReplyToMessageID                  int64
+	ReplyMarkup                       ReplyMarkup
+}
+
+// SendForwarded sends a forwarded message to chat.
+func (c *Client) SendForwarded(chatId int64, fromChatId int64, messageId int64, opts ...*SendForwardedOpts) (*Message, error) {
+	opt := getVariadic(opts, &SendForwardedOpts{})
+	content := &InputMessageForwarded{
+		FromChatId:                 fromChatId,
+		MessageId:                  messageId,
+		InGameShare:                opt.InGameShare,
+		ReplaceVideoStartTimestamp: opt.ReplaceVideoStartTimestamp,
+		NewVideoStartTimestamp:     opt.NewVideoStartTimestamp,
+	}
+	return c.sendMessageWithContent(chatId, content, &MessageSendOptions{
+		DisableNotification:               opt.DisableNotification,
+		EffectId:                          opt.EffectId,
+		FromBackground:                    opt.FromBackground,
+		OnlyPreview:                       opt.OnlyPreview,
+		PaidMessageStarCount:              opt.PaidMessageStarCount,
+		ProtectContent:                    opt.ProtectContent,
+		SchedulingState:                   opt.SchedulingState,
+		SendingId:                         opt.SendingId,
+		UpdateOrderOfInstalledStickerSets: opt.UpdateOrderOfInstalledStickerSets,
 	}, opt.TopicId, opt.Quote, opt.ReplyTo, opt.ReplyToMessageID, opt.ReplyMarkup)
 }
