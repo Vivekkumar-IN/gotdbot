@@ -261,6 +261,9 @@ func (t AddedReaction) MarshalJSON() ([]byte, error) {
 }
 
 func (t *AddedReaction) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias AddedReaction
 	aux := &struct {
 		SenderId json.RawMessage `json:"sender_id"`
@@ -693,7 +696,7 @@ type Animation struct {
 	Duration int32 `json:"duration"`
 	// Original name of the file; as defined by the sender
 	FileName string `json:"file_name"`
-	// True, if stickers were added to the animation. The list of corresponding sticker set can be received using getAttachedStickerSets
+	// True, if stickers were added to the animation. The list of corresponding sticker sets can be received using getAttachedStickerSets
 	HasStickers bool `json:"has_stickers"`
 	// Height of the animation
 	Height int32 `json:"height"`
@@ -1099,6 +1102,9 @@ func (t AuthenticationCodeInfo) MarshalJSON() ([]byte, error) {
 }
 
 func (t *AuthenticationCodeInfo) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias AuthenticationCodeInfo
 	aux := &struct {
 		NextType json.RawMessage `json:"next_type"`
@@ -1178,6 +1184,9 @@ func (t AuthenticationCodeTypeFirebaseAndroid) MarshalJSON() ([]byte, error) {
 }
 
 func (t *AuthenticationCodeTypeFirebaseAndroid) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias AuthenticationCodeTypeFirebaseAndroid
 	aux := &struct {
 		DeviceVerificationParameters json.RawMessage `json:"device_verification_parameters"`
@@ -1554,6 +1563,9 @@ func (t AuthorizationStateWaitEmailCode) MarshalJSON() ([]byte, error) {
 }
 
 func (t *AuthorizationStateWaitEmailCode) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias AuthorizationStateWaitEmailCode
 	aux := &struct {
 		EmailAddressResetState json.RawMessage `json:"email_address_reset_state"`
@@ -1736,7 +1748,7 @@ type AutoDownloadSettings struct {
 	PreloadLargeVideos bool `json:"preload_large_videos"`
 	// True, if the next audio track needs to be preloaded while the user is listening to an audio file
 	PreloadNextAudio bool `json:"preload_next_audio"`
-	// True, if stories needs to be preloaded
+	// True, if stories need to be preloaded
 	PreloadStories bool `json:"preload_stories"`
 	// True, if "use less data for calls" option needs to be enabled
 	UseLessDataForCalls bool `json:"use_less_data_for_calls"`
@@ -1992,6 +2004,9 @@ func (t AvailableReaction) MarshalJSON() ([]byte, error) {
 }
 
 func (t *AvailableReaction) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias AvailableReaction
 	aux := &struct {
 		Type json.RawMessage `json:"type"`
@@ -2046,6 +2061,9 @@ func (t AvailableReactions) MarshalJSON() ([]byte, error) {
 }
 
 func (t *AvailableReactions) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias AvailableReactions
 	aux := &struct {
 		UnavailabilityReason json.RawMessage `json:"unavailability_reason"`
@@ -2100,6 +2118,9 @@ func (t Background) MarshalJSON() ([]byte, error) {
 }
 
 func (t *Background) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias Background
 	aux := &struct {
 		Type json.RawMessage `json:"type"`
@@ -2263,6 +2284,9 @@ func (t BackgroundTypeFill) MarshalJSON() ([]byte, error) {
 }
 
 func (t *BackgroundTypeFill) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias BackgroundTypeFill
 	aux := &struct {
 		Fill json.RawMessage `json:"fill"`
@@ -2315,6 +2339,9 @@ func (t BackgroundTypePattern) MarshalJSON() ([]byte, error) {
 }
 
 func (t *BackgroundTypePattern) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias BackgroundTypePattern
 	aux := &struct {
 		Fill json.RawMessage `json:"fill"`
@@ -2438,6 +2465,9 @@ func (t BasicGroup) MarshalJSON() ([]byte, error) {
 }
 
 func (t *BasicGroup) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias BasicGroup
 	aux := &struct {
 		Status json.RawMessage `json:"status"`
@@ -2852,6 +2882,9 @@ func (t BotInfo) MarshalJSON() ([]byte, error) {
 }
 
 func (t *BotInfo) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias BotInfo
 	aux := &struct {
 		EditCommandsLink         json.RawMessage `json:"edit_commands_link"`
@@ -2922,6 +2955,9 @@ func (t BotMediaPreview) MarshalJSON() ([]byte, error) {
 }
 
 func (t *BotMediaPreview) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias BotMediaPreview
 	aux := &struct {
 		Content json.RawMessage `json:"content"`
@@ -3351,6 +3387,9 @@ func (t BusinessAwayMessageSettings) MarshalJSON() ([]byte, error) {
 }
 
 func (t *BusinessAwayMessageSettings) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias BusinessAwayMessageSettings
 	aux := &struct {
 		Schedule json.RawMessage `json:"schedule"`
@@ -3793,6 +3832,9 @@ func (t BusinessFeaturePromotionAnimation) MarshalJSON() ([]byte, error) {
 }
 
 func (t *BusinessFeaturePromotionAnimation) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias BusinessFeaturePromotionAnimation
 	aux := &struct {
 		Feature json.RawMessage `json:"feature"`
@@ -3858,6 +3900,9 @@ func (t BusinessFeatures) MarshalJSON() ([]byte, error) {
 }
 
 func (t *BusinessFeatures) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias BusinessFeatures
 	aux := &struct {
 		Features []json.RawMessage `json:"features"`
@@ -3927,7 +3972,7 @@ func (t BusinessFeatureUpgradedStories) MarshalJSON() ([]byte, error) {
 
 // BusinessGreetingMessageSettings Describes settings for greeting messages that are automatically sent by a Telegram Business account as response to incoming messages in an inactive private chat
 type BusinessGreetingMessageSettings struct {
-	// The number of days after which a chat will be considered as inactive; currently, must be on of 7, 14, 21, or 28
+	// The number of days after which a chat will be considered as inactive; currently, must be one of 7, 14, 21, or 28
 	InactivityDays int32 `json:"inactivity_days"`
 	// Chosen recipients of the greeting messages
 	Recipients *BusinessRecipients `json:"recipients"`
@@ -3956,7 +4001,7 @@ type BusinessInfo struct {
 	AwayMessageSettings *BusinessAwayMessageSettings `json:"away_message_settings,omitempty"`
 	// The greeting message; may be null if none or the Business account is not of the current user
 	GreetingMessageSettings *BusinessGreetingMessageSettings `json:"greeting_message_settings,omitempty"`
-	// Opening hours of the business in the local time; may be null if none. The hours are guaranteed to be valid and has already been split by week days.
+	// Opening hours of the business in the local time; may be null if none. The hours are guaranteed to be valid and have already been split by week days.
 	LocalOpeningHours *BusinessOpeningHours `json:"local_opening_hours,omitempty"`
 	// Location of the business; may be null if none
 	Location *BusinessLocation `json:"location,omitempty"`
@@ -3964,7 +4009,7 @@ type BusinessInfo struct {
 	NextCloseIn int32 `json:"next_close_in"`
 	// Time left before the business will open the next time, in seconds; 0 if unknown. An updateUserFullInfo update is not triggered when value of this field changes
 	NextOpenIn int32 `json:"next_open_in"`
-	// Opening hours of the business; may be null if none. The hours are guaranteed to be valid and has already been split by week days
+	// Opening hours of the business; may be null if none. The hours are guaranteed to be valid and have already been split by week days
 	OpeningHours *BusinessOpeningHours `json:"opening_hours,omitempty"`
 	// Information about start page of the account; may be null if none
 	StartPage *BusinessStartPage `json:"start_page,omitempty"`
@@ -4272,6 +4317,9 @@ func (t Call) MarshalJSON() ([]byte, error) {
 }
 
 func (t *Call) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias Call
 	aux := &struct {
 		State json.RawMessage `json:"state"`
@@ -4787,6 +4835,9 @@ func (t CallServer) MarshalJSON() ([]byte, error) {
 }
 
 func (t *CallServer) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias CallServer
 	aux := &struct {
 		Type json.RawMessage `json:"type"`
@@ -4893,6 +4944,9 @@ func (t CallStateDiscarded) MarshalJSON() ([]byte, error) {
 }
 
 func (t *CallStateDiscarded) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias CallStateDiscarded
 	aux := &struct {
 		Reason json.RawMessage `json:"reason"`
@@ -5521,6 +5575,9 @@ func (t Chat) MarshalJSON() ([]byte, error) {
 }
 
 func (t *Chat) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias Chat
 	aux := &struct {
 		ActionBar          json.RawMessage   `json:"action_bar"`
@@ -6091,6 +6148,9 @@ func (t ChatActiveStories) MarshalJSON() ([]byte, error) {
 }
 
 func (t *ChatActiveStories) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias ChatActiveStories
 	aux := &struct {
 		List json.RawMessage `json:"list"`
@@ -6263,6 +6323,9 @@ func (t ChatAvailableReactionsSome) MarshalJSON() ([]byte, error) {
 }
 
 func (t *ChatAvailableReactionsSome) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias ChatAvailableReactionsSome
 	aux := &struct {
 		Reactions []json.RawMessage `json:"reactions"`
@@ -6341,6 +6404,9 @@ func (t ChatBoost) MarshalJSON() ([]byte, error) {
 }
 
 func (t *ChatBoost) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias ChatBoost
 	aux := &struct {
 		Source json.RawMessage `json:"source"`
@@ -6693,6 +6759,9 @@ func (t ChatEvent) MarshalJSON() ([]byte, error) {
 }
 
 func (t *ChatEvent) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias ChatEvent
 	aux := &struct {
 		Action   json.RawMessage `json:"action"`
@@ -6826,6 +6895,9 @@ func (t ChatEventAvailableReactionsChanged) MarshalJSON() ([]byte, error) {
 }
 
 func (t *ChatEventAvailableReactionsChanged) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias ChatEventAvailableReactionsChanged
 	aux := &struct {
 		NewAvailableReactions json.RawMessage `json:"new_available_reactions"`
@@ -7409,6 +7481,9 @@ func (t ChatEventMemberInvited) MarshalJSON() ([]byte, error) {
 }
 
 func (t *ChatEventMemberInvited) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias ChatEventMemberInvited
 	aux := &struct {
 		Status json.RawMessage `json:"status"`
@@ -7551,6 +7626,9 @@ func (t ChatEventMemberPromoted) MarshalJSON() ([]byte, error) {
 }
 
 func (t *ChatEventMemberPromoted) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias ChatEventMemberPromoted
 	aux := &struct {
 		NewStatus json.RawMessage `json:"new_status"`
@@ -7609,6 +7687,9 @@ func (t ChatEventMemberRestricted) MarshalJSON() ([]byte, error) {
 }
 
 func (t *ChatEventMemberRestricted) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias ChatEventMemberRestricted
 	aux := &struct {
 		MemberId  json.RawMessage `json:"member_id"`
@@ -7675,6 +7756,9 @@ func (t ChatEventMemberSubscriptionExtended) MarshalJSON() ([]byte, error) {
 }
 
 func (t *ChatEventMemberSubscriptionExtended) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias ChatEventMemberSubscriptionExtended
 	aux := &struct {
 		NewStatus json.RawMessage `json:"new_status"`
@@ -8217,6 +8301,9 @@ func (t ChatEventVideoChatParticipantIsMutedToggled) MarshalJSON() ([]byte, erro
 }
 
 func (t *ChatEventVideoChatParticipantIsMutedToggled) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias ChatEventVideoChatParticipantIsMutedToggled
 	aux := &struct {
 		ParticipantId json.RawMessage `json:"participant_id"`
@@ -8265,6 +8352,9 @@ func (t ChatEventVideoChatParticipantVolumeLevelChanged) MarshalJSON() ([]byte, 
 }
 
 func (t *ChatEventVideoChatParticipantVolumeLevelChanged) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias ChatEventVideoChatParticipantVolumeLevelChanged
 	aux := &struct {
 		ParticipantId json.RawMessage `json:"participant_id"`
@@ -8621,6 +8711,9 @@ func (t ChatInviteLinkInfo) MarshalJSON() ([]byte, error) {
 }
 
 func (t *ChatInviteLinkInfo) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias ChatInviteLinkInfo
 	aux := &struct {
 		Type json.RawMessage `json:"type"`
@@ -8787,7 +8880,7 @@ func (t ChatJoinRequestResultApproved) MarshalJSON() ([]byte, error) {
 	})
 }
 
-// ChatJoinRequestResultDeclined The request was decline
+// ChatJoinRequestResultDeclined The request was declined
 type ChatJoinRequestResultDeclined struct {
 }
 
@@ -9054,6 +9147,9 @@ func (t ChatLists) MarshalJSON() ([]byte, error) {
 }
 
 func (t *ChatLists) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias ChatLists
 	aux := &struct {
 		ChatLists []json.RawMessage `json:"chat_lists"`
@@ -9132,6 +9228,9 @@ func (t ChatMember) MarshalJSON() ([]byte, error) {
 }
 
 func (t *ChatMember) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias ChatMember
 	aux := &struct {
 		MemberId json.RawMessage `json:"member_id"`
@@ -9314,6 +9413,9 @@ func (t ChatMembersFilterMention) MarshalJSON() ([]byte, error) {
 }
 
 func (t *ChatMembersFilterMention) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias ChatMembersFilterMention
 	aux := &struct {
 		TopicId json.RawMessage `json:"topic_id"`
@@ -9525,6 +9627,9 @@ func (t ChatMessageSender) MarshalJSON() ([]byte, error) {
 }
 
 func (t *ChatMessageSender) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias ChatMessageSender
 	aux := &struct {
 		Sender json.RawMessage `json:"sender"`
@@ -9779,6 +9884,9 @@ func (t ChatPhotoSticker) MarshalJSON() ([]byte, error) {
 }
 
 func (t *ChatPhotoSticker) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias ChatPhotoSticker
 	aux := &struct {
 		BackgroundFill json.RawMessage `json:"background_fill"`
@@ -9885,6 +9993,9 @@ func (t ChatPosition) MarshalJSON() ([]byte, error) {
 }
 
 func (t *ChatPosition) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias ChatPosition
 	aux := &struct {
 		List   json.RawMessage `json:"list"`
@@ -9972,6 +10083,9 @@ func (t ChatRevenueStatistics) MarshalJSON() ([]byte, error) {
 }
 
 func (t *ChatRevenueStatistics) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias ChatRevenueStatistics
 	aux := &struct {
 		RevenueByHourGraph json.RawMessage `json:"revenue_by_hour_graph"`
@@ -10028,6 +10142,9 @@ func (t ChatRevenueTransaction) MarshalJSON() ([]byte, error) {
 }
 
 func (t *ChatRevenueTransaction) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias ChatRevenueTransaction
 	aux := &struct {
 		Type json.RawMessage `json:"type"`
@@ -10124,6 +10241,9 @@ func (t ChatRevenueTransactionTypeFragmentWithdrawal) MarshalJSON() ([]byte, err
 }
 
 func (t *ChatRevenueTransactionTypeFragmentWithdrawal) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias ChatRevenueTransactionTypeFragmentWithdrawal
 	aux := &struct {
 		State json.RawMessage `json:"state"`
@@ -10377,6 +10497,9 @@ func (t ChatStatisticsChannel) MarshalJSON() ([]byte, error) {
 }
 
 func (t *ChatStatisticsChannel) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias ChatStatisticsChannel
 	aux := &struct {
 		InstantViewInteractionGraph json.RawMessage `json:"instant_view_interaction_graph"`
@@ -10515,6 +10638,9 @@ func (t ChatStatisticsInteractionInfo) MarshalJSON() ([]byte, error) {
 }
 
 func (t *ChatStatisticsInteractionInfo) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias ChatStatisticsInteractionInfo
 	aux := &struct {
 		ObjectType json.RawMessage `json:"object_type"`
@@ -10685,6 +10811,9 @@ func (t ChatStatisticsSupergroup) MarshalJSON() ([]byte, error) {
 }
 
 func (t *ChatStatisticsSupergroup) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias ChatStatisticsSupergroup
 	aux := &struct {
 		ActionGraph         json.RawMessage `json:"action_graph"`
@@ -11090,6 +11219,9 @@ func (t ChecklistTask) MarshalJSON() ([]byte, error) {
 }
 
 func (t *ChecklistTask) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias ChecklistTask
 	aux := &struct {
 		CompletedBy json.RawMessage `json:"completed_by"`
@@ -11220,6 +11352,9 @@ func (t ClosedVectorPath) MarshalJSON() ([]byte, error) {
 }
 
 func (t *ClosedVectorPath) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias ClosedVectorPath
 	aux := &struct {
 		Commands []json.RawMessage `json:"commands"`
@@ -11941,6 +12076,9 @@ func (t DateTimeFormattingTypeAbsolute) MarshalJSON() ([]byte, error) {
 }
 
 func (t *DateTimeFormattingTypeAbsolute) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias DateTimeFormattingTypeAbsolute
 	aux := &struct {
 		DatePrecision json.RawMessage `json:"date_precision"`
@@ -12448,6 +12586,9 @@ func (t DiffEntity) MarshalJSON() ([]byte, error) {
 }
 
 func (t *DiffEntity) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias DiffEntity
 	aux := &struct {
 		Type json.RawMessage `json:"type"`
@@ -12602,6 +12743,9 @@ func (t DirectMessagesChatTopic) MarshalJSON() ([]byte, error) {
 }
 
 func (t *DirectMessagesChatTopic) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias DirectMessagesChatTopic
 	aux := &struct {
 		SenderId json.RawMessage `json:"sender_id"`
@@ -12708,6 +12852,9 @@ func (t DraftMessage) MarshalJSON() ([]byte, error) {
 }
 
 func (t *DraftMessage) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias DraftMessage
 	aux := &struct {
 		Content json.RawMessage `json:"content"`
@@ -12816,6 +12963,9 @@ func (t DraftMessageContentVideoNote) MarshalJSON() ([]byte, error) {
 }
 
 func (t *DraftMessageContentVideoNote) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias DraftMessageContentVideoNote
 	aux := &struct {
 		SelfDestructType json.RawMessage `json:"self_destruct_type"`
@@ -12868,6 +13018,9 @@ func (t DraftMessageContentVoiceNote) MarshalJSON() ([]byte, error) {
 }
 
 func (t *DraftMessageContentVoiceNote) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias DraftMessageContentVoiceNote
 	aux := &struct {
 		SelfDestructType json.RawMessage `json:"self_destruct_type"`
@@ -13077,6 +13230,9 @@ func (t EmojiCategory) MarshalJSON() ([]byte, error) {
 }
 
 func (t *EmojiCategory) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias EmojiCategory
 	aux := &struct {
 		Source json.RawMessage `json:"source"`
@@ -13380,6 +13536,9 @@ func (t EmojiStatus) MarshalJSON() ([]byte, error) {
 }
 
 func (t *EmojiStatus) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias EmojiStatus
 	aux := &struct {
 		Type json.RawMessage `json:"type"`
@@ -13563,6 +13722,9 @@ func (t EncryptedPassportElement) MarshalJSON() ([]byte, error) {
 }
 
 func (t *EncryptedPassportElement) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias EncryptedPassportElement
 	aux := &struct {
 		Type json.RawMessage `json:"type"`
@@ -14545,6 +14707,9 @@ func (t ForumTopicInfo) MarshalJSON() ([]byte, error) {
 }
 
 func (t *ForumTopicInfo) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias ForumTopicInfo
 	aux := &struct {
 		CreatorId json.RawMessage `json:"creator_id"`
@@ -14628,6 +14793,9 @@ func (t ForwardSource) MarshalJSON() ([]byte, error) {
 }
 
 func (t *ForwardSource) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias ForwardSource
 	aux := &struct {
 		SenderId json.RawMessage `json:"sender_id"`
@@ -15029,7 +15197,7 @@ type Gift struct {
 	Background *GiftBackground `json:"background"`
 	// Number of Telegram Stars that can be claimed by the receiver instead of the regular gift by default. If the gift was paid with just bought Telegram Stars, then full value can be claimed
 	DefaultSellStarCount int64 `json:"default_sell_star_count"`
-	// Point in time (Unix timestamp) when the gift was send for the first time; for sold out gifts only
+	// Point in time (Unix timestamp) when the gift was sent for the first time; for sold out gifts only
 	FirstSendDate int32 `json:"first_send_date"`
 	// True, if the gift can be used to customize the user's name, and backgrounds of profile photo, reply header, and link preview
 	HasColors bool `json:"has_colors"`
@@ -15039,11 +15207,11 @@ type Gift struct {
 	IsForBirthday bool `json:"is_for_birthday"`
 	// True, if the gift can be bought only by Telegram Premium subscribers
 	IsPremium bool `json:"is_premium"`
-	// Point in time (Unix timestamp) when the gift was send for the last time; for sold out gifts only
+	// Point in time (Unix timestamp) when the gift was sent for the last time; for sold out gifts only
 	LastSendDate int32 `json:"last_send_date"`
 	// Point in time (Unix timestamp) when the gift can be sent next time by the current user; may be 0 or a date in the past.
 	NextSendDate int32 `json:"next_send_date"`
-	// Number of times the gift can be purchased all users; may be null if not limited
+	// Number of times the gift can be purchased by all users; may be null if not limited
 	OverallLimits *GiftPurchaseLimits `json:"overall_limits,omitempty"`
 	// Identifier of the chat that published the gift; 0 if none
 	PublisherChatId int64 `json:"publisher_chat_id"`
@@ -15135,6 +15303,9 @@ func (t GiftAuctionAcquiredGift) MarshalJSON() ([]byte, error) {
 }
 
 func (t *GiftAuctionAcquiredGift) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias GiftAuctionAcquiredGift
 	aux := &struct {
 		ReceiverId json.RawMessage `json:"receiver_id"`
@@ -15202,6 +15373,9 @@ func (t GiftAuctionState) MarshalJSON() ([]byte, error) {
 }
 
 func (t *GiftAuctionState) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias GiftAuctionState
 	aux := &struct {
 		State json.RawMessage `json:"state"`
@@ -15635,6 +15809,9 @@ func (t GiftResaleResultPriceIncreased) MarshalJSON() ([]byte, error) {
 }
 
 func (t *GiftResaleResultPriceIncreased) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias GiftResaleResultPriceIncreased
 	aux := &struct {
 		Price json.RawMessage `json:"price"`
@@ -15880,6 +16057,9 @@ func (t GiveawayInfoOngoing) MarshalJSON() ([]byte, error) {
 }
 
 func (t *GiveawayInfoOngoing) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias GiveawayInfoOngoing
 	aux := &struct {
 		Status json.RawMessage `json:"status"`
@@ -16176,6 +16356,9 @@ func (t GroupCall) MarshalJSON() ([]byte, error) {
 }
 
 func (t *GroupCall) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias GroupCall
 	aux := &struct {
 		MessageSenderId json.RawMessage `json:"message_sender_id"`
@@ -16345,6 +16528,9 @@ func (t GroupCallMessage) MarshalJSON() ([]byte, error) {
 }
 
 func (t *GroupCallMessage) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias GroupCallMessage
 	aux := &struct {
 		SenderId json.RawMessage `json:"sender_id"`
@@ -16456,6 +16642,9 @@ func (t GroupCallParticipant) MarshalJSON() ([]byte, error) {
 }
 
 func (t *GroupCallParticipant) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias GroupCallParticipant
 	aux := &struct {
 		ParticipantId json.RawMessage `json:"participant_id"`
@@ -16502,6 +16691,9 @@ func (t GroupCallParticipants) MarshalJSON() ([]byte, error) {
 }
 
 func (t *GroupCallParticipants) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias GroupCallParticipants
 	aux := &struct {
 		ParticipantIds []json.RawMessage `json:"participant_ids"`
@@ -16576,6 +16768,9 @@ func (t GroupCallRecentSpeaker) MarshalJSON() ([]byte, error) {
 }
 
 func (t *GroupCallRecentSpeaker) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias GroupCallRecentSpeaker
 	aux := &struct {
 		ParticipantId json.RawMessage `json:"participant_id"`
@@ -16881,6 +17076,9 @@ func (t InlineKeyboardButton) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InlineKeyboardButton) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InlineKeyboardButton
 	aux := &struct {
 		Style json.RawMessage `json:"style"`
@@ -17075,6 +17273,9 @@ func (t InlineKeyboardButtonTypeSwitchInline) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InlineKeyboardButtonTypeSwitchInline) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InlineKeyboardButtonTypeSwitchInline
 	aux := &struct {
 		TargetChat json.RawMessage `json:"target_chat"`
@@ -17437,6 +17638,9 @@ func (t InlineQueryResults) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InlineQueryResults) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InlineQueryResults
 	aux := &struct {
 		Results []json.RawMessage `json:"results"`
@@ -17486,6 +17690,9 @@ func (t InlineQueryResultsButton) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InlineQueryResultsButton) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InlineQueryResultsButton
 	aux := &struct {
 		Type json.RawMessage `json:"type"`
@@ -17694,6 +17901,9 @@ func (t InputAnimation) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputAnimation) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputAnimation
 	aux := &struct {
 		Animation json.RawMessage `json:"animation"`
@@ -17746,6 +17956,9 @@ func (t InputAudio) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputAudio) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputAudio
 	aux := &struct {
 		Audio json.RawMessage `json:"audio"`
@@ -17792,6 +18005,9 @@ func (t InputBackgroundLocal) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputBackgroundLocal) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputBackgroundLocal
 	aux := &struct {
 		Background json.RawMessage `json:"background"`
@@ -17909,6 +18125,9 @@ func (t InputBusinessStartPage) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputBusinessStartPage) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputBusinessStartPage
 	aux := &struct {
 		Sticker json.RawMessage `json:"sticker"`
@@ -18005,6 +18224,9 @@ func (t InputChatPhotoAnimation) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputChatPhotoAnimation) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputChatPhotoAnimation
 	aux := &struct {
 		Animation json.RawMessage `json:"animation"`
@@ -18074,6 +18296,9 @@ func (t InputChatPhotoStatic) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputChatPhotoStatic) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputChatPhotoStatic
 	aux := &struct {
 		Photo json.RawMessage `json:"photo"`
@@ -18335,6 +18560,9 @@ func (t InputDocument) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputDocument) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputDocument
 	aux := &struct {
 		Document json.RawMessage `json:"document"`
@@ -18533,6 +18761,9 @@ func (t InputIdentityDocument) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputIdentityDocument) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputIdentityDocument
 	aux := &struct {
 		FrontSide   json.RawMessage   `json:"front_side"`
@@ -18626,6 +18857,9 @@ func (t InputInlineQueryResultAnimation) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputInlineQueryResultAnimation) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputInlineQueryResultAnimation
 	aux := &struct {
 		InputMessageContent json.RawMessage `json:"input_message_content"`
@@ -18696,6 +18930,9 @@ func (t InputInlineQueryResultArticle) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputInlineQueryResultArticle) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputInlineQueryResultArticle
 	aux := &struct {
 		InputMessageContent json.RawMessage `json:"input_message_content"`
@@ -18762,6 +18999,9 @@ func (t InputInlineQueryResultAudio) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputInlineQueryResultAudio) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputInlineQueryResultAudio
 	aux := &struct {
 		InputMessageContent json.RawMessage `json:"input_message_content"`
@@ -18828,6 +19068,9 @@ func (t InputInlineQueryResultContact) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputInlineQueryResultContact) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputInlineQueryResultContact
 	aux := &struct {
 		InputMessageContent json.RawMessage `json:"input_message_content"`
@@ -18900,6 +19143,9 @@ func (t InputInlineQueryResultDocument) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputInlineQueryResultDocument) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputInlineQueryResultDocument
 	aux := &struct {
 		InputMessageContent json.RawMessage `json:"input_message_content"`
@@ -18958,6 +19204,9 @@ func (t InputInlineQueryResultGame) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputInlineQueryResultGame) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputInlineQueryResultGame
 	aux := &struct {
 		ReplyMarkup json.RawMessage `json:"reply_markup"`
@@ -19020,6 +19269,9 @@ func (t InputInlineQueryResultLocation) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputInlineQueryResultLocation) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputInlineQueryResultLocation
 	aux := &struct {
 		InputMessageContent json.RawMessage `json:"input_message_content"`
@@ -19090,6 +19342,9 @@ func (t InputInlineQueryResultPhoto) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputInlineQueryResultPhoto) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputInlineQueryResultPhoto
 	aux := &struct {
 		InputMessageContent json.RawMessage `json:"input_message_content"`
@@ -19156,6 +19411,9 @@ func (t InputInlineQueryResultSticker) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputInlineQueryResultSticker) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputInlineQueryResultSticker
 	aux := &struct {
 		InputMessageContent json.RawMessage `json:"input_message_content"`
@@ -19222,6 +19480,9 @@ func (t InputInlineQueryResultVenue) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputInlineQueryResultVenue) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputInlineQueryResultVenue
 	aux := &struct {
 		InputMessageContent json.RawMessage `json:"input_message_content"`
@@ -19296,6 +19557,9 @@ func (t InputInlineQueryResultVideo) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputInlineQueryResultVideo) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputInlineQueryResultVideo
 	aux := &struct {
 		InputMessageContent json.RawMessage `json:"input_message_content"`
@@ -19360,6 +19624,9 @@ func (t InputInlineQueryResultVoiceNote) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputInlineQueryResultVoiceNote) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputInlineQueryResultVoiceNote
 	aux := &struct {
 		InputMessageContent json.RawMessage `json:"input_message_content"`
@@ -19462,6 +19729,9 @@ func (t InputInvoiceTelegram) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputInvoiceTelegram) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputInvoiceTelegram
 	aux := &struct {
 		Purpose json.RawMessage `json:"purpose"`
@@ -19848,6 +20118,9 @@ func (t InputMessagePhoto) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputMessagePhoto) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputMessagePhoto
 	aux := &struct {
 		SelfDestructType json.RawMessage `json:"self_destruct_type"`
@@ -19922,6 +20195,9 @@ func (t InputMessagePoll) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputMessagePoll) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputMessagePoll
 	aux := &struct {
 		Media json.RawMessage `json:"media"`
@@ -20121,6 +20397,9 @@ func (t InputMessageSticker) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputMessageSticker) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputMessageSticker
 	aux := &struct {
 		Sticker json.RawMessage `json:"sticker"`
@@ -20250,6 +20529,9 @@ func (t InputMessageVideo) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputMessageVideo) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputMessageVideo
 	aux := &struct {
 		SelfDestructType json.RawMessage `json:"self_destruct_type"`
@@ -20304,6 +20586,9 @@ func (t InputMessageVideoNote) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputMessageVideoNote) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputMessageVideoNote
 	aux := &struct {
 		SelfDestructType json.RawMessage `json:"self_destruct_type"`
@@ -20366,6 +20651,9 @@ func (t InputMessageVoiceNote) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputMessageVoiceNote) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputMessageVoiceNote
 	aux := &struct {
 		SelfDestructType json.RawMessage `json:"self_destruct_type"`
@@ -20428,6 +20716,9 @@ func (t InputPaidMedia) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputPaidMedia) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputPaidMedia
 	aux := &struct {
 		Media json.RawMessage `json:"media"`
@@ -20482,6 +20773,9 @@ func (t InputPaidMediaTypePhoto) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputPaidMediaTypePhoto) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputPaidMediaTypePhoto
 	aux := &struct {
 		Video json.RawMessage `json:"video"`
@@ -20534,6 +20828,9 @@ func (t InputPaidMediaTypeVideo) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputPaidMediaTypeVideo) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputPaidMediaTypeVideo
 	aux := &struct {
 		Cover json.RawMessage `json:"cover"`
@@ -20674,6 +20971,9 @@ func (t InputPassportElementError) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputPassportElementError) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputPassportElementError
 	aux := &struct {
 		Source json.RawMessage `json:"source"`
@@ -21144,6 +21444,9 @@ func (t InputPersonalDocument) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputPersonalDocument) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputPersonalDocument
 	aux := &struct {
 		Files       []json.RawMessage `json:"files"`
@@ -21212,6 +21515,9 @@ func (t InputPhoto) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputPhoto) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputPhoto
 	aux := &struct {
 		Photo json.RawMessage `json:"photo"`
@@ -21410,6 +21716,9 @@ func (t InputPollMediaSticker) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputPollMediaSticker) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputPollMediaSticker
 	aux := &struct {
 		Sticker json.RawMessage `json:"sticker"`
@@ -21502,6 +21811,9 @@ func (t InputPollOption) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputPollOption) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputPollOption
 	aux := &struct {
 		Media json.RawMessage `json:"media"`
@@ -21552,6 +21864,9 @@ func (t InputPollTypeQuiz) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputPollTypeQuiz) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputPollTypeQuiz
 	aux := &struct {
 		ExplanationMedia json.RawMessage `json:"explanation_media"`
@@ -21623,6 +21938,9 @@ func (t InputRichMessage) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputRichMessage) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputRichMessage
 	aux := &struct {
 		Source json.RawMessage `json:"source"`
@@ -21675,6 +21993,9 @@ func (t InputSticker) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputSticker) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputSticker
 	aux := &struct {
 		Format  json.RawMessage `json:"format"`
@@ -21729,6 +22050,9 @@ func (t InputStoryArea) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputStoryArea) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputStoryArea
 	aux := &struct {
 		Type json.RawMessage `json:"type"`
@@ -21923,6 +22247,9 @@ func (t InputStoryAreaTypeSuggestedReaction) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputStoryAreaTypeSuggestedReaction) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputStoryAreaTypeSuggestedReaction
 	aux := &struct {
 		ReactionType json.RawMessage `json:"reaction_type"`
@@ -22021,6 +22348,9 @@ func (t InputStoryContentPhoto) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputStoryContentPhoto) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputStoryContentPhoto
 	aux := &struct {
 		Photo json.RawMessage `json:"photo"`
@@ -22075,6 +22405,9 @@ func (t InputStoryContentVideo) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputStoryContentVideo) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputStoryContentVideo
 	aux := &struct {
 		Video json.RawMessage `json:"video"`
@@ -22121,6 +22454,9 @@ func (t InputSuggestedPostInfo) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputSuggestedPostInfo) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputSuggestedPostInfo
 	aux := &struct {
 		Price json.RawMessage `json:"price"`
@@ -22192,6 +22528,9 @@ func (t InputThumbnail) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputThumbnail) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputThumbnail
 	aux := &struct {
 		Thumbnail json.RawMessage `json:"thumbnail"`
@@ -22252,6 +22591,9 @@ func (t InputVideo) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InputVideo) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InputVideo
 	aux := &struct {
 		Cover json.RawMessage `json:"cover"`
@@ -22310,6 +22652,9 @@ func (t InternalLinkTypeAttachmentMenuBot) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InternalLinkTypeAttachmentMenuBot) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InternalLinkTypeAttachmentMenuBot
 	aux := &struct {
 		TargetChat json.RawMessage `json:"target_chat"`
@@ -22882,6 +23227,9 @@ func (t InternalLinkTypeMainWebApp) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InternalLinkTypeMainWebApp) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InternalLinkTypeMainWebApp
 	aux := &struct {
 		Mode json.RawMessage `json:"mode"`
@@ -23062,6 +23410,9 @@ func (t InternalLinkTypeNewStory) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InternalLinkTypeNewStory) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InternalLinkTypeNewStory
 	aux := &struct {
 		ContentType json.RawMessage `json:"content_type"`
@@ -23417,6 +23768,9 @@ func (t InternalLinkTypeSettings) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InternalLinkTypeSettings) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InternalLinkTypeSettings
 	aux := &struct {
 		Section json.RawMessage `json:"section"`
@@ -23738,6 +24092,9 @@ func (t InternalLinkTypeWebApp) MarshalJSON() ([]byte, error) {
 }
 
 func (t *InternalLinkTypeWebApp) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias InternalLinkTypeWebApp
 	aux := &struct {
 		Mode json.RawMessage `json:"mode"`
@@ -23984,6 +24341,9 @@ func (t JsonObjectMember) MarshalJSON() ([]byte, error) {
 }
 
 func (t *JsonObjectMember) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias JsonObjectMember
 	aux := &struct {
 		Value json.RawMessage `json:"value"`
@@ -24030,6 +24390,9 @@ func (t JsonValueArray) MarshalJSON() ([]byte, error) {
 }
 
 func (t *JsonValueArray) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias JsonValueArray
 	aux := &struct {
 		Values []json.RawMessage `json:"values"`
@@ -24196,6 +24559,9 @@ func (t KeyboardButton) MarshalJSON() ([]byte, error) {
 }
 
 func (t *KeyboardButton) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias KeyboardButton
 	aux := &struct {
 		Style json.RawMessage `json:"style"`
@@ -24592,6 +24958,9 @@ func (t LanguagePackString) MarshalJSON() ([]byte, error) {
 }
 
 func (t *LanguagePackString) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias LanguagePackString
 	aux := &struct {
 		Value json.RawMessage `json:"value"`
@@ -24758,6 +25127,9 @@ func (t LinkPreview) MarshalJSON() ([]byte, error) {
 }
 
 func (t *LinkPreview) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias LinkPreview
 	aux := &struct {
 		Type json.RawMessage `json:"type"`
@@ -24881,6 +25253,9 @@ func (t LinkPreviewTypeAlbum) MarshalJSON() ([]byte, error) {
 }
 
 func (t *LinkPreviewTypeAlbum) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias LinkPreviewTypeAlbum
 	aux := &struct {
 		Media []json.RawMessage `json:"media"`
@@ -25024,6 +25399,9 @@ func (t LinkPreviewTypeBackground) MarshalJSON() ([]byte, error) {
 }
 
 func (t *LinkPreviewTypeBackground) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias LinkPreviewTypeBackground
 	aux := &struct {
 		BackgroundType json.RawMessage `json:"background_type"`
@@ -25097,6 +25475,9 @@ func (t LinkPreviewTypeChat) MarshalJSON() ([]byte, error) {
 }
 
 func (t *LinkPreviewTypeChat) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias LinkPreviewTypeChat
 	aux := &struct {
 		Type json.RawMessage `json:"type"`
@@ -26250,6 +26631,9 @@ func (t MainWebApp) MarshalJSON() ([]byte, error) {
 }
 
 func (t *MainWebApp) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias MainWebApp
 	aux := &struct {
 		Mode json.RawMessage `json:"mode"`
@@ -26384,6 +26768,9 @@ func (t MaskPosition) MarshalJSON() ([]byte, error) {
 }
 
 func (t *MaskPosition) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias MaskPosition
 	aux := &struct {
 		Point json.RawMessage `json:"point"`
@@ -26508,6 +26895,9 @@ func (t Message) MarshalJSON() ([]byte, error) {
 }
 
 func (t *Message) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias Message
 	aux := &struct {
 		Content          json.RawMessage `json:"content"`
@@ -26745,6 +27135,9 @@ func (t MessageBotWriteAccessAllowed) MarshalJSON() ([]byte, error) {
 }
 
 func (t *MessageBotWriteAccessAllowed) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias MessageBotWriteAccessAllowed
 	aux := &struct {
 		Reason json.RawMessage `json:"reason"`
@@ -26843,6 +27236,9 @@ func (t MessageCall) MarshalJSON() ([]byte, error) {
 }
 
 func (t *MessageCall) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias MessageCall
 	aux := &struct {
 		DiscardReason json.RawMessage `json:"discard_reason"`
@@ -27215,6 +27611,9 @@ func (t MessageChatSetTheme) MarshalJSON() ([]byte, error) {
 }
 
 func (t *MessageChatSetTheme) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias MessageChatSetTheme
 	aux := &struct {
 		Theme json.RawMessage `json:"theme"`
@@ -27511,6 +27910,9 @@ func (t MessageDice) MarshalJSON() ([]byte, error) {
 }
 
 func (t *MessageDice) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias MessageDice
 	aux := &struct {
 		FinalState   json.RawMessage `json:"final_state"`
@@ -27621,6 +28023,9 @@ func (t MessageEffect) MarshalJSON() ([]byte, error) {
 }
 
 func (t *MessageEffect) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias MessageEffect
 	aux := &struct {
 		Type json.RawMessage `json:"type"`
@@ -27970,6 +28375,9 @@ func (t MessageForwardInfo) MarshalJSON() ([]byte, error) {
 }
 
 func (t *MessageForwardInfo) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias MessageForwardInfo
 	aux := &struct {
 		Origin json.RawMessage `json:"origin"`
@@ -28102,6 +28510,9 @@ func (t MessageGift) MarshalJSON() ([]byte, error) {
 }
 
 func (t *MessageGift) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias MessageGift
 	aux := &struct {
 		ReceiverId json.RawMessage `json:"receiver_id"`
@@ -28273,6 +28684,9 @@ func (t MessageGiveaway) MarshalJSON() ([]byte, error) {
 }
 
 func (t *MessageGiveaway) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias MessageGiveaway
 	aux := &struct {
 		Prize json.RawMessage `json:"prize"`
@@ -28347,7 +28761,7 @@ func (t MessageGiveawayCreated) MarshalJSON() ([]byte, error) {
 	})
 }
 
-// MessageGiveawayPrizeStars A Telegram Stars were received by the current user from a giveaway
+// MessageGiveawayPrizeStars Telegram Stars were received by the current user from a giveaway
 type MessageGiveawayPrizeStars struct {
 	// Identifier of the supergroup or channel chat, which was automatically boosted by the winners of the giveaway
 	BoostedChatId int64 `json:"boosted_chat_id"`
@@ -28424,6 +28838,9 @@ func (t MessageGiveawayWinners) MarshalJSON() ([]byte, error) {
 }
 
 func (t *MessageGiveawayWinners) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias MessageGiveawayWinners
 	aux := &struct {
 		Prize json.RawMessage `json:"prize"`
@@ -28480,6 +28897,9 @@ func (t MessageGroupCall) MarshalJSON() ([]byte, error) {
 }
 
 func (t *MessageGroupCall) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias MessageGroupCall
 	aux := &struct {
 		OtherParticipantIds []json.RawMessage `json:"other_participant_ids"`
@@ -28620,6 +29040,9 @@ func (t MessageInvoice) MarshalJSON() ([]byte, error) {
 }
 
 func (t *MessageInvoice) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias MessageInvoice
 	aux := &struct {
 		PaidMedia json.RawMessage `json:"paid_media"`
@@ -28701,6 +29124,9 @@ func (t MessageLinkInfo) MarshalJSON() ([]byte, error) {
 }
 
 func (t *MessageLinkInfo) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias MessageLinkInfo
 	aux := &struct {
 		TopicId json.RawMessage `json:"topic_id"`
@@ -28922,6 +29348,9 @@ func (t MessagePaidMedia) MarshalJSON() ([]byte, error) {
 }
 
 func (t *MessagePaidMedia) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias MessagePaidMedia
 	aux := &struct {
 		Media []json.RawMessage `json:"media"`
@@ -29044,6 +29473,9 @@ func (t MessagePassportDataSent) MarshalJSON() ([]byte, error) {
 }
 
 func (t *MessagePassportDataSent) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias MessagePassportDataSent
 	aux := &struct {
 		Types []json.RawMessage `json:"types"`
@@ -29103,6 +29535,9 @@ func (t MessagePaymentRefunded) MarshalJSON() ([]byte, error) {
 }
 
 func (t *MessagePaymentRefunded) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias MessagePaymentRefunded
 	aux := &struct {
 		OwnerId json.RawMessage `json:"owner_id"`
@@ -29289,6 +29724,9 @@ func (t MessagePoll) MarshalJSON() ([]byte, error) {
 }
 
 func (t *MessagePoll) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias MessagePoll
 	aux := &struct {
 		Media json.RawMessage `json:"media"`
@@ -29459,6 +29897,9 @@ func (t MessagePremiumGiftCode) MarshalJSON() ([]byte, error) {
 }
 
 func (t *MessagePremiumGiftCode) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias MessagePremiumGiftCode
 	aux := &struct {
 		CreatorId json.RawMessage `json:"creator_id"`
@@ -29606,6 +30047,9 @@ func (t MessageProximityAlertTriggered) MarshalJSON() ([]byte, error) {
 }
 
 func (t *MessageProximityAlertTriggered) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias MessageProximityAlertTriggered
 	aux := &struct {
 		TravelerId json.RawMessage `json:"traveler_id"`
@@ -29666,6 +30110,9 @@ func (t MessageReaction) MarshalJSON() ([]byte, error) {
 }
 
 func (t *MessageReaction) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias MessageReaction
 	aux := &struct {
 		RecentSenderIds []json.RawMessage `json:"recent_sender_ids"`
@@ -29871,6 +30318,9 @@ func (t MessageRefundedUpgradedGift) MarshalJSON() ([]byte, error) {
 }
 
 func (t *MessageRefundedUpgradedGift) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias MessageRefundedUpgradedGift
 	aux := &struct {
 		Origin     json.RawMessage `json:"origin"`
@@ -29939,6 +30389,9 @@ func (t MessageReplyInfo) MarshalJSON() ([]byte, error) {
 }
 
 func (t *MessageReplyInfo) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias MessageReplyInfo
 	aux := &struct {
 		RecentReplierIds []json.RawMessage `json:"recent_replier_ids"`
@@ -30002,6 +30455,9 @@ func (t MessageReplyToMessage) MarshalJSON() ([]byte, error) {
 }
 
 func (t *MessageReplyToMessage) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias MessageReplyToMessage
 	aux := &struct {
 		Content json.RawMessage `json:"content"`
@@ -30284,6 +30740,9 @@ func (t MessageSenders) MarshalJSON() ([]byte, error) {
 }
 
 func (t *MessageSenders) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias MessageSenders
 	aux := &struct {
 		Senders []json.RawMessage `json:"senders"`
@@ -30432,6 +30891,9 @@ func (t MessageSendOptions) MarshalJSON() ([]byte, error) {
 }
 
 func (t *MessageSendOptions) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias MessageSendOptions
 	aux := &struct {
 		SchedulingState json.RawMessage `json:"scheduling_state"`
@@ -30717,6 +31179,9 @@ func (t MessageStakeDice) MarshalJSON() ([]byte, error) {
 }
 
 func (t *MessageStakeDice) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias MessageStakeDice
 	aux := &struct {
 		FinalState   json.RawMessage `json:"final_state"`
@@ -30771,6 +31236,9 @@ func (t MessageStatistics) MarshalJSON() ([]byte, error) {
 }
 
 func (t *MessageStatistics) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias MessageStatistics
 	aux := &struct {
 		MessageInteractionGraph json.RawMessage `json:"message_interaction_graph"`
@@ -30876,7 +31344,7 @@ func (t MessageSuggestBirthdate) MarshalJSON() ([]byte, error) {
 	})
 }
 
-// MessageSuggestedPostApprovalFailed Approval of suggested post has failed, because the user which proposed the post had no enough funds
+// MessageSuggestedPostApprovalFailed Approval of suggested post has failed, because the user who proposed the post didn't have enough funds
 type MessageSuggestedPostApprovalFailed struct {
 	// Price of the suggested post
 	Price SuggestedPostPrice `json:"price"`
@@ -30902,6 +31370,9 @@ func (t MessageSuggestedPostApprovalFailed) MarshalJSON() ([]byte, error) {
 }
 
 func (t *MessageSuggestedPostApprovalFailed) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias MessageSuggestedPostApprovalFailed
 	aux := &struct {
 		Price json.RawMessage `json:"price"`
@@ -30952,6 +31423,9 @@ func (t MessageSuggestedPostApproved) MarshalJSON() ([]byte, error) {
 }
 
 func (t *MessageSuggestedPostApproved) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias MessageSuggestedPostApproved
 	aux := &struct {
 		Price json.RawMessage `json:"price"`
@@ -31052,6 +31526,9 @@ func (t MessageSuggestedPostRefunded) MarshalJSON() ([]byte, error) {
 }
 
 func (t *MessageSuggestedPostRefunded) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias MessageSuggestedPostRefunded
 	aux := &struct {
 		Reason json.RawMessage `json:"reason"`
@@ -31295,7 +31772,7 @@ func (t MessageUnsupported) MarshalJSON() ([]byte, error) {
 type MessageUpgradedGift struct {
 	// True, if the gift can be transferred to another owner; only for the receiver of the gift
 	CanBeTransferred bool `json:"can_be_transferred"`
-	// Point in time (Unix timestamp) when the gift can be used to craft another gift can be in the past; only for the receiver of the gift
+	// Point in time (Unix timestamp) when the gift can be used to craft another gift; can be in the past; only for the receiver of the gift
 	CraftDate int32 `json:"craft_date"`
 	// Number of Telegram Stars that must be paid to drop original details of the upgraded gift; 0 if not available; only for the receiver of the gift
 	DropOriginalDetailsStarCount int64 `json:"drop_original_details_star_count"`
@@ -31341,6 +31818,9 @@ func (t MessageUpgradedGift) MarshalJSON() ([]byte, error) {
 }
 
 func (t *MessageUpgradedGift) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias MessageUpgradedGift
 	aux := &struct {
 		Origin     json.RawMessage `json:"origin"`
@@ -31409,6 +31889,9 @@ func (t MessageUpgradedGiftPurchaseOffer) MarshalJSON() ([]byte, error) {
 }
 
 func (t *MessageUpgradedGiftPurchaseOffer) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias MessageUpgradedGiftPurchaseOffer
 	aux := &struct {
 		Price json.RawMessage `json:"price"`
@@ -31469,6 +31952,9 @@ func (t MessageUpgradedGiftPurchaseOfferRejected) MarshalJSON() ([]byte, error) 
 }
 
 func (t *MessageUpgradedGiftPurchaseOfferRejected) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias MessageUpgradedGiftPurchaseOfferRejected
 	aux := &struct {
 		Price json.RawMessage `json:"price"`
@@ -31844,6 +32330,9 @@ func (t NetworkStatistics) MarshalJSON() ([]byte, error) {
 }
 
 func (t *NetworkStatistics) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias NetworkStatistics
 	aux := &struct {
 		Entries []json.RawMessage `json:"entries"`
@@ -31899,6 +32388,9 @@ func (t NetworkStatisticsEntryCall) MarshalJSON() ([]byte, error) {
 }
 
 func (t *NetworkStatisticsEntryCall) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias NetworkStatisticsEntryCall
 	aux := &struct {
 		NetworkType json.RawMessage `json:"network_type"`
@@ -31951,6 +32443,9 @@ func (t NetworkStatisticsEntryFile) MarshalJSON() ([]byte, error) {
 }
 
 func (t *NetworkStatisticsEntryFile) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias NetworkStatisticsEntryFile
 	aux := &struct {
 		FileType    json.RawMessage `json:"file_type"`
@@ -32137,6 +32632,9 @@ func (t Notification) MarshalJSON() ([]byte, error) {
 }
 
 func (t *Notification) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias Notification
 	aux := &struct {
 		Type json.RawMessage `json:"type"`
@@ -32189,6 +32687,9 @@ func (t NotificationGroup) MarshalJSON() ([]byte, error) {
 }
 
 func (t *NotificationGroup) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias NotificationGroup
 	aux := &struct {
 		Type json.RawMessage `json:"type"`
@@ -32490,6 +32991,9 @@ func (t NotificationTypeNewPushMessage) MarshalJSON() ([]byte, error) {
 }
 
 func (t *NotificationTypeNewPushMessage) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias NotificationTypeNewPushMessage
 	aux := &struct {
 		Content  json.RawMessage `json:"content"`
@@ -32848,6 +33352,9 @@ func (t PageBlockAuthorDate) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PageBlockAuthorDate) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PageBlockAuthorDate
 	aux := &struct {
 		Author json.RawMessage `json:"author"`
@@ -32896,6 +33403,9 @@ func (t PageBlockBlockQuote) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PageBlockBlockQuote) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PageBlockBlockQuote
 	aux := &struct {
 		Blocks []json.RawMessage `json:"blocks"`
@@ -32953,6 +33463,9 @@ func (t PageBlockCaption) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PageBlockCaption) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PageBlockCaption
 	aux := &struct {
 		Credit json.RawMessage `json:"credit"`
@@ -33038,6 +33551,9 @@ func (t PageBlockCollage) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PageBlockCollage) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PageBlockCollage
 	aux := &struct {
 		Blocks []json.RawMessage `json:"blocks"`
@@ -33087,6 +33603,9 @@ func (t PageBlockCover) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PageBlockCover) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PageBlockCover
 	aux := &struct {
 		Cover json.RawMessage `json:"cover"`
@@ -33137,6 +33656,9 @@ func (t PageBlockDetails) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PageBlockDetails) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PageBlockDetails
 	aux := &struct {
 		Blocks []json.RawMessage `json:"blocks"`
@@ -33262,6 +33784,9 @@ func (t PageBlockEmbeddedPost) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PageBlockEmbeddedPost) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PageBlockEmbeddedPost
 	aux := &struct {
 		Blocks []json.RawMessage `json:"blocks"`
@@ -33311,6 +33836,9 @@ func (t PageBlockFooter) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PageBlockFooter) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PageBlockFooter
 	aux := &struct {
 		Footer json.RawMessage `json:"footer"`
@@ -33357,6 +33885,9 @@ func (t PageBlockHeader) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PageBlockHeader) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PageBlockHeader
 	aux := &struct {
 		Header json.RawMessage `json:"header"`
@@ -33466,6 +33997,9 @@ func (t PageBlockKicker) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PageBlockKicker) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PageBlockKicker
 	aux := &struct {
 		Kicker json.RawMessage `json:"kicker"`
@@ -33521,7 +34055,7 @@ type PageBlockListItem struct {
 	IsChecked bool `json:"is_checked"`
 	// Item label
 	Label string `json:"label"`
-	// Type of the item numbering type; must be one of "a" for a lowercase letters, "A" for an uppercase letters, "i" for lowercase Roman numerals, "I" for uppercase Roman numerals,
+	// Type of the item numbering type; must be one of "a" for lowercase letters, "A" for uppercase letters, "i" for lowercase Roman numerals, "I" for uppercase Roman numerals,
 	Type string `json:"type"`
 	// Value of the item; 0 for unordered lists
 	Value int32 `json:"value"`
@@ -33543,6 +34077,9 @@ func (t PageBlockListItem) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PageBlockListItem) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PageBlockListItem
 	aux := &struct {
 		Blocks []json.RawMessage `json:"blocks"`
@@ -33646,6 +34183,9 @@ func (t PageBlockParagraph) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PageBlockParagraph) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PageBlockParagraph
 	aux := &struct {
 		Text json.RawMessage `json:"text"`
@@ -33723,6 +34263,9 @@ func (t PageBlockPreformatted) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PageBlockPreformatted) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PageBlockPreformatted
 	aux := &struct {
 		Text json.RawMessage `json:"text"`
@@ -33771,6 +34314,9 @@ func (t PageBlockPullQuote) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PageBlockPullQuote) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PageBlockPullQuote
 	aux := &struct {
 		Credit json.RawMessage `json:"credit"`
@@ -33858,6 +34404,9 @@ func (t PageBlockRelatedArticles) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PageBlockRelatedArticles) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PageBlockRelatedArticles
 	aux := &struct {
 		Header json.RawMessage `json:"header"`
@@ -33906,6 +34455,9 @@ func (t PageBlockSectionHeading) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PageBlockSectionHeading) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PageBlockSectionHeading
 	aux := &struct {
 		Text json.RawMessage `json:"text"`
@@ -33954,6 +34506,9 @@ func (t PageBlockSlideshow) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PageBlockSlideshow) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PageBlockSlideshow
 	aux := &struct {
 		Blocks []json.RawMessage `json:"blocks"`
@@ -34003,6 +34558,9 @@ func (t PageBlockSubheader) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PageBlockSubheader) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PageBlockSubheader
 	aux := &struct {
 		Subheader json.RawMessage `json:"subheader"`
@@ -34049,6 +34607,9 @@ func (t PageBlockSubtitle) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PageBlockSubtitle) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PageBlockSubtitle
 	aux := &struct {
 		Subtitle json.RawMessage `json:"subtitle"`
@@ -34101,6 +34662,9 @@ func (t PageBlockTable) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PageBlockTable) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PageBlockTable
 	aux := &struct {
 		Caption json.RawMessage `json:"caption"`
@@ -34155,6 +34719,9 @@ func (t PageBlockTableCell) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PageBlockTableCell) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PageBlockTableCell
 	aux := &struct {
 		Align  json.RawMessage `json:"align"`
@@ -34217,6 +34784,9 @@ func (t PageBlockThinking) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PageBlockThinking) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PageBlockThinking
 	aux := &struct {
 		Text json.RawMessage `json:"text"`
@@ -34263,6 +34833,9 @@ func (t PageBlockTitle) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PageBlockTitle) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PageBlockTitle
 	aux := &struct {
 		Title json.RawMessage `json:"title"`
@@ -34601,6 +35174,9 @@ func (t PaidReactor) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PaidReactor) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PaidReactor
 	aux := &struct {
 		SenderId json.RawMessage `json:"sender_id"`
@@ -34816,6 +35392,9 @@ func (t PassportElementError) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PassportElementError) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PassportElementError
 	aux := &struct {
 		Source json.RawMessage `json:"source"`
@@ -35224,6 +35803,9 @@ func (t PassportElements) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PassportElements) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PassportElements
 	aux := &struct {
 		Elements []json.RawMessage `json:"elements"`
@@ -35273,6 +35855,9 @@ func (t PassportElementsWithErrors) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PassportElementsWithErrors) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PassportElementsWithErrors
 	aux := &struct {
 		Elements []json.RawMessage `json:"elements"`
@@ -35666,6 +36251,9 @@ func (t PassportSuitableElement) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PassportSuitableElement) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PassportSuitableElement
 	aux := &struct {
 		Type json.RawMessage `json:"type"`
@@ -35749,6 +36337,9 @@ func (t PaymentForm) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PaymentForm) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PaymentForm
 	aux := &struct {
 		Type json.RawMessage `json:"type"`
@@ -35809,6 +36400,9 @@ func (t PaymentFormTypeRegular) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PaymentFormTypeRegular) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PaymentFormTypeRegular
 	aux := &struct {
 		PaymentProvider json.RawMessage `json:"payment_provider"`
@@ -36005,6 +36599,9 @@ func (t PaymentReceipt) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PaymentReceipt) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PaymentReceipt
 	aux := &struct {
 		Type json.RawMessage `json:"type"`
@@ -36204,6 +36801,9 @@ func (t PhoneNumberAuthenticationSettings) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PhoneNumberAuthenticationSettings) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PhoneNumberAuthenticationSettings
 	aux := &struct {
 		FirebaseAuthenticationSettings json.RawMessage `json:"firebase_authentication_settings"`
@@ -36451,6 +37051,9 @@ func (t Poll) MarshalJSON() ([]byte, error) {
 }
 
 func (t *Poll) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias Poll
 	aux := &struct {
 		RecentVoterIds        []json.RawMessage `json:"recent_voter_ids"`
@@ -36751,6 +37354,9 @@ func (t PollOption) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PollOption) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PollOption
 	aux := &struct {
 		Author         json.RawMessage   `json:"author"`
@@ -36847,6 +37453,9 @@ func (t PollTypeQuiz) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PollTypeQuiz) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PollTypeQuiz
 	aux := &struct {
 		ExplanationMedia json.RawMessage `json:"explanation_media"`
@@ -36914,6 +37523,9 @@ func (t PollVoter) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PollVoter) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PollVoter
 	aux := &struct {
 		VoterId json.RawMessage `json:"voter_id"`
@@ -37111,6 +37723,9 @@ func (t PollVoteStatistics) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PollVoteStatistics) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PollVoteStatistics
 	aux := &struct {
 		VoteGraph json.RawMessage `json:"vote_graph"`
@@ -37577,6 +38192,9 @@ func (t PremiumFeaturePromotionAnimation) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PremiumFeaturePromotionAnimation) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PremiumFeaturePromotionAnimation
 	aux := &struct {
 		Feature json.RawMessage `json:"feature"`
@@ -37667,6 +38285,9 @@ func (t PremiumFeatures) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PremiumFeatures) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PremiumFeatures
 	aux := &struct {
 		Features    []json.RawMessage `json:"features"`
@@ -37862,6 +38483,9 @@ func (t PremiumGiftCodeInfo) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PremiumGiftCodeInfo) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PremiumGiftCodeInfo
 	aux := &struct {
 		CreatorId json.RawMessage `json:"creator_id"`
@@ -38016,6 +38640,9 @@ func (t PremiumLimit) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PremiumLimit) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PremiumLimit
 	aux := &struct {
 		Type json.RawMessage `json:"type"`
@@ -38532,6 +39159,9 @@ func (t PremiumPaymentOption) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PremiumPaymentOption) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PremiumPaymentOption
 	aux := &struct {
 		PaymentLink json.RawMessage `json:"payment_link"`
@@ -38578,6 +39208,9 @@ func (t PremiumSourceBusinessFeature) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PremiumSourceBusinessFeature) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PremiumSourceBusinessFeature
 	aux := &struct {
 		Feature json.RawMessage `json:"feature"`
@@ -38624,6 +39257,9 @@ func (t PremiumSourceFeature) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PremiumSourceFeature) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PremiumSourceFeature
 	aux := &struct {
 		Feature json.RawMessage `json:"feature"`
@@ -38670,6 +39306,9 @@ func (t PremiumSourceLimitExceeded) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PremiumSourceLimitExceeded) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PremiumSourceLimitExceeded
 	aux := &struct {
 		LimitType json.RawMessage `json:"limit_type"`
@@ -38760,6 +39399,9 @@ func (t PremiumSourceStoryFeature) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PremiumSourceStoryFeature) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PremiumSourceStoryFeature
 	aux := &struct {
 		Feature json.RawMessage `json:"feature"`
@@ -39013,6 +39655,9 @@ func (t PrepaidGiveaway) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PrepaidGiveaway) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PrepaidGiveaway
 	aux := &struct {
 		Prize json.RawMessage `json:"prize"`
@@ -39061,6 +39706,9 @@ func (t PreparedInlineMessage) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PreparedInlineMessage) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PreparedInlineMessage
 	aux := &struct {
 		Result json.RawMessage `json:"result"`
@@ -39410,6 +40058,9 @@ func (t Proxy) MarshalJSON() ([]byte, error) {
 }
 
 func (t *Proxy) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias Proxy
 	aux := &struct {
 		Type json.RawMessage `json:"type"`
@@ -39598,6 +40249,9 @@ func (t PublicForwards) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PublicForwards) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PublicForwards
 	aux := &struct {
 		Forwards []json.RawMessage `json:"forwards"`
@@ -40183,6 +40837,9 @@ func (t PushMessageContentGiveaway) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PushMessageContentGiveaway) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias PushMessageContentGiveaway
 	aux := &struct {
 		Prize json.RawMessage `json:"prize"`
@@ -40871,6 +41528,9 @@ func (t QuickReplyMessage) MarshalJSON() ([]byte, error) {
 }
 
 func (t *QuickReplyMessage) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias QuickReplyMessage
 	aux := &struct {
 		Content      json.RawMessage `json:"content"`
@@ -40987,6 +41647,9 @@ func (t ReactionNotificationSettings) MarshalJSON() ([]byte, error) {
 }
 
 func (t *ReactionNotificationSettings) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias ReactionNotificationSettings
 	aux := &struct {
 		MessageReactionSource json.RawMessage `json:"message_reaction_source"`
@@ -41247,7 +41910,7 @@ type ReceivedGift struct {
 	CanBeUpgraded bool `json:"can_be_upgraded"`
 	// Identifiers of collections to which the gift is added; only for the receiver of the gift
 	CollectionIds []int32 `json:"collection_ids"`
-	// Point in time (Unix timestamp) when the gift can be used to craft another gift can be in the past; only for the receiver of the gift
+	// Point in time (Unix timestamp) when the gift can be used to craft another gift; can be in the past; only for the receiver of the gift
 	CraftDate int32 `json:"craft_date"`
 	// Point in time (Unix timestamp) when the gift was sent
 	Date int32 `json:"date"`
@@ -41305,6 +41968,9 @@ func (t ReceivedGift) MarshalJSON() ([]byte, error) {
 }
 
 func (t *ReceivedGift) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias ReceivedGift
 	aux := &struct {
 		Gift     json.RawMessage `json:"gift"`
@@ -42292,6 +42958,9 @@ func (t RichMessage) MarshalJSON() ([]byte, error) {
 }
 
 func (t *RichMessage) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias RichMessage
 	aux := &struct {
 		Blocks []json.RawMessage `json:"blocks"`
@@ -42414,6 +43083,9 @@ func (t RichTextAnchorLink) MarshalJSON() ([]byte, error) {
 }
 
 func (t *RichTextAnchorLink) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias RichTextAnchorLink
 	aux := &struct {
 		Text json.RawMessage `json:"text"`
@@ -42462,6 +43134,9 @@ func (t RichTextBankCardNumber) MarshalJSON() ([]byte, error) {
 }
 
 func (t *RichTextBankCardNumber) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias RichTextBankCardNumber
 	aux := &struct {
 		Text json.RawMessage `json:"text"`
@@ -42508,6 +43183,9 @@ func (t RichTextBold) MarshalJSON() ([]byte, error) {
 }
 
 func (t *RichTextBold) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias RichTextBold
 	aux := &struct {
 		Text json.RawMessage `json:"text"`
@@ -42556,6 +43234,9 @@ func (t RichTextBotCommand) MarshalJSON() ([]byte, error) {
 }
 
 func (t *RichTextBotCommand) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias RichTextBotCommand
 	aux := &struct {
 		Text json.RawMessage `json:"text"`
@@ -42604,6 +43285,9 @@ func (t RichTextCashtag) MarshalJSON() ([]byte, error) {
 }
 
 func (t *RichTextCashtag) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias RichTextCashtag
 	aux := &struct {
 		Text json.RawMessage `json:"text"`
@@ -42679,6 +43363,9 @@ func (t RichTextDateTime) MarshalJSON() ([]byte, error) {
 }
 
 func (t *RichTextDateTime) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias RichTextDateTime
 	aux := &struct {
 		FormattingType json.RawMessage `json:"formatting_type"`
@@ -42735,6 +43422,9 @@ func (t RichTextEmailAddress) MarshalJSON() ([]byte, error) {
 }
 
 func (t *RichTextEmailAddress) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias RichTextEmailAddress
 	aux := &struct {
 		Text json.RawMessage `json:"text"`
@@ -42781,6 +43471,9 @@ func (t RichTextFixed) MarshalJSON() ([]byte, error) {
 }
 
 func (t *RichTextFixed) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias RichTextFixed
 	aux := &struct {
 		Text json.RawMessage `json:"text"`
@@ -42829,6 +43522,9 @@ func (t RichTextHashtag) MarshalJSON() ([]byte, error) {
 }
 
 func (t *RichTextHashtag) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias RichTextHashtag
 	aux := &struct {
 		Text json.RawMessage `json:"text"`
@@ -42902,6 +43598,9 @@ func (t RichTextItalic) MarshalJSON() ([]byte, error) {
 }
 
 func (t *RichTextItalic) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias RichTextItalic
 	aux := &struct {
 		Text json.RawMessage `json:"text"`
@@ -42948,6 +43647,9 @@ func (t RichTextMarked) MarshalJSON() ([]byte, error) {
 }
 
 func (t *RichTextMarked) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias RichTextMarked
 	aux := &struct {
 		Text json.RawMessage `json:"text"`
@@ -43019,6 +43721,9 @@ func (t RichTextMention) MarshalJSON() ([]byte, error) {
 }
 
 func (t *RichTextMention) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias RichTextMention
 	aux := &struct {
 		Text json.RawMessage `json:"text"`
@@ -43067,6 +43772,9 @@ func (t RichTextMentionName) MarshalJSON() ([]byte, error) {
 }
 
 func (t *RichTextMentionName) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias RichTextMentionName
 	aux := &struct {
 		Text json.RawMessage `json:"text"`
@@ -43115,6 +43823,9 @@ func (t RichTextPhoneNumber) MarshalJSON() ([]byte, error) {
 }
 
 func (t *RichTextPhoneNumber) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias RichTextPhoneNumber
 	aux := &struct {
 		Text json.RawMessage `json:"text"`
@@ -43186,6 +43897,9 @@ func (t RichTextReference) MarshalJSON() ([]byte, error) {
 }
 
 func (t *RichTextReference) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias RichTextReference
 	aux := &struct {
 		Text json.RawMessage `json:"text"`
@@ -43236,6 +43950,9 @@ func (t RichTextReferenceLink) MarshalJSON() ([]byte, error) {
 }
 
 func (t *RichTextReferenceLink) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias RichTextReferenceLink
 	aux := &struct {
 		Text json.RawMessage `json:"text"`
@@ -43282,6 +43999,9 @@ func (t RichTexts) MarshalJSON() ([]byte, error) {
 }
 
 func (t *RichTexts) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias RichTexts
 	aux := &struct {
 		Texts []json.RawMessage `json:"texts"`
@@ -43331,6 +44051,9 @@ func (t RichTextSpoiler) MarshalJSON() ([]byte, error) {
 }
 
 func (t *RichTextSpoiler) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias RichTextSpoiler
 	aux := &struct {
 		Text json.RawMessage `json:"text"`
@@ -43377,6 +44100,9 @@ func (t RichTextStrikethrough) MarshalJSON() ([]byte, error) {
 }
 
 func (t *RichTextStrikethrough) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias RichTextStrikethrough
 	aux := &struct {
 		Text json.RawMessage `json:"text"`
@@ -43423,6 +44149,9 @@ func (t RichTextSubscript) MarshalJSON() ([]byte, error) {
 }
 
 func (t *RichTextSubscript) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias RichTextSubscript
 	aux := &struct {
 		Text json.RawMessage `json:"text"`
@@ -43469,6 +44198,9 @@ func (t RichTextSuperscript) MarshalJSON() ([]byte, error) {
 }
 
 func (t *RichTextSuperscript) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias RichTextSuperscript
 	aux := &struct {
 		Text json.RawMessage `json:"text"`
@@ -43515,6 +44247,9 @@ func (t RichTextUnderline) MarshalJSON() ([]byte, error) {
 }
 
 func (t *RichTextUnderline) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias RichTextUnderline
 	aux := &struct {
 		Text json.RawMessage `json:"text"`
@@ -43565,6 +44300,9 @@ func (t RichTextUrl) MarshalJSON() ([]byte, error) {
 }
 
 func (t *RichTextUrl) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias RichTextUrl
 	aux := &struct {
 		Text json.RawMessage `json:"text"`
@@ -43659,6 +44397,9 @@ func (t SavedMessagesTag) MarshalJSON() ([]byte, error) {
 }
 
 func (t *SavedMessagesTag) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias SavedMessagesTag
 	aux := &struct {
 		Tag json.RawMessage `json:"tag"`
@@ -43734,6 +44475,9 @@ func (t SavedMessagesTopic) MarshalJSON() ([]byte, error) {
 }
 
 func (t *SavedMessagesTopic) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias SavedMessagesTopic
 	aux := &struct {
 		Type json.RawMessage `json:"type"`
@@ -44440,6 +45184,9 @@ func (t SecretChat) MarshalJSON() ([]byte, error) {
 }
 
 func (t *SecretChat) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias SecretChat
 	aux := &struct {
 		State json.RawMessage `json:"state"`
@@ -44627,6 +45374,9 @@ func (t Session) MarshalJSON() ([]byte, error) {
 }
 
 func (t *Session) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias Session
 	aux := &struct {
 		DeviceType json.RawMessage `json:"device_type"`
@@ -45782,6 +46532,9 @@ func (t SponsoredMessage) MarshalJSON() ([]byte, error) {
 }
 
 func (t *SponsoredMessage) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias SponsoredMessage
 	aux := &struct {
 		Content json.RawMessage `json:"content"`
@@ -46059,6 +46812,9 @@ func (t StarRevenueStatistics) MarshalJSON() ([]byte, error) {
 }
 
 func (t *StarRevenueStatistics) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias StarRevenueStatistics
 	aux := &struct {
 		RevenueByDayGraph json.RawMessage `json:"revenue_by_day_graph"`
@@ -46120,7 +46876,7 @@ type StarSubscription struct {
 	Id string `json:"id"`
 	// True, if the subscription was canceled
 	IsCanceled bool `json:"is_canceled"`
-	// True, if the subscription expires soon and there are no enough Telegram Stars on the user's balance to extend it
+	// True, if the subscription expires soon and there aren't enough Telegram Stars on the user's balance to extend it
 	IsExpiring bool `json:"is_expiring"`
 	// The subscription plan
 	Pricing *StarSubscriptionPricing `json:"pricing"`
@@ -46144,6 +46900,9 @@ func (t StarSubscription) MarshalJSON() ([]byte, error) {
 }
 
 func (t *StarSubscription) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias StarSubscription
 	aux := &struct {
 		Type json.RawMessage `json:"type"`
@@ -46249,7 +47008,7 @@ func (t StarSubscriptionTypeBot) MarshalJSON() ([]byte, error) {
 type StarSubscriptionTypeChannel struct {
 	// True, if the subscription is active and the user can use the method reuseStarSubscription to join the subscribed chat again
 	CanReuse bool `json:"can_reuse"`
-	// The invite link that can be used to renew the subscription if it has been expired; may be empty, if the link isn't available anymore
+	// The invite link that can be used to renew the subscription if it has expired; may be empty if the link isn't available anymore
 	InviteLink string `json:"invite_link,omitempty"`
 }
 
@@ -46294,6 +47053,9 @@ func (t StartLiveStoryResultFail) MarshalJSON() ([]byte, error) {
 }
 
 func (t *StartLiveStoryResultFail) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias StartLiveStoryResultFail
 	aux := &struct {
 		ErrorType json.RawMessage `json:"error_type"`
@@ -46369,6 +47131,9 @@ func (t StarTransaction) MarshalJSON() ([]byte, error) {
 }
 
 func (t *StarTransaction) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias StarTransaction
 	aux := &struct {
 		Type json.RawMessage `json:"type"`
@@ -46542,6 +47307,9 @@ func (t StarTransactionTypeBotPaidMediaPurchase) MarshalJSON() ([]byte, error) {
 }
 
 func (t *StarTransactionTypeBotPaidMediaPurchase) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias StarTransactionTypeBotPaidMediaPurchase
 	aux := &struct {
 		Media []json.RawMessage `json:"media"`
@@ -46597,6 +47365,9 @@ func (t StarTransactionTypeBotPaidMediaSale) MarshalJSON() ([]byte, error) {
 }
 
 func (t *StarTransactionTypeBotPaidMediaSale) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias StarTransactionTypeBotPaidMediaSale
 	aux := &struct {
 		Media []json.RawMessage `json:"media"`
@@ -46754,6 +47525,9 @@ func (t StarTransactionTypeChannelPaidMediaPurchase) MarshalJSON() ([]byte, erro
 }
 
 func (t *StarTransactionTypeChannelPaidMediaPurchase) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias StarTransactionTypeChannelPaidMediaPurchase
 	aux := &struct {
 		Media []json.RawMessage `json:"media"`
@@ -46807,6 +47581,9 @@ func (t StarTransactionTypeChannelPaidMediaSale) MarshalJSON() ([]byte, error) {
 }
 
 func (t *StarTransactionTypeChannelPaidMediaSale) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias StarTransactionTypeChannelPaidMediaSale
 	aux := &struct {
 		Media []json.RawMessage `json:"media"`
@@ -46977,6 +47754,9 @@ func (t StarTransactionTypeFragmentWithdrawal) MarshalJSON() ([]byte, error) {
 }
 
 func (t *StarTransactionTypeFragmentWithdrawal) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias StarTransactionTypeFragmentWithdrawal
 	aux := &struct {
 		WithdrawalState json.RawMessage `json:"withdrawal_state"`
@@ -47025,6 +47805,9 @@ func (t StarTransactionTypeGiftAuctionBid) MarshalJSON() ([]byte, error) {
 }
 
 func (t *StarTransactionTypeGiftAuctionBid) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias StarTransactionTypeGiftAuctionBid
 	aux := &struct {
 		OwnerId json.RawMessage `json:"owner_id"`
@@ -47073,6 +47856,9 @@ func (t StarTransactionTypeGiftOriginalDetailsDrop) MarshalJSON() ([]byte, error
 }
 
 func (t *StarTransactionTypeGiftOriginalDetailsDrop) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias StarTransactionTypeGiftOriginalDetailsDrop
 	aux := &struct {
 		OwnerId json.RawMessage `json:"owner_id"`
@@ -47121,6 +47907,9 @@ func (t StarTransactionTypeGiftPurchase) MarshalJSON() ([]byte, error) {
 }
 
 func (t *StarTransactionTypeGiftPurchase) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias StarTransactionTypeGiftPurchase
 	aux := &struct {
 		OwnerId json.RawMessage `json:"owner_id"`
@@ -47217,6 +48006,9 @@ func (t StarTransactionTypeGiftTransfer) MarshalJSON() ([]byte, error) {
 }
 
 func (t *StarTransactionTypeGiftTransfer) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias StarTransactionTypeGiftTransfer
 	aux := &struct {
 		OwnerId json.RawMessage `json:"owner_id"`
@@ -47290,6 +48082,9 @@ func (t StarTransactionTypeGiftUpgradePurchase) MarshalJSON() ([]byte, error) {
 }
 
 func (t *StarTransactionTypeGiftUpgradePurchase) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias StarTransactionTypeGiftUpgradePurchase
 	aux := &struct {
 		OwnerId json.RawMessage `json:"owner_id"`
@@ -47386,6 +48181,9 @@ func (t StarTransactionTypePaidGroupCallMessageReceive) MarshalJSON() ([]byte, e
 }
 
 func (t *StarTransactionTypePaidGroupCallMessageReceive) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias StarTransactionTypePaidGroupCallMessageReceive
 	aux := &struct {
 		SenderId json.RawMessage `json:"sender_id"`
@@ -47459,6 +48257,9 @@ func (t StarTransactionTypePaidGroupCallReactionReceive) MarshalJSON() ([]byte, 
 }
 
 func (t *StarTransactionTypePaidGroupCallReactionReceive) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias StarTransactionTypePaidGroupCallReactionReceive
 	aux := &struct {
 		SenderId json.RawMessage `json:"sender_id"`
@@ -47534,6 +48335,9 @@ func (t StarTransactionTypePaidMessageReceive) MarshalJSON() ([]byte, error) {
 }
 
 func (t *StarTransactionTypePaidMessageReceive) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias StarTransactionTypePaidMessageReceive
 	aux := &struct {
 		SenderId json.RawMessage `json:"sender_id"`
@@ -47976,6 +48780,9 @@ func (t Sticker) MarshalJSON() ([]byte, error) {
 }
 
 func (t *Sticker) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias Sticker
 	aux := &struct {
 		Format   json.RawMessage `json:"format"`
@@ -48211,6 +49018,9 @@ func (t StickerSet) MarshalJSON() ([]byte, error) {
 }
 
 func (t *StickerSet) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias StickerSet
 	aux := &struct {
 		StickerType json.RawMessage `json:"sticker_type"`
@@ -48283,6 +49093,9 @@ func (t StickerSetInfo) MarshalJSON() ([]byte, error) {
 }
 
 func (t *StickerSetInfo) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias StickerSetInfo
 	aux := &struct {
 		StickerType json.RawMessage `json:"sticker_type"`
@@ -48469,6 +49282,9 @@ func (t StorageStatisticsByFileType) MarshalJSON() ([]byte, error) {
 }
 
 func (t *StorageStatisticsByFileType) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias StorageStatisticsByFileType
 	aux := &struct {
 		FileType json.RawMessage `json:"file_type"`
@@ -48828,7 +49644,7 @@ type Story struct {
 	Content StoryContent `json:"content"`
 	// Point in time (Unix timestamp) when the story was published
 	Date int32 `json:"date"`
-	// True, if users viewed the story can't be received, because the story has expired more than getOption("story_viewers_expiration_delay") seconds ago
+	// True, if users who viewed the story can't be received, because the story has expired more than getOption("story_viewers_expiration_delay") seconds ago
 	HasExpiredViewers bool `json:"has_expired_viewers"`
 	// Unique story identifier among stories posted by the given chat
 	Id int32 `json:"id"`
@@ -48870,6 +49686,9 @@ func (t Story) MarshalJSON() ([]byte, error) {
 }
 
 func (t *Story) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias Story
 	aux := &struct {
 		ChosenReactionType json.RawMessage `json:"chosen_reaction_type"`
@@ -48988,6 +49807,9 @@ func (t StoryArea) MarshalJSON() ([]byte, error) {
 }
 
 func (t *StoryArea) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias StoryArea
 	aux := &struct {
 		Type json.RawMessage `json:"type"`
@@ -49114,7 +49936,7 @@ func (t StoryAreaTypeMessage) MarshalJSON() ([]byte, error) {
 	})
 }
 
-// StoryAreaTypeSuggestedReaction An area pointing to a suggested reaction. App needs to show a clickable reaction on the area and call setStoryReaction when the are is clicked
+// StoryAreaTypeSuggestedReaction An area pointing to a suggested reaction. App needs to show a clickable reaction on the area and call setStoryReaction when the area is clicked
 type StoryAreaTypeSuggestedReaction struct {
 	// True, if reaction has a dark background
 	IsDark bool `json:"is_dark"`
@@ -49144,6 +49966,9 @@ func (t StoryAreaTypeSuggestedReaction) MarshalJSON() ([]byte, error) {
 }
 
 func (t *StoryAreaTypeSuggestedReaction) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias StoryAreaTypeSuggestedReaction
 	aux := &struct {
 		ReactionType json.RawMessage `json:"reaction_type"`
@@ -49495,6 +50320,9 @@ func (t StoryInteraction) MarshalJSON() ([]byte, error) {
 }
 
 func (t *StoryInteraction) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias StoryInteraction
 	aux := &struct {
 		ActorId   json.RawMessage `json:"actor_id"`
@@ -49659,6 +50487,9 @@ func (t StoryInteractionTypeView) MarshalJSON() ([]byte, error) {
 }
 
 func (t *StoryInteractionTypeView) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias StoryInteractionTypeView
 	aux := &struct {
 		ChosenReactionType json.RawMessage `json:"chosen_reaction_type"`
@@ -49885,6 +50716,9 @@ func (t StoryRepostInfo) MarshalJSON() ([]byte, error) {
 }
 
 func (t *StoryRepostInfo) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias StoryRepostInfo
 	aux := &struct {
 		Origin json.RawMessage `json:"origin"`
@@ -49931,6 +50765,9 @@ func (t StoryStatistics) MarshalJSON() ([]byte, error) {
 }
 
 func (t *StoryStatistics) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias StoryStatistics
 	aux := &struct {
 		StoryInteractionGraph json.RawMessage `json:"story_interaction_graph"`
@@ -50403,6 +51240,9 @@ func (t SuggestedPostInfo) MarshalJSON() ([]byte, error) {
 }
 
 func (t *SuggestedPostInfo) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias SuggestedPostInfo
 	aux := &struct {
 		Price json.RawMessage `json:"price"`
@@ -50654,6 +51494,9 @@ func (t Supergroup) MarshalJSON() ([]byte, error) {
 }
 
 func (t *Supergroup) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias Supergroup
 	aux := &struct {
 		ActiveStoryState json.RawMessage `json:"active_story_state"`
@@ -50786,6 +51629,9 @@ func (t SupergroupFullInfo) MarshalJSON() ([]byte, error) {
 }
 
 func (t *SupergroupFullInfo) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias SupergroupFullInfo
 	aux := &struct {
 		MainProfileTab json.RawMessage `json:"main_profile_tab"`
@@ -50922,6 +51768,9 @@ func (t SupergroupMembersFilterMention) MarshalJSON() ([]byte, error) {
 }
 
 func (t *SupergroupMembersFilterMention) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias SupergroupMembersFilterMention
 	aux := &struct {
 		TopicId json.RawMessage `json:"topic_id"`
@@ -51079,6 +51928,9 @@ func (t TargetChatInternalLink) MarshalJSON() ([]byte, error) {
 }
 
 func (t *TargetChatInternalLink) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias TargetChatInternalLink
 	aux := &struct {
 		Link json.RawMessage `json:"link"`
@@ -51553,7 +52405,7 @@ func (t Text) MarshalJSON() ([]byte, error) {
 
 // TextCompositionStyle Describes a style that can be used to compose a text
 type TextCompositionStyle struct {
-	// User identifier of the creator of the style; 0 if none of unknown
+	// User identifier of the creator of the style; 0 if none or unknown
 	CreatorUserId int64 `json:"creator_user_id"`
 	// Identifier of the custom emoji corresponding to the style; 0 if none
 	CustomEmojiId int64 `json:"custom_emoji_id,string"`
@@ -51658,6 +52510,9 @@ func (t TextEntity) MarshalJSON() ([]byte, error) {
 }
 
 func (t *TextEntity) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias TextEntity
 	aux := &struct {
 		Type json.RawMessage `json:"type"`
@@ -51855,6 +52710,9 @@ func (t TextEntityTypeDateTime) MarshalJSON() ([]byte, error) {
 }
 
 func (t *TextEntityTypeDateTime) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias TextEntityTypeDateTime
 	aux := &struct {
 		FormattingType json.RawMessage `json:"formatting_type"`
@@ -52350,6 +53208,9 @@ func (t ThemeSettings) MarshalJSON() ([]byte, error) {
 }
 
 func (t *ThemeSettings) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias ThemeSettings
 	aux := &struct {
 		BaseTheme           json.RawMessage `json:"base_theme"`
@@ -52408,6 +53269,9 @@ func (t Thumbnail) MarshalJSON() ([]byte, error) {
 }
 
 func (t *Thumbnail) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias Thumbnail
 	aux := &struct {
 		Format json.RawMessage `json:"format"`
@@ -52647,6 +53511,9 @@ func (t TMeUrl) MarshalJSON() ([]byte, error) {
 }
 
 func (t *TMeUrl) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias TMeUrl
 	aux := &struct {
 		Type json.RawMessage `json:"type"`
@@ -52808,6 +53675,9 @@ func (t TonRevenueStatistics) MarshalJSON() ([]byte, error) {
 }
 
 func (t *TonRevenueStatistics) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias TonRevenueStatistics
 	aux := &struct {
 		RevenueByDayGraph json.RawMessage `json:"revenue_by_day_graph"`
@@ -52887,6 +53757,9 @@ func (t TonTransaction) MarshalJSON() ([]byte, error) {
 }
 
 func (t *TonTransaction) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias TonTransaction
 	aux := &struct {
 		Type json.RawMessage `json:"type"`
@@ -52983,6 +53856,9 @@ func (t TonTransactionTypeFragmentWithdrawal) MarshalJSON() ([]byte, error) {
 }
 
 func (t *TonTransactionTypeFragmentWithdrawal) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias TonTransactionTypeFragmentWithdrawal
 	aux := &struct {
 		WithdrawalState json.RawMessage `json:"withdrawal_state"`
@@ -53454,6 +54330,9 @@ func (t UnconfirmedSession) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UnconfirmedSession) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UnconfirmedSession
 	aux := &struct {
 		Type json.RawMessage `json:"type"`
@@ -53502,6 +54381,9 @@ func (t UnreadReaction) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UnreadReaction) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UnreadReaction
 	aux := &struct {
 		SenderId json.RawMessage `json:"sender_id"`
@@ -53580,7 +54462,7 @@ func (t UpdateActiveEmojiReactions) MarshalJSON() ([]byte, error) {
 	})
 }
 
-// UpdateActiveGiftAuctions The list of auctions in which participate the current user has changed
+// UpdateActiveGiftAuctions The list of auctions in which the current user participates has changed
 type UpdateActiveGiftAuctions struct {
 	// New states of the auctions
 	States []GiftAuctionState `json:"states"`
@@ -53649,7 +54531,7 @@ func (t UpdateActiveNotifications) MarshalJSON() ([]byte, error) {
 	})
 }
 
-// UpdateAgeVerificationParameters The parameters for age verification of the current user's account has changed
+// UpdateAgeVerificationParameters The parameters for age verification of the current user's account have changed
 type UpdateAgeVerificationParameters struct {
 	// Parameters for the age verification; may be null if age verification isn't needed
 	Parameters *AgeVerificationParameters `json:"parameters,omitempty"`
@@ -53699,7 +54581,7 @@ func (t UpdateAnimatedEmojiMessageClicked) MarshalJSON() ([]byte, error) {
 	})
 }
 
-// UpdateAnimationSearchParameters The parameters of animation search through getOption("animation_search_bot_username") bot has changed
+// UpdateAnimationSearchParameters The parameters of animation search through getOption("animation_search_bot_username") bot have changed
 type UpdateAnimationSearchParameters struct {
 	// The new list of emojis suggested for searching
 	Emojis []string `json:"emojis"`
@@ -53825,6 +54707,9 @@ func (t UpdateAuthorizationState) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpdateAuthorizationState) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpdateAuthorizationState
 	aux := &struct {
 		AuthorizationState json.RawMessage `json:"authorization_state"`
@@ -53873,6 +54758,9 @@ func (t UpdateAutosaveSettings) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpdateAutosaveSettings) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpdateAutosaveSettings
 	aux := &struct {
 		Scope json.RawMessage `json:"scope"`
@@ -54129,6 +55017,9 @@ func (t UpdateChatAction) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpdateChatAction) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpdateChatAction
 	aux := &struct {
 		Action   json.RawMessage `json:"action"`
@@ -54193,6 +55084,9 @@ func (t UpdateChatActionBar) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpdateChatActionBar) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpdateChatActionBar
 	aux := &struct {
 		ActionBar json.RawMessage `json:"action_bar"`
@@ -54264,6 +55158,9 @@ func (t UpdateChatAddedToList) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpdateChatAddedToList) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpdateChatAddedToList
 	aux := &struct {
 		ChatList json.RawMessage `json:"chat_list"`
@@ -54312,6 +55209,9 @@ func (t UpdateChatAvailableReactions) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpdateChatAvailableReactions) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpdateChatAvailableReactions
 	aux := &struct {
 		AvailableReactions json.RawMessage `json:"available_reactions"`
@@ -54385,6 +55285,9 @@ func (t UpdateChatBlockList) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpdateChatBlockList) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpdateChatBlockList
 	aux := &struct {
 		BlockList json.RawMessage `json:"block_list"`
@@ -54665,7 +55568,7 @@ func (t UpdateChatIsTranslatable) MarshalJSON() ([]byte, error) {
 type UpdateChatJoinResult struct {
 	// Identifier of the joined chat, or 0 if the request wasn't approved
 	ChatId int64 `json:"chat_id"`
-	// Identifier of the join request query as received in chatJoinResultGuardBotApprovalRequired. If the corresponding Web App is stiil open, then it must be closed
+	// Identifier of the join request query as received in chatJoinResultGuardBotApprovalRequired. If the corresponding Web App is still open, then it must be closed
 	QueryId int64 `json:"query_id,string"`
 	// Result of the join
 	Result ChatJoinRequestResult `json:"result"`
@@ -54689,6 +55592,9 @@ func (t UpdateChatJoinResult) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpdateChatJoinResult) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpdateChatJoinResult
 	aux := &struct {
 		Result json.RawMessage `json:"result"`
@@ -54826,6 +55732,9 @@ func (t UpdateChatMessageSender) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpdateChatMessageSender) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpdateChatMessageSender
 	aux := &struct {
 		MessageSenderId json.RawMessage `json:"message_sender_id"`
@@ -55076,6 +55985,9 @@ func (t UpdateChatRemovedFromList) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpdateChatRemovedFromList) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpdateChatRemovedFromList
 	aux := &struct {
 		ChatList json.RawMessage `json:"chat_list"`
@@ -55174,6 +56086,9 @@ func (t UpdateChatTheme) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpdateChatTheme) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpdateChatTheme
 	aux := &struct {
 		Theme json.RawMessage `json:"theme"`
@@ -55370,6 +56285,9 @@ func (t UpdateConnectionState) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpdateConnectionState) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpdateConnectionState
 	aux := &struct {
 		State json.RawMessage `json:"state"`
@@ -55464,6 +56382,9 @@ func (t UpdateDefaultPaidReactionType) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpdateDefaultPaidReactionType) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpdateDefaultPaidReactionType
 	aux := &struct {
 		Type json.RawMessage `json:"type"`
@@ -55510,6 +56431,9 @@ func (t UpdateDefaultReactionType) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpdateDefaultReactionType) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpdateDefaultReactionType
 	aux := &struct {
 		ReactionType json.RawMessage `json:"reaction_type"`
@@ -56176,6 +57100,9 @@ func (t UpdateInstalledStickerSets) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpdateInstalledStickerSets) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpdateInstalledStickerSets
 	aux := &struct {
 		StickerType json.RawMessage `json:"sticker_type"`
@@ -56332,6 +57259,9 @@ func (t UpdateMessageContent) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpdateMessageContent) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpdateMessageContent
 	aux := &struct {
 		NewContent json.RawMessage `json:"new_content"`
@@ -56409,6 +57339,9 @@ func (t UpdateMessageEdited) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpdateMessageEdited) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpdateMessageEdited
 	aux := &struct {
 		ReplyMarkup json.RawMessage `json:"reply_markup"`
@@ -56598,6 +57531,9 @@ func (t UpdateMessageReaction) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpdateMessageReaction) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpdateMessageReaction
 	aux := &struct {
 		ActorId          json.RawMessage   `json:"actor_id"`
@@ -56838,6 +57774,9 @@ func (t UpdateNewBusinessCallbackQuery) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpdateNewBusinessCallbackQuery) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpdateNewBusinessCallbackQuery
 	aux := &struct {
 		Payload json.RawMessage `json:"payload"`
@@ -56919,6 +57858,9 @@ func (t UpdateNewCallbackQuery) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpdateNewCallbackQuery) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpdateNewCallbackQuery
 	aux := &struct {
 		Payload json.RawMessage `json:"payload"`
@@ -57154,6 +58096,9 @@ func (t UpdateNewGroupCallPaidReaction) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpdateNewGroupCallPaidReaction) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpdateNewGroupCallPaidReaction
 	aux := &struct {
 		SenderId json.RawMessage `json:"sender_id"`
@@ -57235,6 +58180,9 @@ func (t UpdateNewInlineCallbackQuery) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpdateNewInlineCallbackQuery) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpdateNewInlineCallbackQuery
 	aux := &struct {
 		Payload json.RawMessage `json:"payload"`
@@ -57291,6 +58239,9 @@ func (t UpdateNewInlineQuery) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpdateNewInlineQuery) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpdateNewInlineQuery
 	aux := &struct {
 		ChatType json.RawMessage `json:"chat_type"`
@@ -57490,6 +58441,9 @@ func (t UpdateNotificationGroup) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpdateNotificationGroup) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpdateNotificationGroup
 	aux := &struct {
 		Type json.RawMessage `json:"type"`
@@ -57538,6 +58492,9 @@ func (t UpdateOption) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpdateOption) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpdateOption
 	aux := &struct {
 		Value json.RawMessage `json:"value"`
@@ -57661,6 +58618,9 @@ func (t UpdatePendingMessage) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpdatePendingMessage) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpdatePendingMessage
 	aux := &struct {
 		Content json.RawMessage `json:"content"`
@@ -57736,6 +58696,9 @@ func (t UpdatePollAnswer) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpdatePollAnswer) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpdatePollAnswer
 	aux := &struct {
 		VoterId json.RawMessage `json:"voter_id"`
@@ -57947,6 +58910,9 @@ func (t Updates) MarshalJSON() ([]byte, error) {
 }
 
 func (t *Updates) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias Updates
 	aux := &struct {
 		Updates []json.RawMessage `json:"updates"`
@@ -58115,6 +59081,9 @@ func (t UpdateScopeNotificationSettings) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpdateScopeNotificationSettings) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpdateScopeNotificationSettings
 	aux := &struct {
 		Scope json.RawMessage `json:"scope"`
@@ -58186,6 +59155,9 @@ func (t UpdateServiceNotification) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpdateServiceNotification) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpdateServiceNotification
 	aux := &struct {
 		Content json.RawMessage `json:"content"`
@@ -58208,7 +59180,7 @@ func (t *UpdateServiceNotification) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// UpdateSpeechRecognitionTrial The parameters of speech recognition without Telegram Premium subscription has changed
+// UpdateSpeechRecognitionTrial The parameters of speech recognition without Telegram Premium subscription have changed
 type UpdateSpeechRecognitionTrial struct {
 	// Number of left speech recognition attempts this week
 	LeftCount int32 `json:"left_count"`
@@ -58237,7 +59209,7 @@ func (t UpdateSpeechRecognitionTrial) MarshalJSON() ([]byte, error) {
 	})
 }
 
-// UpdateSpeedLimitNotification Download or upload file speed for the user was limited, but it can be restored by subscription to Telegram Premium. The notification can be postponed until a being downloaded or uploaded file is visible to the user.
+// UpdateSpeedLimitNotification Download or upload file speed for the user was limited, but it can be restored by subscription to Telegram Premium. The notification can be postponed until a file being downloaded or uploaded is visible to the user.
 type UpdateSpeedLimitNotification struct {
 	// True, if upload speed was limited; false, if download speed was limited
 	IsUpload bool `json:"is_upload"`
@@ -58309,6 +59281,9 @@ func (t UpdateStarRevenueStatus) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpdateStarRevenueStatus) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpdateStarRevenueStatus
 	aux := &struct {
 		OwnerId json.RawMessage `json:"owner_id"`
@@ -58428,6 +59403,9 @@ func (t UpdateStoryListChatCount) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpdateStoryListChatCount) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpdateStoryListChatCount
 	aux := &struct {
 		StoryList json.RawMessage `json:"story_list"`
@@ -58478,6 +59456,9 @@ func (t UpdateStoryPostFailed) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpdateStoryPostFailed) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpdateStoryPostFailed
 	aux := &struct {
 		ErrorType json.RawMessage `json:"error_type"`
@@ -58576,6 +59557,9 @@ func (t UpdateSuggestedActions) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpdateSuggestedActions) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpdateSuggestedActions
 	aux := &struct {
 		AddedActions   []json.RawMessage `json:"added_actions"`
@@ -58759,6 +59743,9 @@ func (t UpdateTopicMessageCount) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpdateTopicMessageCount) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpdateTopicMessageCount
 	aux := &struct {
 		TopicId json.RawMessage `json:"topic_id"`
@@ -58807,6 +59794,9 @@ func (t UpdateTrendingStickerSets) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpdateTrendingStickerSets) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpdateTrendingStickerSets
 	aux := &struct {
 		StickerType json.RawMessage `json:"sticker_type"`
@@ -58911,6 +59901,9 @@ func (t UpdateUnreadChatCount) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpdateUnreadChatCount) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpdateUnreadChatCount
 	aux := &struct {
 		ChatList json.RawMessage `json:"chat_list"`
@@ -58961,6 +59954,9 @@ func (t UpdateUnreadMessageCount) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpdateUnreadMessageCount) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpdateUnreadMessageCount
 	aux := &struct {
 		ChatList json.RawMessage `json:"chat_list"`
@@ -59057,6 +60053,9 @@ func (t UpdateUserPrivacySettingRules) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpdateUserPrivacySettingRules) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpdateUserPrivacySettingRules
 	aux := &struct {
 		Setting json.RawMessage `json:"setting"`
@@ -59105,6 +60104,9 @@ func (t UpdateUserStatus) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpdateUserStatus) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpdateUserStatus
 	aux := &struct {
 		Status json.RawMessage `json:"status"`
@@ -59216,7 +60218,7 @@ type UpgradedGift struct {
 	Id int64 `json:"id,string"`
 	// True, if the gift was used to craft another gift
 	IsBurned bool `json:"is_burned"`
-	// True, if the gift was craft from another gifts
+	// True, if the gift was crafted from other gifts
 	IsCrafted bool `json:"is_crafted"`
 	// True, if the original gift could have been bought only by Telegram Premium subscribers
 	IsPremium bool `json:"is_premium"`
@@ -59276,6 +60278,9 @@ func (t UpgradedGift) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpgradedGift) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpgradedGift
 	aux := &struct {
 		HostId  json.RawMessage `json:"host_id"`
@@ -59510,6 +60515,9 @@ func (t UpgradedGiftBackdrop) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpgradedGiftBackdrop) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpgradedGiftBackdrop
 	aux := &struct {
 		Rarity json.RawMessage `json:"rarity"`
@@ -59643,6 +60651,9 @@ func (t UpgradedGiftModel) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpgradedGiftModel) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpgradedGiftModel
 	aux := &struct {
 		Rarity json.RawMessage `json:"rarity"`
@@ -59716,6 +60727,9 @@ func (t UpgradedGiftOriginalDetails) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpgradedGiftOriginalDetails) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpgradedGiftOriginalDetails
 	aux := &struct {
 		ReceiverId json.RawMessage `json:"receiver_id"`
@@ -59812,6 +60826,9 @@ func (t UpgradedGiftOriginOffer) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpgradedGiftOriginOffer) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpgradedGiftOriginOffer
 	aux := &struct {
 		Price json.RawMessage `json:"price"`
@@ -59834,7 +60851,7 @@ func (t *UpgradedGiftOriginOffer) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// UpgradedGiftOriginPrepaidUpgrade The sender or receiver of the message has paid for upgraid of the gift, which has been completed
+// UpgradedGiftOriginPrepaidUpgrade The sender or receiver of the message has paid for upgrade of the gift, which has been completed
 type UpgradedGiftOriginPrepaidUpgrade struct {
 }
 
@@ -59879,6 +60896,9 @@ func (t UpgradedGiftOriginResale) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpgradedGiftOriginResale) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpgradedGiftOriginResale
 	aux := &struct {
 		Price json.RawMessage `json:"price"`
@@ -59971,6 +60991,9 @@ func (t UpgradedGiftSymbol) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UpgradedGiftSymbol) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UpgradedGiftSymbol
 	aux := &struct {
 		Rarity json.RawMessage `json:"rarity"`
@@ -60174,6 +61197,9 @@ func (t User) MarshalJSON() ([]byte, error) {
 }
 
 func (t *User) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias User
 	aux := &struct {
 		ActiveStoryState json.RawMessage `json:"active_story_state"`
@@ -60242,6 +61268,9 @@ func (t UserAuctionBid) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UserAuctionBid) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UserAuctionBid
 	aux := &struct {
 		OwnerId json.RawMessage `json:"owner_id"`
@@ -60346,6 +61375,9 @@ func (t UserFullInfo) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UserFullInfo) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UserFullInfo
 	aux := &struct {
 		BlockList      json.RawMessage `json:"block_list"`
@@ -60834,6 +61866,9 @@ func (t UserPrivacySettingRules) MarshalJSON() ([]byte, error) {
 }
 
 func (t *UserPrivacySettingRules) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias UserPrivacySettingRules
 	aux := &struct {
 		Rules []json.RawMessage `json:"rules"`
@@ -61529,6 +62564,9 @@ func (t VideoChat) MarshalJSON() ([]byte, error) {
 }
 
 func (t *VideoChat) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias VideoChat
 	aux := &struct {
 		DefaultParticipantId json.RawMessage `json:"default_participant_id"`
@@ -61645,6 +62683,9 @@ func (t VideoNote) MarshalJSON() ([]byte, error) {
 }
 
 func (t *VideoNote) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias VideoNote
 	aux := &struct {
 		SpeechRecognitionResult json.RawMessage `json:"speech_recognition_result"`
@@ -61724,6 +62765,9 @@ func (t VoiceNote) MarshalJSON() ([]byte, error) {
 }
 
 func (t *VoiceNote) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias VoiceNote
 	aux := &struct {
 		SpeechRecognitionResult json.RawMessage `json:"speech_recognition_result"`
@@ -61887,6 +62931,9 @@ func (t WebAppOpenParameters) MarshalJSON() ([]byte, error) {
 }
 
 func (t *WebAppOpenParameters) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias WebAppOpenParameters
 	aux := &struct {
 		Mode json.RawMessage `json:"mode"`
@@ -62060,6 +63107,9 @@ func (t WebPageInstantView) MarshalJSON() ([]byte, error) {
 }
 
 func (t *WebPageInstantView) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	type Alias WebPageInstantView
 	aux := &struct {
 		Blocks       []json.RawMessage `json:"blocks"`

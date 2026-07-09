@@ -37,7 +37,7 @@ func (c *Client) AcceptOauthRequest(matchCode string, url string, opts ...*Accep
 	return resp.(*HttpUrl), nil
 }
 
-// AcceptTermsOfService Accepts Telegram terms of services
+// AcceptTermsOfService Accepts Telegram terms of service
 func (c *Client) AcceptTermsOfService(termsOfServiceId string) error {
 	req := &AcceptTermsOfService{
 		TermsOfServiceId: termsOfServiceId,
@@ -4075,7 +4075,7 @@ func (c *Client) GetChatInviteLinkMembers(chatId int64, inviteLink string, limit
 
 // GetChatInviteLinksOpts contains optional parameters for GetChatInviteLinks
 type GetChatInviteLinksOpts struct {
-	// Pass true if revoked links needs to be returned instead of active or expired
+	// Pass true if revoked links need to be returned instead of active or expired
 	IsRevoked bool
 }
 
@@ -6639,7 +6639,7 @@ type GetRemoteFileOpts struct {
 	FileType FileType
 }
 
-// GetRemoteFile Returns information about a file by its remote identifier. This is an offline method. Can be used to register a URL as a file for further uploading, or sending as a message. Even the request succeeds, the file can be used only if it is still accessible to the user.
+// GetRemoteFile Returns information about a file by its remote identifier. This is an offline method. Can be used to register a URL as a file for further uploading, or sending as a message. Even if the request succeeds, the file can be used only if it is still accessible to the user.
 func (c *Client) GetRemoteFile(remoteFileId string, opts ...*GetRemoteFileOpts) (*File, error) {
 	req := &GetRemoteFile{
 		RemoteFileId: remoteFileId,
@@ -6873,7 +6873,7 @@ func (c *Client) GetStarRevenueStatistics(ownerId MessageSender, opts ...*GetSta
 
 // GetStarSubscriptionsOpts contains optional parameters for GetStarSubscriptions
 type GetStarSubscriptionsOpts struct {
-	// Pass true to receive only expiring subscriptions for which there are no enough Telegram Stars to extend
+	// Pass true to receive only expiring subscriptions for which there aren't enough Telegram Stars to extend
 	OnlyExpiring bool
 }
 
@@ -11839,7 +11839,7 @@ func (c *Client) SetPassportElement(element InputPassportElement, password strin
 	return resp.(PassportElement), nil
 }
 
-// SetPassportElementErrors Informs the user who some of the elements in their Telegram Passport contain errors; for bots only. The user will not be able to resend the elements, until the errors are fixed
+// SetPassportElementErrors Informs the user that some of the elements in their Telegram Passport contain errors; for bots only. The user will not be able to resend the elements, until the errors are fixed
 func (c *Client) SetPassportElementErrors(errors []InputPassportElementError, userId int64) error {
 	req := &SetPassportElementErrors{
 		Errors: errors,

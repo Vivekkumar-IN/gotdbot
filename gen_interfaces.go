@@ -4792,7 +4792,7 @@ func UnmarshalInputMessageReplyTo(data []byte) (InputMessageReplyTo, error) {
 	}
 }
 
-// InputPaidMediaType Describes type of paid media to sent
+// InputPaidMediaType Describes type of paid media to send
 //   - InputPaidMediaTypePhoto
 //   - InputPaidMediaTypeVideo
 type InputPaidMediaType interface {
